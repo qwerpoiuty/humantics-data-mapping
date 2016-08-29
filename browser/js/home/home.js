@@ -7,5 +7,30 @@ app.config(function($stateProvider) {
 });
 
 app.controller('homeCtrl', function($scope) {
+    $scope.columns = ["Database", "User", "Date", "Entity"]
+    $scope.table = [{
+        entity: "Sales Transaction",
+        field: "id",
+        target_entity: "Sales Order",
+        target_field: "Sales UID"
 
-})
+    }, {
+        entity: "Sales Transaction",
+        field: "id",
+        target_entity: "Sales Order",
+        target_field: "Sales UID"
+
+    }, {
+        entity: "Sales Transaction",
+        field: "id",
+        target_entity: "Sales Order",
+        target_field: "Sales UID"
+
+    }, {
+        entity: "Sales Transaction",
+        field: "id",
+        target_entity: "Sales Order",
+        target_field: "Sales UID"
+
+    }]
+});
