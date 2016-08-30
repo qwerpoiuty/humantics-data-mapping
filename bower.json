@@ -1,0 +1,18 @@
+{
+  "name": "Data-Mapping",
+  "description": "An app to map data relations",
+  "main": "server/start.js",
+  "license": "MIT",
+  "homepage": "https://github.com/qwerpoiuty/humantics-data-mapping",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "footable": "^3.0.11"
+  }
+}
