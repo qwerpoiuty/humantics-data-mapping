@@ -6,7 +6,7 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('homeCtrl', function($scope) {
+app.controller('homeCtrl', function($scope, userFactory) {
     $scope.columns = ["Database", "User", "Date", "Entity"]
     $scope.table = [{
         entity: "Sales Transaction",
