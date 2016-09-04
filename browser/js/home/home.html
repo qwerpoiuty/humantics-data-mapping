@@ -1,14 +1,13 @@
-<button class = "btn btn-default" ng-click="open()">Test</button>
 <div class="row border-bottom">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
+        <!-- <div class="navbar-header">
+	            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
             <form role="search" class="navbar-form-custom" action="search_results.html">
                 <div class="form-group">
                     <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
                 </div>
             </form>
-        </div>
+        </div> -->
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
@@ -116,10 +115,10 @@
             </ul>
 
         </nav>
-        </div>
+</div>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Your Project Summary</h2>
+        <h2 class="text-success">Your Project Summary</h2>
         <ol class="breadcrumb">
             <li>
                 <a>Home</a>
@@ -127,13 +126,13 @@
             <li>
                 <a>Detailed Search</a>
             </li>
-            <li class="active">
+            <li class="active text-success">
                 <strong>Dashboard</strong>
             </li>
         </ol>
     </div>
     <div class="col-lg-2">
-
+		<button type="button" class="navbar-minimalize minimalize-styl-2 btn btn-primary " ng-click="addTable()"><i class="fa fa-plus"></i> Add a Table</button>
     </div>
 </div>
 <div id="wrapper">
@@ -243,12 +242,23 @@
 						<div class = "ibox-content">
 							<div class = "row row-centered">
 							  <div class="col-lg-6 col-centered">
-							    <div class="input-group">
-							      <input type="text" class="form-control" placeholder="Search for a table or attribute...">
-							      <span class="input-group-btn">
-							        <button class="btn btn-default" type="button">Go!</button>
-							      </span>
-							    </div><!-- /input-group -->
+							      <div class="input-group">
+								      <input type="text" class="form-control" aria-label="...">
+								      <div class="input-group-btn">
+									  	<button type="button" class = "btn btn-success">Search!
+									  	</button>
+								      	<div class="btn-group" dropdown >
+								        <button type="button" class="btn btn-info dropdown-toggle" dropdown-toggle>
+									    {{searchCat?'in ' + searchCat:'Select a Category'}}<span class="caret"></span>
+										</button>
+									    <ul class="dropdown-menu" role="menu">
+									    	<li ng-repeat = "search in searches track by $index" ng-model = "searchCat">
+											<a ng-click = setSearch(search)>in {{search}}</a>
+									    	</li>
+									  	</ul>
+									  	</div>
+								      </div><!-- /btn-group -->
+								    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							</div>
 							<div class="row row-centered">
@@ -256,20 +266,18 @@
 							</div>
 							<div class = "row row-centered">
 								<div class="col-lg-3 col-centered">
-									<div class="btn-group" dropdown >
-									  <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
-									    {{selectedDb?selectedDb : 'Select a database'}} <span class="caret"></span>
-									  </button>
-									  <ul class="dropdown-menu" role="menu">
-									    <li ng-repeat = "db in dbs track by $index" ng-model = "selectedDb">
-											<a ng-click = setDb(db)>{{db}}</a>
-									    </li>
-									  </ul>
-									</div> <!-- /.button-group -->
+									<ui-select ng-model="selectedDb.value">
+									    <ui-select-match placeholder="Select a Database">
+									        {{$select.selected.name}}
+									    </ui-select-match>
+									    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+									        <span ng-bind="item.name"></span>
+									    </ui-select-choices>
+									</ui-select>
 								</div><!-- /.col-lg-3 -->
 								<div class="col-lg-3 col-centered">
 									<div class="btn-group" dropdown >
-									  <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+									  <button type="button" class="btn btn-warning dropdown-toggle" dropdown-toggle>
 									    {{selectedSchema?selectedSchema : 'Select a schema'}} <span class="caret"></span>
 									  </button>
 									  <ul class="dropdown-menu" role="menu">

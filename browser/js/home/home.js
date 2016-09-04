@@ -32,17 +32,37 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     };
 
     //ALL THE SEARCHING STUFF
-    $scope.dbs = dataFactory.getDatabases()
-    $scope.setDb = function(db) {
 
-        $scope.selectedDb = db;
+    $scope.searches = ["Tables", "Attributes"]
+
+    $scope.setSearch = function(search) {
+        $scope.searchCat = search
     }
+    $scope.dbs = dataFactory.getDatabases()
     $scope.setSchema = function(schema) {
         $scope.selectedSchema = schema
     }
-    console.log($scope.dbs)
+
+    $scope.itemArray = [{
+        id: 1,
+        name: 'first'
+    }, {
+        id: 2,
+        name: 'second'
+    }, {
+        id: 3,
+        name: 'third'
+    }, {
+        id: 4,
+        name: 'fourth'
+    }, {
+        id: 5,
+        name: 'fifth'
+    }, ];
+
+    $scope.selectedDb = {}
     $scope.$watch(function() {
-        return $scope.selectedDb
+        return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
             $scope.schemas = dataFactory.getSchemas(nv)
@@ -56,13 +76,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         }
     })
 
-
-
-
-
-
     //ALL THE CREATING STUFF
-    $scope.open = function() {
+    $scope.addTable = function() {
         var modalInstance = $uibModal.open({
             templateUrl: 'js/common/modals/createMapping/modal.html',
             controller: 'createMapCtrl',

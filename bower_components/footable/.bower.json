@@ -26,6 +26,6 @@
     "commit": "531e97698092014d7472dd60a63fd7ea48823d92"
   },
   "_source": "https://github.com/bradvin/FooTable.git",
-  "_target": "~2.0.0",
+  "_target": "^2.0.0",
   "_originalSource": "footable"
 }
