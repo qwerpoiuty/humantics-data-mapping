@@ -169,7 +169,6 @@
                                         <th>Atrribute Name</th>
                                         <th>Data Type</th>
                                         <th>Last Modified</th>
-                                        <th>Order</th>
                                     </tr>
                                     <tr>
                                         <td>Attribute Name</td>               
@@ -231,8 +230,7 @@
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="editAttribute"><i class="fa fa-pencil"></i> Edit</a>
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="addAttribute"><i class="fa fa-plus"></i> </a>
                         </div>
-                            <h2>Table Information</h2>
-
+                            <h2>Attribute Information</h2>
 
                         <div class="mail-tools tooltip-demo m-t-md">
                             <h3>Selected Attribute Name</h3>
@@ -252,23 +250,23 @@
                                     </tr>
                                     <tr>
                                         <td>Database Name</td>      
-                                        <td>Database 1</td>
+                                        <td><input type="text" name="sourceDatabaseName"></td>
                                     </tr>
                                     <tr>
                                         <td>Data Type</td>               
-                                        <td>Float</td>
+                                        <td><input type="text" name="sourceDatabaseType"></td>
                                     </tr>
                                     <tr>
                                         <td>Field Name</td>                                    
-                                        <td></td>
+                                        <td><input type="text" name="sourceFieldName"></td>
                                     </tr>
                                      <tr>
                                         <td>Field Data Type </td>
-                                        <td></td>
+                                        <td><input type="text" name="sourceFieldDataType"></td>
                                     </tr>
                                     <tr>
                                         <td>Sample Value</td>
-                                        <td></td>
+                                        <td><input type="text" name="sourceSampleValue"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -282,43 +280,65 @@
                                    <tr>
                                         <th>Target Information<th>
                                     </tr>
-                                     <tr>
+                                    <tr>
                                         <td>Database Name</td>      
-                                        <td>Database 1</td>
+                                        <td><input type="text" name="targetDatabaseName"></td>
                                     </tr>
                                     <tr>
                                         <td>Data Type</td>               
-                                        <td>Float</td>
+                                        <td><input type="text" name="targetDatabaseType"></td>
                                     </tr>
                                     <tr>
                                         <td>Field Name</td>                                    
-                                        <td></td>
+                                        <td><input type="text" name="targetFieldName"></td>
                                     </tr>
                                      <tr>
                                         <td>Field Data Type </td>
-                                        <td></td>
+                                        <td><input type="text" name="targetFieldDataType"></td>
                                     </tr>
                                     <tr>
                                         <td>Sample Value</td>
-                                        <td></td>
+                                        <td><input type="text" name="targetSampleValue"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 </form>
                             </div>
-                        </div>
+                        </div> 
                     </div>
+
                     <div class="mail-attachment">
                         <div class="attachment">
-                            <h3>Comments</h3>
+                            <div class="pull-right tooltip-demo">
+                                <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="addAttribute"><i class="fa fa-plus"></i> </a>
+                            </div>
+
+                            <h3>Transformation Rules</h3>
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="mail-body text-left tooltip-demo" style="height:20vh;">
-                         <h4 class="text-center"> No Comments<h4>
+                    <div class="mail-body text-left tooltip-demo" style="height:26vh;">
+                         <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
+
+                        <button class="accordion">Rule Name</button>
+                        <div class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+
+                        <button class="accordion">Rule Name</button>
+                        <div class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+
+                        <button class="accordion">Rule Name</button>
+                        <div id="foo" class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+
                     </div>
                     <div class="clearfix"></div>
                 </div>
+
             </div>
 
         </div>
