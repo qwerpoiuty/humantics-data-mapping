@@ -6,38 +6,9 @@ app.config(function($stateProvider) {
     });
 });
 
-<<<<<<< HEAD
-app.controller('homeCtrl', function($scope, userFactory) {
-    $scope.columns = ["Database", "User", "Date", "Entity"]
-    $scope.table = [{
-        entity: "Sales Transaction",
-        field: "id",
-        target_entity: "Sales Order",
-        target_field: "Sales UID"
-
-    }, {
-        entity: "Sales Transaction",
-        field: "id",
-        target_entity: "Sales Order",
-        target_field: "Sales UID"
-
-    }, {
-        entity: "Sales Transaction",
-        field: "id",
-        target_entity: "Sales Order",
-        target_field: "Sales UID"
-
-    }, {
-        entity: "Sales Transaction",
-        field: "id",
-        target_entity: "Sales Order",
-        target_field: "Sales UID"
-
-    }]
-=======
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
->>>>>>> master
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
