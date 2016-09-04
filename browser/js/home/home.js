@@ -6,6 +6,7 @@ app.config(function($stateProvider) {
     });
 });
 
+<<<<<<< HEAD
 app.controller('homeCtrl', function($scope, userFactory) {
     $scope.columns = ["Database", "User", "Date", "Entity"]
     $scope.table = [{
@@ -33,6 +34,10 @@ app.controller('homeCtrl', function($scope, userFactory) {
         target_field: "Sales UID"
 
     }]
+=======
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
+    $scope.columns = ["Database", "Schema", "Date", "Entity"]
+>>>>>>> master
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -54,5 +59,79 @@ app.controller('homeCtrl', function($scope, userFactory) {
 
     $scope.filter = {
         status: null
+    };
+
+    //ALL THE SEARCHING STUFF
+
+    $scope.searches = ["Tables", "Attributes"]
+
+    $scope.setSearch = function(search) {
+        $scope.searchCat = search
+    }
+    $scope.dbs = dataFactory.getDatabases()
+    $scope.setSchema = function(schema) {
+        $scope.selectedSchema = schema
+    }
+
+    $scope.itemArray = [{
+        id: 1,
+        name: 'first'
+    }, {
+        id: 2,
+        name: 'second'
+    }, {
+        id: 3,
+        name: 'third'
+    }, {
+        id: 4,
+        name: 'fourth'
+    }, {
+        id: 5,
+        name: 'fifth'
+    }, ];
+
+    $scope.selectedDb = {}
+    $scope.$watch(function() {
+        return $scope.selectedDb.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            $scope.schemas = dataFactory.getSchemas(nv)
+        }
+    })
+    $scope.$watch(function() {
+        return $scope.selectedSchema
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            $scope.table = dataFactory.getTables()
+        }
+    })
+
+    //ALL THE CREATING STUFF
+    $scope.addTable = function() {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'js/common/modals/createMapping/modal.html',
+            controller: 'createMapCtrl',
+            size: 'lg',
+            resolve: {
+                dbs: function() {
+                    return dataFactory.getDatabases()
+                },
+                attribute: function() {
+                    return {
+                        database: 'customer',
+                        schema: 'store',
+                        table: 'sales',
+                        attribute: 'customer_id'
+                    }
+                }
+            }
+        });
+
+        modalInstance.result.then(function(data) {
+            console.log('dismissed')
+
+        }, function() {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
     };
 });

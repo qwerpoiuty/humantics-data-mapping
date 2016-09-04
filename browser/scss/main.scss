@@ -15,8 +15,47 @@ body {
 }
 
 #main {
-  padding-top: 60px;
   margin: 0 auto;
+}
+
+//APP WIDE STANDARD CLASSES
+.unstyled::-webkit-inner-spin-button,
+.unstyled::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+.unmargin{
+  margin-top:0;
+  margin-bottom:0;
+}
+.row-centered {
+    text-align:center;
+}
+.left{
+  text-align:left !important;
+}
+.right{
+  text-align:right !important;
+}
+.float-left{
+	float:left;
+}
+.float-right{
+	float:right;
+}
+.col-centered {
+    display:inline-block;
+    float:none !important; 
+    /* reset the text-align */
+    margin:0 auto;
+}
+
+.selectDisable {-webkit-user-select: none;  -khtml-user-select: none;   -moz-user-select: none; -o-user-select: none;    user-select: none; }
+
+.selectEnable { -webkit-user-select: text;  -khtml-user-select: text;   -moz-user-select: text; -o-user-select: text;    user-select: text; }
+
+.no-pad{
+  padding:0;
 }
 
 @import 'directives/main';
