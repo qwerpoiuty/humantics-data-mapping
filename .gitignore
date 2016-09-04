@@ -4,6 +4,7 @@ npm-debug.log
 public
 .DS_Store
 coverage
+bower_components
 
 # Logs
 logs
