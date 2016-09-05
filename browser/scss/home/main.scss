@@ -6,3 +6,18 @@
   }
 }
 
+.footable-row-detail-row{
+	display: table-row;
+}
+
+.footable-row-detail-name{
+	display: table-cell;
+	font-weight: bold;
+	padding-right: 15px;
+	padding-bottom: 5px;
+}
+
+.footable-row-detail-value{
+	display: table-cell
+
+}
