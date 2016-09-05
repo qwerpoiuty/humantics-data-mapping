@@ -8,6 +8,7 @@ app.config(function($stateProvider) {
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -79,7 +80,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     //ALL THE CREATING STUFF
     $scope.addTable = function() {
         var modalInstance = $uibModal.open({
-            templateUrl: 'js/common/modals/createMapping/modal.html',
+            templateUrl: 'js/common/modals/createTable/modal.html',
             controller: 'createMapCtrl',
             size: 'lg',
             resolve: {

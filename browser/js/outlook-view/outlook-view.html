@@ -1,15 +1,14 @@
-
 <div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
-        <div class="row border-bottom">
+    <div class="row border-bottom">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div>
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
+                <form role="search" class="navbar-form-custom" action="search_results.html">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
+                    </div>
+                </form>
+            </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
@@ -113,100 +112,108 @@
 
                 <li>
                     <a href="login.html"><i class="fa fa-home"></i> Home</a>
-                </li>	
+                </li>   
             </ul>
 
         </nav>
-        </div>
-
-        <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content mailbox-content">
-                        <div class="file-manager">
-                            <h5>Recent Mappings</h5>
-                            <ul class="folder-list m-b-md" style="padding: 0">
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                 				<li>
-                 					<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                                <li>
-                                	<h2>Aldus PageMaker including versions of Lorem Ipsum.</h2>
-                                	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-9 animated fadeInRight">
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="col-lg-6 animated fadeInRight">
             <div class="mail-box-header">
                 <div class="pull-right tooltip-demo">
                     <a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
                     <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
-                <h2>Rule Info</h2>
+                <h2>List of Attributes from: <span>Retail Stores</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                	<h3>Inventory Management - Migrate Inventory Catalog</h3>
+                    <h3>Database: <span>Sales</span> Schema: <span>Customers</span></h3>
                 </div>
             </div>
-                <div class="mail-box">
 
+            <div class="mail-box">
                 <div class="mail-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Attribute Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-click="selectAttribute(table[$index])" ng-repeat = "attribute in table track by $index">
+                                        <td>{{attribute.name}}
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div class="col-lg-6 animated fadeInRight">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo" ng-switch="editing">
+                    <a ng-switch-default ng-click="editAttribute()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
+                    <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
+                    <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
+                    
+                    <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
+                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+                </div>
+                <h2>Attribute Information</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <h3>{{selected.name || 'New Attribute'}}</h3>
+                </div>
+            </div>
+
+            <div class="mail-box" ng-switch="editing">
+                <div class="mail-body" ng-switch-default>
                     <div class="row">
                         <div class="col-sm-6 b-r">
                             <form role="form">
                                 <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Source</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Rule ID</td>      
-                                    <td>525</td>
+                                    <td>Database</td>      
+                                    <td>{{selected.source.database || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Status</td>               
-                                    <td class="text-warning"> <i class="fa fa-level-down"></i> -20% </td>
+                                    <td>Schema</td>               
+                                    <td>{{selected.source.schema || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Last Modified By</td>                                    
-                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 26% </td>
+                                    <td>Table</td>                                    
+                                    <td>{{selected.source.table || 'Add a value'}}</td>
                                 </tr>
                                  <tr>
-                                    <td>Custom Field 1</td>
-                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 40% </td>
+                                    <td>Data Type</td>
+                                    <td class="text-info">{{selected.source.datatype || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Custom Field 3</td>
-                                    <td class="text-warning"> <i class="fa fa-level-down"></i> -20% </td>
+                                    <td>Status</td>
+                                    <td>{{selected.source.status || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Custom Field 5</td>
-                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 26% </td>
+                                    <td>Last modified date</td>
+                                    <td>{{selected.source.lastModified || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Value</td>
+                                    <td>{{selected.source.sampleValue || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 26% </td>
+                                    <td>{{selected.source.description || 'Add a value'}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -214,58 +221,192 @@
                         </div>
 
                         <div class="col-sm-6">
-            	        	 <form role="form">
+                            <form role="form">
                                 <table class="table table-hover">
-	                                <tbody>
-	                                <tr>
-	                                    <td>Version</td>      
-	                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 40% </td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Created On</td>               
-	                                    <td class="text-warning"> <i class="fa fa-level-down"></i> -20% </td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Last Modified On</td>                                    
-	                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 26% </td>
-	                                </tr>
-	                                 <tr>
-	                                    <td>Custom Field 2</td>
-	                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 40% </td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Custom Field 4</td>
-	                                    <td class="text-warning"> <i class="fa fa-level-down"></i> -20% </td>
-	                                </tr>
-	                                </tbody>
-	                            </table>
-                        	</form>
-
+                                <thead>
+                                    <tr>
+                                        <th>Target</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Database</td>      
+                                    <td>{{selected.target.database || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Schema</td>               
+                                    <td>{{selected.target.schema || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Table</td>                                    
+                                    <td>{{selected.target.table || 'Add a value'}}</td>
+                                </tr>
+                                 <tr>
+                                    <td>Data Type</td>
+                                    <td class="text-info">{{selected.target.datatype || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>{{selected.target.status || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Last modified date</td>
+                                    <td>{{selected.target.lastModified || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Value</td>
+                                    <td>{{selected.target.sampleValue || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>{{selected.target.description || 'Add a value'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </form>
                         </div>
                     </div>
-           		</div>
-                    <div class="mail-attachment">
+                </div>
+                <div class="mail-body" ng-switch-when="true">
+                <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Source</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Database</td>      
+                                    <td><input type="text" ng-model="selected.source.database"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Schema</td>               
+                                    <td><input type="text" ng-model="selected.source.schema"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Table</td>                                    
+                                    <td><input type="text" ng-model="selected.source.table"/></td>
+                                </tr>
+                                 <tr>
+                                    <td>Data Type</td>
+                                    <td class="text-info"><input type="text" ng-model="selected.source.datatype"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td><input type="text" ng-model="selected.source.status"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Last modified date</td>
+                                    <td><input type="text" ng-model="selected.source.lastModified"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Value</td>
+                                    <td><input type="text" ng-model="selected.source.sampleValue"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td><input type="text" ng-model="selected.source.description"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Target</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Database</td>      
+                                    <td><input type="text" ng-model="selected.target.database"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Schema</td>               
+                                    <td><input type="text" ng-model="selected.target.schema"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Table</td>                                    
+                                    <td><input type="text" ng-model="selected.target.table"/></td>
+                                </tr>
+                                 <tr>
+                                    <td>Data Type</td>
+                                    <td class="text-info"><input type="text" ng-model="selected.target.datatype"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td><input type="text" ng-model="selected.target.status"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Last modified date</td>
+                                    <td><input type="text" ng-model="selected.target.lastModified"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Value</td>
+                                    <td><input type="text" ng-model="selected.target.sampleValue"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td><input type="text" ng-model="selected.target.description"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="mail-attachment">
                         <div class="attachment">
-                            <h3>Mappings</h3>
+                            <div class="pull-right tooltip-demo">
+                                <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="addAttribute"><i class="fa fa-plus"></i> </a>
+                            </div>
+
+                            <h3>Transformation Rules</h3>
                             <div class="clearfix"></div>
                         </div>
-                        </div>
-                        <div class="mail-body text-left tooltip-demo">
-                             <h4 class="text-center"> No Mappings <h4>
-                        </div>
-                        <div class="clearfix"></div>
+                    </div>
+                    <div class="mail-body text-left tooltip-demo" style="height:26vh;">
+                         <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
 
+                        <button class="accordion">Rule Name</button>
+                        <div class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
 
+                        <button class="accordion">Rule Name</button>
+                        <div class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+
+                        <button class="accordion">Rule Name</button>
+                        <div id="foo" class="panel">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
+
             </div>
+
+    </div>
+    </div>
+    <div class="footer">
+        <div class="pull-right">
+            Anna <strong>Kendrick</strong> Logged In.
         </div>
+        <div>
+            <strong>Copyright</strong> Humantics 2016
         </div>
-        <div class="footer">
-            <div class="pull-right">
-                Anna <strong>Kendrick</strong> Logged In.
-            </div>
-            <div>
-                <strong>Copyright</strong> Humantics 2016
-            </div>
-        </div>
+    </div>
 </div>
