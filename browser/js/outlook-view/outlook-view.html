@@ -120,12 +120,7 @@
     <div class="wrapper wrapper-content">
         <div class="col-lg-6 animated fadeInRight">
             <div class="mail-box-header">
-                <div class="pull-right tooltip-demo">
-                    <a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
-                    <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
-                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
-                </div>
-                <h2>List of Attributes from: <span>Retail Stores</span></h2>
+                <h2 class="text-success">List of Attributes from: <span>Retail Stores</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3>Database: <span>Sales</span> Schema: <span>Customers</span></h3>
                 </div>
@@ -137,6 +132,7 @@
                         <div class="col-sm-12">
                             <form role="form">
                                 <table class="table table-hover">
+                                    <button class = "btn btn-primary" ng-click="newAttribute()">Make a new Attribute</button>
                                 <thead>
                                     <tr>
                                         <th>Attribute Name</th>
@@ -170,7 +166,7 @@
                 </div>
             </div>
 
-            <div class="mail-box" ng-switch="editing">
+            <div class="mail-box overflow" ng-switch="editing">
                 <div class="mail-body" ng-switch-default>
                     <div class="row">
                         <div class="col-sm-6 b-r">
@@ -201,7 +197,7 @@
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td>{{selected.source.status || 'Add a value'}}</td>
+                                    <td class = "text-warning">{{selected.source.status || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
@@ -248,7 +244,7 @@
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td>{{selected.target.status || 'Add a value'}}</td>
+                                    <td class = "text-warning">{{selected.target.status || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
@@ -368,7 +364,7 @@
                 <div class="mail-attachment">
                         <div class="attachment">
                             <div class="pull-right tooltip-demo">
-                                <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="addAttribute"><i class="fa fa-plus"></i> </a>
+                                <a class="btn btn-white btn-sm" title="addAttribute"><i class="fa fa-plus"></i> </a>
                             </div>
 
                             <h3>Transformation Rules</h3>
@@ -377,20 +373,28 @@
                     </div>
                     <div class="mail-body text-left tooltip-demo" style="height:26vh;">
                          <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
-
-                        <button class="accordion">Rule Name</button>
-                        <div class="panel">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <div class = "accordion-button">
+                            <button class="accordion btn-success">New Rule</button>
+                            <div class="panel">
+                                <form ng-submit="addTransformation()">
+                                    <div class = "row">
+                                        <input type="text" placeholder="Rule Name"/>
+                                    </div>
+                                    <div class = "row">
+                                        <textarea placeholder="Rule Body" cols="50"></textarea>
+                                    </div>
+                                    <div class = "row">
+                                        <button class="btn btn-info">Save</button>
+                                        <button class = "btn btn-danger">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-                        <button class="accordion">Rule Name</button>
-                        <div class="panel">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        </div>
-
-                        <button class="accordion">Rule Name</button>
-                        <div id="foo" class="panel">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <div accordion class = "accordion-button" ng-repeat = "rule in rules">
+                            <button class="accordion btn-success">{{rule.name}}</button>
+                            <div class="panel">
+                              <p>{{rule.body}}</p>
+                            </div>
                         </div>
 
                     </div>

@@ -49,7 +49,15 @@ body {
     /* reset the text-align */
     margin:0 auto;
 }
-
+.overflow{
+  overflow:auto
+}
+.bold{
+  text-decoration: bold;
+}
+.underliner{
+  text-decoration: underline;
+}
 .selectDisable {-webkit-user-select: none;  -khtml-user-select: none;   -moz-user-select: none; -o-user-select: none;    user-select: none; }
 
 .selectEnable { -webkit-user-select: text;  -khtml-user-select: text;   -moz-user-select: text; -o-user-select: text;    user-select: text; }

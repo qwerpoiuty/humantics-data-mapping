@@ -10,10 +10,11 @@ app.controller('detailedCtrl', function($scope, dataFactory) {
     $scope.selected = {}
     $scope.editing = false
     $scope.selectAttribute = function(attribute) {
+        $scope.editing = false
         $scope.selected = attribute
         $scope.selected.index = $scope.table.indexOf(attribute)
     }
-    $sc
+
     $scope.addAttribute = function(attribute) {
         $scope.selected = {}
         // dataFactory.addAttribute($scope.table, attribute)
@@ -23,15 +24,24 @@ app.controller('detailedCtrl', function($scope, dataFactory) {
         $scope.editing = !$scope.editing
         console.log($scope.editing)
     }
-    var acc = document.getElementsByClassName("accordion");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].onclick = function() {
-            this.classList.toggle("active");
-            this.nextElementSibling.classList.toggle("show");
-        }
-    };
+    $scope.addTransformation = function() {
+
+    }
+    $scope.newAttribute = function() {
+        $scope.selected = {}
+    }
+    $scope.rules = [{
+        name: 'Rule 1',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    }, {
+        name: 'Rule 2',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    }, {
+        name: 'Rule 3',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    }]
+
     $scope.table = [{
         name: "location",
         source: {
