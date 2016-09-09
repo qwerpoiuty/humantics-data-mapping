@@ -66,6 +66,9 @@ div.panel.show {
 }
 
 .accordion-panel-parent{
-    border: 3px solid #e7eaec;
+    border-bottom: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+    border-left: 3px solid #e7eaec;
+    border-top: none;
     padding: 0 0 0 0 !important;
 }
