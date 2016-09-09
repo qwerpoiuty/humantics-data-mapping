@@ -9,7 +9,7 @@
             <li>
                 <a>Detailed Search</a>
             </li>
-            <li class="active text-success">
+            <li class="text-success">
                 <strong>Dashboard</strong>
             </li>
         </ol>
@@ -265,7 +265,7 @@
 	        		<div class="col-lg-offset-3 col-lg-6">
 						<div class = "ibox">
 							<div class = "ibox-content">
-								<div class = "row row-centered">
+								<!-- <div class = "row row-centered"> -->
 								 <!-- 
 
 								 			SEARCH FUNCTIONALITY 
@@ -319,10 +319,13 @@
 									</div>
 								</div> -->
 								<div class = "row row-centered">
-									<div class="col-lg-12 col-centered">
+									<div class="col-lg-12 col-centered searchOuterContainer">
+										<ul class="tab">
+											  <li><a href="#" class="tablinks" onclick="openCity(event, 'searchForm')"><h5 class="text-success">Search</h5></a></li>
+											  <li><a href="#" class="tablinks" onclick="openCity(event, 'searchForm2')"><h5 class="text-success">Browse</h5></a></li>
+											</ul>
 									    <form id="searchForm" method="post">
 									        <fieldset>
-
 									            <input id="searchBar123" type="text" />
 
 									            <input type="submit" value="Submit" id="submitButton" />
@@ -333,11 +336,7 @@
 
 									                <input type="radio" name="check" value="entity" id="searchEntity" />
 									                <label for="searchWeb" class="searchLabel">Entity Search</label>
-
-									                <input type="radio" name="check" value="browse" id="searchBrowse" />
-									                <label for="searchWeb" class="searchLabel">Browse</label>
 									            </div>
-
 									        </fieldset>
 									    </form>
 									</div>
@@ -354,7 +353,7 @@
 		                                </div>
 		                                <pre>{{selectedDb}}</pre>
 		                            </div> --><!-- .col-lg-6  -->
-								</div><!-- .row -->
+								<!-- </div><!-- .row --> 
 							</div>
 						</div>
 					</div>

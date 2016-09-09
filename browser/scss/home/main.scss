@@ -38,13 +38,16 @@
 	color:#676a6c;
 }
 
+.searchOuterContainer{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 #searchForm{
 	/* The search form. */
 	background-color:white;
 	padding:50px 50px 30px;
 	position:relative;
-	margin-left: 10px;
-	margin-right: 10px;
 	border: 1px solid #e7eaec;
 
 }
@@ -174,4 +177,40 @@ span.arrow{
 #more:hover{
 	background-position:left bottom;
 }
+
+
+//tabs
+
+/* Style the list */
+ul.tab {
+    list-style-type: none;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+    border-left: 1px solid #e7eaec;
+    border-right: 1px solid #e7eaec;
+    border-top: 1px solid #e7eaec;
+    border-bottom: none;
+    background-color: white;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #ccc;}
 
