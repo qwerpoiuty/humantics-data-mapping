@@ -76,7 +76,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         }
     })
 
-    function openBrowse(evt, tabselection) {
+    $scope.openBrowse = function(evt, tabselection) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
