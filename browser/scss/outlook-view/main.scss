@@ -48,3 +48,24 @@ div.panel.show {
     opacity: 1;
     max-height: 500px;
 }
+
+.newRuleType{
+    resize: none;
+    border: 3px solid #e7eaec;
+}
+
+.newRuleDescription{
+    resize: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 3px solid #e7eaec;
+}
+
+.accordion-panel{
+    padding: 30px;
+}
+
+.accordion-panel-parent{
+    border: 3px solid #e7eaec;
+    padding: 0 0 0 0 !important;
+}

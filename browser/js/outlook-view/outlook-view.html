@@ -118,13 +118,13 @@
         </nav>
     </div>
     <div class="wrapper wrapper-content">
-        <div class="col-lg-6 animated fadeInRight">
+        <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header">
                 <h2 style="color:#1ab394;">Attributes from: <span style="color:#676a6c;">Retail Stores</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:#f8ac59;">Database: <span style="color:#676a6c;">Sales</span></h3> 
                     <h3 style="color:#1c84c6;">Schema: <span style="color:#676a6c;">Customers</span></h3>
-                    <button class = "btn btn-primary" ng-click="newAttribute()" style="float:right;">Make a new Attribute</button>
+                    <button class = "btn btn-primary" ng-click="newAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
 
@@ -151,14 +151,12 @@
                 </div>
             </div>
         </div>   
-        <div class="col-lg-6 animated fadeInRight">
+        <div class="col-lg-7 animated fadeInRight">
             <div class="mail-box-header">
                 <div class="pull-right tooltip-demo" ng-switch="editing">
                     <a ng-switch-default ng-click="editAttribute()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
                     <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
                     <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
-                    
-                    <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
                 <h2 style="color:#1ab394;">Attribute Information</h2>
@@ -376,17 +374,17 @@
                          <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
                         <div class = "accordion-button">
                             <button class="accordion">New Rule</button>
-                            <div class="panel">
-                                <form ng-submit="addTransformation()">
+                            <div class="panel accordion-panel-parent col-lg-12">
+                                <form class="accordion-panel" ng-submit="addTransformation()">
                                     <div class = "row">
-                                        <input type="text" placeholder="Rule Name"/>
+                                        <input class=" col-lg-2 col-lg-offset-5 newRuleType" type="text" placeholder="Rule Type"/>
                                     </div>
                                     <div class = "row">
-                                        <textarea placeholder="Rule Body" cols="50"></textarea>
+                                        <textarea class="newRuleDescription col-lg-12" placeholder="Rule Description" cols="50"></textarea>
                                     </div>
                                     <div class = "row">
-                                        <button class="btn btn-info">Save</button>
-                                        <button class = "btn btn-danger">Cancel</button>
+                                        <button class="col-lg-1 col-lg-offset-10 btn btn-info">Save</button>
+                                        <button class="col-lg-1 btn btn-danger">Cancel</button>
                                     </div>
                                 </form>
                             </div>
