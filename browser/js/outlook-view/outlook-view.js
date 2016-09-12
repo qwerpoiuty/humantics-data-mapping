@@ -17,6 +17,7 @@ app.controller('detailedCtrl', function($scope, dataFactory) {
 
     $scope.addAttribute = function(attribute) {
         $scope.selected = {}
+        $scope.editing = true
         // dataFactory.addAttribute($scope.table, attribute)
     }
     $scope.editAttribute = function() {
@@ -25,11 +26,9 @@ app.controller('detailedCtrl', function($scope, dataFactory) {
         console.log($scope.editing)
     }
 
+    $scope.newRule = false
     $scope.addTransformation = function() {
-
-    }
-    $scope.newAttribute = function() {
-        $scope.selected = {}
+        $scope.newRule = !$scope.newRule
     }
     $scope.rules = [{
         name: 'Rule 1',
