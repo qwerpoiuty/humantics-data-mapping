@@ -376,15 +376,23 @@
                             <button class="accordion">New Rule</button>
                             <div class="panel accordion-panel-parent col-lg-12">
                                 <form class="accordion-panel" ng-submit="addTransformation()">
-                                    <div class = "row">
-                                        <input class=" col-lg-2 col-lg-offset-5 newRuleType" type="text" placeholder="Rule Type"/>
+                                    <div class="pull-right tooltip-demo" ng-switch="editing">
+                                        <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+                                    </div>
+                                    <div class="row">
+                                        <h4>Rule Type</h4> 
                                     </div>
                                     <div class = "row">
-                                        <textarea class="newRuleDescription col-lg-12" placeholder="Rule Description" cols="50"></textarea>
+                                        <input id="ruleType" class="newRuleType" type="text" placeholder=""/>
+                                    </div>
+                                    <div class="row">
+                                        <h4>Rule Description</h4>
                                     </div>
                                     <div class = "row">
-                                        <button class="col-lg-1 col-lg-offset-10 btn btn-info">Save</button>
-                                        <button class="col-lg-1 btn btn-danger">Cancel</button>
+                                        <textarea class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
+                                    </div>
+                                    <div class = "row">
+                                        <button class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
                                     </div>
                                 </form>
                             </div>
