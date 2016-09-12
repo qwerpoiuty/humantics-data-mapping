@@ -27,7 +27,8 @@ button.accordion {
     outline: none;
     font-size: 15px;
     transition: 0.4s;
-    color:white;
+    color:#676a6c;
+    background-color: #e7eaec;
 }
 
 button.accordion.active, button.accordion:hover {
@@ -46,4 +47,28 @@ div.panel {
 div.panel.show {
     opacity: 1;
     max-height: 500px;
+}
+
+.newRuleType{
+    resize: none;
+    border: 3px solid #e7eaec;
+}
+
+.newRuleDescription{
+    resize: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 3px solid #e7eaec;
+}
+
+.accordion-panel{
+    padding: 30px;
+}
+
+.accordion-panel-parent{
+    border-bottom: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+    border-left: 3px solid #e7eaec;
+    border-top: none;
+    padding: 0 0 0 0 !important;
 }
