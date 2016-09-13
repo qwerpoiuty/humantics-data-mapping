@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 
 var db = require('../_db');
 
-module.exports = db.define('sourceATTRIBUTE', {
+module.exports = db.define('attribute', {
     name: {
         type: Sequelize.STRING
     },

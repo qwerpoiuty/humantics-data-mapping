@@ -12,7 +12,26 @@ var ensureAuthenticated = function(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-    //raw queries?
+    models.Mapping.find(req.body).then(function(mappings) {
+        res.json(mappings)
+    })
+})
+
+router.put('/', function(req, res) {
+    models.Mapping.find(req.body.id).then(function(mapping) {
+        return mapping.update(req.body)
+    }).then(function(updatedMapping) {
+        res.json(updatedMapping)
+    })
+})
+
+router.post('/', function(req, res) {
+    models.Mapping.findOrCreate({
+        where: {
+            name: req.body.name
+        },
+        defaults: req.body
+    })
 })
 
 module.exports = router

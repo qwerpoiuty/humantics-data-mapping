@@ -24,22 +24,19 @@ app.factory('dataFactory', function($http) {
             })
     }
     d.createTable = function(table) {
-        // return $http.post('/api/table', table).then(function(response){
-        //     return response.data
-        // })
+        return $http.post('/api/tables', table).then(function(response) {
+            return response.data
+        })
     }
     d.getMapping = function(db) {
-
-
-        // return $http.get('/api/mappings', db).then(function(response) {
-        //     return response.data
-        // })
+        return $http.get('/api/mappings', db).then(function(response) {
+            return response.data
+        })
     }
     d.updateMapping = function(mapping) {
-
-        // return $http.put('/api/mappings', mapping).then(function(response){
-        //     return response.data
-        // })
+        return $http.put('/api/mappings', mapping).then(function(response) {
+            return response.data
+        })
     }
     d.createMapping = function(mapping) {
         return $http.post('/api/mappings', mapping).then(function(response) {

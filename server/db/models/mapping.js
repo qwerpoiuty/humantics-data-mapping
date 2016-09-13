@@ -3,6 +3,9 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 module.exports = db.define('mapping', {
+    name: {
+        type: Sequelize.STRING
+    },
     source: {
         type: Sequelize.INTEGER
     },

@@ -2,13 +2,10 @@
 var db = require('./_db');
 module.exports = db;
 
+var Attribute = require('./models/attribute')
+var Db = require('./models/db')
+var Schema = require('./models/schema')
+var Table = require('./models/table')
+var System = require('./models/system')
 var User = require('./models/user');
 var Mapping = require('./models/mapping')
-var sourceATTRIBUTE = requre('/models/sourceATTRIBUTE')
-var sourceDB = requre('/models/sourceDB')
-var sourceSCHEMA = requre('/models/sourceSCHEMA')
-var sourceTABLE = requre('/models/sourceTABLE')
-var targetATTRIBUTE = requre('/models/targetATTRIBUTE')
-var targetDB = requre('/models/targetDB')
-var targetSCHEMA = requre('/models/targetSCHEMA')
-var targetTABLE = requre('/models/targetTABLE')

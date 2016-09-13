@@ -2,11 +2,14 @@ var Sequelize = require('sequelize');
 
 var db = require('../_db');
 
-module.exports = db.define('sourceTable', {
+module.exports = db.define('schema', {
     name: {
         type: Sequelize.STRING
     },
-    schema: {
+    db: {
         type: Sequelize.INTEGER
+    },
+    tables: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
 })

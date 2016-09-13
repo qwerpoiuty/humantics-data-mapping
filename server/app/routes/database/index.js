@@ -12,56 +12,66 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 
-router.get('/databases', function(req, res) {
-    if (req.body.type = "source") models.sourceDB.find(req.body.db).then(function(sourceDBS) {
-        res.json(sourceDBS)
+router.get('/systems', function(req, res) {
+    models.System.find(req.body).then(function(systems) {
+        res.json(systems)
     })
-    else {
-        models.targetDB.find(req.body.db).then(function(targetDBS) {
-            res.json(targetDBS)
-        })
-    }
+})
+
+router.get('/databases', function(req, res) {
+    models.Db.find(req.body.db).then(function(dbs) {
+        res.json(dbs)
+    })
+
 })
 
 router.get('/schemas', function(req, res) {
-    if (req.body.type = "source") models.sourceSCHEMA.find(req.body.db).then(function(sourceSCHEMAS) {
-        res.json(sourceSCHEMAS)
+    models.Schema.find(req.body.db).then(function(schemas) {
+        res.json(schemas)
     })
-    else {
-        models.targetSCHEMA.find(req.body.db).then(function(targetSCHEMAS) {
-            res.json(targetSCHEMAS)
-        })
-    }
+
 })
 
 router.get('/tables', function(req, res) {
-    if (req.body.type = "source") models.sourceTABLE.find(req.body.db).then(function(sourceTABLES) {
-        res.json(sourceTABLES)
+    models.Table.find(req.body.db).then(function(tables) {
+        res.json(tables)
     })
-    else {
-        models.targetTABLE.find(req.body.db).then(function(targetTABLES) {
-            res.json(targetTABLES)
-        })
-    }
+
 })
 
 router.get('/searchtables', function(req, res) {
-    if (req.body.type = "source") models.sourceATTRIBUTE.find(req.body.db).then(function(sourceATTRIBUTEs) {
-        res.json(sourceATTRIBUTES)
+    models.Attribute.find(req.body.db).then(function(attributes) {
+        res.json(attributes)
     })
-    else {
-        models.targetATTRIBUTE.find(req.body.db).then(function(targetATTRIBUTES) {
-            res.json(targetATTRIBUTES)
-        })
-    }
-    // var schema_promises = []
-    // for (var i = 0; i < Objects.keys(db); i++) {
-    //     var schemas = db[Objects.keys(db)[i]].query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE '%" + req.body + "'%")
-    //     schema_promises.push(schemas)
-    // }
-    // Promise.all(schema_promises).then(function(tables) {
-    //     res.json(tables)
-    // })
+})
+
+router.post('/tables', function(req, res) {
+    models.Table.findOrCreate({
+        where: {
+            name: req.body.name
+        },
+        defaults: req.body
+    }).spread(function(table, created) {
+        if (!created) {
+            res.json(false)
+        }
+        res.json(table)
+    })
+})
+
+router.post('/attributes', function(req, res) {
+    models.Attribute.findOrCreate({
+        where: {
+            name: req.body.name,
+            endDate: req.body.endDate
+        },
+        defaults: req.body
+    }).spread(function(attribute, created) {
+        if (!created) {
+            res.json(false)
+        }
+        res.jsos(attribute)
+    })
 })
 
 module.exports = router
