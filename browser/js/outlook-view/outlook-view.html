@@ -134,14 +134,21 @@
                         <div class="col-sm-12">
                             <form role="form">
                                 <table class="table table-hover">
+                                    <button class = "btn btn-primary" ng-click="addAttribute()">Make a new Attribute</button>
                                 <thead>
                                     <tr>
                                         <th>Attribute Name</th>
+                                        <th>Order</th>
+                                        <th>DataType</th>
+                                        <th>Last Modified</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-click="selectAttribute(table[$index])" ng-repeat = "attribute in table track by $index">
-                                        <td>{{attribute.name}}
+                                        <td>{{attribute.name}}</td>
+                                        <td>{{$index}}</td>
+                                        <td>{{attribute.target.datatype}}</td>
+                                        <td>{{attribute.target.status}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -363,7 +370,7 @@
                 <div class="mail-attachment">
                         <div class="attachment">
                             <div class="pull-right tooltip-demo">
-                                <a class="btn btn-white btn-sm" title="addAttribute"><i class="fa fa-plus"></i> </a>
+                                <a class="btn btn-white btn-sm" ng-click = addTransformation()><i class="fa fa-plus"></i> </a>
                             </div>
 
                             <h3>Transformation Rules</h3>
@@ -376,6 +383,7 @@
                             <button class="accordion">New Rule</button>
                             <div class="panel accordion-panel-parent col-lg-12">
                                 <form class="accordion-panel" ng-submit="addTransformation()">
+
                                     <div class="pull-right tooltip-demo" ng-switch="editing">
                                         <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                                     </div>
