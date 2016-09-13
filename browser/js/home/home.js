@@ -8,6 +8,7 @@ app.config(function($stateProvider) {
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -42,6 +43,22 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.setSchema = function(schema) {
         $scope.selectedSchema = schema
     }
+
+    $scope.setDatabase = function(schema) {
+        $scope.selectedDatabase = database
+    }
+
+    $scope.dbs = dataFactory.getSystems()
+
+    $scope.selectedSystem = {}
+    $scope.$watch(function() {
+        return $scope.selectedSystems.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            $scope.databases = dataFactory.getDatabases(nv)
+            
+        }
+    })
 
     $scope.itemArray = [{
         id: 1,
@@ -101,7 +118,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     //ALL THE CREATING STUFF
     $scope.addTable = function() {
         var modalInstance = $uibModal.open({
-            templateUrl: 'js/common/modals/createMapping/modal.html',
+            templateUrl: 'js/common/modals/createTable/modal.html',
             controller: 'createMapCtrl',
             size: 'lg',
             resolve: {
@@ -117,7 +134,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
                     }
                 }
             }
-        });
+        }); 
 
         modalInstance.result.then(function(data) {
             console.log('dismissed')

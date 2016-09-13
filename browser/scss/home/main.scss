@@ -40,7 +40,7 @@
 }
 
 .tabFieldset2{
-	margin-top: 30px;
+	margin-top: 15px;
 	background-color:white;
 }
 
@@ -232,9 +232,26 @@ input[type=radio].css-checkbox {
 .DatabaseSelect{
 	padding-left: 30px;
 	padding-right: 30px;
+	margin-bottom: 15px;
+}
+
+.SystemSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 15px;
+}
+
+.SchemaSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 15px;
 }
 
 .button-right{
 	float:right;
 	margin-right: 30px;
+}
+
+.newTableText{
+	width:110px;
 }

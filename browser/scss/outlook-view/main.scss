@@ -1,0 +1,74 @@
+.table-tab{
+	border: 1px solid grey;
+	width: 25%;
+	padding: 5px;
+	text-align: center;
+}
+
+.table-tab2{
+	border: 1px solid grey;
+	width: 25%;
+	padding: 5px;
+	text-align: center;
+	margin-left: 6px;
+}
+
+.table-title{
+	
+}
+
+button.accordion {
+    color: #444;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    color:#676a6c;
+    background-color: #e7eaec;
+}
+
+button.accordion.active, button.accordion:hover {
+
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+}
+
+div.panel.show {
+    opacity: 1;
+    max-height: 500px;
+}
+
+.newRuleType{
+    resize: none;
+    border: 3px solid #e7eaec;
+    margin-bottom: 10px;
+}
+
+.newRuleDescription{
+    resize: none;
+    border: 3px solid #e7eaec;
+    margin-bottom: 10px;
+}
+
+.accordion-panel{
+    padding: 30px;
+}
+
+.accordion-panel-parent{
+    border-bottom: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+    border-left: 3px solid #e7eaec;
+    border-top: none;
+    padding: 0 0 0 0 !important;
+}
