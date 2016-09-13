@@ -76,7 +76,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         }
     })
 
-    $scope.openBrowse = function(evt, tabselection) {
+    $scope.openBrowse = function(evt, tabSelection) {
+
     // Declare all variables
     var i, tabcontent, tablinks;
 
@@ -93,7 +94,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     }
 
     // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(tabselection).style.display = "block";
+    document.getElementById(tabSelection).style.display = "block";
     evt.currentTarget.className += " active";
 }
 
@@ -125,4 +126,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
+
+    document.getElementById("SearchTab").style.display = "inline";
+    document.getElementById("SearchTab").className += " active";
 });

@@ -29,13 +29,33 @@
 .view-height-2{
 	height: 90vh;
 }
-
 .row-fix{
 	margin: 0;
 }
 
+.tabFieldset{
+	margin-top: 50px;
+	margin-bottom: 35px;
+	background-color:white;
+}
+
+.tabFieldset2{
+	margin-top: 30px;
+	background-color:white;
+}
+
+.tabFieldset3{
+	margin-top: 50px;
+	background-color:white;
+}
+
 .searchLabel{
 	color:#676a6c;
+}
+
+#searchInContainer{
+	margin-top: 15px;
+	background-color:white;
 }
 
 .searchOuterContainer{
@@ -56,7 +76,7 @@ fieldset{
 	border:none;
 }
 
-#searchBar123{
+#searchBar{
 	/* The search text box. */
 
 	border: 1px solid #e7eaec;
@@ -69,50 +89,8 @@ fieldset{
 	outline:medium none;
 	padding:0 0 0 35px;
 	text-shadow:1px 1px 0 white;
-	width:90%;
-}
-
-.icons{
-	list-style:none;
-	margin:10px 0 0 335px;
-	height:19px;
-	position:relative;
-}
-
-.icons li{
-	float:left;
-	height:19px;
-	text-indent:-999px;
-	cursor:pointer;
-	margin-right:5px;
-}
-
-/* Styling each icon */
-
-li.web{ width:15px;}
-li.web.active,
-li.web:hover{ background-position:left bottom;}
-
-li.images{ width:22px; background-position:-18px 0;}
-li.images.active,
-li.images:hover{ background-position:-18px bottom;}
-
-li.news{ width:14px; background-position:-44px 0;}
-li.news.active,
-li.news:hover{ background-position:-44px bottom;}
-
-li.videos{ width:17px; background-position:right 0;}
-li.videos.active,
-li.videos:hover{ background-position:right bottom;}
-
-span.arrow{
-	/* The little arrow that moves below the icons */
-
-	width:11px;
-	height:6px;
-	margin:21px 0 0 5px;
-	position:absolute;
-	left:0;
+	width:80%;
+	margin-left: 5%;
 }
 
 /* The submit button */
@@ -124,6 +102,9 @@ span.arrow{
 	text-transform:uppercase;
 	border:none;
 	cursor:pointer;
+	margin-right: 5%;
+	background-color: #009688;
+	color: white;
 }
 
 #submitButton:hover{
@@ -187,10 +168,7 @@ ul.tab {
     margin-bottom: 0;
     padding: 0;
     overflow: hidden;
-    border-left: 1px solid #e7eaec;
-    border-right: 1px solid #e7eaec;
-    border-top: 1px solid #e7eaec;
-    border-bottom: none;
+    border: 1px solid #e7eaec;
     background-color: white;
 }
 
@@ -209,8 +187,54 @@ ul.tab li a {
 }
 
 /* Change background color of links on hover */
-ul.tab li a:hover {background-color: #ddd;}
+ul.tab li a:hover {background-color: #f3f3f4;}
 
 /* Create an active/current tablink class */
-ul.tab li a:focus, .active {background-color: #ccc;}
+ul.tab li a:focus, .active {background-color: #f3f3f4;}
 
+.tabcontent {
+    display: none;
+}
+
+
+
+
+input[type=radio].css-checkbox {
+							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+						}
+
+						input[type=radio].css-checkbox + label.css-label {
+							padding-left:21px;
+							height:16px; 
+							display:inline-block;
+							line-height:16px;
+							background-repeat:no-repeat;
+							background-position: 0 0;
+							font-size:16px;
+							vertical-align:middle;
+							cursor:pointer;
+
+						}
+
+						input[type=radio].css-checkbox:checked + label.css-label {
+							background-position: 0 -16px;
+						}
+						label.css-label {
+				background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_cce337a3f8bb55521f55ec55906db31e.png);
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+.DatabaseSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.button-right{
+	float:right;
+	margin-right: 30px;
+}
