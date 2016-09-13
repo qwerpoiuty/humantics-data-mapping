@@ -1,6 +1,11 @@
 'use strict';
 var router = require('express').Router();
-var models = require('../../../db')
+var db = require('../../../db')
+var Db = db.model('db')
+var Schema = db.model('schema')
+var Table = db.model('table')
+var Attribute = db.model('attribute')
+
 var chalk = require('chalk')
 
 
@@ -19,7 +24,7 @@ router.get('/systems', function(req, res) {
 })
 
 router.get('/databases', function(req, res) {
-    models.Db.find(req.body.db).then(function(dbs) {
+    Db.findAll(req.body).then(function(dbs) {
         res.json(dbs)
     })
 
@@ -58,7 +63,24 @@ router.post('/tables', function(req, res) {
         res.json(table)
     })
 })
+router.post('/system', function(req, res) {
+    // db.query('select a.name,a.datatype, a."dateModified", a."openDate",a."endDate", b.name , c.name, d.name from "attributes" as a inner join "tables" as b on a.table=b.id inner join "schemas" as c on b.schema = c.id inner join dbs as d on c.db = d.id').then(function(result) {
+    //     console.log(result)
+    //     res.json(result)
+    // })
+    db.model("db").findOrCreate({
+        where: {
+            name: req.body.name
+        },
+        defaults: req.body
+    }).spread(function(result, created) {
+        if (!created) {
+            res.json(false)
+        }
+        res.json(result)
+    })
 
+})
 router.post('/attributes', function(req, res) {
     models.Attribute.findOrCreate({
         where: {

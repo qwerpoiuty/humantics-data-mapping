@@ -2,7 +2,10 @@ app.factory('dataFactory', function($http) {
     var d = {}
     d.getDatabases = function() {
         //this is going to be a get for database names
-        return ["Customers", "Sales", "Banks", "Marketing"]
+        return $http.get('/api/database/databases')
+            .then(function(response) {
+                return response.data
+            })
     }
 
     d.getSchemas = function(db) {
@@ -16,6 +19,15 @@ app.factory('dataFactory', function($http) {
             .then(function(response) {
                 return response.data
             })
+    }
+    d.createSystem = function(system) {
+        var system = {
+            db_name: 'testDb',
+            schemas: [1, 2, 3]
+        }
+        return $http.post('/api/database/system', system).then(function(response) {
+            return response.data
+        })
     }
     d.searchTables = function(search) {
         return $http.get('/api/database/searchtables', search)

@@ -7,6 +7,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
+
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
 
     $scope.clearFilter = function() {
@@ -39,7 +40,11 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.setSearch = function(search) {
         $scope.searchCat = search
     }
-    $scope.dbs = dataFactory.getDatabases()
+    dataFactory.getDatabases().then(function(dbs) {
+        $scope.dbs = dbs
+        console.log($scope.dbs)
+    })
+
     $scope.setSchema = function(schema) {
         $scope.selectedSchema = schema
     }

@@ -12,7 +12,7 @@ module.exports = db.define('mapping', {
     target: {
         type: Sequelize.INTEGER
     },
-    dateModified: {
+    date_modified: {
         type: Sequelize.DATE
     },
     modifier: {
@@ -21,7 +21,7 @@ module.exports = db.define('mapping', {
     comments: {
         type: Sequelize.STRING
     },
-    transformationRules: {
+    transformation_rules: {
         type: Sequelize.ARRAY(Sequelize.STRING)
     }
 })
