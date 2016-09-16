@@ -6,3 +6,252 @@
   }
 }
 
+.footable-row-detail-row{
+	display: table-row;
+}
+
+.footable-row-detail-name{
+	display: table-cell;
+	font-weight: bold;
+	padding-right: 15px;
+	padding-bottom: 5px;
+}
+
+.footable-row-detail-value{
+	display: table-cell
+
+}
+
+.view-height-1{
+	height: 10vh;
+}
+
+.view-height-2{
+	height: 90vh;
+}
+.row-fix{
+	margin: 0;
+}
+
+.tabFieldset{
+	margin-top: 50px;
+	margin-bottom: 35px;
+	background-color:white;
+}
+
+.tabFieldset2{
+	margin-top: 15px;
+	background-color:white;
+}
+
+.tabFieldset3{
+	margin-top: 50px;
+	background-color:white;
+}
+
+.searchLabel{
+	color:#676a6c;
+}
+
+#searchInContainer{
+	margin-top: 15px;
+	background-color:white;
+}
+
+.searchOuterContainer{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#searchForm{
+	/* The search form. */
+	background-color:white;
+	padding:50px 50px 30px;
+	position:relative;
+	border: 1px solid #e7eaec;
+
+}
+
+fieldset{
+	border:none;
+}
+
+#searchBar{
+	/* The search text box. */
+
+	border: 1px solid #e7eaec;
+	color:#888888;
+	float:left;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:15px;
+	height:36px;
+	line-height:36px;
+	outline:medium none;
+	padding:0 0 0 35px;
+	text-shadow:1px 1px 0 white;
+	width:80%;
+	margin-left: 5%;
+}
+
+/* The submit button */
+
+#submitButton{
+	width:10%;
+	height:36px;
+	overflow:hidden;
+	text-transform:uppercase;
+	border:none;
+	cursor:pointer;
+	margin-right: 5%;
+	background-color: #009688;
+	color: white;
+}
+
+#submitButton:hover{
+	background-position:left bottom;
+}
+
+.webResult h2{
+	background-color:#5D6F7B;
+	font-size:18px;
+	font-weight:normal;
+	padding:8px 20px;
+
+	/* Applying CSS3 rounded corners */
+	-moz-border-radius:18px;
+	-webkit-border-radius:18px;
+	border-radius:18px;
+}
+.webResult h2 b{ color:#fff; }
+.webResult h2 a{ color:#eee;border:none;}
+.webResult p{ line-height:1.5;padding:15px 20px;}
+.webResult p b{ color:white;}
+.webResult > a{ margin-left:20px;}
+
+/* Image & video search results */
+
+.imageResult{
+	float:left;
+	height:170px;
+	margin:0 0 20px 40px;
+	text-align:center;
+	width:150px;
+}
+.imageResult img{ display:block;border:none;}
+.imageResult a.pic{
+	border:1px solid #fff;
+	outline:1px solid #777;
+	display:block;
+	margin:0 auto 15px;
+}
+
+/* The show more button */
+
+#more{
+	width:83px;
+	height:24px;
+	background:url('img/more.png') no-repeat;
+	cursor:pointer;
+	margin:40px auto;
+}
+
+#more:hover{
+	background-position:left bottom;
+}
+
+
+//tabs
+
+/* Style the list */
+ul.tab {
+    list-style-type: none;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7eaec;
+    background-color: white;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #f3f3f4;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #f3f3f4;}
+
+.tabcontent {
+    display: none;
+}
+
+
+
+
+input[type=radio].css-checkbox {
+							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+						}
+
+						input[type=radio].css-checkbox + label.css-label {
+							padding-left:21px;
+							height:16px; 
+							display:inline-block;
+							line-height:16px;
+							background-repeat:no-repeat;
+							background-position: 0 0;
+							font-size:16px;
+							vertical-align:middle;
+							cursor:pointer;
+
+						}
+
+						input[type=radio].css-checkbox:checked + label.css-label {
+							background-position: 0 -16px;
+						}
+						label.css-label {
+				background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_cce337a3f8bb55521f55ec55906db31e.png);
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+.DatabaseSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 15px;
+}
+
+.SystemSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 15px;
+}
+
+.SchemaSelect{
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 15px;
+}
+
+.button-right{
+	float:right;
+	margin-right: 30px;
+}
+
+.newTableText{
+	width:110px;
+}

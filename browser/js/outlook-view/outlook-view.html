@@ -120,11 +120,11 @@
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header">
-                <h2 style="color:#1ab394;">Attributes from: <span style="color:#676a6c;">Retail Stores</span></h2>
+                <h2 style="color:#1ab394;">Attributes from: <span style="color:#676a6c;">{{table.table_name}}</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:#f8ac59;">Database: <span style="color:#676a6c;">Sales</span></h3> 
-                    <h3 style="color:#1c84c6;">Schema: <span style="color:#676a6c;">Customers</span></h3>
-                    <button class = "btn btn-primary" ng-click="newAttribute()" style="float:right;">New Attribute</button>
+                    <h3 style="color:#f8ac59;">Database: <span style="color:#676a6c;">{{table.db_name}}</span></h3> 
+                    <h3 style="color:#1c84c6;">Schema: <span style="color:#676a6c;">{{table.schema_name}}</span></h3>
+                    <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
 
@@ -134,7 +134,6 @@
                         <div class="col-sm-12">
                             <form role="form">
                                 <table class="table table-hover">
-                                    <button class = "btn btn-primary" ng-click="addAttribute()">Make a new Attribute</button>
                                 <thead>
                                     <tr>
                                         <th>Attribute Name</th>
@@ -145,10 +144,10 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-click="selectAttribute(table[$index])" ng-repeat = "attribute in table track by $index">
-                                        <td>{{attribute.name}}</td>
-                                        <td>{{$index}}</td>
-                                        <td>{{attribute.target.datatype}}</td>
-                                        <td>{{attribute.target.status}}</td>
+                                        <td>{{attribute.attr_name}}</td>
+                                        <td>{{attribute.attr_id}}</td>
+                                        <td>{{attribute.datatype}}</td>
+                                        <td>{{attribute.status || incomplete}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -187,35 +186,35 @@
                                 <tbody>
                                 <tr>
                                     <td>Database</td>      
-                                    <td>{{selected.source.database || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.db_name || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td>{{selected.source.schema || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.schema_name || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td>{{selected.source.table || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.table_name || 'Add a value'}}</td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info">{{selected.source.datatype || 'Add a value'}}</td>
+                                    <td class="text-info">{{sourceMapping.datatype || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td class = "text-warning">{{selected.source.status || 'Add a value'}}</td>
+                                    <td class = "text-warning">{{sourceMapping.status || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td>{{selected.source.lastModified || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.last_modified || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td>{{selected.source.sampleValue || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.sample_value || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td>{{selected.source.description || 'Add a value'}}</td>
+                                    <td>{{sourceMapping.description || 'Add a value'}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -234,35 +233,35 @@
                                 <tbody>
                                 <tr>
                                     <td>Database</td>      
-                                    <td>{{selected.target.database || 'Add a value'}}</td>
+                                    <td>{{targetMapping.db_name || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td>{{selected.target.schema || 'Add a value'}}</td>
+                                    <td>{{targetMapping.schema_name || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td>{{selected.target.table || 'Add a value'}}</td>
+                                    <td>{{targetMapping.table_name || 'Add a value'}}</td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info">{{selected.target.datatype || 'Add a value'}}</td>
+                                    <td class="text-info">{{targetMapping.datatype || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td class = "text-warning">{{selected.target.status || 'Add a value'}}</td>
+                                    <td class = "text-warning">{{targetMapping.status || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td>{{selected.target.lastModified || 'Add a value'}}</td>
+                                    <td>{{targetMapping.lastModified || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td>{{selected.target.sampleValue || 'Add a value'}}</td>
+                                    <td>{{targetMapping.sampleValue || 'Add a value'}}</td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td>{{selected.target.description || 'Add a value'}}</td>
+                                    <td>{{targetMapping.description || 'Add a value'}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -284,35 +283,35 @@
                                 <tbody>
                                 <tr>
                                     <td>Database</td>      
-                                    <td><input type="text" ng-model="selected.source.database"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.db_name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td><input type="text" ng-model="selected.source.schema"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.schema_name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td><input type="text" ng-model="selected.source.table"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.table_name"/></td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="selected.source.datatype"/></td>
+                                    <td class="text-info"><input type="text" ng-model="sourceMapping.datatype"/></td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><input type="text" ng-model="selected.source.status"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.status"/></td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td><input type="text" ng-model="selected.source.lastModified"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.last_modified"/></td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td><input type="text" ng-model="selected.source.sampleValue"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.sampleValue"/></td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td><input type="text" ng-model="selected.source.description"/></td>
+                                    <td><input type="text" ng-model="sourceMapping.description"/></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -331,35 +330,35 @@
                                 <tbody>
                                 <tr>
                                     <td>Database</td>      
-                                    <td><input type="text" ng-model="selected.target.database"/></td>
+                                    <td><input type="text" ng-model="targetMapping.db_name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td><input type="text" ng-model="selected.target.schema"/></td>
+                                    <td><input type="text" ng-model="targetMapping.schema_name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td><input type="text" ng-model="selected.target.table"/></td>
+                                    <td><input type="text" ng-model="targetMapping.table_name"/></td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="selected.target.datatype"/></td>
+                                    <td class="text-info"><input type="text" ng-model="targetMapping.datatype"/></td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><input type="text" ng-model="selected.target.status"/></td>
+                                    <td><input type="text" ng-model="targetMapping.status"/></td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td><input type="text" ng-model="selected.target.lastModified"/></td>
+                                    <td><input type="text" ng-model="targetMapping.last_modified"/></td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td><input type="text" ng-model="selected.target.sampleValue"/></td>
+                                    <td><input type="text" ng-model="targetMapping.sampleValue"/></td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td><input type="text" ng-model="selected.target.description"/></td>
+                                    <td><input type="text" ng-model="targetMapping.description"/></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -379,26 +378,28 @@
                     </div>
                     <div class="mail-body text-left tooltip-demo" style="height:26vh;">
                          <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
-<<<<<<< HEAD
-                        <div class = "accordion-button" ng-show="newRule">
-                            <button class="accordion btn-success">New Rule</button>
-                            <div class="panel">
-                                <form ng-submit="addTransformation()">
-=======
                         <div class = "accordion-button">
                             <button class="accordion">New Rule</button>
                             <div class="panel accordion-panel-parent col-lg-12">
                                 <form class="accordion-panel" ng-submit="addTransformation()">
->>>>>>> 14edf30c9b40d875e3492928f9cfa11ac1a09340
-                                    <div class = "row">
-                                        <input class=" col-lg-2 col-lg-offset-5 newRuleType" type="text" placeholder="Rule Type"/>
+
+                                    <div class="pull-right tooltip-demo" ng-switch="editing">
+                                        <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+                                    </div>
+                                    <div class="row">
+                                        <h4>Rule Type</h4> 
                                     </div>
                                     <div class = "row">
-                                        <textarea class="newRuleDescription col-lg-12" placeholder="Rule Description" cols="50"></textarea>
+                                        <input id="ruleType" class="newRuleType" type="text" placeholder=""/>
+                                    </div>
+                                    <div class="row">
+                                        <h4>Rule Description</h4>
                                     </div>
                                     <div class = "row">
-                                        <button class="col-lg-1 col-lg-offset-10 btn btn-info">Save</button>
-                                        <button class="col-lg-1 btn btn-danger">Cancel</button>
+                                        <textarea class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
+                                    </div>
+                                    <div class = "row">
+                                        <button class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
                                     </div>
                                 </form>
                             </div>

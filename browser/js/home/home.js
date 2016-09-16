@@ -49,6 +49,20 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         $scope.selectedSchema = schema
     }
 
+    $scope.setDatabase = function(schema) {
+        $scope.selectedDatabase = database
+    }
+
+    $scope.selectedSystem = {}
+    // $scope.$watch(function() {
+    //     return $scope.selectedSystems.value
+    // }, function(nv, ov) {
+    //     if (nv !== ov) {
+    //         $scope.databases = dataFactory.getDatabases(nv)
+
+    //     }
+    // })
+
     $scope.itemArray = [{
         id: 1,
         name: 'first'
@@ -67,21 +81,60 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     }, ];
 
     $scope.selectedDb = {}
+    $scope.selectedSchema = {}
     $scope.$watch(function() {
         return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            $scope.schemas = dataFactory.getSchemas(nv)
+            var db = {
+                dbs: nv.id
+            }
+            if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
+            dataFactory.getSchemas(db).then(function(schemas) {
+                $scope.schemas = schemas
+            })
         }
     })
     $scope.$watch(function() {
-        return $scope.selectedSchema
+        return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            $scope.table = dataFactory.getTables()
+            var schema = {
+                schema: nv.id
+            }
+            dataFactory.getTables(schema).then(function(tables) {
+                $scope.tables = tables
+                console.log($scope.tables)
+            })
         }
     })
 
+    $scope.openBrowse = function(evt, tabSelection) {
+
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(tabSelection).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    $scope.detailedView = function(tableId) {
+        $scope.go('detailed', {
+            id: tableId
+       })
+    }
     //ALL THE CREATING STUFF
     $scope.addTable = function() {
         var modalInstance = $uibModal.open({
@@ -110,4 +163,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
+
+    document.getElementById("SearchTab").style.display = "inline";
+    document.getElementById("SearchTab").className += " active";
 });

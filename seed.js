@@ -102,7 +102,7 @@ var seedTables = function() {
     var tables = [{
         table_name: 'test_table_1',
         schema: 1,
-        columns: [1]
+        columns: [1,2]
     }, {
         table_name: 'test_table_2',
         schema: 2,
@@ -155,7 +155,7 @@ var seedAttributes = function() {
     }]
 
     var creatingAttributes = attributes.map(function(attribute) {
-        return db.model('table').create(attribute)
+        return db.model('attribute').create(attribute)
     })
     return Promise.all(creatingAttributes)
 }

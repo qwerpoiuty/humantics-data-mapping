@@ -3,6 +3,10 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 module.exports = db.define('attribute', {
+    attr_id:{ 
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true},
     attr_name: {
         type: Sequelize.STRING
     },

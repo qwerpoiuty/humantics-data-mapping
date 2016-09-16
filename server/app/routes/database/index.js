@@ -31,17 +31,33 @@ router.get('/databases', function(req, res) {
 })
 
 router.get('/schemas', function(req, res) {
-    models.Schema.find(req.body.db).then(function(schemas) {
+    Schema.findAll({
+        where: {
+            db: parseInt(req.query.dbs)
+        }
+    }).then(function(schemas) {
         res.json(schemas)
     })
 
 })
 
 router.get('/tables', function(req, res) {
-    models.Table.find(req.body.db).then(function(tables) {
-        res.json(tables)
+    Table.findAll({
+        where: {
+            schema: parseInt(req.query.schema)
+        }
     })
+        .then(function(tables) {
+            res.json(tables)
+        })
 
+})
+
+router.get('/tableById/:tableId', function(req,res){
+	db.query('select * from "tables" as a inner join "attributes" as b on b.attr_id =any(a.columns) inner join "schemas" as c on c.schema_id = a.schema inner join "dbs" as d on c.db = d.db_id where a.table_id=' + req.params.tableId)
+	.then(function(table){
+		res.json(table)
+	})
 })
 
 router.get('/searchtables', function(req, res) {
@@ -95,5 +111,7 @@ router.post('/attributes', function(req, res) {
         res.jsos(attribute)
     })
 })
+
+
 
 module.exports = router
