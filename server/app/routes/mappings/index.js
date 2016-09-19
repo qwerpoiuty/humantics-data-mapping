@@ -13,14 +13,13 @@ var ensureAuthenticated = function(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-	console.log('hello',req.query)
     db.query('SELECT * FROM "mappings" as a inner join "attributes" as b on a.source = b.attr_id inner join "tables" as c on b.table = c.table_id inner join schemas d on c.schema = d.schema_id inner join "dbs" as e on d.db = e.db_id WHERE a.target = ' + req.query.attr_id).then(function(mappings) {
         res.json(mappings)
     })
 })
 
 router.put('/', function(req, res) {
-    models.Mapping.find(req.body.id).then(function(mapping) {
+    Mapping.find(req.body.id).then(function(mapping) {
         return mapping.update(req.body)
     }).then(function(updatedMapping) {
         res.json(updatedMapping)
@@ -28,7 +27,6 @@ router.put('/', function(req, res) {
 })
 
 router.post('/', function(req, res) {
-	console.log(req.body)
     Mapping.findOrCreate({
         where: {
             name: req.body.name

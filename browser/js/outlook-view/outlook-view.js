@@ -35,7 +35,6 @@ app.controller('detailedCtrl', function($scope, dataFactory,table) {
     $scope.editAttribute = function() {
         //toggles the edit state. 
         $scope.editing = !$scope.editing
-        console.log($scope.editing)
     }
 
     $scope.newRule = false
