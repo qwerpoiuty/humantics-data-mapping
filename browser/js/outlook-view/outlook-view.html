@@ -119,12 +119,11 @@
     </div>
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
-            <div class="mail-box-header">
-                <h2 style="color:#1ab394;">Attributes from: <span style="color:#676a6c;">Retail Stores</span></h2>
+            <div class="mail-box-header" style="background-color:#1c84c6;">
+                <h2><span style="color:white;">Retail Stores</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:#f8ac59;">Database: <span style="color:#676a6c;">Sales</span></h3> 
-                    <h3 style="color:#1c84c6;">Schema: <span style="color:#676a6c;">Customers</span></h3>
-                    <button class = "btn btn-primary" ng-click="newAttribute()" style="float:right;">New Attribute</button>
+                    <h3 style="color:white;">[Database]: <span style="color:white;">Sales</span><span style="color:white;"> [Schema]:</span><span style="color:white;"> Customers</span></h3> 
+                    <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
 
@@ -134,7 +133,6 @@
                         <div class="col-sm-12">
                             <form role="form">
                                 <table class="table table-hover">
-                                    <button class = "btn btn-primary" ng-click="addAttribute()">Make a new Attribute</button>
                                 <thead>
                                     <tr>
                                         <th>Attribute Name</th>
@@ -159,16 +157,16 @@
             </div>
         </div>   
         <div class="col-lg-7 animated fadeInRight">
-            <div class="mail-box-header">
+            <div class="mail-box-header" style="background-color:#1ab394;">
                 <div class="pull-right tooltip-demo" ng-switch="editing">
                     <a ng-switch-default ng-click="editAttribute()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
                     <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
                     <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
-                <h2 style="color:#1ab394;">Attribute Information</h2>
+                <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3>{{selected.name || 'New Attribute'}}</h3>
+                    <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                 </div>
             </div>
 
@@ -186,6 +184,10 @@
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <td>System</td>      
+                                    <td>{{selected.source.system || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
                                     <td>Database</td>      
                                     <td>{{selected.source.database || 'Add a value'}}</td>
                                 </tr>
@@ -196,6 +198,10 @@
                                 <tr>
                                     <td>Table</td>                                    
                                     <td>{{selected.source.table || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Column</td>      
+                                    <td>{{selected.source.column || 'Add a value'}}</td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
@@ -233,6 +239,10 @@
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <td>System</td>      
+                                    <td>{{selected.target.system || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
                                     <td>Database</td>      
                                     <td>{{selected.target.database || 'Add a value'}}</td>
                                 </tr>
@@ -243,6 +253,10 @@
                                 <tr>
                                     <td>Table</td>                                    
                                     <td>{{selected.target.table || 'Add a value'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Column</td>      
+                                    <td>{{selected.target.column || 'Add a value'}}</td>
                                 </tr>
                                  <tr>
                                     <td>Data Type</td>
@@ -283,36 +297,89 @@
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <td>System</td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Database</td>      
-                                    <td><input type="text" ng-model="selected.source.database"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Databases">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td><input type="text" ng-model="selected.source.schema"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Schemas">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td><input type="text" ng-model="selected.source.table"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Tables">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
-                                 <tr>
+                                <tr>
+                                    <td>Column</td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Columns">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="selected.source.datatype"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.dataType"/></td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><input type="text" ng-model="selected.source.status"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.status"/></td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td><input type="text" ng-model="selected.source.lastModified"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.lastModified"/></td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td><input type="text" ng-model="selected.source.sampleValue"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.sampleValue"/></td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td><input type="text" ng-model="selected.source.description"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.description"/></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -329,37 +396,90 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                 <tr>
+                                    <td>System</td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>Database</td>      
-                                    <td><input type="text" ng-model="selected.target.database"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Schema</td>               
-                                    <td><input type="text" ng-model="selected.target.schema"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Table</td>                                    
-                                    <td><input type="text" ng-model="selected.target.table"/></td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
                                 </tr>
-                                 <tr>
+                                <tr>
+                                    <td>Column</td>
+                                      <td>    
+                                        <ui-select ng-model="selectedSystem.value">
+                                            <ui-select-match placeholder="List of Systems">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                                <span ng-bind="item.name"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="selected.target.datatype"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.dataType"/></td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><input type="text" ng-model="selected.target.status"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.status"/></td>
                                 </tr>
                                 <tr>
                                     <td>Last modified date</td>
-                                    <td><input type="text" ng-model="selected.target.lastModified"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.lastModified"/></td>
                                 </tr>
                                 <tr>
                                     <td>Sample Value</td>
-                                    <td><input type="text" ng-model="selected.target.sampleValue"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.sampleValue"/></td>
                                 </tr>
                                 <tr>
                                     <td>Description</td>
-                                    <td><input type="text" ng-model="selected.target.description"/></td>
+                                    <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.description"/></td>
                                 </tr>
                                 </tbody>
                             </table>
