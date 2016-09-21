@@ -86,11 +86,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            var db = {
-                dbs: nv.id
-            }
             if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
-            dataFactory.getSchemas(db).then(function(schemas) {
+            dataFactory.getSchemas(nv.id).then(function(schemas) {
                 $scope.schemas = schemas
             })
         }
@@ -99,10 +96,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            var schema = {
-                schema: nv.id
-            }
-            dataFactory.getTables(schema).then(function(tables) {
+            
+            dataFactory.getTables(nv.id).then(function(tables) {
                 $scope.tables = tables
                 console.log($scope.tables)
             })

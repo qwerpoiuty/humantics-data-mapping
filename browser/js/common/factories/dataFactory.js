@@ -13,9 +13,11 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.getSchemas = function(db) {
+    d.getSchemas = function(dbID) {
         //this is going to accept a database as an argument and return a list of schemas
-        var query = db
+        var query = {
+                dbs: dbID
+            }
         return $http.get('/api/database/schemas', {
                 params: query
             })
@@ -24,8 +26,11 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.getTables = function(schema) {
+    d.getTables = function(schema_id) {
         //same thing. this is going to be a get function for tables depending on the schema
+        var schema = {
+                schema: schema_id
+            }
         var query = schema
         return $http.get('/api/database/tables', {
                 params: query

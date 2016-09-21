@@ -119,11 +119,10 @@
     </div>
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
-            <div class="mail-box-header">
-                <h2 style="color:#1ab394;">Attributes from: <span style="color:#676a6c;">{{table.table_name}}</span></h2>
+            <div class="mail-box-header" style="background-color:#1c84c6;">
+                <h2><span style="color:white;"> {{table[0].table_name}}</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:#f8ac59;">Database: <span style="color:#676a6c;">{{table.db_name}}</span></h3> 
-                    <h3 style="color:#1c84c6;">Schema: <span style="color:#676a6c;">{{table.schema_name}}</span></h3>
+                    <h3 style="color:white;">[Database]: <span style="color:white;"> {{table[0].db_name}}</span><span style="color:white;"> [Schema]:</span><span style="color:white;"> {{table[0].schema_name}}</span></h3> 
                     <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
@@ -139,7 +138,7 @@
                                         <th>Attribute Name</th>
                                         <th>Order</th>
                                         <th>DataType</th>
-                                        <th>Last Modified</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,7 +146,7 @@
                                         <td>{{attribute.attr_name}}</td>
                                         <td>{{attribute.attr_id}}</td>
                                         <td>{{attribute.datatype}}</td>
-                                        <td>{{attribute.status || incomplete}}</td>
+                                        <td>{{attribute.status || 'incomplete'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -158,214 +157,21 @@
             </div>
         </div>   
         <div class="col-lg-7 animated fadeInRight">
-            <div class="mail-box-header">
-                <div class="pull-right tooltip-demo" ng-switch="editing">
-                    <a ng-switch-default ng-click="editAttribute()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
-                    <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
-                    <a ng-switch-when="true" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
+            <div class="mail-box-header" style="background-color:#1ab394;">
+                <div class="pull-right tooltip-demo">
+                    <a ng-click="editAttribute()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
+                    <a ng-if="editing!=='none'" ng-click="editAttribute()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
+                    <a ng-if="editing!=='none'" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
-                <h2 style="color:#1ab394;">Attribute Information</h2>
+                <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3>{{selected.name || 'New Attribute'}}</h3>
+                    <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                 </div>
             </div>
 
-            <div class="mail-box overflow" ng-switch="editing">
-                <div class="mail-body" ng-switch-default>
-                    <div class="row">
-                        <div class="col-sm-6 b-r">
-                            <form role="form">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Source</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Database</td>      
-                                    <td>{{sourceMapping.db_name || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Schema</td>               
-                                    <td>{{sourceMapping.schema_name || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Table</td>                                    
-                                    <td>{{sourceMapping.table_name || 'Add a value'}}</td>
-                                </tr>
-                                 <tr>
-                                    <td>Data Type</td>
-                                    <td class="text-info">{{sourceMapping.datatype || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td class = "text-warning">{{sourceMapping.status || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Last modified date</td>
-                                    <td>{{sourceMapping.last_modified || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Value</td>
-                                    <td>{{sourceMapping.sample_value || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td>{{sourceMapping.description || 'Add a value'}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <form role="form">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Target</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Database</td>      
-                                    <td>{{targetMapping.db_name || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Schema</td>               
-                                    <td>{{targetMapping.schema_name || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Table</td>                                    
-                                    <td>{{targetMapping.table_name || 'Add a value'}}</td>
-                                </tr>
-                                 <tr>
-                                    <td>Data Type</td>
-                                    <td class="text-info">{{targetMapping.datatype || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td class = "text-warning">{{targetMapping.status || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Last modified date</td>
-                                    <td>{{targetMapping.lastModified || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Value</td>
-                                    <td>{{targetMapping.sampleValue || 'Add a value'}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td>{{targetMapping.description || 'Add a value'}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="mail-body" ng-switch-when="true">
-                <div class="row">
-                        <div class="col-sm-6 b-r">
-                            <form role="form">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Source</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Database</td>      
-                                    <td><input type="text" ng-model="sourceMapping.db_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Schema</td>               
-                                    <td><input type="text" ng-model="sourceMapping.schema_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Table</td>                                    
-                                    <td><input type="text" ng-model="sourceMapping.table_name"/></td>
-                                </tr>
-                                 <tr>
-                                    <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="sourceMapping.datatype"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td><input type="text" ng-model="sourceMapping.status"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Last modified date</td>
-                                    <td><input type="text" ng-model="sourceMapping.last_modified"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Value</td>
-                                    <td><input type="text" ng-model="sourceMapping.sampleValue"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td><input type="text" ng-model="sourceMapping.description"/></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <form role="form">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Target</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Database</td>      
-                                    <td><input type="text" ng-model="targetMapping.db_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Schema</td>               
-                                    <td><input type="text" ng-model="targetMapping.schema_name"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Table</td>                                    
-                                    <td><input type="text" ng-model="targetMapping.table_name"/></td>
-                                </tr>
-                                 <tr>
-                                    <td>Data Type</td>
-                                    <td class="text-info"><input type="text" ng-model="targetMapping.datatype"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td><input type="text" ng-model="targetMapping.status"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Last modified date</td>
-                                    <td><input type="text" ng-model="targetMapping.last_modified"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Value</td>
-                                    <td><input type="text" ng-model="targetMapping.sampleValue"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Description</td>
-                                    <td><input type="text" ng-model="targetMapping.description"/></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            <div class="mail-box overflow">
+                <mapping source="sourceMapping" target="targetMapping" edit = "editing"></mapping>
                 <div class="mail-attachment">
                         <div class="attachment">
                             <div class="pull-right tooltip-demo">

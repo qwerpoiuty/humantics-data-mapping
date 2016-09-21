@@ -5,7 +5,6 @@ app.config(function($stateProvider) {
         controller: 'detailedCtrl',
         resolve:{
             table: function(dataFactory, $stateParams){
-                console.log('hello')
                 return dataFactory.getTableById($stateParams.tableId).then(function(table){
                     return table
                 })
@@ -16,10 +15,11 @@ app.config(function($stateProvider) {
 
 app.controller('detailedCtrl', function($scope, dataFactory,table) {
     $scope.table = table[0]
+    console.log(table)
     $scope.selected = {}
-    $scope.editing = false
+    $scope.editing = "none"
     $scope.selectAttribute = function(attribute) {
-        $scope.editing = false
+        $scope.editing = "none"
         dataFactory.getMapping(attribute.attr_id).then(function(mapping){
             $scope.sourceMapping = mapping[0][0]
             $scope.targetMapping = attribute
@@ -29,12 +29,19 @@ app.controller('detailedCtrl', function($scope, dataFactory,table) {
 
     $scope.addAttribute = function(attribute) {
         $scope.selected = {}
-        $scope.editing = true
+        $scope.editing = "newAttribute"
+        console.log($scope.editing)
         // dataFactory.addAttribute($scope.table, attribute)
     }
     $scope.editAttribute = function() {
         //toggles the edit state. 
-        $scope.editing = !$scope.editing
+        console.log($scope.editing)
+        if ($scope.editing=="none") $scope.editing = 'editAttribute'
+        else $scope.editing = "none"
+    }
+
+    $scope.save = function(){
+
     }
 
     $scope.newRule = false
