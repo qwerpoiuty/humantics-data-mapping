@@ -16,7 +16,6 @@ app.directive('mapping', function($state, dataFactory) {
 
                 dataFactory.getSchemas(nv.db_id).then(function(schemas){
                     scope.schemas = schemas
-                    console.log(scope.schemas)
                 })
             })
             scope.$watch('temp.selectedSchema', function(nv,ov){
@@ -26,13 +25,13 @@ app.directive('mapping', function($state, dataFactory) {
                 })
             })
             scope.$watch('target',function(nv,ov){
-                scope.target =nv
+                // scope.target =nv
             })
             scope.$watch('source', function(nv,ov){
-                scope.source=nv
+                // scope.source=nv
             })
             scope.$watch('edit', function(nv,ov){
-                scope.edit=nv
+                // scope.edit=nv
                 if(scope.edit == 'editAttribute'){
                     scope.temp = scope.target
                     console.log(scope.temp)
