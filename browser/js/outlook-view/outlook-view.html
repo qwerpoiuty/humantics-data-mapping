@@ -178,7 +178,12 @@
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Source</th>
+                                        <th>
+                                        <ul class="tab" style="border:none;">
+                                          <li><a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" href="#" class="tablinks" ng-click=""><h5 style="margin:0;color:#676a6c;" class="text-success">Source 1</h5></a></li>
+                                          <li><a style="margin:0;padding:8px; border:1px solid #e7eaec;" href="#" class="tablinks" ng-click=""><h5 style="margin:0;color:#676a6c;" class="text-success">Source 2</h5></a></li>
+                                        </ul>
+                                        </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -233,8 +238,7 @@
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Target</th>
-                                        <th></th>
+                                        <th><h5 style="margin-top:5px;margin-left:5px;margin-bottom:6px;margin-right:5px;color:#676a6c;" class="text-success">Target</h5></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -503,9 +507,8 @@
                             <button class="accordion">New Rule</button>
                             <div class="panel accordion-panel-parent col-lg-12">
                                 <form class="accordion-panel" ng-submit="addTransformation()">
-
-                                    <div class="pull-right tooltip-demo" ng-switch="editing">
-                                        <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+                                    <div class="pull-right tooltip-demo">
+                                        <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
                                     </div>
                                     <div class="row">
                                         <h4>Rule Type</h4> 
@@ -526,8 +529,14 @@
                             </div>
                         </div>
                         <div accordion class = "accordion-button" ng-repeat = "rule in rules">
-                            <button class="accordion">{{rule.name}}</button>
+                            
+                            <button class="accordion">{{rule.name}}
+                            </button>
                             <div class="panel">
+                                <div class="pull-right tooltip-demo" ng-switch="editing">
+                                       <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
+                                        <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
+                                </div>
                               <p>{{rule.body}}</p>
                             </div>
                         </div>

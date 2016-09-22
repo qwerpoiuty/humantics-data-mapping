@@ -56,7 +56,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     }, function(nv, ov) {
         if (nv !== ov) {
             $scope.databases = dataFactory.getDatabases(nv)
-            
         }
     })
 
