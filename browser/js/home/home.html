@@ -1,141 +1,3 @@
-
-
-<div class="row wrapper border-bottom white-bg page-heading view-height-1 row-fix">
-    <div class="col-lg-8">
-        <h2 class="text-success">Your Project Summary</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a>Home</a>
-            </li>
-            <li>
-                <a>Detailed Search</a>
-            </li>
-            <li class="text-success">
-                <strong>Dashboard</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-4">
-    	<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-
-        <!-- <div class="navbar-header">
-	            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div> -->
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="login.html"><i class="fa fa-home"></i> Home</a>
-                </li>	
-            </ul>
-
-        </nav>
-		<!-- <button type="button" class="navbar-minimalize minimalize-styl-2 btn btn-primary " ng-click="addTable()"><i class="fa fa-plus"></i> Add a Table</button> -->
-    </div>
-</div>
 <div id="wrapper" class="view-height-2">
     <div id="page-wrapper" class="gray-bg" style="min-height: 100%;">
 	    <div class="wrapper wrapper-content animated fadeIn">
@@ -363,10 +225,10 @@
 															<h4 class="m-b"> Select a Database</h4>
 															<ui-select ng-model="selectedDb.value">
 															    <ui-select-match placeholder="List of Databases">
-															        {{$select.selected.name}}
+															        {{$select.selected.db_name}}
 															    </ui-select-match>
-															    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-															        <span ng-bind="item.name"></span>
+															    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.id">
+															        <span ng-bind="db.db_name"></span>
 															    </ui-select-choices>
 															</ui-select>
 														</div>
@@ -374,10 +236,10 @@
 															<h4 class="m-b"s> Select a Schema</h4>
 															<ui-select ng-model="selectedSchema.value">
 															    <ui-select-match placeholder="List of Schemas">
-															        {{$select.selected.name}}
+															        {{$select.selected.schema_name}}
 															    </ui-select-match>
-															    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-															        <span ng-bind="item.name"></span>
+															    <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.id">
+															        <span ng-bind="schema.schema_name"></span>
 															    </ui-select-choices>
 															</ui-select>
 														</div>
@@ -424,7 +286,7 @@
 						</div>
 					</div>
 	        	</div>
-	            <div class="row" ng-show="table">
+	            <div class="row" ng-show="tables">
 	                <div class="col-lg-12">
 	                    <div class="ibox">
 	                        <div class="ibox-content">
@@ -458,12 +320,12 @@
 				                        </tr>
 	                                	</thead>
 	                                    <tbody>
-	                                    <tr ng-repeat="row in table track by $index" foo-repeat-done>
-											<td>{{$index}}</td>
-											<td>{{row.entity}}</td>
-											<td>19</td>
-											<td>Customers</td>
-											<td>Retail Stores</td>
+	                                    <tr ng-repeat="table in tables track by $index" foo-repeat-done>
+											<td>{{table.id}}</td>
+											<td>{{table.table_name}}</td>
+											<td>{{selectedDatabase.value.db_name}}</td>
+											<td>{{selectedSchema.value.schema_name}}</td>
+											<td>{{table.columns.length}}</td>
 											<td>Stan Le</td>
 											<td>Database 1</td>
 											<td>Float</td>
@@ -473,7 +335,7 @@
 											<td>Date</td>
 											<td>Date</td>
 											<td>Date</td> -->
-											<td><button class = "btn btn-primary" ng-click="detailedView(table[$index])">Detailed View</button></td>
+											<td><button class = "btn btn-primary" ng-click="detailedView(table.id)">Detailed View</button></td>
 											<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
 	                                    </tr>
 	                                    </tbody>
@@ -485,7 +347,6 @@
 					                        </tr>
 					                    </tfoot>
 	                                </table>
-
 	                            </div>
 	                        </div>
 	                    </div>

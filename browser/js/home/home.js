@@ -7,6 +7,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
+
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
 
     $scope.clearFilter = function() {
@@ -39,7 +40,11 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     $scope.setSearch = function(search) {
         $scope.searchCat = search
     }
-    $scope.dbs = dataFactory.getDatabases()
+    dataFactory.getDatabases().then(function(dbs) {
+        $scope.dbs = dbs
+        console.log($scope.dbs)
+    })
+
     $scope.setSchema = function(schema) {
         $scope.selectedSchema = schema
     }
@@ -48,9 +53,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         $scope.selectedDatabase = database
     }
 
-    $scope.dbs = dataFactory.getSystems()
-
     $scope.selectedSystem = {}
+
     $scope.$watch(function() {
         return $scope.selectedSystems.value
     }, function(nv, ov) {
@@ -58,6 +62,16 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
             $scope.databases = dataFactory.getDatabases(nv)
         }
     })
+
+    // $scope.$watch(function() {
+    //     return $scope.selectedSystems.value
+    // }, function(nv, ov) {
+    //     if (nv !== ov) {
+    //         $scope.databases = dataFactory.getDatabases(nv)
+
+    //     }
+    // })
+
 
     $scope.itemArray = [{
         id: 1,
@@ -77,43 +91,55 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
     }, ];
 
     $scope.selectedDb = {}
+    $scope.selectedSchema = {}
     $scope.$watch(function() {
         return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            $scope.schemas = dataFactory.getSchemas(nv)
+            if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
+            dataFactory.getSchemas(nv.id).then(function(schemas) {
+                $scope.schemas = schemas
+            })
         }
     })
     $scope.$watch(function() {
-        return $scope.selectedSchema
+        return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            $scope.table = dataFactory.getTables()
+            
+            dataFactory.getTables(nv.id).then(function(tables) {
+                $scope.tables = tables
+                console.log($scope.tables)
+            })
         }
     })
 
     $scope.openBrowse = function(evt, tabSelection) {
 
-    // Declare all variables
-    var i, tabcontent, tablinks;
+        // Declare all variables
+        var i, tabcontent, tablinks;
 
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(tabSelection).style.display = "block";
+        evt.currentTarget.className += " active";
     }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    $scope.detailedView = function(tableId) {
+        $scope.go('detailed', {
+            id: tableId
+       })
     }
-
-    // Show the current tab, and add an "active" class to the link that opened the tab
-    document.getElementById(tabSelection).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-
     //ALL THE CREATING STUFF
     $scope.addTable = function() {
         var modalInstance = $uibModal.open({
@@ -133,7 +159,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
                     }
                 }
             }
-        }); 
+        });
 
         modalInstance.result.then(function(data) {
             console.log('dismissed')

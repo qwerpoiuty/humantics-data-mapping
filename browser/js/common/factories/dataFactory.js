@@ -7,20 +7,54 @@ app.factory('dataFactory', function($http) {
 
     d.getDatabases = function() {
         //this is going to be a get for database names
-        return ["Customers", "Sales", "Banks", "Marketing"]
-    }
-
-    d.getSchemas = function(db) {
-        //this is going to accept a database as an argument and return a list of schemas
-        return ["Schema1", "s2", "s3", "s4"]
-    }
-
-    d.getTables = function(dbschema) {
-        //same thing. this is going to be a get function for tables depending on the schema
-        return $http.get('/api/database/tables', dbschema)
+        return $http.get('/api/database/databases')
             .then(function(response) {
                 return response.data
             })
+    }
+
+    d.getSchemas = function(dbID) {
+        //this is going to accept a database as an argument and return a list of schemas
+        var query = {
+                dbs: dbID
+            }
+        return $http.get('/api/database/schemas', {
+                params: query
+            })
+            .then(function(response) {
+                return response.data
+            })
+    }
+
+    d.getTables = function(schema_id) {
+        //same thing. this is going to be a get function for tables depending on the schema
+        var schema = {
+                schema: schema_id
+            }
+        var query = schema
+        return $http.get('/api/database/tables', {
+                params: query
+            })
+            .then(function(response) {
+                return response.data
+            })
+    }
+
+    d.getTableById = function(tableId){
+        return $http.get('/api/database/tableById/' + tableId)
+            .then(function(response){
+                return response.data
+            })
+    }
+
+    d.createSystem = function(system) {
+        var system = {
+            db_name: 'testDb',
+            schemas: [1, 2, 3]
+        }
+        return $http.post('/api/database/system', system).then(function(response) {
+            return response.data
+        })
     }
     d.searchTables = function(search) {
         return $http.get('/api/database/searchtables', search)
@@ -29,12 +63,14 @@ app.factory('dataFactory', function($http) {
             })
     }
     d.createTable = function(table) {
-        return $http.post('/api/tables', table).then(function(response) {
+        var query = table
+        return $http.post('/api/tables', {params: query}).then(function(response) {
             return response.data
         })
     }
-    d.getMapping = function(db) {
-        return $http.get('/api/mappings', db).then(function(response) {
+    d.getMapping = function(target) {
+        var query = {attr_id:target}
+        return $http.get('/api/mappings', {params:query}).then(function(response) {
             return response.data
         })
     }
@@ -44,6 +80,13 @@ app.factory('dataFactory', function($http) {
         })
     }
     d.createMapping = function(mapping) {
+        var mapping = {
+            name:'test_mapping_1',
+            source: 3,
+            target: 1,
+            date_modified: Date.now(),
+            modifier:1
+        }
         return $http.post('/api/mappings', mapping).then(function(response) {
             return response.data
         })

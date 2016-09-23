@@ -3,6 +3,11 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 module.exports = db.define('mapping', {
+    mapping_id:{
+         type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
     name: {
         type: Sequelize.STRING
     },
@@ -12,7 +17,7 @@ module.exports = db.define('mapping', {
     target: {
         type: Sequelize.INTEGER
     },
-    dateModified: {
+    date_modified: {
         type: Sequelize.DATE
     },
     modifier: {
@@ -21,7 +26,7 @@ module.exports = db.define('mapping', {
     comments: {
         type: Sequelize.STRING
     },
-    transformationRules: {
+    transformation_rules: {
         type: Sequelize.ARRAY(Sequelize.STRING)
     }
 })
