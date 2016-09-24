@@ -18,14 +18,13 @@ app.controller('detailedCtrl', function($scope, dataFactory,table) {
     console.log(table)
     $scope.selected = {}
     $scope.editing = "none"
-    $scope.sourceSelection ="source1"
+    $scope.sourceSelection ="none"
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         dataFactory.getMapping(attribute.attr_id).then(function(mapping){
             $scope.sourceMapping = mapping[0][0]
             $scope.targetMapping = attribute
         })
-
     }
 
     $scope.addAttribute = function(attribute) {

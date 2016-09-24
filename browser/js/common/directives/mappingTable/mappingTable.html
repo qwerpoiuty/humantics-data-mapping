@@ -1,4 +1,5 @@
 <div class="body-container mail-box overflow" style="margin-bottom:0;" ng-switch="edit">
+
     <div class="mail-body" ng-switch-default>
         <div class="row">
             <div class="col-sm-6 b-r">
@@ -6,17 +7,16 @@
                     <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>
+                            <th style="padding-top:0; padding-bottom:4px;">
                                 <ul class="tab" style="border:none;">
-                                  <li ><a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-class="{'active': sourceSelection=='source1'}" ng-click="sourceSelection=='source1'"><h5 style="margin:0;color:#676a6c;" class="text-success">Source 1</h5></a></li>
-                                  <li><a style="margin:0;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-class="{'active': sourceSelection=='source2'}" ng-click="sourceSelection=='source2'"><h5 style="margin:0;color:#676a6c;" class="text-success">Source 2</h5></a></li>
+                                  <li ><a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="sourceSelection=='source1'"><h5 style="margin:0;color:#676a6c;" class="text-success">Source 1</h5></a></li>
+                                  <li><a style="margin:0;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-click="sourceSelection=='source2'"><h5 style="margin:0;color:#676a6c;" class="text-success">Source 2</h5></a></li>
                                 </ul>
                             </th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody ng-switch="sourceSelection">
-                        <div ng-switch-when="source1">   
+                    <tbody>
                             <tr>
                                 <td>System</td>      
                                 <td>{{source.system || 'Add a value'}}</td>
@@ -57,49 +57,7 @@
                                 <td>Description</td>
                                 <td>{{source.description || 'Add a value'}}</td>
                             </tr>
-                        </div>  
-                        <div ng-switch-when="source2">   
-                            <tr>
-                                <td>System</td>      
-                                <td>{{source.system || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Database</td>      
-                                <td>{{source.db_name || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Schema</td>               
-                                <td>{{source.schema_name || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Table</td>                                    
-                                <td>{{source.table_name || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Column</td>      
-                                <td>{{selected.source.column || 'Add a value'}}</td>
-                            </tr>
-                             <tr>
-                                <td>Data Type</td>
-                                <td class="text-info">{{source.datatype || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td class = "text-warning">{{source.status || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Last modified date</td>
-                                <td>{{source.last_modified || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Sample Value</td>
-                                <td>{{source.sample_value || 'Add a value'}}</td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>{{source.description || 'Add a value'}}</td>
-                            </tr>
-                        </div>  
+                        </div> 
                     </tbody>
                 </table>
                 </form>
@@ -375,45 +333,90 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr> 
                         <td>System</td>      
-                        <td>{{source.system || 'Add a value'}}</td>
+                        <td>   
+                         <ui-select ng-model="temp.system">
+                            <ui-select-match placeholder="{{source.system}}">
+                                {{temp.system || 'Add a value'}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
+                                <span ng-bind="system"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Database</td>      
-                        <td>{{source.db_name || 'Add a value'}}</td>
+                        <td>
+                            <ui-select ng-model="temp.db">
+                                <ui-select-match placeholder="{{source.db_name}}">
+                                    {{temp.db.db_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
+                                    <span ng-bind="db.db_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Schema</td>               
-                        <td>{{source.schema_name || 'Add a value'}}</td>
+                        <td>   
+                            <ui-select ng-model="temp.schema">
+                                <ui-select-match placeholder="{{source.schema_name}}">
+                                    {{temp.schema.schema_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
+                                    <span ng-bind="schema.schema_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Table</td>                                    
-                        <td>{{source.table_name || 'Add a value'}}</td>
+                        <td>
+                            <ui-select ng-model="temp.table">
+                                <ui-select-match placeholder="{{source.table_name}}">
+                                    {{temp.table.table_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
+                                    <span ng-bind="table.table_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Column</td>      
-                        <td>{{selected.source.column || 'Add a value'}}</td>
+                        <td>
+                            <ui-select ng-model="temp.attr">
+                                <ui-select-match placeholder="{{source.attr_name}}">
+                                    {{temp.attr.attr_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
+                                    <span ng-bind="attr.attr_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
                     </tr>
                      <tr>
-                        <td>Data Type</td>
-                        <td class="text-info">{{source.datatype || 'Add a value'}}</td>
+                        <td >Data Type</td>
+                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
                     </tr>
                     <tr>
                         <td>Status</td>
-                        <td class = "text-warning">{{source.status || 'Add a value'}}</td>
+                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.status"/></td>
                     </tr>
                     <tr>
-                        <td>Last modified date</td>
-                        <td>{{source.last_modified || 'Add a value'}}</td>
+                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16 text-center">{{source.last_modified || 'Some Value'}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td>{{source.sample_value || 'Add a value'}}</td>
+                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.sample_value"/></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{{source.description || 'Add a value'}}</td>
+                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.description"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -444,20 +447,20 @@
                         </td>
                     </tr> -->
                     <tr>
-                        <td>System</td>      
-                        <td>{{target.system || 'Add a value'}}</td>
+                        <td class="padding-tb-16">System</td>      
+                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
                     </tr>
                     <tr>
-                        <td>Database</td>      
-                        <td>{{target.db_name || 'Add a value'}}</td>
+                        <td class="padding-tb-16">Database</td>      
+                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
                     </tr>
                     <tr>
-                        <td>Schema</td>               
-                        <td>{{target.schema_name || 'Add a value'}}</td>
+                        <td class="padding-tb-16">Schema</td>               
+                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
                     </tr>
                     <tr>
-                        <td>Table</td>                                    
-                        <td>{{target.table_name || 'Add a value'}}</td>
+                        <td class="padding-tb-16">Table</td>                                    
+                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
                     </tr>
 <!-- THIS IS IF WE WANT FOR THE MAPPER TO BE ABLE TO MOVE ATTRIBUTES I DON"T THINK THIS SHOULD BE ALLOWED -->
                     <!-- <tr>
@@ -500,10 +503,9 @@
                         </td>
                     </tr> -->
                     <tr>
-                        <td>Column</td>
-                          <td>    
-                            <input class="btn btn-default form-control" type="text" ng-model="temp.attr_name"/></td>
-                        </td>
+                        <td class="padding-tb-16">Column</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -513,8 +515,8 @@
                         <td><input class="btn btn-default form-control" type="text" ng-model="temp.status"/></td>
                     </tr>
                     <tr>
-                        <td>Last modified date</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.last_modified"/></td>
+                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16 text-center">{{target.lastModified || 'Some Value'}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
