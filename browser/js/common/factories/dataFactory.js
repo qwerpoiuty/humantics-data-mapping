@@ -47,6 +47,27 @@ app.factory('dataFactory', function($http) {
             })
     }
 
+    d.getTablesByName = function(tableName){
+        return $http.get('/api/database/tableName/' + tableName)
+            .then(function(response){
+                return response.data
+            })
+    }
+
+    d.getTablesByAttribute = function(attributeName){
+        return $http.get('/api/database/tablesAttribute/' + attributeName)
+            .then(function(response){
+                return response.data
+            })
+    }
+
+    d.getImpactByTable = function(tableId){
+        return $http.get('/api/mappings/impact/table/' + tableId)
+            .then(function(response){
+                return response.data
+            })
+    }
+
     d.createSystem = function(system) {
         var system = {
             db_name: 'testDb',

@@ -6,10 +6,10 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
 
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
-
+    $scope.searchQuery =""
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -35,23 +35,9 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
 
     //ALL THE SEARCHING STUFF
 
-    $scope.searches = ["Tables", "Attributes"]
-
-    $scope.setSearch = function(search) {
-        $scope.searchCat = search
-    }
     dataFactory.getDatabases().then(function(dbs) {
         $scope.dbs = dbs
-        console.log($scope.dbs)
     })
-
-    $scope.setSchema = function(schema) {
-        $scope.selectedSchema = schema
-    }
-
-    $scope.setDatabase = function(schema) {
-        $scope.selectedDatabase = database
-    }
 
     $scope.selectedSystem = {}
     // $scope.$watch(function() {
@@ -104,7 +90,42 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
             })
         }
     })
-    $scope.searchCat = false
+
+    //search things
+    $scope.searchCat = "table"
+    $scope.search = function(category, query){
+        switch (category){
+            case "table":
+                return dataFactory.getTablesByName(query).then(function(tables){
+                    $scope.tables = tables[0]
+                })
+            case "entity":
+                return dataFactory.getTablesByAttribute(query).then(function(tables){
+                    $scope.tables = tables[0]
+                })
+        }
+    }
+
+    $scope.impact = function(type,id){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'js/common/modals/impactAnalysis/impact.html',
+            controller: 'impactCtrl',
+            size: 'lg',
+            resolve: {
+                impact:function(){
+                    return dataFactory.getImpactByTable(id).then(function(impact){
+                        return impact
+                        })
+                },
+                type:function(){
+                    return type
+                }
+            }
+        });
+    }
+
+
+    //tab functions
     $scope.openBrowse = function(evt, tabSelection) {
 
         // Declare all variables
@@ -126,9 +147,12 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory) {
         document.getElementById(tabSelection).style.display = "block";
         evt.currentTarget.className += " active";
     }
+    //detailed view transition
+
     $scope.detailedView = function(tableId) {
-        $scope.go('detailed', {
-            id: tableId
+        console.log(tableId)
+        $state.go('detailed', {
+            tableId: tableId
        })
     }
     //ALL THE CREATING STUFF

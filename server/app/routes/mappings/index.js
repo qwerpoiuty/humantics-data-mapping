@@ -18,6 +18,20 @@ router.get('/', function(req, res) {
     })
 })
 
+router.get('/impact/attribute/:attr_id', function(req,res){
+	db.query('select * from tables a inner join attributes b on b.table = a.table_id inner join mappings c on c.target = b.attr_id where c.source =' + req.params.attr_id)
+	.then(function(mappings){
+		res.json(mappings)
+	})
+})
+
+router.get('/impact/table/:table_id', function(req,res){
+	db.query('select * from tables inner join attributes on attributes.table = tables.table_id inner join mappings on attributes.attr_id = mappings.source where tables.table_id =' + req.params.table_id)
+	.then(function(mappings){
+		res.json(mappings)
+	})
+})
+
 router.put('/', function(req, res) {
     Mapping.find(req.body.id).then(function(mapping) {
         return mapping.update(req.body)

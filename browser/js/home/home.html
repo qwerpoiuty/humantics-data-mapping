@@ -15,14 +15,6 @@
     </div>
     <div class="col-lg-4">
     	<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <!-- <div class="navbar-header">
-	            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div> -->
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
@@ -245,29 +237,27 @@
 								<div class = "row row-centered">
 									<div class="col-lg-12 col-centered searchOuterContainer">
 										<ul class="tab">
-											  <li><a href="#" class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
-											  <li><a href="#" class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
-											  <li><a href="#" class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
 											</ul>
-										<div id="SearchTab", class="tabcontent">	
+										<div id="SearchTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset">
-										            <input id="searchBar" type="text"/>
-
-										            <input type="submit" value="Submit" id="submitButton" />
-
+										            <input id="searchBar" ng-model="searchQuery" type="text"/>
+										            <input type="submit" value="Submit" id="submitButton" ng-click="search(searchCat,searchQuery)"/>
 										            <div id="searchInContainer">
 										                <input type="radio" name="check" class="css-checkbox" value="table" id="searchTable" checked ng-model="searchCat"/>
 										                <label for="searchTable" class="css-label" id="siteNameLabel">Table Search</label>
 				
-										                <input type="radio" name="check" class="css-checkbox" value="entity" id="searchEntity" />
+										                <input type="radio" name="check" class="css-checkbox" value="entity" id="searchEntity" ng-model="searchCat"/>
 										                <label for="searchEntity" class="css-label">Entity Search</label>
-										                <pre>{{searchCat}}</pre>
+										                
 										            </div>
 										        </fieldset>
 										    </form>
 									    </div>
-							    		<div id="BrowseTab", class="tabcontent">	
+							    		<div id="BrowseTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset2">	
 													<div class = "row">
@@ -308,7 +298,7 @@
 										        </fieldset>
 										    </form>
 									    </div>
-							    		<div id="CreateTab", class="tabcontent">	
+							    		<div id="CreateTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset3">
 										            <div class="row">
@@ -346,11 +336,8 @@
 											<th>Database</th>
 											<th>Schema</th>
 											<th>Attribute Count</th>
-											<th data-hide="all">Author</th>
-											<th data-hide="all">Database</th>
-											<th data-hide="all">Srouce Type</th>
-											<th data-hide="all">Source Field Name</th>
-											<th data-hide="all">Source Field Datatype</th>
+											<th data-hide="all">Project</th>
+											<th data-hide="all">Srouce/Target</th>
 				                            <th data-hide="all">More Information</th>
 				                            <th>Status</th>
 				                        </tr>
@@ -359,15 +346,13 @@
 	                                    <tr ng-repeat="table in tables track by $index" foo-repeat-done>
 											<td>{{table.id}}</td>
 											<td>{{table.table_name}}</td>
-											<td>{{selectedDatabase.value.db_name}}</td>
-											<td>{{selectedSchema.value.schema_name}}</td>
-											<td>{{table.columns.length}}</td>
+											<td>{{table.db_name}}</td>
+											<td>{{table.schema_name}}</td>
+											<!-- make sure to actually keep a runnign tally on the number of attributes that call this table home -->
+											<td>22</td>
 											<td>Stan Le</td>
-											<td>Database 1</td>
-											<td>Float</td>
-											<td>Field Name</td>
-											<td>Field DataT</td>
-											<td><button class = "btn btn-primary" ng-click="detailedView(table.id)">Detailed View</button></td>
+											<td>Target</td>
+											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
 											<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
 	                                    </tr>
 	                                    </tbody>

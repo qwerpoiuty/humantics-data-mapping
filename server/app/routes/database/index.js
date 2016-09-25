@@ -60,6 +60,22 @@ router.get('/tableById/:tableId', function(req,res){
 	})
 })
 
+router.get('/tableName/:table_name', function(req,res){
+	var query = "'" + req.params.table_name + "'"
+	db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_name =' + query)
+	.then(function(tables){
+		res.json(tables)
+	})
+})
+
+router.get('/tablesAttribute/:attributeName', function(req,res){
+	var query = "'" + req.params.attributeName + "'"
+	db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where attributes.attr_name = ' + query)
+	.then(function(tables){
+		res.json(tables)
+	})
+})
+
 router.get('/searchtables', function(req, res) {
     models.Attribute.find(req.body.db).then(function(attributes) {
         res.json(attributes)

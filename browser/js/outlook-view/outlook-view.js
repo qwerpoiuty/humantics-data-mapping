@@ -15,7 +15,7 @@ app.config(function($stateProvider) {
 
 app.controller('detailedCtrl', function($scope, dataFactory,table) {
     $scope.table = table[0]
-    console.log(table)
+    
     $scope.selected = {}
     $scope.editing = "none"
     $scope.selectAttribute = function(attribute) {

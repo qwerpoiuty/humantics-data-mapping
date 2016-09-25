@@ -1,0 +1,134 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Impact Analysis </h3>
+</div>
+<div class="modal-body" id="modal-body" ng-switch = "type">
+    <table ng-switch-when="table" class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+      <thead>
+        <tr>
+          <th data-toggle="true">Table Id</th>
+          <th>Table Name</th>
+          <th>Database</th>
+          <th>Schema</th>
+          <th>Attribute Count</th>
+          <th data-hide="all">Project</th>
+          <th data-hide="all">Srouce/Target</th>
+          <th data-hide="all">More Information</th>
+          <th data-hide="all">Impact Analysis</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="table in tables track by $index" foo-repeat-done>
+          <td>{{table.id}}</td>
+          <td>{{table.table_name}}</td>
+          <td>{{table.db_name}}</td>
+          <td>{{table.schema_name}}</td>
+          <!-- make sure to actually keep a runnign tally on the number of attributes that call this table home -->
+          <td>22</td>
+          <td>Stan Le</td>
+          <td>Target</td>
+          <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
+          <td><button class = "btn btn-warning" ng-click ="impact('table', table.table_id)">Impact Analysis</button></td>
+          <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+          <tr>
+              <td colspan="5">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+      </tfoot>
+    </table>
+    <div ng-switch-when="attribute">
+        <div class="col-lg-5 animated fadeInRight">
+            <div class="mail-box-header" style="background-color:#1c84c6;">
+                <h2><span style="color:white;">Impact analysis of {{impact.name}}</span></h2>
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Attribute Name</th>
+                                        <th>Order</th>
+                                        <th>DataType</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-click="selectAttribute(impact[$index])" ng-repeat = "attribute in impact track by $index">
+                                        <td>{{attribute.attr_name}}</td>
+                                        <td>{{attribute.attr_id}}</td>
+                                        <td>{{attribute.datatype}}</td>
+                                        <td>{{attribute.status || 'incomplete'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class = "col-lg-7 animated fadeInRight">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>System</td>      
+                    <td>{{attribute.system || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Database</td>      
+                    <td>{{attribute.db_name || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Schema</td>               
+                    <td>{{attribute.schema_name || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Table</td>                                    
+                    <td>{{attribute.table_name || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Column</td>      
+                    <td>{{selected.attribute.column || ''}}</td>
+                </tr>
+                 <tr>
+                    <td>Data Type</td>
+                    <td class="text-info">{{attribute.datatype || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td class = "text-warning">{{attribute.status || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Last modified date</td>
+                    <td>{{attribute.last_modified || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Sample Value</td>
+                    <td>{{attribute.sample_value || ''}}</td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>{{attribute.description || ''}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+</div>

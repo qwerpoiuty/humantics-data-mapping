@@ -12,7 +12,7 @@ module.exports = db.define('mapping', {
         type: Sequelize.STRING
     },
     source: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     target: {
         type: Sequelize.INTEGER
