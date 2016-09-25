@@ -40,6 +40,15 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
     })
 
     $scope.selectedSystem = {}
+
+    $scope.$watch(function() {
+        return $scope.selectedSystems.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            $scope.databases = dataFactory.getDatabases(nv)
+        }
+    })
+
     // $scope.$watch(function() {
     //     return $scope.selectedSystems.value
     // }, function(nv, ov) {
@@ -48,6 +57,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
 
     //     }
     // })
+
 
     $scope.itemArray = [{
         id: 1,

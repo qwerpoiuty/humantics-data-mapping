@@ -1,0 +1,55 @@
+<div class="mail-box overflow">
+
+    <div class="mail-attachment">
+            <div class="attachment">
+                <div class="pull-right tooltip-demo">
+                    <a class="btn btn-white btn-sm" ng-click = addTransformation()><i class="fa fa-plus"></i> </a>
+                </div>
+
+                <h3>Transformation Rules</h3>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="mail-body text-left tooltip-demo" style="height:26vh;">
+             <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
+            <div class = "accordion-button">
+                <button class="accordion">New Rule</button>
+                <div class="panel accordion-panel-parent col-lg-12">
+                    <form class="accordion-panel" ng-submit="addTransformation()">
+                        <div class="pull-right tooltip-demo">
+                            <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
+                        </div>
+                        <div class="row">
+                            <h4>Rule Type</h4> 
+                        </div>
+                        <div class = "row">
+                            <input id="ruleType" class="newRuleType" type="text" placeholder=""/>
+                        </div>
+                        <div class="row">
+                            <h4>Rule Description</h4>
+                        </div>
+                        <div class = "row">
+                            <textarea class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
+                        </div>
+                        <div class = "row">
+                            <button class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div accordion class = "accordion-button" ng-repeat = "rule in rules">
+                
+                <button class="accordion">{{rule.name}}
+                </button>
+                <div class="panel">
+                    <div class="pull-right tooltip-demo" ng-switch="editing">
+                           <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
+                            <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                  <p>{{rule.body}}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+</div>
