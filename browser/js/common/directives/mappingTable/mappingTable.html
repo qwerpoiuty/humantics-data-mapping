@@ -509,10 +509,10 @@
                     </tr>
                     <tr>
                         <td>Data Type</td>
-                        <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
+                        <td class="text-info"><input class="btn btn-default form-control" type="text" placeholder="{{target.datatype}}" ng-model="temp.target.datatype"/></td>
                     <tr>
                         <td>Status</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.status"/></td>
+                        <td><input placeholder="{{target.status}}" class="btn btn-default form-control" type="text" ng-model="temp.target.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
@@ -520,11 +520,11 @@
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.sample_value"/></td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.sample_value}}" type="text" ng-model="temp.target.sample_value"/></td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.description"/></td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.description}}" type="text" ng-model="temp.target.description"/></td>
                     </tr>
                     </tbody>
                 </table>

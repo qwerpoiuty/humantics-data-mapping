@@ -4,11 +4,11 @@ app.directive('mapping', function($state, dataFactory) {
         scope:{
             target:'=',
             source:'=',
-            edit:'='
+            edit:'=',
+            temp:'='
         },
         templateUrl:'js/common/directives/mappingTable/mappingTable.html',
         link: function(scope,element,attrs){
-            scope.temp = {}
             scope.systems = dataFactory.getSystems()
             
 
@@ -49,9 +49,9 @@ app.directive('mapping', function($state, dataFactory) {
                     if(scope.source){
                         scope.temp = scope.source
                     }
-                    // scope.temp = scope.source
-                    console.log(scope.temp)
+                    scope.temp.target = scope.target
                 }
+                console.log('hello',scope.temp)
             })
 
         }

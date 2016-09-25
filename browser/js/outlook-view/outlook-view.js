@@ -16,6 +16,7 @@ app.config(function($stateProvider) {
 app.controller('detailedCtrl', function($scope, dataFactory,table) {
     $scope.table = table[0]
     console.log(table)
+    $scope.temp = {}
     $scope.selected = {}
     $scope.editing = "none"
     $scope.sourceSelection ="none"
@@ -41,7 +42,16 @@ app.controller('detailedCtrl', function($scope, dataFactory,table) {
     }
 
     $scope.save = function(){
-
+        $scope.editing = "none"
+        var mapping = {
+            name:'Test',
+            source: $scope.temp.attr.attr_id,
+            target: $scope.temp.target.attr_id,
+            date_modified: Date.now(),
+        }
+        dataFactory.createMapping(mapping).then(function(mapping){
+            $scope.$digest()
+        })
     }
 
     $scope.newRule = false
