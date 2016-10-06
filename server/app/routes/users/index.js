@@ -50,7 +50,7 @@ router.post('/signup', function(req, res){
         where:{
             email: req.body.email
         },
-            deafults: req.body
+            defaults: req.body
     }).spread(function(user, created){
         if(!created){
             res.json(false)

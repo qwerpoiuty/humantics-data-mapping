@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt');
 var _ = require('lodash');
 var Sequelize = require('sequelize');
 
+var chalk = require('chalk')
+
 var db = require('../_db');
 
 module.exports = db.define('user', {
@@ -20,30 +22,20 @@ module.exports = db.define('user', {
     }
 }, {
     instanceMethods: {
-        // sanitize: function() {
-        //     return _.omit(this.toJSON(), ['password', 'salt']);
-        // },
-        correctPassword: function(candidatePassword) {
-            return this.Model.encryptPassword(candidatePassword, this.salt) === this.password;
-        }
-    },
-    classMethods: {
-        generateSalt: function() {
-            return bcrypt.randomBytes(16).toString('base64');
+        sanitize: function() {
+            return _.omit(this.toJSON(), ['password', 'salt']);
         },
-        encryptPassword: function(plainText, salt) {
-            var hash = bcrypt.createHash('sha1');
-            hash.update(plainText);
-            hash.update(salt);
-            return hash.digest('hex');
+        correctPassword: function(candidatePassword) {
+            console.log(chalk.yellow("hellow"))
+            return bcrypt.compareSync(candidatePassword, this.password, this.salt);
         }
     },
     hooks: {
         beforeCreate: function(user) {
-            if (user.changed('password')) {
-                user.salt = user.Model.generateSalt();
-                user.password = user.Model.encryptPassword(user.password, user.salt);
-            }
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(user.password, salt);
+            user.salt = salt;
+            user.password = hash; 
         }
     }
 });
