@@ -15,7 +15,7 @@ module.exports = db.define('task', {
     mapper: {
         type: Sequelize.INTEGER
     },
-    attributes: {
+    attrs: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     status: {

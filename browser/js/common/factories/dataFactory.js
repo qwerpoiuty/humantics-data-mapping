@@ -1,4 +1,5 @@
 app.factory('dataFactory', function($http) {
+    console.log("hello friend 123")
     var d = {}
 
     d.getProjects = function(){

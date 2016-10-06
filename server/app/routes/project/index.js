@@ -14,4 +14,18 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 
+router.get('/:id', function(req,res){
+	db.query('SELECT * FROM projects INNER JOIN tasks on tasks.task_id = any(projects.tasks) WHERE projects.project_id =' + req.params.id)
+		.then(function(projects){
+			res.json(projects)
+	})
+})
+
+router.get('/projects', function(req,res){
+	db.query('SELECT * FROM projects INNER JOIN users on users.id = any(projects.members) WHERE users.id =' + req.query.id)
+		.then(function(projects){
+			res.json(projects)
+		})
+})
+
 
