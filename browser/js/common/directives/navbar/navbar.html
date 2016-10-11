@@ -3,13 +3,13 @@
         <h2 class="text-success">Your Project Summary</h2>
         <ol class="breadcrumb">
             <li>
-                <a>Home</a>
+                <a ng-class="{ active: isActive('/')}">Home</a>
             </li>
             <li>
-                <a>Detailed Search</a>
+                <a ng-class="{ active: isActive('/detailed')}">Detailed Search</a>
             </li>
             <li class="text-success">
-                <strong>Dashboard</strong>
+                <a ng-class="{ active: isActive('/reporting')}">Reporting</a>
             </li>
         </ol>
     </div>

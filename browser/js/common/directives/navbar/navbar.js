@@ -1,10 +1,14 @@
-app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state, $location) {
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function(scope) {
+
+    $scope.isActive = function (viewLocation) { 
+        return $location.path().indexOf(viewLocation) == 0;
+    };
 
         //     scope.items = [
 

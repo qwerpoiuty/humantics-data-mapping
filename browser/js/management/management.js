@@ -8,5 +8,4 @@ app.config(function($stateProvider) {
 
 app.controller('manageCtrl', function ($scope, AuthService, datafactory) {
 
-	
 });
