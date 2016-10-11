@@ -16,8 +16,8 @@ app.factory('dataFactory', function($http) {
     d.getSchemas = function(dbID) {
         //this is going to accept a database as an argument and return a list of schemas
         var query = {
-                dbs: dbID
-            }
+            dbs: dbID
+        }
         return $http.get('/api/database/schemas', {
                 params: query
             })
@@ -29,8 +29,8 @@ app.factory('dataFactory', function($http) {
     d.getTables = function(schema_id) {
         //same thing. this is going to be a get function for tables depending on the schema
         var schema = {
-                schema: schema_id
-            }
+            schema: schema_id
+        }
         var query = schema
         return $http.get('/api/database/tables', {
                 params: query
@@ -40,39 +40,45 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.getAttributesByTableId = function(tableId){
+    d.getAttributesByTableId = function(tableId) {
         return $http.get('/api/database/tableById/' + tableId)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
 
-    d.getTablesByName = function(tableName){
+    d.getTablesByName = function(tableName) {
         return $http.get('/api/database/tableName/' + tableName)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
 
-    d.getTablesByAttribute = function(attributeName){
+    d.getTablesByAttribute = function(attributeName) {
         return $http.get('/api/database/tablesAttribute/' + attributeName)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
-
-    d.getImpactByTable = function(tableId){
+    d.getAttributesByIds = function(attributes) {
+        console.log('hello')
+        return $http.get('/api/database/attributesByIds', attributes)
+            .then(function(response) {
+                return response.data
+            })
+    }
+    d.getImpactByTable = function(tableId) {
         console.log(tableId)
         return $http.get('/api/mappings/impact/table/' + tableId)
-            .then(function(response){
+            .then(function(response) {
                 console.log(response.data)
                 return response.data
             })
     }
 
-    d.getImpactByAttribute = function(attr_id){
+    d.getImpactByAttribute = function(attr_id) {
         return $http.get('/api/mappings/impact/attribute/' + attr_id)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
@@ -94,13 +100,19 @@ app.factory('dataFactory', function($http) {
     }
     d.createTable = function(table) {
         var query = table
-        return $http.post('/api/tables', {params: query}).then(function(response) {
+        return $http.post('/api/tables', {
+            params: query
+        }).then(function(response) {
             return response.data
         })
     }
     d.getMapping = function(target) {
-        var query = {attr_id:target}
-        return $http.get('/api/mappings', {params:query}).then(function(response) {
+        var query = {
+            attr_id: target
+        }
+        return $http.get('/api/mappings', {
+            params: query
+        }).then(function(response) {
             return response.data
         })
     }
@@ -110,13 +122,9 @@ app.factory('dataFactory', function($http) {
         })
     }
     d.createMapping = function(mapping) {
-        var mapping = {
-            name:'test_mapping_1',
-            source: 3,
-            target: 1,
-            date_modified: Date.now(),
-            modifier:1
-        }
+        if (!mapping.modifier) mapping.modifier = null
+        if (!mapping.comments) mapping.comments = null
+        if (!mapping.transformation_rules) mapping.transformation_rules = null
         return $http.post('/api/mappings', mapping).then(function(response) {
             return response.data
         })
