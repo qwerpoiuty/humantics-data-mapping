@@ -14,10 +14,14 @@ module.exports = db.define('mapping', {
     source: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
+    status: {
+        type: Sequelize.ENUM("incomplete", "pending", "complete"),
+        defaultValue: "incomplete"
+    },
     target: {
         type: Sequelize.INTEGER
     },
-    date_modified: {
+    date_created: {
         type: Sequelize.DATE
     },
     modifier: {
@@ -28,5 +32,11 @@ module.exports = db.define('mapping', {
     },
     transformation_rules: {
         type: Sequelize.ARRAY(Sequelize.STRING)
+    }
+}, {
+    hooks: {
+        beforeCreate: function(mapping) {
+            mapping.date_created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        }
     }
 })

@@ -29,7 +29,7 @@
                                         <td>{{attribute.attr_name}}</td>
                                         <td>{{attribute.attr_id}}</td>
                                         <td>{{attribute.datatype}}</td>
-                                        <td>{{attribute.status || 'incomplete'}}</td>
+                                        <td ng-class="mappingStatusStyle">{{attribute.status || 'incomplete'}}</td>
                                     </tr>
                                 </tbody>
                             </table>

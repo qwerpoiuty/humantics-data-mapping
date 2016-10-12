@@ -6,6 +6,7 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 module.exports = db.define('user', {
+    timestamps: false,
     email: {
         type: Sequelize.STRING
     },

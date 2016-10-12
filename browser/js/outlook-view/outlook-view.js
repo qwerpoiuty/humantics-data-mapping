@@ -30,6 +30,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
                 }
             })
             $scope.sources = sources
+
             $scope.targetMapping = attribute
         })
     }

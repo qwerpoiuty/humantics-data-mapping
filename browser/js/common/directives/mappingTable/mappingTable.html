@@ -6,6 +6,7 @@
                     <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>Source</th>
                             <th style="padding-top:0; padding-bottom:4px;">
                                 <ul class="tab" style="border:none;">
                                   <li ng-repeat = "source in sources track by $index"><a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)"><h5 style="margin:0;color:#676a6c;" class="text-success">Source {{$index + 1}}</h5></a></li>
@@ -16,43 +17,42 @@
                     <tbody>
                             <tr>
                                 <td>System</td>      
-                                <td>{{displaySource.system || 'Add a value'}}</td>
+                                <td>{{displaySource.system || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Database</td>      
-                                <td>{{displaySource.db_name || 'Add a value'}}</td>
+                                <td>{{displaySource.db_name || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Schema</td>               
-                                <td>{{displaySource.schema_name || 'Add a value'}}</td>
+                                <td>{{displaySource.schema_name || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Table</td>                                    
-                                <td>{{displaySource.table_name || 'Add a value'}}</td>
+                                <td>{{displaySource.table_name || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Column</td>      
-                                <td>{{displaySource.attr_name || 'Add a value'}}</td>
+                                <td>{{displaySource.attr_name || ''}}</td>
                             </tr>
                              <tr>
                                 <td>Data Type</td>
-                                <td class="text-info">{{displaySource.datatype || 'Add a value'}}</td>
+                                <td>{{displaySource.datatype || ''}}</td>
                             </tr>
                             <tr>
-                                <td>Status</td>
-                                <td class = "text-warning">{{displaySource.status || 'Add a value'}}</td>
+    
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.last_modified || 'Add a value'}}</td>
+                                <td>{{displaySource.last_modified || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Sample Value</td>
-                                <td>{{displaySource.sample_value || 'Add a value'}}</td>
+                                <td>{{displaySource.sample_value || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Description</td>
-                                <td>{{displaySource.description || 'Add a value'}}</td>
+                                <td>{{displaySource.description || ''}}</td>
                             </tr>
                         </div> 
                     </tbody>
@@ -72,43 +72,41 @@
                     <tbody>
                     <tr>
                         <td>System</td>      
-                        <td>{{target.system || 'Add a value'}}</td>
+                        <td>{{target.system || ''}}</td>
                     </tr>
                     <tr>
                         <td>Database</td>      
-                        <td>{{target.db_name || 'Add a value'}}</td>
+                        <td>{{target.db_name || ''}}</td>
                     </tr>
                     <tr>
                         <td>Schema</td>               
-                        <td>{{target.schema_name || 'Add a value'}}</td>
+                        <td>{{target.schema_name || ''}}</td>
                     </tr>
                     <tr>
                         <td>Table</td>                                    
-                        <td>{{target.table_name || 'Add a value'}}</td>
+                        <td>{{target.table_name || ''}}</td>
                     </tr>
                     <tr>
                         <td>Column</td>      
-                        <td>{{target.attr_name || 'Add a value'}}</td>
+                        <td>{{target.attr_name || ''}}</td>
                     </tr>
                      <tr>
                         <td>Data Type</td>
-                        <td class="text-info">{{target.datatype || 'Add a value'}}</td>
+                        <td class="text-info">{{target.datatype || ''}}</td>
                     </tr>
                     <tr>
-                        <td>Status</td>
-                        <td class = "text-warning">{{target.status || 'Add a value'}}</td>
                     </tr>
                     <tr>
                         <td>Last modified date</td>
-                        <td>{{target.lastModified || 'Add a value'}}</td>
+                        <td>{{target.lastModified || ''}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td>{{target.sampleValue || 'Add a value'}}</td>
+                        <td>{{target.sampleValue || ''}}</td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{{target.description || 'Add a value'}}</td>
+                        <td>{{target.description || ''}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -197,9 +195,7 @@
                         <td>Data Type</td>
                         <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.status"/></td>
                     </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.status"/></td>
+                    <tr>ng-model="selected.source.status"/></td>
                     </tr>
                     <tr>
                         <td>Last modified date</td>
@@ -296,9 +292,7 @@
                     <tr>
                         <td>Data Type</td>
                         <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="target.status"/></td>
-                    <tr>
-                        <td>Status</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.status"/></td>
+                    <tr>ng-model="selected.target.status"/></td>
                     </tr>
                     <tr>
                         <td>Last modified date</td>
@@ -335,7 +329,7 @@
                         <td>   
                          <ui-select ng-model="temp.system">
                             <ui-select-match placeholder="{{displaySource.system}}">
-                                {{temp.system || 'Add a value'}}
+                                {{temp.system || ''}}
                             </ui-select-match>
                             <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
                                 <span ng-bind="system"></span>
@@ -348,7 +342,7 @@
                         <td>
                             <ui-select ng-model="temp.db">
                                 <ui-select-match placeholder="{{displaySource.db_name}}">
-                                    {{temp.db_name|| 'Add a value'}}
+                                    {{temp.db_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
                                     <span ng-bind="db.db_name"></span>
@@ -361,7 +355,7 @@
                         <td>   
                             <ui-select ng-model="temp.schema">
                                 <ui-select-match placeholder="{{displaySource.schema_name}}">
-                                    {{temp.schema_name|| 'Add a value'}}
+                                    {{temp.schema_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
                                     <span ng-bind="schema.schema_name"></span>
@@ -374,7 +368,7 @@
                         <td>
                             <ui-select ng-model="temp.table">
                                 <ui-select-match placeholder="{{displaySource.table_name}}">
-                                    {{temp.table_name|| 'Add a value'}}
+                                    {{temp.table_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
                                     <span ng-bind="table.table_name"></span>
@@ -387,7 +381,7 @@
                         <td>
                             <ui-select ng-model="temp.attr">
                                 <ui-select-match placeholder="{{displaySource.attr_name}}">
-                                    {{temp.attr_name|| 'Add a value'}}
+                                    {{temp.attr_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
                                     <span ng-bind="attr.attr_name"></span>
@@ -399,9 +393,7 @@
                         <td >Data Type</td>
                         <td><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
                     </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.status"/></td>
+                    <tr>ng-model="temp.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
@@ -454,9 +446,7 @@
                     <tr>
                         <td>Data Type</td>
                         <td class="text-info"><input class="btn btn-default form-control" type="text" placeholder="{{target.datatype}}" ng-model="temp.target.datatype"/></td>
-                    <tr>
-                        <td>Status</td>
-                        <td><input placeholder="{{target.status}}" class="btn btn-default form-control" type="text" ng-model="temp.target.status"/></td>
+                    <tr>btn-default form-control" type="text" ng-model="temp.target.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
@@ -493,7 +483,7 @@
                         <td>   
                          <ui-select ng-model="temp.system">
                             <ui-select-match >
-                                {{temp.system || 'Add a value'}}
+                                {{temp.system || ''}}
                             </ui-select-match>
                             <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
                                 <span ng-bind="system"></span>
@@ -506,7 +496,7 @@
                         <td>
                             <ui-select ng-model="temp.db">
                                 <ui-select-match >
-                                    {{temp.db.db_name|| 'Add a value'}}
+                                    {{temp.db.db_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
                                     <span ng-bind="db.db_name"></span>
@@ -519,7 +509,7 @@
                         <td>   
                             <ui-select ng-model="temp.schema">
                                 <ui-select-match >
-                                    {{temp.schema.schema_name|| 'Add a value'}}
+                                    {{temp.schema.schema_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
                                     <span ng-bind="schema.schema_name"></span>
@@ -532,7 +522,7 @@
                         <td>
                             <ui-select ng-model="temp.table">
                                 <ui-select-match >
-                                    {{temp.table.table_name|| 'Add a value'}}
+                                    {{temp.table.table_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
                                     <span ng-bind="table.table_name"></span>
@@ -545,7 +535,7 @@
                         <td>
                             <ui-select ng-model="temp.attr">
                                 <ui-select-match >
-                                    {{temp.attr.attr_name|| 'Add a value'}}
+                                    {{temp.attr.attr_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
                                     <span ng-bind="attr.attr_name"></span>
@@ -557,9 +547,7 @@
                         <td >Data Type</td>
                         <td><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
                     </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.status"/></td>
+                    <tr>ng-model="temp.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
@@ -613,8 +601,6 @@
                         <td>Data Type</td>
                         <td class="text-info">{{target.dataType}}</td>
                     <tr>
-                        <td>Status</td>
-                        <td class = "padding-tb-16 text-center">{{target.status}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>

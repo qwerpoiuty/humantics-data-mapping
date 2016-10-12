@@ -54,7 +54,7 @@ router.get('/tables', function(req, res) {
 })
 
 router.get('/tableById/:tableId', function(req, res) {
-    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId)
+    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
         .then(function(table) {
             res.json(table)
         })
