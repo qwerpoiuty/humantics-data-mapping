@@ -116,6 +116,17 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
+
+    d.getRecentMapping = function(target) {
+        var query = {
+            attr_id: target
+        }
+        return $http.get('/api/mappings/recentMapping', {
+            params: query
+        }).then(function(response) {
+            return response.data
+        })
+    }
     d.updateMapping = function(mapping) {
         return $http.put('/api/mappings', mapping).then(function(response) {
             return response.data

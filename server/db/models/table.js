@@ -17,4 +17,6 @@ module.exports = db.define('table', {
     columns: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
+}, {
+    timestamps: false
 })

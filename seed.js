@@ -149,17 +149,17 @@ var seedMappings = function(){
 db.sync({
     force: true
 })
-    // .then(function() {
-    //     return seedDbs();
-    // }).then(function() {
-    //     return seedSchemas()
-    // })
-    // .then(function() {
-    //     return seedTables()
-    // })
-    // .then(function() {
-    //     return seedAttributes()
-    // })
+    .then(function() {
+            return seedDbs();
+        }).then(function() {
+            return seedSchemas()
+        })
+        .then(function() {
+            return seedTables()
+        })
+        .then(function() {
+            return seedAttributes()
+        })
     .then(function() {
         console.log(chalk.green('Seed successful!'));
         process.exit(0);

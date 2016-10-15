@@ -17,7 +17,7 @@ module.exports = db.define('attribute', {
     datatype: {
         type: Sequelize.STRING
     },
-    date_created: {
+    date_modified: {
         type: Sequelize.DATE
     },
     open_date: {
@@ -26,4 +26,6 @@ module.exports = db.define('attribute', {
     end_date: {
         type: Sequelize.DATE
     }
+}, {
+    timestamps: false
 })

@@ -9,18 +9,20 @@ app.directive('mapping', function($state, dataFactory) {
         },
         templateUrl: 'js/common/directives/mappingTable/mappingTable.html',
         link: function(scope) {
-            console.log(scope.source)
             scope.systems = dataFactory.getSystems()
             dataFactory.getDatabases().then(function(dbs) {
                 scope.dbs = dbs
             })
-
-            scope.changeSource = function(index) {
-                scope.displaySource = scope.sources[index]
+            scope.editMap = ""
+            scope.editMapping = function(string) {
+                scope.editSource = true
+                scope.temp = scope.displaySource
+                console.log(scope.index)
             }
 
-            scope.addSource = function() {
-                edit = "editAttribute"
+            scope.changeSource = function(index) {
+                scope.sourceIndex = index
+                scope.displaySource = scope.sources[index]
             }
 
             scope.$watch('temp.db', function(nv, ov) {
@@ -36,12 +38,10 @@ app.directive('mapping', function($state, dataFactory) {
             })
 
             scope.$watch('temp.table', function(nv, ov) {
-                console.log(nv)
                 dataFactory.getAttributesByTableId(nv.table_id).then(function(attrs) {
                     scope.attrs = attrs[0]
                 })
             })
-
 
             scope.$watch('target', function(nv, ov) {
                 // scope.target =nv
@@ -53,14 +53,6 @@ app.directive('mapping', function($state, dataFactory) {
             })
 
             scope.$watch('edit', function(nv, ov) {
-                // scope.edit=nv
-                if (scope.edit == 'editAttribute') {
-                    if (scope.source) {
-                        scope.temp = scope.displaySource
-                        console.log(scope.temp)
-                    }
-                    scope.temp.target = scope.target
-                }
                 if (scope.edit == 'newSource') {
                     scope.temp = {}
                 }
