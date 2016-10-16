@@ -34,6 +34,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
             // dataFactory.addAttribute($scope.table, attribute)
     }
 
+    $scope.editAttribute = function() {
+        $scope.editing = "editAttribute"
+    }
+
     $scope.cancel = function() {
         $scope.editing = "none"
     }
@@ -60,6 +64,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
                 $scope.editing = "none"
                 $scope.sources = $scope.sources
             })
+        } else if ($scope.editing == "editAttribute") {
+            console.log($scope.temp.sourceIndex)
         }
     }
 
