@@ -17,8 +17,8 @@ module.exports = db.define('user', {
     salt: {
         type: Sequelize.STRING
     },
-    mappings: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
+    power_level: {
+        type: Sequelize.INTEGER
     }
 }, {
     instanceMethods: {

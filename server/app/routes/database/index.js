@@ -43,45 +43,52 @@ router.get('/schemas', function(req, res) {
 
 router.get('/tables', function(req, res) {
     Table.findAll({
-        where: {
-            schema: parseInt(req.query.schema)
-        }
-    })
+            where: {
+                schema: parseInt(req.query.schema)
+            }
+        })
         .then(function(tables) {
             res.json(tables)
         })
 
 })
 
-router.get('/tableById/:tableId', function(req,res){
-	db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId)
-	.then(function(table){
-		res.json(table)
-	})
+router.get('/tableById/:tableId', function(req, res) {
+    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
+        .then(function(table) {
+            res.json(table)
+        })
 })
 
-router.get('/tableName/:table_name', function(req,res){
-	var query = "'" + req.params.table_name + "'"
-	db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_name =' + query)
-	.then(function(tables){
-		res.json(tables)
-	})
+router.get('/tableName/:table_name', function(req, res) {
+    var query = "'" + req.params.table_name + "'"
+    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_name =' + query)
+        .then(function(tables) {
+            res.json(tables)
+        })
 })
 
-router.get('/tableByAttribute/:attr_name', function(req,res){
+router.get('/tableByAttribute/:attr_name', function(req, res) {
     var query = "'" + req.params.attr_name + "'"
     db.query('select * from attributes inner join tables on tables.table_id = attributes.table inner join schemas on schemas.schema_id = table.schema inner join dbs on dbs.db_id = schemas.db where attributes.attr_name = ' + query)
-    .then(function(attributes){
-        res.json(attributes)
-    })
+        .then(function(attributes) {
+            res.json(attributes)
+        })
 })
 
-router.get('/tablesAttribute/:attributeName', function(req,res){
-	var query = "'" + req.params.attributeName + "'"
-	db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where attributes.attr_name = ' + query)
-	.then(function(tables){
-		res.json(tables)
-	})
+router.get('/tablesAttribute/:attributeName', function(req, res) {
+    var query = "'" + req.params.attributeName + "'"
+    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where attributes.attr_name = ' + query)
+        .then(function(tables) {
+            res.json(tables)
+        })
+})
+
+router.get('/attributesByIds', function(req, res) {
+    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join schemas on tables.schemas = schemas.schem_id inner join dbs on schemas.db = dbs.db_id where attributes.attr_id = any(' + req.body.attributes + ')')
+        .then(function(attributes) {
+            res.json(attributes)
+        })
 })
 
 router.get('/searchtables', function(req, res) {

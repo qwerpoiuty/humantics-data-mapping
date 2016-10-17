@@ -1,4 +1,5 @@
 <navbar></navbar>
+
 <div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
@@ -23,11 +24,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                          <!--           <tr ng-click="selectProject(table[$index])" ng-repeat = "project in table track by $index">
+                                    <tr ng-click="selectProject(table[$index])" ng-repeat = "project in table track by $index">
                                         <td>{{project.project_name}}</td>
                                         <td>{{project.leader}}</td>
                                         <td>{{project.status || 'incomplete'}}</td>
-                                    </tr> -->
+                                    </tr>
 
                                     <tr>
                                         <td>Project One</td>
@@ -73,7 +74,7 @@
             <div class="mail-box-header" style="background-color:#1ab394;">
                 <h2 style="color:white;">Current Jobs</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;"><!-- {{selected.pro_name}} -->Project One</h3>
+                    <h3 style="color:white;">{{selected.pro_name}}Project One</h3>
                 </div>
             </div>
 
@@ -93,14 +94,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                              <!--       <tr ng-click="selectProject(table[$index])" ng-repeat = "project in table track by $index">
+                                    <tr ng-click="selectProject(table[$index])" ng-repeat = "project in table track by $index">
                                         <td>{{project.pro_name}}</td>
                                         <td>{{project.pro_mapper_name}}</td>
                                         <td>{{project.status || 'incomplete'}}</td>
                                         <td>
                                         <a ng-click="approve()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Approve</a>
                                         <a ng-click="disapprove()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Disapprove</a> <td>  
-                                    </tr> -->
+                                    </tr>
                                     <tr>
                                         <td>Job One</td>
                                         <td>Mapping</td>
@@ -157,4 +158,185 @@
             <strong>Copyright</strong> Humantics 2016
         </div>
     </div>
+
+<div id = "wrapper" class = "view-height-2">
+	<div class = "wrapper wrapper-content animated fadeIn">
+		<div class = "p-w-md m-t-sm">
+			<div class="row">
+	        		<div class="col-lg-offset-3 col-lg-6">
+						<div class = "ibox">
+							<div class = "ibox-content">
+								<div class = "row row-centered">
+									<div class="col-lg-12 col-centered searchOuterContainer">
+										<ul class="tab">
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'attributeImpact')"><h5 class="text-success">Attribute Impact</h5></a></li>
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'tableImpact')"><h5 class="text-success">Table Impact</h5></a></li>
+											  <li><a class="tablinks" ng-click="openBrowse(event, 'mappingImpact')"><h5 class="text-success">Create</h5></a></li>
+											</ul>
+										<div id="attributeImpact" class="tabcontent">
+										    <form method="post">
+										        <fieldset class="tabFieldset">
+										        	<h4>Analyse the impact of an attribute</h4>
+										            <input id="searchBar" ng-model="searchQuery" type="text"/>
+										            <input type="submit" value="Submit" id="submitButton" ng-click="attributeSearch(searchQuery)"/>
+										        </fieldset>
+										    </form>
+									    </div>
+							    		<div id="tableImpact" class="tabcontent">
+										    <form method="post">
+										        <fieldset class="tabFieldset2">
+													<div class = "row">
+														<div class="SystemSelect">
+															<h4 class="m-b"> Select a System</h4>
+															<ui-select ng-model="selectedSystem.value">
+															    <ui-select-match placeholder="List of Systems">
+															        {{$select.selected.name}}
+															    </ui-select-match>
+															    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+															        <span ng-bind="item.name"></span>
+															    </ui-select-choices>
+															</ui-select>
+														</div>
+														<div class="DatabaseSelect">
+															<h4 class="m-b"> Select a Database</h4>
+															<ui-select ng-model="selectedDb.value">
+															    <ui-select-match placeholder="List of Databases">
+															        {{$select.selected.db_name}}
+															    </ui-select-match>
+															    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+															        <span ng-bind="db.db_name"></span>
+															    </ui-select-choices>
+															</ui-select>
+														</div>
+														<div class="SchemaSelect">
+															<h4 class="m-b"> Select a Schema</h4>
+															<ui-select ng-model="selectedSchema.value">
+															    <ui-select-match placeholder="List of Schemas">
+															        {{$select.selected.schema_name}}
+															    </ui-select-match>
+															    <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
+															        <span ng-bind="schema.schema_name"></span>
+															    </ui-select-choices>
+															</ui-select>
+														</div>
+														<div class = "SchemaSelect">
+															<h4 class = "m-b">Select a Table</h4>
+															<ui-select ng-model="selectedTable.value">
+															    <ui-select-match placeholder="List of Tables">
+															        {{$select.selected.table_name}}
+															    </ui-select-match>
+															    <ui-select-choices repeat="table in (tables | filter: $select.search) track by table.table_id">
+															        <span ng-bind="table.table_name"></span>
+															    </ui-select-choices>
+															</ui-select>
+														</div>
+													</div>
+										        </fieldset>
+										    </form>
+									    </div>
+							    		<div id="mappingImpact" class="tabcontent">
+
+									    </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	        </div>
+	        <div class = "row" ng-show="searchCat">
+	        	<div class = "col-lg-6" id="sourceColumn">
+					<div class = "ibox">
+						<div class = "ibox-content">
+							<div class = "ibox-header">
+								<h4>Sources</h4>
+							</div>
+							<table class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
+								<thead>
+								<tr>
+									<th data-toggle="true">Attribute Id</th>
+									<th>Attribute Name</th>
+									<th>Database</th>
+									<th>Schema</th>
+									<th>Table</th>
+									<th data-hide="all">Datatype</th>
+									<th data-hide="all">Last Modified</th>
+									<th data-hide="all">Last Editor</th>
+									<th data-hide="all">Impact Analysis</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat = "source in sources track by $index" foo-repeat-done>
+									<td>{{source.attr_id}}</td>
+									<td>{{source.attr_name}}</td>
+									<td>{{source.db_name}}</td>
+									<td>{{source.schema_name}}</td>
+									<td>{{source.table_name}}</td>
+									<td>{{source.datatype}}</td>
+									<td>{{source.last_modified}}</td>
+									<td>Last Editor</td>
+									<td><button class = "btn btn-primary" ng-click="impact(source.attr_id)">Get Analysis</button></td>
+								</tr>
+								</tbody>
+								<tfoot>
+			                        <tr>
+			                            <td colspan="5">
+			                                <ul class="pagination"></ul>
+			                            </td>
+			                        </tr>
+			                    </tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class = "col-lg-6" id="impactColumn" ng-show="attributes">
+					<div class = "ibox">
+						<div class = "ibox-content">
+							<div class = "ibox-header">
+								<h4>Target</h4>
+							</div>
+							<table class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
+								<thead>
+								<tr>
+									<th data-toggle="true">Attribute Id</th>
+									<th>Attribute Name</th>
+									<th>Database</th>
+									<th>Schema</th>
+									<th>Table</th>
+									<th data-hide="all">Datatype</th>
+									<th data-hide="all">Last Modified</th>
+									<th data-hide="all">Last Editor</th>
+									<th data-hide="all">Impact Analysis</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat = "attribute in attributes track by $index" foo-repeat-done>
+									<td>{{attribute.attr_id}}</td>
+									<td>{{attribute.attr_name}}</td>
+									<td>{{attribute.db_name}}</td>
+									<td>{{attribute.schema_name}}</td>
+									<td>{{attribute.table_name}}</td>
+									<td>{{attribute.datatype}}</td>
+									<td>{{attribute.last_modified}}</td>
+									<td>Last Editor</td>
+									<td><button class = "btn btn-primary" ng-click="targetImpact(attribute)">Get Analysis</button></td>
+								</tr>
+								</tbody>
+								<tfoot>
+			                        <tr>
+			                            <td colspan="5">
+			                                <ul class="pagination"></ul>
+			                            </td>
+			                        </tr>
+			                    </tfoot>
+							</table>
+						</div>	
+					</div>
+				</div>
+	        </div>
+	        <div class = "row" ng-show="{{searchCat==='table'}}">
+	        	<h1>Hello World</h1>
+	        </div>
+		</div>
+	</div>
+
 </div>
