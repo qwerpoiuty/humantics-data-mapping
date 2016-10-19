@@ -32,7 +32,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user) {
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = ($scope.targetMapping.transformation_rules) ? $scope.targetMapping.transformation_rules : []
-            console.log($scope.rules)
+            console.log($scope.targetMapping)
         })
     }
 

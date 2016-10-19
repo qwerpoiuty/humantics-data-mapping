@@ -48,15 +48,27 @@
                 </div>
                 <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <button class = "btn btn-danger" style="float:right;">Pending Review</button>
-                    <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3>
+                    <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
+                    
+                    <div ng-hide="clicked">
+                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=true ">Pending Review</button>
+                    </div>
 
+                    <div ng-show="clicked">
+                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=false">Decline</button>
+                        <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="clicked=false">Approve</button>
+                    </div>
+
+                    
+                    <!-- <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3> -->
                 </div>
                 <h3 ng-class="mappingStatusStyle">{{targetMapping.status}}</h3>
             </div>
             <div style="background-color:#ffffff;padding-top:14px;">
-                <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-                <rules rules="rules" target = "targetMapping"></rules>
+                <div style="overflow-y:auto;">
+                    <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
+                    <rules rules="rules" target = "targetMapping"></rules>
+                </div>
             </div>
         </div> 
         
