@@ -1,5 +1,13 @@
 app.factory('dataFactory', function($http) {
+    console.log("hello friend 123")
     var d = {}
+
+    d.getProjects = function(){
+        return $http.get('api/project')
+            .then(function(response){
+                return response.data
+            })
+    }
 
     d.getSystems = function() {
         return ["IBM", "INTEL", "LINUX", "STUFF"]
@@ -83,27 +91,37 @@ app.factory('dataFactory', function($http) {
             })
     }
 
+    d.getMapping = function(target) {
+        var query = {attr_id:target}
+        return $http.get('/api/mappings', {params:query})
+            .then(function(response) {
+                return response.data
+        })
+    }
+
+    d.createProject = function(project){
+        return $http.post('api/project', project)
+            .then(function(response){
+                return response.data
+            })
+    }
+
     d.createSystem = function(system) {
         var system = {
             db_name: 'testDb',
             schemas: [1, 2, 3]
         }
-        return $http.post('/api/database/system', system).then(function(response) {
-            return response.data
-        })
-    }
-    d.searchTables = function(search) {
-        return $http.get('/api/database/searchtables', search)
+        return $http.post('/api/database/system', system)
             .then(function(response) {
                 return response.data
-            })
+        })
     }
+
     d.createTable = function(table) {
         var query = table
-        return $http.post('/api/tables', {
-            params: query
-        }).then(function(response) {
-            return response.data
+        return $http.post('/api/tables', {params: query})
+            .then(function(response) {
+                return response.data
         })
     }
     d.getMapping = function(target) {
@@ -132,13 +150,45 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
+
     d.createMapping = function(mapping) {
+        var mapping = {
+            name:'test_mapping_1',
+            source: 3,
+            target: 1,
+            date_modified: Date.now(),
+            modifier:1
+        }
+        return $http.post('/api/mappings', mapping)
+            .then(function(response) {
+                return response.data
+        })
+    }
+
+
+    d.searchTables = function(search) {
+        return $http.get('/api/database/searchtables', search)
+            .then(function(response) {
+                return response.data
+            })
+    }
+
+    d.updateProject = function(project){
+        return $http.put('api/project', project)
+            .then(function(response){
+                return response.data
+            })
+    }
+
+    d.updateMapping = function(mapping) {
         if (!mapping.modifier) mapping.modifier = null
         if (!mapping.comments) mapping.comments = null
         if (!mapping.transformation_rules) mapping.transformation_rules = null
         return $http.post('/api/mappings', mapping).then(function(response) {
             return response.data
+
         })
     }
+
     return d
 })

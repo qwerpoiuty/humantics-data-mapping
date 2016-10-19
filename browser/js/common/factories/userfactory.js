@@ -1,8 +1,9 @@
 app.factory('userFactory', function($http) {
+    console.log("hello friend")
     var userFactory = {}
         //user fetches
     userFactory.createUser = function(user) {
-        return $http.post("/signup", user)
+        return $http.post("/api/users/signup", user)
             .then(function(response) {
                 if (response.data) {
                     var credentials = {

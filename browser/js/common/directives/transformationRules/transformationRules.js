@@ -4,7 +4,9 @@ app.directive('rules', function($state, dataFactory) {
         scope: {
             rules: '='
         },
-        templateUrl: 'js/common/directives/transformationRules/transformationRules.html',
-        link: function(scope, element, attrs) {}
+        templateUrl:'js/common/directives/transformationRules/transformationRules.html',
+        link: function(scope,element,attrs){
+        
+        }
     }
 })

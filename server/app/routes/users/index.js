@@ -45,16 +45,17 @@ router.put('/update', function(req, res) {
 })
 
 router.post('/signup', function(req, res){
+    console.log('hello world', req.body.password)
     User.findOrCreate({
         where:{
             email: req.body.email
         },
-            deafults: req.body
+            defaults: req.body
     }).spread(function(user, created){
         if(!created){
             res.json(false)
         }
-        res.staus.send(200)
+        res.sendStatus(200)
     })
 })
 

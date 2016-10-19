@@ -2,6 +2,8 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+var chalk = require('chalk');
+
 module.exports = function (app, db) {
 
     var User = db.model('user');
@@ -16,6 +18,7 @@ module.exports = function (app, db) {
             })
             .then(function (user) {
                 // user.correctPassword is a method from the User schema.
+                
                 if (!user || !user.correctPassword(password)) {
                     done(null, false);
                 } else {

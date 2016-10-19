@@ -1,5 +1,5 @@
 <div class="body-container mail-box overflow" style="margin-bottom:0;" ng-switch="edit">
-    <div class="mail-body" ng-switch-default>
+    <div class="mail-body" ng-switch-default style="border-top:none;">
         <div class="row">
             <div class="col-sm-6 b-r" ng-if="!editSource">
                 <form role="form">
@@ -382,6 +382,7 @@
             </div>
         </div>
     </div>
+
     <div class="mail-body" ng-switch-when="newSource">
         <div class="row">
             <div class="col-sm-6 b-r">

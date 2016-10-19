@@ -1,4 +1,4 @@
-<div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
+<div id="page-wrapper" class="gray-bg" style="min-height: 973px;padding-bottom:50px;">
     <navbar></navbar>
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="mail-box">
-                <div class="mail-body">
+                <div class="mail-body" style="padding-top:34px;">
                     <div class="row">
                         <div class="col-sm-12">
                             <form role="form">
@@ -48,22 +48,21 @@
                 </div>
                 <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
+                    <button class = "btn btn-danger" style="float:right;">Pending Review</button>
                     <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3>
+
                 </div>
                 <h3 ng-class="mappingStatusStyle">{{targetMapping.status}}</h3>
             </div>
-            <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-            <rules rules="rules"></rules>
+            <div style="background-color:#ffffff;padding-top:14px;">
+                <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
+                <rules rules="rules"></rules>
+            </div>
         </div> 
         
     </div>
     </div>
-    <div class="footer">
-        <div class="pull-right">
-            Anna <strong>Kendrick</strong> Logged In.
-        </div>
-        <div>
-            <strong>Copyright</strong> Humantics 2016
-        </div>
-    </div>
+
 </div>
+<footer></footer>
