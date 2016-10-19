@@ -96,7 +96,7 @@ app.controller('manageCtrl', function($scope, dataFactory, AuthService) {
         document.getElementById(tabSelection).style.display = "block";
         evt.currentTarget.className += " active";
     }
-    document.getElementById("attributeImpact").style.display = "inline";
-    document.getElementById("attributeImpact").className += " active";
+    document.getElementById("ProjectTab").style.display = "inline";
+    document.getElementById("ProjectTab").className += " active";
 
 });

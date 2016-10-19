@@ -137,20 +137,24 @@
 										    <form method="post">
 										        <fieldset class="tabFieldset2">	
 													<div class = "row">
-														<div class="SystemSelect">
-															<h4 class="m-b"> Select a System</h4>
-															<ui-select ng-model="selectedSystem.value">
-															    <ui-select-match placeholder="List of Systems">
-															        {{$select.selected.name}}
-															    </ui-select-match>
-															    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-															        <span ng-bind="item.name"></span>
-															    </ui-select-choices>
-															</ui-select>
-														</div>
-														<div class="DatabaseSelect">
-															<h4 class="m-b"> Select a Database</h4>
-															<ui-select ng-model="selectedDb.value">
+														<div class="col-lg-8 col-lg-offset-2">
+													        <div class="input-group m-b">
+													        	<span class="input-group-addon"><div class="newTableText">Select a System</div></span>
+													        	<ui-select ng-model="selectedSystem.value">
+																    <ui-select-match placeholder="List of Systems">
+																        {{$select.selected.name}}
+																    </ui-select-match>
+																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+																        <span ng-bind="item.name"></span>
+																    </ui-select-choices>
+																</ui-select>
+													        </div>
+											      		</div>
+
+														<div class="col-lg-8 col-lg-offset-2">
+													        <div class="input-group m-b">
+													        	<span class="input-group-addon"><div class="newTableText">Select a Database</div></span>
+													       			<ui-select ng-model="selectedDb.value">
 															    <ui-select-match placeholder="List of Databases">
 															        {{$select.selected.db_name}}
 															    </ui-select-match>
@@ -158,18 +162,22 @@
 															        <span ng-bind="db.db_name"></span>
 															    </ui-select-choices>
 															</ui-select>
-														</div>
-														<div class="SchemaSelect">
-															<h4 class="m-b"s> Select a Schema</h4>
-															<ui-select ng-model="selectedSchema.value">
-															    <ui-select-match placeholder="List of Schemas">
-															        {{$select.selected.schema_name}}
-															    </ui-select-match>
-															    <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
-															        <span ng-bind="schema.schema_name"></span>
-															    </ui-select-choices>
-															</ui-select>
-														</div>
+													        </div>
+											      		</div>
+
+														<div class="col-lg-8 col-lg-offset-2">
+													        <div class="input-group m-b">
+													        	<span class="input-group-addon"><div class="newTableText">Select a Schema</div></span>
+																<ui-select ng-model="selectedSchema.value">
+																    <ui-select-match placeholder="List of Schemas">
+																        {{$select.selected.schema_name}}
+																    </ui-select-match>
+																    <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
+																        <span ng-bind="schema.schema_name"></span>
+																    </ui-select-choices>
+																</ui-select>
+													        </div>
+											      		</div>
 													</div>
 										        </fieldset>
 										    </form>
