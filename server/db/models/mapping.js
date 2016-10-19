@@ -34,9 +34,5 @@ module.exports = db.define('mapping', {
         type: Sequelize.ARRAY(Sequelize.STRING)
     }
 }, {
-    hooks: {
-        beforeCreate: function(mapping) {
-            mapping.date_created = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        }
-    }
+    timestamps: false
 })

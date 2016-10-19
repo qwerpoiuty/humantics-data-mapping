@@ -15,4 +15,6 @@ module.exports = db.define('system', {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
 
+}, {
+    timestamps: false
 })

@@ -1,12 +1,11 @@
 <div class="body-container mail-box overflow" style="margin-bottom:0;" ng-switch="edit">
     <div class="mail-body" ng-switch-default style="border-top:none;">
         <div class="row">
-            <div class="col-sm-6 b-r">
+            <div class="col-sm-6 b-r" ng-if="!editSource">
                 <form role="form">
                     <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Source</th>
                             <th style="padding-top:0; padding-bottom:4px;">
                                 <ul class="tab" style="border:none;">
                                   <li ng-repeat = "source in sources track by $index"><a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)"><h5 style="margin:0;color:#676a6c;" class="text-success">Source {{$index + 1}}</h5></a></li>
@@ -40,26 +39,109 @@
                                 <td>{{displaySource.datatype || ''}}</td>
                             </tr>
                             <tr>
-    
-                            </tr>
-                            <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.last_modified || ''}}</td>
+                                <td>{{displaySource.date_modified || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Sample Value</td>
                                 <td>{{displaySource.sample_value || ''}}</td>
                             </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>{{displaySource.description || ''}}</td>
-                            </tr>
-                        </div> 
                     </tbody>
                 </table>
                 </form>
             </div>
-
+            <div class="col-sm-6 b-r" ng-if="editSource">
+                <form role="form">
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr> 
+                        <td>System</td>      
+                        <td>   
+                         <ui-select ng-model="temp.system">
+                            <ui-select-match >
+                                {{temp.system || ''}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
+                                <span ng-bind="system"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>      
+                        <td>
+                            <ui-select ng-model="temp.db">
+                                <ui-select-match >
+                                    {{temp.db.db_name|| ''}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
+                                    <span ng-bind="db.db_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Schema</td>               
+                        <td>   
+                            <ui-select ng-model="temp.schema">
+                                <ui-select-match >
+                                    {{temp.schema.schema_name|| ''}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
+                                    <span ng-bind="schema.schema_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Table</td>                                    
+                        <td>
+                            <ui-select ng-model="temp.table">
+                                <ui-select-match >
+                                    {{temp.table.table_name|| ''}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
+                                    <span ng-bind="table.table_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Column</td>      
+                        <td>
+                            <ui-select ng-model="temp.attr">
+                                <ui-select-match >
+                                    {{temp.attr.attr_name|| ''}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
+                                    <span ng-bind="attr.attr_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td >Data Type</td>
+                        <td>{{temp.attr.datatype}}</td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16 text-center">{{temp.attr.last_modified}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sample Value</td>
+                        <td>{{temp.attr.sample_value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </form>
+            </div>
             <div class="col-sm-6">
                 <form role="form">
                     <table class="table table-hover">
@@ -103,10 +185,6 @@
                     <tr>
                         <td>Sample Value</td>
                         <td>{{target.sampleValue || ''}}</td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td>{{target.description || ''}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -205,10 +283,6 @@
                         <td>Sample Value</td>
                         <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.sampleValue"/></td>
                     </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.description"/></td>
-                    </tr>
                     </tbody>
                 </table>
                 </form>
@@ -302,170 +376,13 @@
                         <td>Sample Value</td>
                         <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.sampleValue"/></td>
                     </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.description"/></td>
-                    </tr>
                     </tbody>
                 </table>
                 </form>
             </div>
         </div>
     </div>
-    <div class="mail-body" style="border-top:none;" ng-switch-when="editAttribute">
-        <div class="row">
-            <div class="col-sm-6 b-r">
-                <form role="form">
-                    <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Source</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr> 
-                        <td>System</td>      
-                        <td>   
-                         <ui-select ng-model="temp.system">
-                            <ui-select-match placeholder="{{displaySource.system}}">
-                                {{temp.system || ''}}
-                            </ui-select-match>
-                            <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
-                                <span ng-bind="system"></span>
-                            </ui-select-choices>
-                        </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Database</td>      
-                        <td>
-                            <ui-select ng-model="temp.db">
-                                <ui-select-match placeholder="{{displaySource.db_name}}">
-                                    {{temp.db_name|| ''}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
-                                    <span ng-bind="db.db_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Schema</td>               
-                        <td>   
-                            <ui-select ng-model="temp.schema">
-                                <ui-select-match placeholder="{{displaySource.schema_name}}">
-                                    {{temp.schema_name|| ''}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
-                                    <span ng-bind="schema.schema_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Table</td>                                    
-                        <td>
-                            <ui-select ng-model="temp.table">
-                                <ui-select-match placeholder="{{displaySource.table_name}}">
-                                    {{temp.table_name|| ''}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
-                                    <span ng-bind="table.table_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Column</td>      
-                        <td>
-                            <ui-select ng-model="temp.attr">
-                                <ui-select-match placeholder="{{displaySource.attr_name}}">
-                                    {{temp.attr_name|| ''}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
-                                    <span ng-bind="attr.attr_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                     <tr>
-                        <td >Data Type</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
-                    </tr>
-                    <tr>ng-model="temp.status"/></td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{displaySource.last_modified || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.sample_value"/></td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.description"/></td>
-                    </tr>
-                    </tbody>
-                </table>
-                </form>
-            </div>
 
-            <div class="col-sm-6">
-                <form role="form">
-                    <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Target</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
-                        
-                    </tr>
-                    <tr>
-                        <td>Data Type</td>
-                        <td class="text-info"><input class="btn btn-default form-control" type="text" placeholder="{{target.datatype}}" ng-model="temp.target.datatype"/></td>
-                    <tr>btn-default form-control" type="text" ng-model="temp.target.status"/></td>
-                    </tr>
-                    <tr>
-                        <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.lastModified || 'Some Value'}}</td>
-                    </tr>
-                    <tr>
-                        <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" placeholder="{{target.sample_value}}" type="text" ng-model="temp.target.sample_value"/></td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input class="btn btn-default form-control" placeholder="{{target.description}}" type="text" ng-model="temp.target.description"/></td>
-                    </tr>
-                    </tbody>
-                </table>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="mail-body" ng-switch-when="newSource">
         <div class="row">
             <div class="col-sm-6 b-r">
@@ -545,21 +462,16 @@
                     </tr>
                      <tr>
                         <td >Data Type</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.datatype"/></td>
+                        <td>{{temp.attr.datatype}}</td>
                     </tr>
-                    <tr>ng-model="temp.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{displaySource.last_modified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{temp.attr.last_modified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.sample_value"/></td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="temp.description"/></td>
+                        <td>{{temp.attr.sample_value}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -610,9 +522,199 @@
                         <td>Sample Value</td>
                         <td>{{target.sample_value}}</td>
                     </tr>
+                    </tbody>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mail-body" ng-switch-when="editAttribute">
+        <div class="row">
+            <div class="col-sm-6 b-r">
+                <form role="form">
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr> 
+                        <td>System</td>      
+                        <td>   
+                         <ui-select ng-model="temp.system">
+                            <ui-select-match placeholder="{{displaySource.system}}">
+                                {{temp.system || 'Add a value'}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
+                                <span ng-bind="system"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>      
+                        <td>
+                            <ui-select ng-model="temp.db">
+                                <ui-select-match placeholder="{{displaySource.db_name}}">
+                                    {{temp.db.db_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
+                                    <span ng-bind="db.db_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Schema</td>               
+                        <td>   
+                            <ui-select ng-model="temp.schema">
+                                <ui-select-match placeholder="{{displaySource.schema_name}}">
+                                    {{temp.schema.schema_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
+                                    <span ng-bind="schema.schema_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Table</td>                                    
+                        <td>
+                            <ui-select ng-model="temp.table">
+                                <ui-select-match placeholder="{{displaySource.table_name}}">
+                                    {{temp.table.table_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
+                                    <span ng-bind="table.table_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Column</td>      
+                        <td>
+                            <ui-select ng-model="temp.attr">
+                                <ui-select-match placeholder="{{displaySource.attr_name}}">
+                                    {{temp.attr.attr_name|| 'Add a value'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
+                                    <span ng-bind="attr.attr_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td >Data Type</td>
+                        <td>{{temp.attr.datatype}}</td>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16 text-center">{{displaySource.last_modified || 'Some Value'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sample Value</td>
+                        <td>{{temp.attr.sampleValue}}</td>
+                    </tr>
                     <tr>
                         <td>Description</td>
-                        <td>{{target.description}}</td>
+                        <td>temp.attr.description</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </form>
+            </div>
+
+            <div class="col-sm-6">
+                <form role="form">
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Target</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="padding-tb-16">System</td>      
+                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Database</td>      
+                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Schema</td>               
+                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Table</td>                                    
+                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
+                    </tr>
+                    <!-- THIS IS IF WE WANT FOR THE MAPPER TO BE ABLE TO MOVE ATTRIBUTES I DON"T THINK THIS SHOULD BE ALLOWED -->
+                    <!-- <tr>
+                        <td>Database</td>
+                          <td>    
+                            <ui-select ng-model="temp.selectedDb">
+                                <ui-select-match placeholder="{{temp.db_name}}">
+                                    {{$select.selected.db_name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+                                    <span ng-bind="db.db_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Schema</td>               
+                          <td>    
+                            <ui-select ng-model="target.selectedSchema">
+                                <ui-select-match placeholder="{{temp.schema_name}}">
+                                    {{$select.selected.schema_name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.id">
+                                    <span ng-bind="schema.schema_name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Table</td>                                    
+                          <td>    
+                            <ui-select ng-model="selectedSystem.value">
+                                <ui-select-match placeholder="List of Systems">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                                    <span ng-bind="item.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td class="padding-tb-16">Column</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Data Type</td>
+                        <td class="text-info"><input class="btn btn-default form-control" type="text" placeholder="{{target.datatype}}" ng-model="temp.target.datatype"/></td>
+                    <tr>
+                        <td>Status</td>
+                        <td><input placeholder="{{target.status}}" class="btn btn-default form-control" type="text" ng-model="temp.target.status"/></td>
+                    </tr>
+                    <tr>
+                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16 text-center">{{target.lastModified || 'Some Value'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sample Value</td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.sample_value}}" type="text" ng-model="temp.target.sample_value"/></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.description}}" type="text" ng-model="temp.target.description"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -620,4 +722,5 @@
             </div>
         </div>
     </div>
+
 </div>

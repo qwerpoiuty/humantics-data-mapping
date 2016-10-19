@@ -21,7 +21,6 @@
                                         <th>Attribute Name</th>
                                         <th>Order</th>
                                         <th>DataType</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,7 +28,6 @@
                                         <td>{{attribute.attr_name}}</td>
                                         <td>{{attribute.attr_id}}</td>
                                         <td>{{attribute.datatype}}</td>
-                                        <td ng-class="mappingStatusStyle">{{attribute.status || 'incomplete'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -45,14 +43,17 @@
                     <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
                     <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> New Source</a>
                     <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
-                    <a ng-if="editing!=='none'" ng-click="editAttribute()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
+                    <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
                 <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                     <button class = "btn btn-danger" style="float:right;">Pending Review</button>
+                    <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3>
+
                 </div>
+                <h3 ng-class="mappingStatusStyle">{{targetMapping.status}}</h3>
             </div>
             <div style="background-color:#ffffff;padding-top:14px;">
                 <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>

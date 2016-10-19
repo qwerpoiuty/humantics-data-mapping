@@ -38,4 +38,6 @@ module.exports = db.define('user', {
             user.password = hash; 
         }
     }
+}, {
+    timestamps: false
 });
