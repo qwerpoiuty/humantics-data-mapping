@@ -35,7 +35,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
     }
 
     $scope.editAttribute = function() {
-        $scope.editing = "editAttribute"
+        if ($scope.targetMapping) $scope.editing = "editAttribute"
+        else alert('pick an attribute first')
+
+
     }
 
     $scope.cancel = function() {
@@ -65,7 +68,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
                 $scope.sources = $scope.sources
             })
         } else if ($scope.editing == "editAttribute") {
-            console.log($scope.temp.sourceIndex)
+            console.log($scope.temp)
         }
     }
 
