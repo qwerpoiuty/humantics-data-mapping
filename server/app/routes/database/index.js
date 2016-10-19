@@ -143,6 +143,18 @@ router.post('/attributes', function(req, res) {
     })
 })
 
+router.post('/updateAttribute/:attr_id', function(req, res) {
+    var string = []
+    for (var key in req.body) {
+        var temp = key + '=' + "'" + req.body[key] + "'"
+        string.push(temp)
+    }
+    string = string.join(',')
+    db.query('update attributes set ' + string + ' where attributes.attr_id =' + req.params.attr_id)
+        .then(function(attribute) {
+            res.json(attribute)
+        })
+})
 
 
 module.exports = router

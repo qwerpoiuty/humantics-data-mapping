@@ -21,7 +21,6 @@ router.get('/', function(req, res) {
 router.get('/recentMapping', function(req, res) {
     db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id where a.target=' + req.query.attr_id + ' order by a.version desc')
         .then(function(mappings) {
-            console.log(mappings[0])
             if (mappings[0].length > 0) {
                 var currentVersion = mappings[0][0].version
                 for (var i = 0; i < mappings[0].length; i++) {
@@ -66,6 +65,13 @@ router.post('/', function(req, res) {
         .then(function(mapping) {
             res.sendStatus(200)
         })
+})
+
+router.post('/rules/:targetId', function(req, res) {
+    db.query("update mappings set transformation_rules= (array['" + JSON.stringify(req.body) + "']::json[]) where mappings.target=106").then(function(projects) {
+        console.log(projects)
+    })
+
 })
 
 module.exports = router

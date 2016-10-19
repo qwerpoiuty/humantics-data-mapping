@@ -1,10 +1,9 @@
 app.factory('dataFactory', function($http) {
-    console.log("hello friend 123")
     var d = {}
 
-    d.getProjects = function(){
+    d.getProjects = function() {
         return $http.get('api/project')
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
@@ -92,16 +91,20 @@ app.factory('dataFactory', function($http) {
     }
 
     d.getMapping = function(target) {
-        var query = {attr_id:target}
-        return $http.get('/api/mappings', {params:query})
+        var query = {
+            attr_id: target
+        }
+        return $http.get('/api/mappings', {
+                params: query
+            })
             .then(function(response) {
                 return response.data
-        })
+            })
     }
 
-    d.createProject = function(project){
+    d.createProject = function(project) {
         return $http.post('api/project', project)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
@@ -114,15 +117,23 @@ app.factory('dataFactory', function($http) {
         return $http.post('/api/database/system', system)
             .then(function(response) {
                 return response.data
-        })
+            })
     }
-
-    d.createTable = function(table) {
-        var query = table
-        return $http.post('/api/tables', {params: query})
+    d.updateAttribute = function(attribute, target) {
+        console.log(attribute, target)
+        return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {
                 return response.data
-        })
+            })
+    }
+    d.createTable = function(table) {
+        var query = table
+        return $http.post('/api/tables', {
+                params: query
+            })
+            .then(function(response) {
+                return response.data
+            })
     }
     d.getMapping = function(target) {
         var query = {
@@ -145,24 +156,13 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
-    d.updateMapping = function(mapping) {
-        return $http.put('/api/mappings', mapping).then(function(response) {
-            return response.data
-        })
-    }
+
 
     d.createMapping = function(mapping) {
-        var mapping = {
-            name:'test_mapping_1',
-            source: 3,
-            target: 1,
-            date_modified: Date.now(),
-            modifier:1
-        }
         return $http.post('/api/mappings', mapping)
             .then(function(response) {
                 return response.data
-        })
+            })
     }
 
 
@@ -173,9 +173,9 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.updateProject = function(project){
+    d.updateProject = function(project) {
         return $http.put('api/project', project)
-            .then(function(response){
+            .then(function(response) {
                 return response.data
             })
     }
@@ -187,6 +187,13 @@ app.factory('dataFactory', function($http) {
         return $http.post('/api/mappings', mapping).then(function(response) {
             return response.data
 
+        })
+    }
+
+    d.updateRules = function(transformationRules, targetId) {
+        console.log(transformationRules)
+        return $http.post('/api/mappings/rules/' + targetId, transformationRules).then(function(response) {
+            return response.data
         })
     }
 

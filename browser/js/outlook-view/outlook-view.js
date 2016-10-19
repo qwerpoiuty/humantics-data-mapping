@@ -8,13 +8,19 @@ app.config(function($stateProvider) {
                 return dataFactory.getAttributesByTableId($stateParams.tableId).then(function(table) {
                     return table
                 })
+            },
+            user: function(AuthService) {
+                return AuthService.getLoggedInUser().then(function(user) {
+                    return user
+                })
             }
         }
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table) {
+app.controller('detailedCtrl', function($scope, dataFactory, table, user) {
     $scope.table = table[0]
+    $scope.user = user
     $scope.temp = {}
     $scope.selected = {}
     $scope.editing = "none"
@@ -25,6 +31,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
             $scope.targetMapping = attribute
+            $scope.rules = ($scope.targetMapping.transformation_rules) ? $scope.targetMapping.transformation_rules : []
+            console.log($scope.rules)
         })
     }
 
@@ -50,25 +58,40 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
     }
 
     $scope.save = function() {
+        var newSources = []
+        $scope.sources.forEach(function(e) {
+            newSources.push(e.attr_id)
+        })
+        if (!$scope.sources[0].version) var version = 1
+        else var version = $scope.sources[0].version + 1
+
+        var mapping = {
+            version: version,
+            modifier: $scope.user.id,
+            source: newSources,
+            target: $scope.targetMapping.attr_id
+        }
+
         if ($scope.editing == "newSource") {
-            var newSources = []
-            $scope.sources.forEach(function(e) {
-                newSources.push(e.attr_id)
-            })
-            if (!$scope.sources[0].version) var version = 1
-            else var version = $scope.sources[0].version + 1
-            newSources.push($scope.temp.attr.attr_id)
-            var mapping = {
-                version: version,
-                source: newSources,
-                target: $scope.targetMapping.attr_id
-            }
-            dataFactory.createMapping(mapping).then(function(mapping) {
+            mapping.source.push($scope.temp.attr.attr_id)
+
+            dataFactory.updateMapping(mapping).then(function(mapping) {
                 $scope.editing = "none"
                 $scope.sources = $scope.sources
             })
         } else if ($scope.editing == "editAttribute") {
-            console.log($scope.temp)
+            mapping.source[$scope.sourceIndex] = $scope.temp.attr_id
+            if ($scope.temp.target) {
+                dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
+                    .then(function(target) {
+                        dataFactory.updateMapping(mapping)
+                            .then(function(mapping) {
+                                $scope.selectAttribute($scope.targetMapping)
+                            })
+                    })
+
+            }
+
         }
     }
 
@@ -76,16 +99,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table) {
     $scope.addTransformation = function() {
         $scope.newRule = !$scope.newRule
     }
-    $scope.rules = [{
-        name: 'Rule 1',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }, {
-        name: 'Rule 2',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }, {
-        name: 'Rule 3',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }]
+
 
 
 });

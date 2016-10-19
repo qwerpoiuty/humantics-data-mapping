@@ -12,10 +12,10 @@
         </div>
         <div class="mail-body text-left tooltip-demo" style="height:26vh;padding-bottom:0;">
              <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
-            <div class = "accordion-button">
+            <div accordion class = "accordion-button" ng-if="newRule">
                 <button class="accordion">New Rule</button>
                 <div class="panel accordion-panel-parent col-lg-12">
-                    <form class="accordion-panel" ng-submit="addTransformation()">
+                    <form class="accordion-panel">
                         <div class="pull-right tooltip-demo">
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
                         </div>
@@ -23,16 +23,16 @@
                             <h4>Rule Type</h4> 
                         </div>
                         <div class = "row">
-                            <input id="ruleType" class="newRuleType" type="text" placeholder=""/>
+                            <input ng-model="newTransformation.type" id="ruleType" class="newRuleType" type="text" placeholder="Rule Name"/>
                         </div>
                         <div class="row">
                             <h4>Rule Description</h4>
                         </div>
                         <div class = "row">
-                            <textarea class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
+                            <textarea ng-model="newTransformation.description" class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
                         </div>
                         <div class = "row">
-                            <button class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
+                            <button ng-click="saveTransformation(newTransformation)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
                         </div>
                     </form>
                 </div>

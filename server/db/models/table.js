@@ -16,6 +16,10 @@ module.exports = db.define('table', {
     },
     columns: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
+    },
+    status: {
+        type: Sequelize.ENUM('incomplete', 'pending', 'complete'),
+        defaultValue: 'incomplete'
     }
 }, {
     timestamps: false

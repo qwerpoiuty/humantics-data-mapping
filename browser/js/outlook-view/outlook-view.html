@@ -48,7 +48,6 @@
                 </div>
                 <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                     <button class = "btn btn-danger" style="float:right;">Pending Review</button>
                     <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3>
 
@@ -57,7 +56,7 @@
             </div>
             <div style="background-color:#ffffff;padding-top:14px;">
                 <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-                <rules rules="rules"></rules>
+                <rules rules="rules" target = "targetMapping"></rules>
             </div>
         </div> 
         
