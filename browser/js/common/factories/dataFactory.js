@@ -1,8 +1,9 @@
 app.factory('dataFactory', function($http) {
     var d = {}
 
+    //high level gets
     d.getProjects = function() {
-        return $http.get('api/project')
+        return $http.get('api/projects')
             .then(function(response) {
                 return response.data
             })
@@ -23,7 +24,7 @@ app.factory('dataFactory', function($http) {
     d.getSchemas = function(dbID) {
         //this is going to accept a database as an argument and return a list of schemas
         var query = {
-            dbs: dbID
+            db: dbID
         }
         return $http.get('/api/database/schemas', {
                 params: query
@@ -46,9 +47,27 @@ app.factory('dataFactory', function($http) {
                 return response.data
             })
     }
+    d.getattributes = function(attr_id) {
+        var attribute = {
+            attribute: attr_id
+        }
+        return $http.get('/api/database/attributes', {
+                params: query
+            })
+            .then(function(response) {
+                return reponse.data
+            })
+    }
 
-    d.getAttributesByTableId = function(tableId) {
+    //Specific gets
+    d.getTableById = function(tableId) {
         return $http.get('/api/database/tableById/' + tableId)
+            .then(function(response) {
+                return response.data
+            })
+    }
+    d.getAttributesByTableId = function(tableId) {
+        return $http.get('/api/database/attributesByTableId/' + tableId)
             .then(function(response) {
                 return response.data
             })
@@ -62,70 +81,32 @@ app.factory('dataFactory', function($http) {
     }
 
     d.getTablesByAttribute = function(attributeName) {
-        return $http.get('/api/database/tablesAttribute/' + attributeName)
+        return $http.get('/api/database/tablesByAttribute/' + attributeName)
             .then(function(response) {
                 return response.data
             })
     }
     d.getAttributesByIds = function(attributes) {
-        console.log('hello')
         return $http.get('/api/database/attributesByIds', attributes)
             .then(function(response) {
                 return response.data
             })
     }
-    d.getImpactByTable = function(tableId) {
-        console.log(tableId)
-        return $http.get('/api/mappings/impact/table/' + tableId)
-            .then(function(response) {
-                console.log(response.data)
-                return response.data
-            })
-    }
 
-    d.getImpactByAttribute = function(attr_id) {
-        return $http.get('/api/mappings/impact/attribute/' + attr_id)
-            .then(function(response) {
-                return response.data
-            })
-    }
-
-    d.getMapping = function(target) {
-        var query = {
-            attr_id: target
-        }
-        return $http.get('/api/mappings', {
-                params: query
-            })
-            .then(function(response) {
-                return response.data
-            })
-    }
-
+    //posts
     d.createProject = function(project) {
         return $http.post('api/project', project)
             .then(function(response) {
                 return response.data
             })
     }
+    d.updateProject = function(project) {
+        return $http.put('api/project', project)
+            .then(function(response) {
+                return response.data
+            })
+    }
 
-    d.createSystem = function(system) {
-        var system = {
-            db_name: 'testDb',
-            schemas: [1, 2, 3]
-        }
-        return $http.post('/api/database/system', system)
-            .then(function(response) {
-                return response.data
-            })
-    }
-    d.updateAttribute = function(attribute, target) {
-        console.log(attribute, target)
-        return $http.post('/api/database/updateAttribute/' + target, attribute)
-            .then(function(response) {
-                return response.data
-            })
-    }
     d.createTable = function(table) {
         var query = table
         return $http.post('/api/tables', {
@@ -135,36 +116,6 @@ app.factory('dataFactory', function($http) {
                 return response.data
             })
     }
-    d.getMapping = function(target) {
-        var query = {
-            attr_id: target
-        }
-        return $http.get('/api/mappings', {
-            params: query
-        }).then(function(response) {
-            return response.data
-        })
-    }
-
-    d.getRecentMapping = function(target) {
-        var query = {
-            attr_id: target
-        }
-        return $http.get('/api/mappings/recentMapping', {
-            params: query
-        }).then(function(response) {
-            return response.data
-        })
-    }
-
-
-    d.createMapping = function(mapping) {
-        return $http.post('/api/mappings', mapping)
-            .then(function(response) {
-                return response.data
-            })
-    }
-
 
     d.searchTables = function(search) {
         return $http.get('/api/database/searchtables', search)
@@ -173,29 +124,20 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.updateProject = function(project) {
-        return $http.put('api/project', project)
+    d.createAttribute = function(attribute) {
+        return $http.post('/api/database/attributes/' + attribute.table_id, attribute)
+            .then(function(response) {
+                return response.data
+            })
+    }
+    d.updateAttribute = function(attribute, target) {
+        return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {
                 return response.data
             })
     }
 
-    d.updateMapping = function(mapping) {
-        if (!mapping.modifier) mapping.modifier = null
-        if (!mapping.comments) mapping.comments = null
-        if (!mapping.transformation_rules) mapping.transformation_rules = null
-        return $http.post('/api/mappings', mapping).then(function(response) {
-            return response.data
 
-        })
-    }
-
-    d.updateRules = function(transformationRules, targetId) {
-        console.log(transformationRules)
-        return $http.post('/api/mappings/rules/' + targetId, transformationRules).then(function(response) {
-            return response.data
-        })
-    }
 
     return d
 })

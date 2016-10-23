@@ -11,7 +11,7 @@ app.directive('mapping', function($state, dataFactory) {
         link: function(scope) {
             scope.systems = dataFactory.getSystems()
             dataFactory.getDatabases().then(function(dbs) {
-                scope.dbs = dbs
+                scope.dbs = dbs[0]
             })
             scope.editMap = ""
 
@@ -22,13 +22,13 @@ app.directive('mapping', function($state, dataFactory) {
 
             scope.$watch('temp.db', function(nv, ov) {
                 dataFactory.getSchemas(nv.db_id).then(function(schemas) {
-                    scope.schemas = schemas
+                    scope.schemas = schemas[0]
                 })
             })
             scope.$watch('temp.schema', function(nv, ov) {
 
                 dataFactory.getTables(nv.schema_id).then(function(tables) {
-                    scope.tables = tables
+                    scope.tables = tables[0]
                 })
             })
 
@@ -44,6 +44,7 @@ app.directive('mapping', function($state, dataFactory) {
             scope.$watch('source', function(nv, ov) {
                 scope.sources = nv
                 scope.displaySource = nv[0]
+                scope.temp.sourceIndex = 0
                     // scope.source=nv
             })
 

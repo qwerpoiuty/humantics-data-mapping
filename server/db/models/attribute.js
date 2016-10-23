@@ -11,7 +11,7 @@ module.exports = db.define('attribute', {
     attr_name: {
         type: Sequelize.STRING
     },
-    table: {
+    table_id: {
         type: Sequelize.INTEGER
     },
     datatype: {

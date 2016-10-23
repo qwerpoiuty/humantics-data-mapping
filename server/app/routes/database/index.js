@@ -17,44 +17,58 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 
+//high level gets
+
+router.get('/api/projects', function(req, res) {
+    db.query('select * from projects').then(function(projects) {
+        res.json(projects)
+    })
+})
 router.get('/systems', function(req, res) {
-    models.System.find(req.body).then(function(systems) {
+    db.query('select * from systems').then(function(systems) {
         res.json(systems)
     })
 })
 
 router.get('/databases', function(req, res) {
-    Db.findAll(req.body).then(function(dbs) {
+    db.query('select * from dbs').then(function(dbs) {
         res.json(dbs)
     })
 
 })
 
 router.get('/schemas', function(req, res) {
-    Schema.findAll({
-        where: {
-            db: parseInt(req.query.dbs)
-        }
-    }).then(function(schemas) {
+    db.query('select * from schemas where schemas.db = ' + parseInt(req.query.db)).then(function(schemas) {
         res.json(schemas)
     })
 
 })
 
 router.get('/tables', function(req, res) {
-    Table.findAll({
-            where: {
-                schema: parseInt(req.query.schema)
-            }
-        })
+    db.query('select * from tables where tables.schema = ' + parseInt(req.query.schema))
         .then(function(tables) {
             res.json(tables)
         })
 
 })
 
-router.get('/tableById/:tableId', function(req, res) {
-    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
+router.get('/attributes', function(req, res) {
+    db.query('select * from attributes where attributes.table_id = ' + parseInt(req.query.attribute))
+        .then(function(attributes) {
+            res.json(attributes)
+        })
+})
+
+//specific gets
+router.get('/tableById:tableId', function(req, res) {
+    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_id=' + req.params.tableId)
+        .then(function(table) {
+            res.json(table)
+        })
+})
+
+router.get('/attributesByTableId/:tableId', function(req, res) {
+    db.query('select * from attributes inner join tables on attributes.table_id = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
         .then(function(table) {
             res.json(table)
         })
@@ -70,76 +84,54 @@ router.get('/tableName/:table_name', function(req, res) {
 
 router.get('/tableByAttribute/:attr_name', function(req, res) {
     var query = "'" + req.params.attr_name + "'"
-    db.query('select * from attributes inner join tables on tables.table_id = attributes.table inner join schemas on schemas.schema_id = table.schema inner join dbs on dbs.db_id = schemas.db where attributes.attr_name = ' + query)
+    db.query('select * from attributes inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = table.schema inner join dbs on dbs.db_id = schemas.db where attributes.attr_name = ' + query)
         .then(function(attributes) {
             res.json(attributes)
         })
 })
 
-router.get('/tablesAttribute/:attributeName', function(req, res) {
+router.get('/tablesByAttribute/:attributeName', function(req, res) {
     var query = "'" + req.params.attributeName + "'"
-    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where attributes.attr_name = ' + query)
+    db.query('select * from attributes inner join tables on attributes.table_id = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where attributes.attr_name = ' + query)
         .then(function(tables) {
             res.json(tables)
         })
 })
 
 router.get('/attributesByIds', function(req, res) {
-    db.query('select * from attributes inner join tables on attributes.table = tables.table_id inner join schemas on tables.schemas = schemas.schem_id inner join dbs on schemas.db = dbs.db_id where attributes.attr_id = any(' + req.body.attributes + ')')
+    db.query('select * from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schemas = schemas.schem_id inner join dbs on schemas.db = dbs.db_id where attributes.attr_id = any(' + req.body.attributes + ')')
         .then(function(attributes) {
             res.json(attributes)
         })
 })
 
-router.get('/searchtables', function(req, res) {
-    models.Attribute.find(req.body.db).then(function(attributes) {
-        res.json(attributes)
-    })
-})
 
 router.post('/tables', function(req, res) {
-    models.Table.findOrCreate({
-        where: {
-            name: req.body.name
-        },
-        defaults: req.body
-    }).spread(function(table, created) {
-        if (!created) {
-            res.json(false)
-        }
-        res.json(table)
-    })
-})
-router.post('/system', function(req, res) {
-    // db.query('select a.name,a.datatype, a."dateModified", a."openDate",a."endDate", b.name , c.name, d.name from "attributes" as a inner join "tables" as b on a.table=b.id inner join "schemas" as c on b.schema = c.id inner join dbs as d on c.db = d.id').then(function(result) {
-    //     console.log(result)
-    //     res.json(result)
-    // })
-    db.model("db").findOrCreate({
-        where: {
-            name: req.body.name
-        },
-        defaults: req.body
-    }).spread(function(result, created) {
-        if (!created) {
-            res.json(false)
-        }
-        res.json(result)
+    var keys = Object.keys(req.body)
+    var values = []
+    for (var key in req.body) {
+        values.push(req.body[key])
+    }
+    keys = keys.join(',')
+    values = values.join(',')
+    db.query('insert into tables (' + keys + ') values(' + values + ')').then(function(table) {
+        res.sendStatus(200)
     })
 
 })
-router.post('/attributes', function(req, res) {
-    models.Attribute.findOrCreate({
-        where: {
-            name: req.body.name,
-            endDate: req.body.endDate
-        },
-        defaults: req.body
-    }).spread(function(attribute, created) {
-        if (!created) {
-            res.json(false)
-        }
-        res.jsos(attribute)
+
+router.post('/attributes/:tableId', function(req, res) {
+    req.body.attr_name = "'" + req.body.attr_name + "'"
+    req.body.datatype = "'" + req.body.datatype + "'"
+    var keys = Object.keys(req.body)
+    var values = []
+    for (var key in req.body) {
+        values.push(req.body[key])
+    }
+    keys = keys.join(',')
+    values = values.join(',')
+    db.query('insert into attributes (' + keys + ') values(' + values + ')').then(function(table) {
+        res.sendStatus(200)
     })
 })
 
@@ -155,6 +147,7 @@ router.post('/updateAttribute/:attr_id', function(req, res) {
             res.json(attribute)
         })
 })
+
 
 
 module.exports = router
