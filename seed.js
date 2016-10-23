@@ -44,21 +44,21 @@ var Promise = require('sequelize').Promise;
 
 // };
 
- var dbs = [{
-        db_name: 'DB1',
-        system: 1
-    }, {
-        db_name: 'DB2',
-        system: 1
-    }, {
-        db_name: 'DB3',
-        system: 1
-    }]
+var dbs = [{
+    db_name: 'DB1',
+    system: 1
+}, {
+    db_name: 'DB2',
+    system: 1
+}, {
+    db_name: 'DB3',
+    system: 1
+}]
 var schemas = []
 var tables = []
 var attributes = []
 var mappings = []
-for(var i =1; i <=dbs.length;i++){
+for (var i = 1; i <= dbs.length; i++) {
     var temp = [{
         schema_name: 'Schema1',
         db: i,
@@ -71,7 +71,7 @@ for(var i =1; i <=dbs.length;i++){
     }]
     schemas = schemas.concat(temp)
 }
-for (var i = 1; i <= schemas.length; i++){
+for (var i = 1; i <= schemas.length; i++) {
     var temp = [{
         table_name: 'Products',
         schema: i
@@ -84,37 +84,37 @@ for (var i = 1; i <= schemas.length; i++){
     }]
     tables = tables.concat(temp)
 }
-for (var i = 1; i < tables.length; i++){
+for (var i = 1; i < tables.length; i++) {
     var temp = [{
         attr_name: 'test_attr_1',
-        table: i,
+        table_id: i,
         datatype: 'float',
         date_modified: Date.now(),
     }, {
         attr_name: 'test_attr_2',
-        table: i,
+        table_id: i,
         datatype: 'int',
         date_modified: Date.now(),
     }, {
         attr_name: 'test_attr_3',
-        table: i,
+        table_id: i,
         datatype: 'string',
         date_modified: Date.now(),
     }, {
         attr_name: 'test_attr_4',
-        table: i,
+        table_id: i,
         datatype: 'long',
         date_modified: Date.now(),
     }, {
         attr_name: 'test_attr_5',
-        table: i,
+        table_id: i,
         datatype: 'boolean',
         date_modified: Date.now(),
     }]
     attributes = attributes.concat(temp)
 }
 var seedDbs = function() {
-   
+
     var creatingDbs = dbs.map(function(db) {
         return Dbs.create(db)
     })
@@ -128,7 +128,7 @@ var seedSchemas = function() {
     return Promise.all(creatingSchemas)
 }
 var seedTables = function() {
-   
+
     var creatingTables = tables.map(function(table) {
         return db.model('table').create(table)
     })
@@ -143,23 +143,23 @@ var seedAttributes = function() {
     return Promise.all(creatingAttributes)
 }
 var mappings = []
-var seedMappings = function(){
-    
+var seedMappings = function() {
+
 }
 db.sync({
-    force: true
-})
+        force: true
+    })
     .then(function() {
-            return seedDbs();
-        }).then(function() {
-            return seedSchemas()
-        })
-        .then(function() {
-            return seedTables()
-        })
-        .then(function() {
-            return seedAttributes()
-        })
+        return seedDbs();
+    }).then(function() {
+        return seedSchemas()
+    })
+    .then(function() {
+        return seedTables()
+    })
+    .then(function() {
+        return seedAttributes()
+    })
     .then(function() {
         console.log(chalk.green('Seed successful!'));
         process.exit(0);

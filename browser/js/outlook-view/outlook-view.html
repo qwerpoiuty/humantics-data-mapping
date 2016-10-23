@@ -44,29 +44,27 @@
                     <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> New Source</a>
                     <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
                     <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
-                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
+                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Delete Source</a>
                 </div>
                 <h2 style="color:white;">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                     
                     <div ng-hide="clicked">
-                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=true ">Pending Review</button>
+                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=true ">{{sources[0].status}}</button>
                     </div>
 
                     <div ng-show="clicked">
-                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=false">Decline</button>
-                        <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="clicked=false">Approve</button>
+                        <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
+                        <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
                     </div>
 
-                    
                     <!-- <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3> -->
                 </div>
-                <h3 ng-class="mappingStatusStyle">{{targetMapping.status}}</h3>
             </div>
             <div style="background-color:#ffffff;padding-top:14px;">
                 <div style="overflow-y:auto;">
-                    <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
+                    <mapping source="sources" target="targetMapping" edit = "editing" temp="temp" sourceIndex = "sourceIndex"></mapping>
                     <rules rules="rules" target = "targetMapping"></rules>
                 </div>
             </div>

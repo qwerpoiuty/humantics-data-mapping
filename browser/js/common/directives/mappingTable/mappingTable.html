@@ -118,82 +118,27 @@
                     <tbody>
                     <tr>
                         <td>System</td>
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
                     </tr>
                     <tr>
-                        <td>Databases</td>                       
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>Databases</td>
                     </tr>
                     <tr>
-                        <td>Schema</td>               
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>Schema</td>                          
                     </tr>
                     <tr>
-                        <td>Table</td>                                    
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>Table</td>
                     </tr>
                     <tr>
                         <td>Column</td>
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.status"/></td>
-                    </tr>
-                    <tr>ng-model="selected.source.status"/></td>
                     </tr>
                     <tr>
                         <td>Last modified date</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.lastModified"/></td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.source.sampleValue"/></td>
                     </tr>
                     </tbody>
                 </table>
@@ -212,82 +157,32 @@
                     <tbody>
                      <tr>
                         <td>System</td>
-                          <td>    
-                            <ui-select ng-model="targetMapping.system">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>{{table[0].system_name}}</td>
                     </tr>
                     <tr>
                         <td>Database</td>
-                          <td>    
-                            <ui-select ng-model="targetMapping.db_name">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>{{table[0].db_name}}
                     </tr>
                     <tr>
                         <td>Schema</td>               
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                        <td>{{table[0].schema_name}}</td>
                     </tr>
                     <tr>
                         <td>Table</td>                                    
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                          <td>{{table[0].table_name}}</td>
                     </tr>
                     <tr>
                         <td>Column</td>
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match >
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
+                          <td><input class = "btn btn-default form-control" type="text" ng-model="temp.target.attr_name"/></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
-                        <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="target.status"/></td>
-                    <tr>ng-model="selected.target.status"/></td>
+                        <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="temp.target.datatype"/></td>
                     </tr>
                     <tr>
                         <td>Last modified date</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.lastModified"/></td>
                     </tr>
-                    <tr>
-                        <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" type="text" ng-model="selected.target.sampleValue"/></td>
-                    </tr>
+                    
                     </tbody>
                 </table>
                 </form>

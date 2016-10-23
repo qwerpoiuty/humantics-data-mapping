@@ -18,21 +18,26 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, user) {
-    $scope.table = table[0]
+app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappingFactory, $stateParams) {
+    if (table) $scope.table = table[0]
+    else {
+        dataFactory.getTableById($stateParams.tableId).then(function(table) {
+            $scope.table = table
+        })
+    }
     $scope.user = user
     $scope.temp = {}
     $scope.selected = {}
     $scope.editing = "none"
     $scope.sourceSelection = "none"
+    $scope.sourceIndex = 0
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
-        dataFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
+        mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
             $scope.targetMapping = attribute
-            $scope.rules = ($scope.targetMapping.transformation_rules) ? $scope.targetMapping.transformation_rules : []
-            console.log($scope.targetMapping)
+            $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
         })
     }
 
@@ -57,49 +62,71 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user) {
         else alert('pick an attribute first')
     }
 
+    $scope.deleteSource = function() {
+        var mapping = $scope.setMapping()
+        mapping.source.splice($scope.temp.sourceIndex, 1)
+        mappingFactory.updateMapping(mapping).then(function(mapping) {
+            $scope.apply()
+        })
+
+    }
+
     $scope.save = function() {
+        switch ($scope.editing) {
+            case "newSource":
+                var mapping = $scope.setMapping()
+                mapping.source.push($scope.temp.attr.attr_id)
+                mappingFactory.updateMapping(mapping).then(function(mapping) {
+                    $scope.editing = "none"
+                    $scope.sources = $scope.sources
+                })
+                break
+            case "editAttribute":
+                var mapping = $scope.setMapping()
+                mapping.source[$scope.sourceIndex] = $scope.temp.attr_id
+                if ($scope.temp.target) {
+                    mappingFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
+                        .then(function(target) {
+                            mappingFactory.updateMapping(mapping)
+                                .then(function(mapping) {
+                                    $scope.selectAttribute($scope.targetMapping)
+                                })
+                        })
+                }
+                break
+            case "newAttribute":
+                $scope.temp.target.table_id = $stateParams.tableId
+                dataFactory.createAttribute($scope.temp.target).then(function(table) {
+                    console.log('hello')
+                })
+        }
+    }
+
+    $scope.setMapping = function() {
         var newSources = []
         $scope.sources.forEach(function(e) {
             newSources.push(e.attr_id)
         })
-        if (!$scope.sources[0].version) var version = 1
+        if (!$scope.sources[0]) var version = 1
         else var version = $scope.sources[0].version + 1
-
         var mapping = {
             version: version,
             modifier: $scope.user.id,
             source: newSources,
             target: $scope.targetMapping.attr_id
         }
+        mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : "NULL"
+        return mapping
+    }
 
-        if ($scope.editing == "newSource") {
-            mapping.source.push($scope.temp.attr.attr_id)
-
-            dataFactory.updateMapping(mapping).then(function(mapping) {
-                $scope.editing = "none"
-                $scope.sources = $scope.sources
-            })
-        } else if ($scope.editing == "editAttribute") {
-            mapping.source[$scope.sourceIndex] = $scope.temp.attr_id
-            if ($scope.temp.target) {
-                dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
-                    .then(function(target) {
-                        dataFactory.updateMapping(mapping)
-                            .then(function(mapping) {
-                                $scope.selectAttribute($scope.targetMapping)
-                            })
-                    })
-
-            }
-
+    $scope.changeStatus = function(status) {
+        var temp = {
+            status: status,
+            id: $scope.targetMapping.attr_id,
+            version: $scope.sources[0].version
         }
+        mappingFactory.changeStatus(temp)
     }
-
-    $scope.newRule = false
-    $scope.addTransformation = function() {
-        $scope.newRule = !$scope.newRule
-    }
-
 
 
 });

@@ -31,7 +31,7 @@ module.exports = db.define('mapping', {
         type: Sequelize.STRING
     },
     transformation_rules: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: Sequelize.JSON
     }
 }, {
     timestamps: false

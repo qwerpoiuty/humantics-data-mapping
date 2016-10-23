@@ -37,16 +37,16 @@
                     </form>
                 </div>
             </div>
-            <div accordion class = "accordion-button" ng-repeat = "rule in rules">
+            <div accordion class = "accordion-button" ng-repeat = "rule in rules track by $index">
                 
-                <button class="accordion">{{rule.name}}
+                <button class="accordion">{{rule.type}}
                 </button>
                 <div class="panel">
                     <div class="pull-right tooltip-demo" ng-switch="editing">
                            <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
                     </div>
-                  <p>{{rule.body}}</p>
+                  <p>{{rule.description}}</p>
                 </div>
             </div>
 
