@@ -38,7 +38,7 @@ router.get('/recentMapping', function(req, res) {
 })
 
 router.get('/impact/attribute/:attr_id', function(req, res) {
-    db.query('select * from tables a inner join attributes b on b.table = a.table_id inner join mappings c on c.target = b.attr_id where ' + req.params.attr_id + '= any(c.source)')
+    db.query('select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ' + req.params.attr_id + '= any(c.source)')
         .then(function(mappings) {
             res.json(mappings)
         })
