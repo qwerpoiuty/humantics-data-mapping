@@ -80,8 +80,8 @@ app.factory('dataFactory', function($http) {
             })
     }
 
-    d.getTablesByAttribute = function(attributeName) {
-        return $http.get('/api/database/tablesByAttribute/' + attributeName)
+    d.attributesByName = function(attributeName) {
+        return $http.get('/api/database/attributesByName/' + attributeName)
             .then(function(response) {
                 return response.data
             })

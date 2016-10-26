@@ -7,11 +7,12 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('reportCtrl', function($scope, dataFactory, AuthService) {
+app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory) {
     dataFactory.getDatabases().then(function(dbs) {
         $scope.dbs = dbs
     })
 
+    $scope.impactSearches = []
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
     $scope.selectedTable = {}
@@ -41,7 +42,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService) {
             return $scope.selectedTable.value
         }, function(nv, ov) {
             if (nv !== ov) {
-                dataFactory.getImpactByTable(nv.table_id).then(function(attributes) {
+                reportingFactory.getImpactByTable(nv.table_id).then(function(attributes) {
                     $scope.attributes = attributes[0]
                 })
             }
@@ -49,17 +50,33 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService) {
         //search stuff
     $scope.searchQuery = ""
     $scope.attributeSearch = function(query) {
-        dataFactory.getTablesByAttribute(query).then(function(attributes) {
-            $scope.attributes = attributes[0]
+        dataFactory.attributesByName(query).then(function(attributes) {
+            $scope.sources = attributes[0]
+            $scope.impactSearches.push($scope.sources)
         })
     }
 
 
     $scope.impact = function(attr_id) {
-        dataFactory.getImpactByAttribute(attr_id)
+        reportingFactory.getImpactByAttribute(attr_id)
             .then(function(attributes) {
-                $scope.attributes = attributes[0]
+                $scope.targets = attributes[0]
             })
+    }
+
+    $scope.nextImpact = function(attr_id) {
+        $scope.impactSearches.push($scope.sources)
+        console.log($scope.impactSearches)
+        $scope.sources = $scope.targets
+        reportingFactory.getImpactByAttribute(attr_id).then(function(attributes) {
+            $scope.targets = attributes[0]
+        })
+    }
+
+    $scope.previousImpact = function() {
+        $scope.impactSearches.pop()
+        $scope.sources = $scope.impactSearches[$scope.impactSearches.length - 1]
+        $scope.targets = []
     }
 
     $scope.demoPUPOSES = function() {
@@ -67,8 +84,9 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService) {
     }
 
     $scope.openBrowse = function(evt, tabSelection) {
-
-        // Declare all variables
+        $scope.sources = null
+        $scope.targets = null
+            // Declare all variables
         var i, tabcontent, tablinks;
 
         // Get all elements with class="tabcontent" and hide them
