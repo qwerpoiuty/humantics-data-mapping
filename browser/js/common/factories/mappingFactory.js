@@ -32,8 +32,6 @@ app.factory('mappingFactory', function($http) {
     }
 
     d.updateMapping = function(mapping) {
-        if (!mapping.comments) mapping.comments = "NULL"
-        if (!mapping.transformation_rules) mapping.transformation_rules = "NULL"
         return $http.post('/api/mappings', mapping).then(function(response) {
             return response.data
 

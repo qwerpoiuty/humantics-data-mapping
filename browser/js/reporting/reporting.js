@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 
 app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory) {
     dataFactory.getDatabases().then(function(dbs) {
-        $scope.dbs = dbs
+        $scope.dbs = dbs[0]
     })
 
     $scope.impactSearches = []
@@ -23,7 +23,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         if (nv !== ov) {
             if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {
-                $scope.schemas = schemas
+                $scope.schemas = schemas[0]
             })
         }
     })
@@ -33,7 +33,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         if (nv !== ov) {
 
             dataFactory.getTables(nv.schema_id).then(function(tables) {
-                $scope.tables = tables
+                $scope.tables = tables[0]
             })
         }
     })

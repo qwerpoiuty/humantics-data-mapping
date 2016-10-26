@@ -3,10 +3,8 @@ app.factory('reportingFactory', function($http) {
 
     //impact analysis
     d.getImpactByTable = function(tableId) {
-        console.log(tableId)
         return $http.get('/api/mappings/impact/table/' + tableId)
             .then(function(response) {
-                console.log(response.data)
                 return response.data
             })
     }
