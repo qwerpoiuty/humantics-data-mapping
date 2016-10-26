@@ -116,7 +116,6 @@
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'ProjectBrowseTab')"><h5 class="text-success">Projects</h5></a></li>
 											</ul>
 										<div id="SearchTab" class="tabcontent">	
 										    <form method="post">
@@ -141,7 +140,7 @@
 														<div class="col-lg-8 col-lg-offset-2">
 													        <div class="input-group m-b">
 													        	<span class="input-group-addon"><div class="newTableText">Select a System</div></span>
-													        	<ui-select ng-model="selectedSystem.value">
+													        		<ui-select ng-model="selectedSystem.value">
 																    <ui-select-match placeholder="List of Systems">
 																        {{$select.selected.name}}
 																    </ui-select-match>
@@ -204,82 +203,6 @@
 										    </form>
 									    </div>
 									</div>
-
-									<div id="ProjectBrowseTab" class="tabcontent">	
-										    <form method="post">
-										        <fieldset class="tabFieldset5">
-										            
-										            <div class="mail-box" style="border:none;!important;">
-										                <div class="mail-body" style="border:none;!important;" >
-										                    <div class="row">
-										                        <div class="col-sm-12">
-										                            <form role="form">
-										                                <table class="table table-hover">
-										                                <thead>
-										                                    <tr>
-										                                        <th class="text-center">Project Name</th>
-										                                        <th class="text-center">Manager</th>
-										                                        <th class="text-center">Due Date</th>
-										                                        <th class="text-center">Availability</th>
-										                                    </tr>
-										                                </thead>
-										                                <tbody>
-										                                    <!-- <tr ng-click="selectAttribute(table[$index])" ng-repeat = "attribute in table track by $index">
-										                                        <td>{{attribute.attr_name}}</td>
-										                                        <td>{{attribute.attr_id}}</td>
-										                                        <td>{{attribute.datatype}}</td>
-										                                    </tr> -->
-										                                    <tr>
-										                                    	<td>Project 1</td>
-										                                    	<td>S. Lieat</td>
-										                                    	<td>September 6th 2015</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 2</td>
-										                                    	<td>L. Khan</td>
-										                                    	<td>October 23rd 2016</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 3</td>
-										                                    	<td>B. Robinson</td>
-										                                    	<td>July 6th 2033</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-danger" ng-click="clicked=true ">Closed</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 4</td>
-										                                    	<td>R. Paul</td>
-										                                    	<td>January 19th 1998</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 5</td>
-										                                    	<td>Q. Phillips</td>
-										                                    	<td>March 18th 2002</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-danger" ng-click="clicked=true ">Closed</button>
-																                </td>
-									                                    	</tr>
-										                                </tbody>
-										                            </table>
-										                            </form>
-										                        </div>
-										                    </div>
-										                </div>
-										            </div>
-										        </fieldset>
-										    </form>
-									    </div>
-									</div>
 								</div> 
 							</div>
 						</div>
@@ -336,4 +259,3 @@
 	    </div>
     </div>
 </div>
-<footer></footer>

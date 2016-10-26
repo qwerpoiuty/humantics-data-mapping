@@ -79,6 +79,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappin
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
+                    location.reload()
                 })
                 break
             case "editAttribute":
@@ -90,15 +91,18 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappin
                             mappingFactory.updateMapping(mapping)
                                 .then(function(mapping) {
                                     $scope.selectAttribute($scope.targetMapping)
+                                    location.reload()
                                 })
                         })
                 }
+                location.reload()
                 break
             case "newAttribute":
                 $scope.temp.target.table_id = $stateParams.tableId
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
-                    console.log('hello')
+                    location.reload()
                 })
+                
         }
     }
 
@@ -126,6 +130,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappin
             version: $scope.sources[0].version
         }
         mappingFactory.changeStatus(temp)
+        
     }
 
 
