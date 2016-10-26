@@ -7,73 +7,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('manageCtrl', function($scope, dataFactory, AuthService) {
-    dataFactory.getDatabases().then(function(dbs) {
-        $scope.dbs = dbs
-    })
-
-    $scope.selectedDb = {}
-    $scope.selectedSchema = {}
-    $scope.selectedTable = {}
-    $scope.$watch(function() {
-        return $scope.selectedDb.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-            if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
-            console.log('hello')
-            dataFactory.getSchemas(nv.db_id).then(function(schemas) {
-                $scope.schemas = schemas
-            })
-        }
-    })
-    $scope.$watch(function() {
-        return $scope.selectedSchema.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-
-            dataFactory.getTables(nv.schema_id).then(function(tables) {
-                $scope.tables = tables
-            })
-        }
-    })
-
-    $scope.$watch(function() {
-            return $scope.selectedTable.value
-        }, function(nv, ov) {
-            if (nv !== ov) {
-                dataFactory.getImpactByTable(nv.table_id).then(function(attributes) {
-                    $scope.impactCategory = "table"
-                    $scope.souces = [nv]
-                    $scope.attributes = attributes[0]
-                })
-            }
-        })
-        //search stuff
-    $scope.searchQuery = ""
-    $scope.attributeSearch = function(query) {
-        dataFactory.getTablesByAttribute(query).then(function(attributes) {
-            $scope.searchCat = "attribute"
-            $scope.sources = attributes[0]
-            console.log($scope.sources)
-        })
-    }
-
-
-    $scope.impact = function(attr_id) {
-        console.log('hello')
-        dataFactory.getImpactByAttribute(attr_id)
-            .then(function(attributes) {
-                $scope.attributes = attributes[0]
-            })
-    }
-
-    $scope.targetImpact = function(source) {
-        $scope.sources = [source]
-        dataFactory.getImpactByAttribute(source.attr_id)
-            .then(function(attributes) {
-                $scope.attributes = attributes[0]
-            })
-    }
-
+    
 
     $scope.openBrowse = function(evt, tabSelection) {
 

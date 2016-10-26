@@ -114,7 +114,6 @@
 										<ul class="tab">
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'ProjectTab')"><h5 class="text-success">Project</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'TaskTab')"><h5 class="text-success">Task</h5></a></li>
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'ExtraTab')"><h5 class="text-success">Extra</h5></a></li>
 											</ul>
 										<div id="ProjectTab" class="tabcontent">	
 										     <form method="post">
@@ -123,72 +122,95 @@
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b">
 												        	<span class="input-group-addon"><div class="newTableText">Project Name</div></span>
-												        	<input type="text" placeholder="Input Project Name" class="form-control">
+												        	<input type="text" placeholder="Input Project Name" ng-model="newProjectName" class="form-control" style="width:90%;">
 												        </div>
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b">
 												        	<span class="input-group-addon"><div class="newTableText">Project Members</div></span>
-												        	<input type="text" placeholder="Add Project Members" class="form-control">
+												        	<input type="text" placeholder="Add Project Members" ng-model="newProjectMember" class="form-control" style="width:90%;">
+												        	<button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectMember()"><i class="fa fa-plus"></i></button>
+												        </div>
+												      </div>
+												      <div class="col-lg-8 col-lg-offset-2">
+												        <div class="input-group m-b">
+												        	<span class="input-group-addon"><div class="newTableText">Project Tables</div></span>
+												        	<input type="text" placeholder="Add Project Tables " ng-model="newProjectTable" class="form-control" style="width:90%;">
+												        	<button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectTable()"><i class="fa fa-plus"></i></button>
 												        </div>
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b">
 												        	<span class="input-group-addon"><div class="newTableText">Due Date</div></span>
-												        	<input type="text" placeholder="Project Due Date" class="form-control">
+												        	<input type="text" placeholder="Project Due Date" ng-model="newProjectDate" class="form-control" style="width:90%;">
 												    	</div>
 												      </div>									      	
 												    </div>
 												    <div class="row">
-												    	<button type="button" class="navbar-minimalize btn btn-primary button-right">Create</button>
+												    	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click="createProject()">Create</button>
 											    	</div>
 										        </fieldset>
 										    </form>
 									    </div>
 							    		<div id="TaskTab" class="tabcontent">	
 										    <form method="post">
-										        <fieldset class="tabFieldset">	
+										        <fieldset class="tabFieldsetTask">	
 													<div class = "row">
 														<div class="col-lg-8 col-lg-offset-2">
 													        <div class="input-group m-b">
 													        	<span class="input-group-addon"><div class="newTableText">Project</div></span> 
-													        		<ui-select ng-model="selectedProject.value">
+													        		<ui-select ng-model="selectedProject.value" style="width:90%;">
 																    <ui-select-match placeholder="List of Projects">
 																        {{$select.selected.name}}
 																    </ui-select-match>
 																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																        <span ng-bind="item.name"></span>
+																        <span ng-bind="project.name"></span>
 																    </ui-select-choices>
 																</ui-select>
 													        </div>
 											      		</div>
 														
-														<div class="col-lg-8 col-lg-offset-2">
+
+													  <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b">
-												        	<span class="input-group-addon"><div class="newTableText">Task Name</div></span> 
-												        	<input type="text" placeholder="Input Task Name" class="form-control">
+												        	<span class="input-group-addon"><div class="newTableText">Project Tables</div></span>
+												        	<input type="text" placeholder="Add Project Tables " ng-model="newProjectTable" class="form-control" style="width:90%;">
+												        	<button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectTable()"><i class="fa fa-plus"></i></button>
 												        </div>
+												      </div>
+
+														<div class="col-lg-8 col-lg-offset-2">
+													        <div class="input-group m-b">
+													        	<span class="input-group-addon"><div class="newTableText">Task Name</div></span> 
+													        	<input type="text" placeholder="Input Task Name" ng-model="newTaskName" class="form-control" style="width:90%;">
+													        </div>
 												     	</div>
 
 											    		<div class="col-lg-8 col-lg-offset-2">
 													        <div class="input-group m-b">
 													        	<span class="input-group-addon"><div class="newTableText">Task Members</div></span> 
-													        		<ui-select ng-model="selectedProject.members.value">
+												        		<ui-select ng-model="selectedProject.members.value" style="width:90%;">
 																    <ui-select-match placeholder="List of Members in this Project">
 																        {{$select.selected.name}}
 																    </ui-select-match>
 																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																        <span ng-bind="item.name"></span>
+																        <span ng-bind="task.member"></span>
 																    </ui-select-choices>
 																</ui-select>
 													        </div>
 											      		</div>
 
 													    <div class="col-lg-8 col-lg-offset-2">
-													        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Due Date</div></span>
-													        <input type="text" placeholder="Project Due Date" class="form-control"></div>
+													        <div class="input-group m-b">
+													        	<span class="input-group-addon">
+												        		<div class="newTableText">Due Date</div></span>
+													        	<input type="text" placeholder="Project Due Date" ng-model="newTaskDate" class="form-control" style="width:90%;">
+													        </div>
 													    </div>
 													</div>
+													 <div class="row">
+												    	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click="createProject()">Create</button>
+											    	</div>
 										        </fieldset>
 										    </form>
 									    </div>
@@ -201,6 +223,53 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="row" ng-show="tables">
+	                <div class="col-lg-12">
+	                    <div class="ibox">
+	                        <div class="ibox-content">
+				                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+	                                	<thead>
+	                                	<tr>
+											<th data-toggle="true">Table Id</th>
+											<th>Table Name</th>
+											<th>Database</th>
+											<th>Schema</th>
+											<th>Attribute Count</th>
+											<th data-hide="all">Sample Source Value</th>
+				                            <th data-hide="all">Created On</th>
+				                            <th data-hide="all">Last Modified</th>
+				                            <th data-hide="all">Last Modified By</th>
+				                            <th data-hide="all">More Information</th>
+				                            <th>Status</th>
+				                        </tr>
+	                                	</thead>
+	                                    <tbody>
+	                                    <tr ng-repeat="table in tables track by $index" foo-repeat-done>
+											<td>{{table.id}}</td>
+											<td>{{table.table_name}}</td>
+											<td>{{table.db_name}}</td>
+											<td>{{table.schema_name}}</td>
+											<!-- make sure to actually keep a runnign tally on the number of attributes that call this table home -->
+											<td>22</td>
+											<td>Stan Le</td>
+											<td>Target</td>
+											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
+											<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+	                                    </tr>
+	                                    </tbody>
+	                                    <tfoot>
+					                        <tr>
+					                            <td colspan="5">
+					                                <ul class="pagination"></ul>
+					                            </td>
+					                        </tr>
+					                    </tfoot>
+	                                </table>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
 			</div>
 		</div>
 	</div>
