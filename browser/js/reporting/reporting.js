@@ -66,8 +66,10 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
     $scope.nextImpact = function(attr_id) {
         $scope.impactSearches.push($scope.sources)
-        console.log($scope.impactSearches)
+        $scope.sources = null
+        console.log($scope.sources)
         $scope.sources = $scope.targets
+        $scope.targets = null
         reportingFactory.getImpactByAttribute(attr_id).then(function(attributes) {
             $scope.targets = attributes[0]
         })
