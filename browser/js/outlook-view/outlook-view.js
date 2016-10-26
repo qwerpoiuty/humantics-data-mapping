@@ -4,8 +4,13 @@ app.config(function($stateProvider) {
         templateUrl: 'js/outlook-view/outlook-view.html',
         controller: 'detailedCtrl',
         resolve: {
+            attributes: function(dataFactory, $stateParams) {
+                return dataFactory.getAttributesByTableId($stateParams.tableId).then(function(attributes) {
+                    return attributes
+                })
+            },
             table: function(dataFactory, $stateParams) {
-                return dataFactory.getAttributesByTableId($stateParams.tableId).then(function(table) {
+                return dataFactory.getTableById($stateParams.tableId).then(function(table) {
                     return table
                 })
             },
@@ -18,14 +23,11 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappingFactory, $stateParams) {
-    if (table) $scope.table = table[0]
-    else {
-        dataFactory.getTableById($stateParams.tableId).then(function(table) {
-            $scope.table = table
-        })
-    }
+app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams) {
+
+    $scope.table = table[0][0]
     $scope.user = user
+    $scope.attributes = attributes[0]
     $scope.temp = {}
     $scope.selected = {}
     $scope.editing = "none"
@@ -42,7 +44,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappin
     }
 
     $scope.addAttribute = function(attribute) {
-        $scope.selected = {}
+        $scope.temp = $scope.table
         $scope.editing = "newAttribute"
             // dataFactory.addAttribute($scope.table, attribute)
     }
@@ -115,10 +117,14 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, user, mappin
             source: newSources,
             target: $scope.targetMapping.attr_id
         }
-        mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : "NULL"
+        mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
+        console.log(mapping.transformation_rules)
         return mapping
     }
-
+    $scope.changingStatus = false
+    $scope.toggleChange = function() {
+        $scope.changingStatus = !$scope.changingStatus
+    }
     $scope.changeStatus = function(status) {
         var temp = {
             status: status,

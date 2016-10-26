@@ -1,4 +1,4 @@
-app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state, $location) {
+app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
 
     return {
         restrict: 'E',
@@ -6,6 +6,38 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state, $
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function(scope) {
 
+            scope.items = [
+
+                {
+                    label: 'Home',
+                    state: 'home',
+                    auth: true
+                }, {
+                    label: 'Projects',
+                    state: 'management',
+                    auth: true
+                }, {
+                    label: 'Reporting',
+                    state: 'reporting',
+                    auth: true
+                }
+            ];
+            scope.headers = {
+                detailed: "Detailed Table Breakdown",
+                reporting: "Find Reports",
+                management: "Manage Projects"
+            }
+            scope.transition = function(stateName) {
+                var transition = $state.go(stateName)
+                transition.then(function(currentState) {
+                    scope.pagetitle = scope.headers[currentState.name]
+                    console.log(scope.pagetitle)
+                })
+            }
+
+            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+                scope.pagetitle = scope.headers[toState.name]
+            })
             scope.user = null;
 
 
@@ -22,8 +54,7 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state, $
             var setUser = function() {
                 AuthService.getLoggedInUser().then(function(user) {
                     scope.user = user;
-                    if (scope.user.firstName) scope.name = user.firstName + " " + user.lastName
-                    else scope.name = "Back"
+
                 });
             };
 
@@ -33,12 +64,13 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state, $
 
             setUser();
 
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
         }
 
-    }
+    };
 
 });

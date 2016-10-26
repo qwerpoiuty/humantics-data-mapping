@@ -6,10 +6,10 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
     $scope.columns = ["Database", "Schema", "Date", "Entity"]
-    $scope.searchQuery =""
+    $scope.searchQuery = ""
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -49,32 +49,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
         }
     })
 
-    // $scope.$watch(function() {
-    //     return $scope.selectedSystems.value
-    // }, function(nv, ov) {
-    //     if (nv !== ov) {
-    //         $scope.databases = dataFactory.getDatabases(nv)
-
-    //     }
-    // })
-
-
-    $scope.itemArray = [{
-        id: 1,
-        name: 'first'
-    }, {
-        id: 2,
-        name: 'second'
-    }, {
-        id: 3,
-        name: 'third'
-    }, {
-        id: 4,
-        name: 'fourth'
-    }, {
-        id: 5,
-        name: 'fifth'
-    }, ];
 
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
@@ -93,7 +67,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
         return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            
+
             dataFactory.getTables(nv.schema_id).then(function(tables) {
                 $scope.tables = tables
                 console.log($scope.tables)
@@ -103,31 +77,31 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
 
     //search things
     $scope.searchCat = "table"
-    $scope.search = function(category, query){
-        switch (category){
+    $scope.search = function(category, query) {
+        switch (category) {
             case "table":
-                return dataFactory.getTablesByName(query).then(function(tables){
+                return dataFactory.getTablesByName(query).then(function(tables) {
                     $scope.tables = tables[0]
                 })
             case "entity":
-                return dataFactory.getTablesByAttribute(query).then(function(tables){
+                return dataFactory.attributesByName(query).then(function(tables) {
                     $scope.tables = tables[0]
                 })
         }
     }
 
-    $scope.impact = function(type,id){
+    $scope.impact = function(type, id) {
         var modalInstance = $uibModal.open({
             templateUrl: 'js/common/modals/impactAnalysis/impact.html',
             controller: 'impactCtrl',
             size: 'lg',
             resolve: {
-                impact:function(){
-                    return dataFactory.getImpactByTable(id).then(function(impact){
+                impact: function() {
+                    return dataFactory.getImpactByTable(id).then(function(impact) {
                         return impact
-                        })
+                    })
                 },
-                type:function(){
+                type: function() {
                     return type
                 }
             }
@@ -138,34 +112,34 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory,$state) {
     //tab functions
     $scope.openBrowse = function(evt, tabSelection) {
 
-        // Declare all variables
-        var i, tabcontent, tablinks;
+            // Declare all variables
+            var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the link that opened the tab
+            document.getElementById(tabSelection).style.display = "block";
+            evt.currentTarget.className += " active";
         }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the link that opened the tab
-        document.getElementById(tabSelection).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-    //detailed view transition
+        //detailed view transition
 
     $scope.detailedView = function(tableId) {
-        console.log(tableId)
-        $state.go('detailed', {
-            tableId: tableId
-       })
-    }
-    //ALL THE CREATING STUFF
+            console.log(tableId)
+            $state.go('detailed', {
+                tableId: tableId
+            })
+        }
+        //ALL THE CREATING STUFF
     $scope.addTable = function() {
         var modalInstance = $uibModal.open({
             templateUrl: 'js/common/modals/createTable/modal.html',

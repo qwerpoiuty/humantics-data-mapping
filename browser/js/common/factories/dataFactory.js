@@ -48,7 +48,7 @@ app.factory('dataFactory', function($http) {
             })
     }
     d.getattributes = function(attr_id) {
-        var attribute = {
+        var query = {
             attribute: attr_id
         }
         return $http.get('/api/database/attributes', {
@@ -60,6 +60,7 @@ app.factory('dataFactory', function($http) {
     }
 
     //Specific gets
+
     d.getTableById = function(tableId) {
         return $http.get('/api/database/tableById/' + tableId)
             .then(function(response) {

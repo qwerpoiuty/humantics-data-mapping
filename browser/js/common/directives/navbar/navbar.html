@@ -1,15 +1,9 @@
 <div class="row wrapper border-bottom white-bg page-heading view-height-1 row-fix">
     <div class="col-lg-8">
-        <h2 class="text-success">Your Project Summary</h2>
+        <h2 class="text-success">{{pagetitle || "Your Dashboard"}}</h2>
         <ol class="breadcrumb">
-            <li>
-                <a ng-class="{ active: isActive('/')}">Home</a>
-            </li>
-            <li>
-                <a ng-class="{ active: isActive('/detailed')}">Detailed Search</a>
-            </li>
-            <li class="text-success">
-                <a ng-class="{ active: isActive('/reporting')}">Reporting</a>
+            <li class = "navLink" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+                <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
             </li>
         </ol>
     </div>
@@ -25,7 +19,8 @@
         </div> -->
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
+                    <span ng-if="!user" class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
+                    <span ng-if="user" class = "m-r-sm text-muted welcome-message">Welcome Back {{user.email}}</span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -125,11 +120,11 @@
 
 
                 <li>
-                    <a href="login.html"><i class="fa fa-home"></i> Home</a>
+                    <a ng-if="!user" ui-sref="login">Login</a>
+                    <a ng-if="user">Logout</a>
                 </li>	
             </ul>
 
         </nav>
-		<!-- <button type="button" class="navbar-minimalize minimalize-styl-2 btn btn-primary " ng-click="addTable()"><i class="fa fa-plus"></i> Add a Table</button> -->
     </div>
 </div>

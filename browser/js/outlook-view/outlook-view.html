@@ -1,11 +1,10 @@
 <div id="page-wrapper" class="gray-bg" style="min-height:973px;padding-left:0px; padding-right:0px; padding-bottom:50px;">
-    <navbar></navbar>
     <div class="wrapper wrapper-content" style="padding-top:10px;">
         <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <h2><span style="color:white; font-size:20px;"> {{table[0].table_name}}</span></h2>
+                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table[0].db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table[0].schema_name}}</span></h3> 
+                    <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
                     <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
@@ -24,7 +23,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-click="selectAttribute(table[$index])" ng-repeat = "attribute in table track by $index">
+                                    <tr ng-click="selectAttribute(attributes[$index])" ng-repeat = "attribute in attributes track by $index">
                                         <td>{{attribute.attr_name}}</td>
                                         <td>{{attribute.attr_id}}</td>
                                         <td>{{attribute.datatype}}</td>
@@ -50,11 +49,11 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{selected.name || 'New Attribute'}}</h3>
                     
-                    <div ng-hide="clicked">
-                        <button class = "btn btn-danger" style="float:right;" ng-click="clicked=true ">{{sources[0].status}}</button>
+                    <div ng-hide="changingStatus">
+                        <button class = "btn btn-danger" ng-if ="sources[0].status" style="float:right;" ng-click="toggleChange()">{{sources[0].status}}</button>
                     </div>
 
-                    <div ng-show="clicked">
+                    <div ng-show="changingStatus">
                         <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
                         <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
                     </div>
