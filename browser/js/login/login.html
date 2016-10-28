@@ -1,17 +1,16 @@
 
 
-<div class="middle-box text-center loginscreen animated fadeInDown">
+<div class="middle-box text-center loginscreen animated fadeInDown" style="background-color:grey; padding-top: 30px; padding-bottom: 30px; padding-left: 30px; padding-right: 30px; margin-top: 150px;">
     <div>
         <div>
-            <h1 class="logo-name">DATAMAPPING PORTAL</h1>
+          <h1 class="logo-name" style="color:white; text-shadow: -1px 0 #f3f3f4, 0 1px #f3f3f4, 1px 0 #f3f3f4, 0 -1px #f3f3f4;">D &nbspA &nbspT &nbspA &nbspM &nbspA &nbspP &nbspS</h1>
         </div>
-        <h3>Welcome to SOME DATA MAPPING NAME</h3>
-        <p>A visualization aid for data mapping.</p>
-        <h1 class="logo-name">Humantics Data Mapping Service</h1>
+        <h3 style="color:whitesmoke;">Welcome to SOME DATA MAPPING NAME</h3>
+        <p style="color:whitesmoke;">A visualization aid for data mapping.</p>
     </div>
 
     <div>
-        <p>Login to start mapping!</p>
+        <p style="color:whitesmoke;">Login to start mapping!</p>
         <form class="m-t" role="form" ng-submit="submit()">
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Username" ng-model="loginInfo.email" required="">
@@ -21,7 +20,7 @@
             </div>
             <button ng-click="sendLogin(loginInfo)" class="btn btn-primary block full-width m-b">Login</button>
 
-            <a href="#"><small>Forgot password?</small></a>
+            <a href="#" style="color:whitesmoke; margin-bottom: 10px;"><small>Forgot password?</small></a>
             <a class="btn btn-sm btn-white btn-block" href="#">Create an account</a>
         </form>
     </div>

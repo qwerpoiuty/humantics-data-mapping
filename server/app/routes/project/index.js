@@ -1,7 +1,7 @@
 'use strict';
 var router = require('express').Router();
 var db = require('../../../db')
-var Project = project.model('project')
+var Project = db.model('project')
 
 var chalk = require('chalk')
 
@@ -14,18 +14,23 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 
+router.get('/', function(req,res){
+	console.log("hello")
+	db.query('SELECT * FROM projects INNER JOIN users on users.id = projects.leader')
+		.then(function(projects){
+			res.json(projects)
+		})
+})
+
 router.get('/:id', function(req,res){
-	db.query('SELECT * FROM projects INNER JOIN tasks on tasks.task_id = any(projects.tasks) WHERE projects.project_id =' + req.params.id)
+	db.query('SELECT * FROM projects INNER JOIN tables on tables.table_id = any(projects.tables) WHERE projects.project_id =' + req.params.id)
 		.then(function(projects){
 			res.json(projects)
 	})
 })
 
-router.get('/projects', function(req,res){
-	db.query('SELECT * FROM projects INNER JOIN users on users.id = any(projects.members) WHERE users.id =' + req.query.id)
-		.then(function(projects){
-			res.json(projects)
-		})
-})
+
+
+module.exports = router;
 
 

@@ -33,6 +33,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.editing = "none"
     $scope.sourceSelection = "none"
     $scope.sourceIndex = 0
+    $scope.currentAttr = "Select an Attribute"
+
+
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
@@ -40,12 +43,14 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
+            $scope.currentAttr = $scope.targetMapping.attr_name
         })
     }
 
     $scope.addAttribute = function(attribute) {
         $scope.temp = $scope.table
         $scope.editing = "newAttribute"
+        $scope.currentAttr = "New Attribute"
             // dataFactory.addAttribute($scope.table, attribute)
     }
 

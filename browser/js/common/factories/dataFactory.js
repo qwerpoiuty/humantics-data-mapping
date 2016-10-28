@@ -2,13 +2,6 @@ app.factory('dataFactory', function($http) {
     var d = {}
 
     //high level gets
-    d.getProjects = function() {
-        return $http.get('api/projects')
-            .then(function(response) {
-                return response.data
-            })
-    }
-
     d.getSystems = function() {
         return ["IBM", "INTEL", "LINUX", "STUFF"]
     }
@@ -95,18 +88,7 @@ app.factory('dataFactory', function($http) {
     }
 
     //posts
-    d.createProject = function(project) {
-        return $http.post('api/project', project)
-            .then(function(response) {
-                return response.data
-            })
-    }
-    d.updateProject = function(project) {
-        return $http.put('api/project', project)
-            .then(function(response) {
-                return response.data
-            })
-    }
+
 
     d.createTable = function(table) {
         var query = table
