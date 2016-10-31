@@ -44,6 +44,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
             $scope.currentAttr = $scope.targetMapping.attr_name
+            console.log($scope.sources[0])
         })
     }
 
