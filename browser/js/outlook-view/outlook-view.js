@@ -133,7 +133,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
     $scope.changeStatus = function(status) {
         var temp = {
-            status: status,
+            status: mappingStatus,
             id: $scope.targetMapping.attr_id,
             version: $scope.sources[0].version
         }

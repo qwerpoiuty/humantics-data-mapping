@@ -20,16 +20,16 @@
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
                         </div>
                         <div class="row">
-                            <h4>Rule Type</h4> 
+                            <h4>Rule Name</h4> 
                         </div>
                         <div class = "row">
-                            <input ng-model="newTransformation.type" id="ruleType" class="newRuleType" type="text" placeholder="Rule Name"/>
+                            <input ng-model="newTransformation.type" id="ruleType" class="newRuleType" type="text" placeholder="Rule Type"/>
                         </div>
                         <div class="row">
                             <h4>Rule Description</h4>
                         </div>
                         <div class = "row">
-                            <textarea ng-model="newTransformation.description" class="newRuleDescription col-lg-12" placeholder="" cols="50"></textarea>
+                            <textarea ng-model="newTransformation.description" class="newRuleDescription col-lg-12" placeholder="A short explanation of this rule" cols="50"></textarea>
                         </div>
                         <div class = "row">
                             <button ng-click="saveTransformation(newTransformation)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>

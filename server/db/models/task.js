@@ -21,7 +21,7 @@ module.exports = db.define('task', {
     due_date: {
         type: Sequelize.DATE
     },
-    status: {
+    task_status: {
         type: Sequelize.ENUM('Complete', 'Incomplete', 'Pending Review')
     }
 }, {

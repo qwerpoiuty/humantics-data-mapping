@@ -24,7 +24,7 @@ module.exports = db.define('project', {
     tasks: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
-    status:{
+    project_status:{
         type: Sequelize.STRING,
         defaultValue: "Incomplete"
     },
