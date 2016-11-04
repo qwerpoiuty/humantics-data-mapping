@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Create A Project</h3>
+</div>
+<div class="modal-body" id="modal-body" ng-switch = "type">
+    <form method="post">
+      <fieldset class="tabFieldset3">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="input-group m-b">
+              <span class="input-group-addon"><div class="newTableText">Project Name</div></span>
+              <input type="text" placeholder="Input Project Name" ng-model="newProjectName" class="form-control" style="width:90%;">
+            </div>
+          </div>
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="input-group m-b">
+              <span class="input-group-addon"><div class="newTableText">Project Members</div></span>
+              <input type="text" placeholder="Add Project Members" ng-model="newProjectMember" class="form-control" style="width:90%;">
+              <button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectMember()"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="input-group m-b">
+              <span class="input-group-addon"><div class="newTableText">Project Tables</div></span>
+              <input type="text" placeholder="Add Project Tables " ng-model="newProjectTable" class="form-control" style="width:90%;">
+              <button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectTable()"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="col-lg-8 col-lg-offset-2">
+            <div class="input-group m-b">
+              <span class="input-group-addon"><div class="newTableText">Due Date</div></span>
+              <input type="text" placeholder="Project Due Date" ng-model="newProjectDate" class="form-control" style="width:90%;">
+            </div>
+          </div>  W                        
+      </div>
+      <div class="row">
+       
+      </div>
+      </fieldset>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click="createProject()">Create</button>
+</div>
