@@ -39,6 +39,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
+            console.log(mapping)
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
             $scope.targetMapping = attribute
