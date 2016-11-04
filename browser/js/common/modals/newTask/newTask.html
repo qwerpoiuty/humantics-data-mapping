@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Create A Task</h3>
+</div>
+<div class="modal-body" id="modal-body" ng-switch = "type">
+  <form method="post">
+    <fieldset class="tabFieldsetTask">  
+  <div class = "row">
+    <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group m-b">
+            <span class="input-group-addon"><div class="newTableText">Project</div></span> 
+              <ui-select ng-model="selectedProject.value" style="width:90%;">
+            <ui-select-match placeholder="List of Projects">
+                {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                <span ng-bind="project.name"></span>
+            </ui-select-choices>
+        </ui-select>
+          </div>
+        </div>
+    
+
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="input-group m-b">
+          <span class="input-group-addon"><div class="newTableText">Project Tables</div></span>
+          <input type="text" placeholder="Add Project Tables " ng-model="newProjectTable" class="form-control" style="width:90%;">
+          <button class="button button-square button-tiny" style="margin-top:5px;" ng-click="addProjectTable()"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+
+    <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group m-b">
+            <span class="input-group-addon"><div class="newTableText">Task Name</div></span> 
+            <input type="text" placeholder="Input Task Name" ng-model="newTaskName" class="form-control" style="width:90%;">
+          </div>
+      </div>
+
+      <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group m-b">
+            <span class="input-group-addon"><div class="newTableText">Task Members</div></span> 
+            <ui-select ng-model="selectedProject.members.value" style="width:90%;">
+            <ui-select-match placeholder="List of Members in this Project">
+                {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                <span ng-bind="task.member"></span>
+            </ui-select-choices>
+        </ui-select>
+          </div>
+        </div>
+
+      <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group m-b">
+            <span class="input-group-addon">
+            <div class="newTableText">Due Date</div></span>
+            <input type="text" placeholder="Project Due Date" ng-model="newTaskDate" class="form-control" style="width:90%;">
+          </div>
+      </div>
+  </div>
+    </fieldset>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click="createTask()">Create</button>
+</div>

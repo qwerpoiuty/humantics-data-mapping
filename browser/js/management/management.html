@@ -226,8 +226,7 @@
 		</div>
 	</div>
 </div>
- -->
-<div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
+ --> <div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header" style="background-color:#1c84c6;">
@@ -235,6 +234,7 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                 </div>
                 <h3 style="color:white;">List of Current Projects</h3>
+                <button class = "btn btn-primary" data-toggle="modal" style="float:right;">New Project</button>
             </div>
 
             <div class="mail-box">
@@ -302,6 +302,7 @@
                 <h2 style="color:white;">Current Jobs</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
+                     <button class = "btn btn-primary" ng-if="selectedTask=='true'" data-toggle="modal" style="float:right;background-color:#1c84c6">New Task</button>
                 </div>
             </div>
 

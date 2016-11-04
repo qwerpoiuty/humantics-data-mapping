@@ -23,10 +23,12 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     $scope.user = user
     $scope.projects = projects[0]
     $scope.currentPro = "Select a Project"
+    $scope.selectedTask ="false"
 
 
     $scope.selectProject = function(project){
         $scope.currentPro = project.project_name
+        $scope.selectedTask = "true"
         projectFactory.getProjectById(project.project_id).then(function(project){
             $scope.targetProject =  project[0]
         })
