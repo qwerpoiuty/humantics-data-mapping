@@ -121,7 +121,7 @@
 
                 <li>
                     <a ng-if="!user" ui-sref="login">Login</a>
-                    <a ng-if="user">Logout</a>
+                    <a ng-if="user" ng-click = "logout()">Logout</a>
                 </li>	
             </ul>
 

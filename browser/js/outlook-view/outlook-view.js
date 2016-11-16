@@ -38,14 +38,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
+        $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
-            console.log(mapping)
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
+            if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
-            console.log($scope.sources[0])
+            console.log($scope.rules)
         })
     }
 
@@ -88,6 +89,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
+                    $state.reload()
                 })
                 break
             case "editAttribute":
@@ -98,7 +100,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)
                                 .then(function(mapping) {
-                                    $scope.selectAttribute($scope.targetMapping)
+                                    $state.reload()
                                 })
                         })
                 }
@@ -139,6 +141,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             version: $scope.sources[0].version
         }
         mappingFactory.changeStatus(temp)
+        $state.reload()
     }
 
 

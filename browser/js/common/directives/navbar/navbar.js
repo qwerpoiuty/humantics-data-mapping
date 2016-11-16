@@ -61,7 +61,11 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
             var removeUser = function() {
                 scope.user = null;
             };
-
+            scope.logout = function() {
+                AuthService.logout().then(function() {
+                    $state.go('login');
+                });
+            };
             setUser();
 
 

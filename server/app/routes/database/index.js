@@ -60,6 +60,13 @@ router.get('/attributes', function(req, res) {
 })
 
 //specific gets
+router.get('/recentTable', function(req, res) {
+    db.query('select MAX(table_id) from tables')
+        .then(function(table_id) {
+            console.log(table_id[0])
+            res.json(table_id[0][0].max)
+        })
+})
 router.get('/tableById/:tableId', function(req, res) {
     db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_id=' + req.params.tableId)
         .then(function(table) {
@@ -102,13 +109,16 @@ router.get('/attributesByIds', function(req, res) {
 
 
 router.post('/tables', function(req, res) {
+    req.body.table_name = "'" + req.body.table_name + "'"
     var keys = Object.keys(req.body)
+
     var values = []
     for (var key in req.body) {
         values.push(req.body[key])
     }
     keys = keys.join(',')
     values = values.join(',')
+
     db.query('insert into tables (' + keys + ') values(' + values + ')').then(function(table) {
         res.sendStatus(200)
     })

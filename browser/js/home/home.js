@@ -51,6 +51,8 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
 
     $scope.selectedDb = {}
+    $scope.createdDb = {}
+    $scope.createdSchema = {}
     $scope.selectedSchema = {}
     $scope.$watch(function() {
         return $scope.selectedDb.value
@@ -69,6 +71,17 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
             dataFactory.getTables(nv.schema_id).then(function(tables) {
                 $scope.tables = tables[0]
+            })
+        }
+    })
+
+    $scope.$watch(function() {
+        return $scope.createdDb.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            console.log(nv)
+            dataFactory.getSchemas(nv.db_id).then(function(schemas) {
+                $scope.createdSchemas = schemas[0]
             })
         }
     })
@@ -106,6 +119,17 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         });
     }
 
+    $scope.createTable = function() {
+        var table = {
+            schema: $scope.createdSchema.value.schema_id,
+            table_name: $scope.createdTable
+        }
+        dataFactory.createTable(table).then(function(table) {
+            dataFactory.getMostRecentTable().then(function(table_id) {
+                $scope.detailedView(table_id)
+            })
+        })
+    }
 
     //tab functions
     $scope.openBrowse = function(evt, tabSelection) {
@@ -133,7 +157,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         //detailed view transition
 
     $scope.detailedView = function(tableId) {
-        console.log(tableId)
         $state.go('detailed', {
             tableId: tableId
         })
