@@ -144,5 +144,16 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $state.reload()
     }
 
+    $scope.generateDDL = function() {
+        //allow for inidividuals to modify conditions on the attributes such as not null and default values
+        var ddl = "CREATE TABLE " + $scope.table.table_name + "("
+        for (var i = 0; i < $scope.attributes.length; i++) {
+            console.log($scope.attributes[i])
+            ddl = ddl + $scope.attributes[i].attr_name + " " + $scope.attributes[i].datatype + $scope.attributes[i].description + ", "
+        }
+        ddl += ")"
+        console.log(ddl)
+    }
+
 
 });
