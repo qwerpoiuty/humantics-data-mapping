@@ -34,6 +34,14 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         })
     }
 
+    // $scope.propertyName = 'table_due';
+    // $scope.reverse = true;
+
+    // $scope.sortBy = function(propertyName) {
+    //     $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+    //     $scope.propertyName = propertyName;
+    // };
+
     // $scope.openBrowse = function(evt, tabSelection) {
 
     //     // Declare all variables
