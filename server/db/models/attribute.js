@@ -25,6 +25,13 @@ module.exports = db.define('attribute', {
     },
     end_date: {
         type: Sequelize.DATE
+    },
+    pri: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    properties: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
     }
 }, {
     timestamps: false

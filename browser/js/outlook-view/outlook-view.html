@@ -1,9 +1,8 @@
-<button ng-click = "generateDDL()">test</button>
 <div id="page-wrapper" class="gray-bg" style="min-height:973px;padding-left:0px; padding-right:0px; padding-bottom:50px;">
     <div class="wrapper wrapper-content" style="padding-top:10px;">
         <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span></h2>
+                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
                     <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
@@ -18,16 +17,19 @@
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
+                                        <th>Properties</th>
                                         <th>Attribute Name</th>
-                                        <th>Order</th>
                                         <th>DataType</th>
+                                        <th>PII</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-click="selectAttribute(attributes[$index])" ng-repeat = "attribute in attributes track by $index">
+                                    <tr ng-click="selectAttribute(attributes[$index])" ng-repeat = "attribute in attributes track by $index"
+                                    ng-class="{{attribute.attr_id}}">
+                                        <td><span class = "att-prop-badge" ng-repeat="prop in attribute.properties">{{prop}}</span></td>
                                         <td>{{attribute.attr_name}}</td>
-                                        <td>{{attribute.attr_id}}</td>
                                         <td>{{attribute.datatype}}</td>
+                                        <td><span class = "att-pri-badge" ng-show="{{attribute.pri == true}}"><i class ="fa fa-check" area-hidden="true"></i></span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -58,8 +60,6 @@
                         <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
                         <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
                     </div>
-
-                    <!-- <h3 style="color:white;">{{targetMapping.attr_name || 'New Attribute'}}</h3> -->
                 </div>
             </div>
             <div style="background-color:#ffffff;padding-top:24px;">

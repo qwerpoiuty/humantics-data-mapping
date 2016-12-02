@@ -23,7 +23,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams) {
+app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal) {
 
     $scope.table = table[0][0]
     $scope.user = user
@@ -46,7 +46,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
-            console.log($scope.rules)
         })
     }
 
@@ -146,13 +145,30 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.generateDDL = function() {
         //allow for inidividuals to modify conditions on the attributes such as not null and default values
-        var ddl = "CREATE TABLE " + $scope.table.table_name + "("
+        var ddl = "CREATE TABLE " + $scope.table.table_name + "\n(\n"
+        var body = []
         for (var i = 0; i < $scope.attributes.length; i++) {
-            console.log($scope.attributes[i])
-            ddl = ddl + $scope.attributes[i].attr_name + " " + $scope.attributes[i].datatype + $scope.attributes[i].description + ", "
+            body.push($scope.attributes[i].attr_name + " " + $scope.attributes[i].datatype) + "\n"
         }
-        ddl += ")"
-        console.log(ddl)
+        ddl += body.join(',\n')
+        ddl += "\n)"
+        if ($scope.table.primary_index.type === "upi") {
+            ddl += "\nUNIQUE PRIMARY INDEX(" + $scope.table.primary_index.attr_name + ")\n;"
+        } else if ($scope.table.primary_index.type === "nupi") {
+            ddl += "\n NON-UNIQUE PRIMARY INDEX(" + $scope.table.primary_index.attr_name + ")\n;"
+        }
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'js/common/directives/modal.html',
+            controller: 'ModalInstanceCtrl',
+            size: "small",
+            resolve: {
+                ddl: function() {
+                    return ddl;
+                }
+            }
+        });
+
     }
 
 
