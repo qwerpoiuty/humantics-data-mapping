@@ -1,3 +1,4 @@
+<!-- <button ng-click = "generateDDL()">test</button> -->
 <div id="page-wrapper" class="gray-bg" style="min-height:973px;padding-left:0px; padding-right:0px; padding-bottom:50px;">
     <div class="wrapper wrapper-content" style="padding-top:10px;">
         <div class="col-lg-5 animated fadeInRight">
@@ -50,7 +51,7 @@
                     <h3 style="color:white;">{{currentAttr}}</h3>
                     
                     <div ng-hide="changingStatus">
-                        <button class = "btn btn-danger" ng-if ="sources[0].status" style="float:right;" ng-click="toggleChange()">{{sources[0].mapping_status}}</button>
+                        <button class = "btn btn-danger" ng-if ="sources[0].status" style="float:right;" ng-click="toggleChange()">Incomplete</button>
                     </div>
 
                     <div ng-show="changingStatus">

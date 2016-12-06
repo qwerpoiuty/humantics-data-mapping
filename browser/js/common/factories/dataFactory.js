@@ -53,7 +53,11 @@ app.factory('dataFactory', function($http) {
     }
 
     //Specific gets
-
+    d.getMostRecentTable = function() {
+        return $http.get('/api/database/recentTable').then(function(response) {
+            return response.data
+        })
+    }
     d.getTableById = function(tableId) {
         return $http.get('/api/database/tableById/' + tableId)
             .then(function(response) {
@@ -91,10 +95,7 @@ app.factory('dataFactory', function($http) {
 
 
     d.createTable = function(table) {
-        var query = table
-        return $http.post('/api/tables', {
-                params: query
-            })
+        return $http.post('/api/database/tables', table)
             .then(function(response) {
                 return response.data
             })

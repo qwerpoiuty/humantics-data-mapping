@@ -180,17 +180,34 @@
 										        <fieldset class="tabFieldset3">
 										            <div class="row">
 												      <div class="col-lg-8 col-lg-offset-2">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Database</div></span> <input type="text" placeholder="Select a Database" class="form-control"></div>
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Database</div></span>
+													        	
+											       			<ui-select ng-model="createdDb.value">
+														    <ui-select-match placeholder="List of Databases">
+														        {{$select.selected.db_name}}
+														    </ui-select-match>
+														    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+														        <span ng-bind="db.db_name"></span>
+														    </ui-select-choices>
+															</ui-select>
+												      	</div>
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Schema</div></span> <input type="text" placeholder="Select a Schema" class="form-control"></div>
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Schema</div></span> <ui-select ng-model="createdSchema.value">
+																    <ui-select-match placeholder="List of Schemas">
+																        {{$select.selected.schema_name}}
+																    </ui-select-match>
+																    <ui-select-choices repeat="schema in (createdSchemas | filter: $select.search) track by schema.schema_id">
+																        <span ng-bind="schema.schema_name"></span>
+																    </ui-select-choices>
+																</ui-select></div>
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control"></div>
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "createdTable"></div>
 												      </div>									      	
 												    </div>
 												    <div class="row">
-												    	<button type="button" class="navbar-minimalize btn btn-primary button-right">Save</button>
+												    	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>
 											    	</div>
 										        </fieldset>
 										    </form>
@@ -251,7 +268,6 @@
 									<!-- <div id="ProjectBrowseTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset5">
-										            
 										            <div class="mail-box" style="border:none;!important;">
 										                <div class="mail-body" style="border:none;!important;" >
 										                    <div class="row">

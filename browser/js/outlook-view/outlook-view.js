@@ -38,13 +38,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
+        $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
+            if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
-            console.log($scope.sources[0])
+            console.log($scope.rules)
         })
     }
 
@@ -87,6 +89,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
+                    $state.reload()
                 })
                 break
             case "editAttribute":
@@ -97,7 +100,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)
                                 .then(function(mapping) {
-                                    $scope.selectAttribute($scope.targetMapping)
+                                    $state.reload()
                                 })
                         })
                 }
@@ -138,6 +141,18 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             version: $scope.sources[0].version
         }
         mappingFactory.changeStatus(temp)
+        $state.reload()
+    }
+
+    $scope.generateDDL = function() {
+        //allow for inidividuals to modify conditions on the attributes such as not null and default values
+        var ddl = "CREATE TABLE " + $scope.table.table_name + "("
+        for (var i = 0; i < $scope.attributes.length; i++) {
+            console.log($scope.attributes[i])
+            ddl = ddl + $scope.attributes[i].attr_name + " " + $scope.attributes[i].datatype + $scope.attributes[i].description + ", "
+        }
+        ddl += ")"
+        console.log(ddl)
     }
 
 

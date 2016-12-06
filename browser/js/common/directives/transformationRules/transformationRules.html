@@ -1,4 +1,4 @@
-<div class="mail-box" style="overflow:none;margin-bottom:0;">
+<div class="mail-box" style="overflow:none;margin-bottom:0;border-bottom:0;">
 
     <div class="mail-attachment">
             <div class="attachment">
@@ -42,11 +42,14 @@
                 <button class="accordion">{{rule.type}}
                 </button>
                 <div class="panel">
-                    <div class="pull-right tooltip-demo" ng-switch="editing">
-                           <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
+                    <div class="pull-right tooltip-demo">
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="hide[$index]"><i class="fa fa-pencil" ng-click = "editRule($index)"></i></a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hide[$index]" ng-click = "updateRule($index)">Save</a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hide[$index]" ng-click = "cancel($index)">Cancel</a>
+                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteRule($index)"><i class="fa fa-trash-o"></i></a>
                     </div>
-                  <p>{{rule.description}}</p>
+                   <p ng-hide="hide[$index] == 1">{{rule.description}}</p>
+                   <textarea ng-show="hide[$index] ==1" ng-model="rule.newDescription" class="newRuleDescription col-lg-12" placeholder="{{rule.description}}" cols="50"></textarea>
                 </div>
             </div>
 

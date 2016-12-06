@@ -47,7 +47,17 @@ router.get('/impact/attribute/:attr_id', function(req, res) {
 router.get('/impact/table/:table_id', function(req, res) {
     db.query('select * from tables inner join attributes on attributes.table_id = tables.table_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id =' + req.params.table_id)
         .then(function(mappings) {
-            res.json(mappings)
+            var seen = {}
+            var out = []
+            var j = 0
+            for (var i = 0; i < mappings[0].length; i++) {
+                var item = mappings[0][i].table_id
+                if (seen[item] !== 1) {
+                    seen[item] = 1;
+                    out[j++] = mappings[0][i]
+                }
+            }
+            res.json(out)
         })
 })
 

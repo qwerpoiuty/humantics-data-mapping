@@ -67,7 +67,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.nextImpact = function(attr_id) {
         $scope.impactSearches.push($scope.sources)
         $scope.sources = null
-        console.log($scope.sources)
         $scope.sources = $scope.targets
         $scope.targets = null
         reportingFactory.getImpactByAttribute(attr_id).then(function(attributes) {
@@ -81,8 +80,11 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         $scope.targets = []
     }
 
-    $scope.demoPUPOSES = function() {
-        dataFactory.getImpactByTable()
+    $scope.tableImpact = function(table) {
+        reportingFactory.getImpactByTable(table.table_id).then(function(impacts) {
+            $scope.sources = impacts
+            $scope.impactSearchs.push($scope.sources)
+        })
     }
 
     $scope.openBrowse = function(evt, tabSelection) {
