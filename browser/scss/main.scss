@@ -67,9 +67,10 @@ body {
   padding:0;
 }
 
-.node {
-  cursor: pointer;
+.with-newlines{
+  white-space:pre
 }
+
 
 .node circle {
   fill: #fff;
@@ -86,7 +87,6 @@ body {
   stroke: #676a6c;
   stroke-width: 3.0px;
 }
-
 
 @import 'directives/main';
 @import 'home/main';

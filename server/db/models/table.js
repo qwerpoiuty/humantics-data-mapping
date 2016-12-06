@@ -17,6 +17,9 @@ module.exports = db.define('table', {
     columns: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
+    primary_index: {
+        type: Sequelize.JSON
+    },
     table_status: {
         type: Sequelize.ENUM('incomplete', 'pending', 'complete'),
         defaultValue: 'incomplete'

@@ -3,6 +3,7 @@ var router = require('express').Router();
 var db = require('../../../db')
 var Mapping = db.model('mapping')
 var chalk = require('chalk')
+var Promise = require('bluebird');
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -58,6 +59,36 @@ router.get('/impact/table/:table_id', function(req, res) {
                 }
             }
             res.json(out)
+        })
+})
+
+router.get('/impact/tree/:table_id', function(req, res) {
+    //gets the root of the tree
+    var tree = []
+    db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + req.params.table_id)
+        .then(function(attributes) {
+            attributes = attributes[0]
+            tree.push({
+                id: req.params.table_id,
+                name: attributes[0].schema_name + '.' + attributes[0].table_name,
+            })
+            var children = attributes.map(function(e) {
+                    return e.target
+                })
+                //find the children of the root
+            db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')")
+                .then(function(attributes) {
+                    attributes = attributes[0]
+                    var promises = []
+                    attributes.forEach(function(e) {
+                        tree.push({
+                            id: e.table_id,
+                            name: attributes[0].schema_name + '.' + attributes[0].table_name,
+                            parent: req.params.table_id
+                        })
+                    })
+                    return attributes
+                })
         })
 })
 

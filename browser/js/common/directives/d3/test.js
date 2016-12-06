@@ -10,8 +10,8 @@ app.directive("d3", function(dataFactory, reportingFactory) {
                     bottom: 20,
                     left: 120
                 },
-                width = 1920 - margin.right - margin.left,
-                height = 1080 - margin.top - margin.bottom;
+                width = 1800 - margin.right - margin.left,
+                height = 900 - margin.top - margin.bottom;
 
             var i = 0,
                 duration = 750,

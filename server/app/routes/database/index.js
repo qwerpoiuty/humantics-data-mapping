@@ -19,11 +19,6 @@ var ensureAuthenticated = function(req, res, next) {
 
 //high level gets
 
-router.get('/api/projects', function(req, res) {
-    db.query('select * from projects').then(function(projects) {
-        res.json(projects)
-    })
-})
 router.get('/systems', function(req, res) {
     db.query('select * from systems').then(function(systems) {
         res.json(systems)

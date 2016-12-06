@@ -10,6 +10,7 @@ app.directive('mapping', function($state, dataFactory) {
         templateUrl: 'js/common/directives/mappingTable/mappingTable.html',
         link: function(scope) {
             scope.systems = dataFactory.getSystems()
+            console.log(scope.source)
             dataFactory.getDatabases().then(function(dbs) {
                 scope.dbs = dbs[0]
             })

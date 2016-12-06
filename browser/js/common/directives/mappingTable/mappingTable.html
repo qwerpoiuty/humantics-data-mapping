@@ -6,6 +6,7 @@
                     <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th ng-if="source===[]">Null</th>
                             <th style="padding-top:0; padding-bottom:3px;">
                               <!--   <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" style="background-color:#e7eaec; border:none; color:#676a6c;"  type="button" data-toggle="dropdown">Sources
@@ -89,6 +90,15 @@
                     <tr>
                         <td>Column</td>      
                         <td>{{target.attr_name || ''}}</td>
+                    </tr>
+                    <tr>
+                        <td>Properties</td>
+                        <td><span class = "att-prop-badge" ng-repeat="prop in target.properties">{{prop}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><span class = "att-pri-badge" ng-show="{{attribute.pri == true}}"><i class ="fa fa-check" area-hidden="true"></i></span>
+                        </td>
                     </tr>
                      <tr>
                         <td>Data Type</td>
@@ -179,7 +189,16 @@
                     </tr>
                     <tr>
                         <td>Column</td>
-                          <td><input class = "btn btn-default form-control" type="text" ng-model="temp.target.attr_name"/></td>
+                        <td><input class = "btn btn-default form-control" type="text" ng-model="temp.target.attr_name"/></td>
+                    </tr>
+                    <tr>
+                        <td>Properties</td>
+                        <td><label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -303,23 +322,23 @@
                     <tbody>
                     <tr>
                         <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.system}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.db_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.schema_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.table_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
                         
                     </tr>
                     <tr>
@@ -329,7 +348,7 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.last_modified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.last_modified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
@@ -424,7 +443,7 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{displaySource.last_modified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{displaySource.last_modified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
@@ -432,7 +451,7 @@
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>temp.attr.description</td>
+                        <td>{{temp.attr.description}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -451,19 +470,19 @@
                     <tbody>
                     <tr>
                         <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.system}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.db_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.schema_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.table_name}}</td>
                     </tr>
                     <!-- THIS IS IF WE WANT FOR THE MAPPER TO BE ABLE TO MOVE ATTRIBUTES I DON"T THINK THIS SHOULD BE ALLOWED -->
                     <!-- <tr>
@@ -507,8 +526,18 @@
                     </tr> -->
                     <tr>
                         <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
                         
+                    </tr>
+                    <tr>
+                        <td>Properties</td>
+                        <td>
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -519,7 +548,7 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.lastModified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.lastModified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>

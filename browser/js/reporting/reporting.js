@@ -12,6 +12,11 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         $scope.dbs = dbs[0]
     })
 
+    $scope.test = function() {
+        reportingFactory.getTree(2).then(function(tree) {
+            console.log(tree)
+        })
+    }
     $scope.impactSearches = []
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
