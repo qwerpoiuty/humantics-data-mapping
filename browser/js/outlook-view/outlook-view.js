@@ -95,6 +95,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 var mapping = $scope.setMapping()
                 mapping.source[$scope.sourceIndex] = $scope.temp.attr_id
                 if ($scope.temp.target) {
+                    var arr = []
+                    for (var key in $scope.temp.target.properties) {
+                        if ($scope.temp.target.properties[key]) arr.push(key)
+                    }
+                    $scope.temp.target.properties = arr
                     mappingFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)
@@ -105,7 +110,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 }
                 break
             case "newAttribute":
-                $scope.temp.target.table_id = $stateParams.tableId
+                $scope.temp.target.table_id = $stateParams.tableI
+                var arr = []
+                for (var key in $scope.temp.target.properties) {
+                    if ($scope.temp.target.properties[key]) arr.push(key)
+                }
+                $scope.temp.target.properties = arr
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
                     console.log('hello')
                 })
@@ -152,6 +162,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         }
         ddl += body.join(',\n')
         ddl += "\n)"
+
         if ($scope.table.primary_index.type === "upi") {
             ddl += "\nUNIQUE PRIMARY INDEX(" + $scope.table.primary_index.attr_name + ")\n;"
         } else if ($scope.table.primary_index.type === "nupi") {
@@ -170,6 +181,4 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         });
 
     }
-
-
 });

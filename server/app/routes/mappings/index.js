@@ -3,6 +3,7 @@ var router = require('express').Router();
 var db = require('../../../db')
 var Mapping = db.model('mapping')
 var chalk = require('chalk')
+var Promise = require('bluebird');
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -63,57 +64,32 @@ router.get('/impact/table/:table_id', function(req, res) {
 
 router.get('/impact/tree/:table_id', function(req, res) {
     //gets the root of the tree
-    db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + req.params.table_id).then(function(attributes) {
-        attributes = attributes[0]
-        console.log(attributes)
-        var tree = [{
-            id: req.params.table_id,
-            name: attributes[0].schema_name + '.' + attributes[0].table_name,
-        }]
-        var children = attributes.map(function(e) {
-                return e.target
+    var tree = []
+    db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + req.params.table_id)
+        .then(function(attributes) {
+            attributes = attributes[0]
+            tree.push({
+                id: req.params.table_id,
+                name: attributes[0].schema_name + '.' + attributes[0].table_name,
             })
-            //finds all the tables amongst the children of root
-        db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')")
-            .then(function(attributes) {
-                attributes = attributes[0]
-                var flags = {},
-                    child_tables = []
-                for (var i = 0; i < attributes.length; i++) {
-                    if (flags[attributes[i].table_id]) continue;
-                    flags[attributes[i].table_id] = true;
-                    child_tables.push(attributes[i].table_id);
-                    tree.push({
-                        id: attributes[i].table_id,
-                        name: attributes[i].schema_name + attributes[0].table_name,
-                        parent: req.params.table_id
+            var children = attributes.map(function(e) {
+                    return e.target
+                })
+                //find the children of the root
+            db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')")
+                .then(function(attributes) {
+                    attributes = attributes[0]
+                    var promises = []
+                    attributes.forEach(function(e) {
+                        tree.push({
+                            id: e.table_id,
+                            name: attributes[0].schema_name + '.' + attributes[0].table_name,
+                            parent: req.params.table_id
+                        })
                     })
-                }
-                while (child_tables) {
-                    for (var i = 0; i < child_tables.length; i++) {
-                        db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + child_tables[i].table_id)
-                            .then(function(attributes) {
-                                attributes = attributes[0]
-                                var flags = {},
-                                    temp_child_array = []
-                                for (var i = 0; i < attributes.length; i++) {
-                                    if (flags[attributes[i].table_id]) continue;
-                                    flags[attributes[i].table_id] = true;
-                                    temp.push(attributes[i].table_id);
-                                    tree.push({
-                                        id: attributes[i].table_id,
-                                        name: attributes[i].schema_name + attributes[0].table_name,
-                                        parent: child_tables[i].table_id
-                                    })
-                                }
-                                child_tables = temp_child_array
-                            })
-                    }
-                }
-            })
-        console.log(tree)
-        res.json(tree)
-    })
+                    return attributes
+                })
+        })
 })
 
 router.post('/', function(req, res) {

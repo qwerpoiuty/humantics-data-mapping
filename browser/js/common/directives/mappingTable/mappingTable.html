@@ -95,6 +95,11 @@
                         <td>Properties</td>
                         <td><span class = "att-prop-badge" ng-repeat="prop in target.properties">{{prop}}</span></td>
                     </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><span class = "att-pri-badge" ng-show="{{attribute.pri == true}}"><i class ="fa fa-check" area-hidden="true"></i></span>
+                        </td>
+                    </tr>
                      <tr>
                         <td>Data Type</td>
                         <td class="text-info">{{target.datatype || ''}}</td>
@@ -188,7 +193,12 @@
                     </tr>
                     <tr>
                         <td>Properties</td>
-                        <td><label>Primary Key<input type="checkbox" ng-model="temp.properties.pk"/></label><label>Foreign Key<input type="checkbox" ng-model = "temp.properties.fk"/></label></td>
+                        <td><label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -312,23 +322,23 @@
                     <tbody>
                     <tr>
                         <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.system}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.db_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.schema_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.table_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
                         
                     </tr>
                     <tr>
@@ -338,7 +348,7 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.last_modified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.last_modified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
@@ -460,19 +470,19 @@
                     <tbody>
                     <tr>
                         <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.system}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.db_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.schema_name}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.table_name}}</td>
                     </tr>
                     <!-- THIS IS IF WE WANT FOR THE MAPPER TO BE ABLE TO MOVE ATTRIBUTES I DON"T THINK THIS SHOULD BE ALLOWED -->
                     <!-- <tr>
@@ -516,12 +526,18 @@
                     </tr> -->
                     <tr>
                         <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
                         
                     </tr>
                     <tr>
                         <td>Properties</td>
-                        <td><label>Primary Key<input type="checkbox" ng-model="temp.properties.pk"/></label><label>Foreign Key<input type="checkbox" ng-model = "temp.properties.fk"/></label></td>
+                        <td>
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -532,7 +548,7 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.lastModified || 'Some Value'}}</td>
+                        <td class="padding-tb-16 text-center">{{target.lastModified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
