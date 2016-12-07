@@ -63,33 +63,87 @@ router.get('/impact/table/:table_id', function(req, res) {
 })
 
 router.get('/impact/tree/:table_id', function(req, res) {
-    //gets the root of the tree
+    //gets the children of a node given a tableId
     var tree = []
-    db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + req.params.table_id)
-        .then(function(attributes) {
-            attributes = attributes[0]
-            tree.push({
-                id: req.params.table_id,
-                name: attributes[0].schema_name + '.' + attributes[0].table_name,
-            })
-            var children = attributes.map(function(e) {
-                    return e.target
-                })
-                //find the children of the root
-            db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')")
-                .then(function(attributes) {
-                    attributes = attributes[0]
-                    var promises = []
-                    attributes.forEach(function(e) {
-                        tree.push({
-                            id: e.table_id,
-                            name: attributes[0].schema_name + '.' + attributes[0].table_name,
-                            parent: req.params.table_id
+    let promises = []
+    let thenable = {
+        then: function(resolve) {
+            resolve(tree)
+            throw new TypeError("throwing")
+        }
+    }
+
+
+    let promise = Promise.resolve(thenable)
+    let findChildren = parents => {
+        let promises = []
+        parents.forEach(parent => {
+            let childPromise = new Promise((resolve, reject) => {
+                if (!parent) {
+                    resolve()
+                } else {
+                    db.query("select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = " + parent).then(attributes => {
+                        attributes = attributes[0]
+                        var children = attributes.map(e => {
+                            return e.target
+                        })
+                        db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')").then(function(attributes) {
+                            attributes = attributes[0]
+                            if (attributes === undefined) return resolve()
+                            let tables = addToTree(attributes, parent)
+                            var children = tables.map(e => {
+                                return e.table_id
+                            })
+                            if (children.length == 0) {
+                                resolve()
+                            } else {
+                                return findChildren(children)
+                            }
                         })
                     })
-                    return attributes
-                })
+                }
+            })
+            promises.push(childPromise)
         })
+        Promise.all(promises).then(() => {
+            res.json(tree)
+        })
+    }
+
+    let addToTree = (attributes, parent) => {
+        var flags = {},
+            child_tables = []
+        for (var i = 0; i < attributes.length; i++) {
+            if (flags[attributes[i].table_id]) continue;
+            flags[attributes[i].table_id] = true;
+            child_tables.push(attributes[i].table_id);
+            tree.push({
+                id: attributes[i].table_id,
+                name: attributes[i].schema_name + "." + attributes[0].table_name,
+                parent: parent
+            })
+        }
+        return child_tables
+    }
+    db.query('select table_name, schema_name, target from tables inner join attributes on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ' + req.params.table_id).then(attributes => {
+        attributes = attributes[0]
+        tree.push({
+            id: req.params.table_id,
+            name: attributes[0].schema_name + '.' + attributes[0].table_name,
+        })
+        var children = attributes.map(e => {
+            return e.target
+        })
+        db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')").then(attributes => {
+            var tables = addToTree(attributes[0], req.params.table_id)
+            var children = attributes[0].map(e => {
+                return e.table_id
+            })
+            return findChildren(children)
+        })
+    })
+
+
 })
 
 router.post('/', function(req, res) {

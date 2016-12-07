@@ -1,9 +1,12 @@
 app.directive("d3", function(dataFactory, reportingFactory) {
     return {
         restrict: 'E',
-        scope: {},
+        scope: {
+            root: "="
+        },
         templateUrl: 'js/common/directives/d3/test.html',
         link: function(scope) {
+            console.log(scope.root)
             var margin = {
                     top: 10,
                     right: 120,
@@ -30,30 +33,25 @@ app.directive("d3", function(dataFactory, reportingFactory) {
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                root = flare;
-                console.log(root)
-                root.x0 = height / 2;
-                root.y0 = 0;
+            root = scope.root[0];
+            root.x0 = height / 2;
+            root.y0 = 0;
 
 
 
-                function collapse(d) {
-                    if (d.children) {
-                        d._children = d.children;
-                        d._children.forEach(collapse);
-                        d.children = null;
-                    }
+            function collapse(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d._children.forEach(collapse);
+                    d.children = null;
                 }
+            }
 
-                root.children.forEach(collapse);
-                update(root);
-
-
-
+            root.children.forEach(collapse);
+            update(root);
             d3.select(self.frameElement).style("height", "800px");
 
             function update(source) {
-
                 // Compute the new tree layout.
                 var nodes = tree.nodes(root).reverse(),
                     links = tree.links(nodes);
@@ -178,6 +176,7 @@ app.directive("d3", function(dataFactory, reportingFactory) {
 
             // Toggle children on click.
             function click(d) {
+                console.log(d.children)
                 if (d.children) {
                     d._children = d.children;
                     d.children = null;
