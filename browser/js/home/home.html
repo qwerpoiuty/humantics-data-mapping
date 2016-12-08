@@ -3,12 +3,12 @@
 	    <div class="wrapper wrapper-content animated fadeIn">
 	        <div class="p-w-md m-t-sm">
 	        	<div class="row">
-	        		<div class = "col-sm-6">
+	        		<div class = "col-sm-5">
 	        			<div class="ibox">
-	        				<div class="ibox-title">
+	        				<div class="ibox-title" style="border-top:none;">
 	        					<h5 class="text-success">Summary of Projects</h5>
 	        				</div>
-	        				<div class="ibox-content">
+	        				<div class="ibox-content" style="max-height:230px;overflow-y:scroll;">
 			        			<table class="footable table table-stripped toggle-arrow-tiny">
 		                        <thead>
 		                        <tr>
@@ -53,54 +53,14 @@
 		                            <td>Jul 14, 2013</td>
 		                            <td>Ongoing</td>
 		                        </tr>
-		                            <tr>
-		                            <td>Project 18</small></td>
-		                            <td>John Young </td>
-		                            <td>2</td>
-		                            <td>18</td>
-		                            <td>Jul 14, 2013</td>
-		                            <td>Ongoing</td>
-		                        </tr>
 		                        </tbody>
 		                    </table>
 		                 	</div>
 	        			</div>
 	        		</div>
-	        		<div class = "col-sm-6">
-	        			<div class="ibox">
-	        				<div class="ibox-title">
-								<h5 class="text-success">Recent Actions</h5>
-	        				</div>
-							<div class="ibox-content">
-								<table class="footable table table-stripped toggle-arrow-tiny">
-		                        <tr>
-		                            <td style="text-align:center;border-top:none;">Completed 1 Task For Project 18</td>
-		                        </tr>
-		                          <tr>
-		                            <td style="text-align:center;">Joined Project 18</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center;">Completed 1 Task For Project 12</td>
-		                        </tr>
-		                            <tr>
-		                            <td style="text-align:center;">Completed 2 Tables For Project 12</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center;">Completed 2 Tasks For Project 7</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:center;">Completed 2 Tables For Project 7</td>
-		                        </tr>
-		                        </tbody>
-		                    </table>
-							</div>
-	        			</div>
-	        		</div>
-	        	</div>
-	        	<div class="row">
-	        		<div class="col-lg-offset-3 col-lg-6">
+	        		<div class="col-lg-7">
 						<div class = "ibox">
-							<div class = "ibox-content">
+							<div class = "ibox-content" style="padding:30px; border:none;">
 								<div class = "row row-centered">
 									<div class="col-lg-12 col-centered searchOuterContainer">
 										<ul class="tab">
@@ -108,7 +68,6 @@
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'SqlTab')"><h5 class="text-success">SQL</h5></a></li>
-											  <!-- <li><a class="tablinks" ng-click="openBrowse(event, 'ProjectBrowseTab')"><h5 class="text-success">Projects</h5></a></li> -->
 											</ul>
 										<div id="SearchTab" class="tabcontent">	
 										    <form method="post">
@@ -118,7 +77,6 @@
 										            <div id="searchInContainer">
 										                <input type="radio" name="check" class="css-checkbox" value="table" id="searchTable" checked ng-model="searchCat"/>
 										                <label for="searchTable" class="css-label" id="siteNameLabel">Table Search</label>
-				
 										                <input type="radio" name="check" class="css-checkbox" value="entity" id="searchEntity" ng-model="searchCat"/>
 										                <label for="searchEntity" class="css-label">Entity Search</label>
 										                
@@ -204,18 +162,16 @@
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "createdTable"></div>
-												      </div>									      	
+												      </div>
+												      <button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>									      	
 												    </div>
-												    <div class="row">
-												    	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>
-											    	</div>
 										        </fieldset>
 										    </form>
 									    </div>
 
 									    <div id="SqlTab" class="tabcontent">	
 												<form method="post">
-										        <fieldset class="tabFieldset2">	
+										        <fieldset class="tabFieldset4">	
 													<div class = "row">
 															<div class="col-lg-8 col-lg-offset-2">
 													        <div class="input-group m-b">
@@ -230,120 +186,52 @@
 																</ui-select>
 													        </div>
 											      		</div>
-
-													<!-- 	<div class="col-lg-8 col-lg-offset-2">
-													        <div class="input-group m-b">
-													        	<span class="input-group-addon"><div class="newTableText">Select a Database</div></span>
-													       			<ui-select ng-model="selectedDb.value">
-															    <ui-select-match placeholder="List of Databases">
-															        {{$select.selected.db_name}}
-															    </ui-select-match>
-															    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-															        <span ng-bind="db.db_name"></span>
-															    </ui-select-choices>
-															</ui-select>
-													        </div>
-											      		</div>
-
-														<div class="col-lg-8 col-lg-offset-2">
-													        <div class="input-group m-b">
-													        	<span class="input-group-addon"><div class="newTableText">Select a Schema</div></span>
-																<ui-select ng-model="selectedSchema.value">
-																    <ui-select-match placeholder="List of Schemas">
-																        {{$select.selected.schema_name}}
-																    </ui-select-match>
-																    <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
-																        <span ng-bind="schema.schema_name"></span>
-																    </ui-select-choices>
-																</ui-select>
-													        </div>
-											      		</div> -->
 													</div>
 										        </fieldset>
 										    </form>
 									    </div>
 
 									</div>
-
-									<!-- <div id="ProjectBrowseTab" class="tabcontent">	
-										    <form method="post">
-										        <fieldset class="tabFieldset5">
-										            <div class="mail-box" style="border:none;!important;">
-										                <div class="mail-body" style="border:none;!important;" >
-										                    <div class="row">
-										                        <div class="col-sm-12">
-										                            <form role="form">
-										                                <table class="table table-hover">
-										                                <thead>
-										                                    <tr>
-										                                        <th class="text-center">Project Name</th>
-										                                        <th class="text-center">Manager</th>
-										                                        <th class="text-center">Due Date</th>
-										                                        <th class="text-center">Availability</th>
-										                                    </tr>
-										                                </thead>
-										                                <tbody>
-										                                   
-										                                    <tr>
-										                                    	<td>Project 1</td>
-										                                    	<td>S. Lieat</td>
-										                                    	<td>September 6th 2015</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 2</td>
-										                                    	<td>L. Khan</td>
-										                                    	<td>October 23rd 2016</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 3</td>
-										                                    	<td>B. Robinson</td>
-										                                    	<td>July 6th 2033</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-danger" ng-click="clicked=true ">Closed</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 4</td>
-										                                    	<td>R. Paul</td>
-										                                    	<td>January 19th 1998</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-primary" ng-click="clicked=true ">Open</button>
-																                </td>
-									                                    	</tr>
-									                                    	<tr>
-										                                    	<td>Project 5</td>
-										                                    	<td>Q. Phillips</td>
-										                                    	<td>March 18th 2002</td>
-										                                    	<td> 
-										                                    		<button class = "btn btn-danger" ng-click="clicked=true ">Closed</button>
-																                </td>
-									                                    	</tr>
-										                                </tbody>
-										                            </table>
-										                            </form>
-										                        </div>
-										                    </div>
-										                </div>
-										            </div>
-										        </fieldset>
-										    </form>
-									    </div>
-									</div> -->
 								</div> 
 							</div>
 						</div>
 					</div>
+	        	
 	        	</div>
-	            <div class="row" ng-show="tables">
-	                <div class="col-lg-12">
+	        	<div class="row">
+	        			<div class = "col-lg-5">
+	        			<div class="ibox">
+	        				<div class="ibox-title" style="border-top:none;">
+								<h5 class="text-success">Recent Actions</h5>
+	        				</div>
+							<div class="ibox-content">
+								<table class="footable table table-stripped toggle-arrow-tiny">
+		                        <tr>
+		                            <td style="text-align:center;border-top:none;">Completed 1 Task For Project 18</td>
+		                        </tr>
+		                          <tr>
+		                            <td style="text-align:center;">Joined Project 18</td>
+		                        </tr>
+		                        <tr>
+		                            <td style="text-align:center;">Completed 1 Task For Project 12</td>
+		                        </tr>
+		                            <tr>
+		                            <td style="text-align:center;">Completed 2 Tables For Project 12</td>
+		                        </tr>
+		                        <tr>
+		                            <td style="text-align:center;">Completed 2 Tasks For Project 7</td>
+		                        </tr>
+		                        <tr>
+		                            <td style="text-align:center;">Completed 2 Tables For Project 7</td>
+		                        </tr>
+		                        </tbody>
+		                    </table>
+							</div>
+	        			</div>
+	        		</div>
+	        		   <div class="col-lg-7">
 	                    <div class="ibox">
-	                        <div class="ibox-content">
+	                        <div class="ibox-content" style:"border-top:none;">
 				                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
 	                                	<thead>
 	                                	<tr>
@@ -385,6 +273,9 @@
 	                            </div>
 	                        </div>
 	                    </div>
+	        	</div>
+	            <div class="row" ng-show="tables">
+	
 	                </div>
 	            </div>
 	        </div>
