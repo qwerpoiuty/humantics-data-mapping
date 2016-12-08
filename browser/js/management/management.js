@@ -56,6 +56,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
             }
         })
     }
+
     $scope.newProject = function() {
         var modalInstance = $modal.open({
             templateUrl: 'js/common/modals/newProject/newProject.html',

@@ -1,4 +1,4 @@
-<div class="mail-box" style="overflow:none;margin-bottom:0;border-bottom:0;">
+<div class="mail-box" style="overflow:none;margin-bottom:0;border-bottom:none; border-left:none; border-right:none;">
 
     <div class="mail-attachment">
             <div class="attachment">
@@ -6,16 +6,15 @@
                     <a class="btn btn-white btn-sm" ng-click = addTransformation()><i class="fa fa-plus"></i> </a>
                 </div>
 
-                <h3>Transformation Rules</h3>
-                <div class="clearfix"></div>
+                <h3 style="margin:0px;">Transformation Rules</h3>
             </div>
         </div>
         <div class="mail-body text-left tooltip-demo" style="height:26vh;padding-bottom:0;">
              <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
             <div accordion class = "accordion-button" ng-if="newRule">
-                <button class="accordion">New Rule</button>
+                <button class="accordion"><h4>New Rule</h4></button>
                 <div class="panel accordion-panel-parent col-lg-12" style="margin-bottom:15px;">
-                    <form class="accordion-panel">
+                    <form class="accordion-panel" style="padding-top:10px; padding-bottom:10px;">
                         <div class="pull-right tooltip-demo">
                             <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
                         </div>

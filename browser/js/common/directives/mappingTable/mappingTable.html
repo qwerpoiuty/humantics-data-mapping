@@ -1,7 +1,7 @@
-<div class="body-container mail-box overflow" style="margin-bottom:0;" ng-switch="edit">
-    <div class="mail-body" ng-switch-default style="border-top:none;">
+<div class="body-container mail-box overflow" style="margin-bottom:0; border:none;" ng-switch="edit">
+    <div class="mail-body" ng-switch-default style="border-top:none; padding-bottom:0px;">
         <div class="row">
-            <div class="col-sm-6 b-r">
+            <div class="col-sm-6 b-r" style="border-right: 2px solid #f8ac59;">
                 <form role="form">
                     <table class="table table-hover">
                     <thead>
@@ -15,13 +15,15 @@
                                 </div> -->
                                     <ul class="tab" style="border:none;">
                                         <li ng-repeat = "source in sources track by $index">
+                                            <a ng-if="!sources.length" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
+                                                <h5 style="margin:0;color:#676a6c;" class="text-success">No Source</h5>
+                                            </a>
                                             <a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
                                                 <h5 style="margin:0;color:#676a6c;" class="text-success">Source {{$index + 1}}</h5>
                                             </a>
                                         </li>
                                     </ul>
                             </th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,9 +122,9 @@
             </div>
         </div>
     </div>
-    <div class="mail-body" ng-switch-when="newAttribute">
+    <div class="mail-body" ng-switch-when="newAttribute" style="padding-bottom:0px;">
         <div class="row">
-            <div class="col-sm-6 b-r">
+            <div class="col-sm-6 b-r" style="border-right: 2px solid #f8ac59;">
                 <form role="form">
                     <table class="table table-hover">
                     <thead>
@@ -173,32 +175,36 @@
                     <tbody>
                      <tr>
                         <td>System</td>
-                        <td>{{temp.system_name}}</td>
+                        <td style="text-align:center;">{{temp.system_name}}</td>
                     </tr>
                     <tr>
                         <td>Database</td>
-                        <td>{{temp.db_name}}
+                        <td style="text-align:center;">{{temp.db_name}}
                     </tr>
                     <tr>
                         <td>Schema</td>               
-                        <td>{{temp.schema_name}}</td>
+                        <td style="text-align:center;">{{temp.schema_name}}</td>
                     </tr>
                     <tr>
                         <td>Table</td>                                    
-                          <td>{{temp.table_name}}</td>
+                        <td style="text-align:center;">{{temp.table_name}}</td>
                     </tr>
                     <tr>
                         <td>Column</td>
-                        <td><input class = "btn btn-default form-control" type="text" ng-model="temp.target.attr_name"/></td>
+                        <td style="text-align:center;"><input class = "btn btn-default form-control" type="text" ng-model="temp.target.attr_name"/></td>
                     </tr>
                     <tr>
                         <td>Properties</td>
-                        <td><label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        <td style="text-align:center;">
+                            <label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> 
+                            <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> 
+                            <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>UPI</label>
+                            <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.npi"/>NPI</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Personally Identifiable Information</td>
-                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
+                        <td style="text-align:center;"><label><input type="checkbox" ng-model = "temp.target.pii"/></label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
@@ -215,9 +221,9 @@
         </div>
     </div>
 
-    <div class="mail-body" ng-switch-when="newSource">
+    <div class="mail-body" ng-switch-when="newSource" style="padding-bottom:0px;border:none;">
         <div class="row">
-            <div class="col-sm-6 b-r">
+            <div class="col-sm-6 b-r" style="border-right: 2px solid #f8ac59;">
                 <form role="form">
                     <table class="table table-hover">
                     <thead>
@@ -360,9 +366,9 @@
             </div>
         </div>
     </div>
-    <div class="mail-body" ng-switch-when="editAttribute">
+    <div class="mail-body" ng-switch-when="editAttribute" style="padding-bottom:0px; border:none;">
         <div class="row">
-            <div class="col-sm-6 b-r">
+            <div class="col-sm-6 b-r" style="border-right: 2px solid #f8ac59;">
                 <form role="form">
                     <table class="table table-hover">
                     <thead>
@@ -531,13 +537,16 @@
                     </tr>
                     <tr>
                         <td>Properties</td>
-                        <td>
-                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>
+                        <td style="text-align:center;">
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model="temp.target.properties.pk"/>PK</label> 
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.fk"/>FK</label> 
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.upi"/>UPI</label>
+                        <label class = "att-prop-checkbox"><input type="checkbox" ng-model = "temp.target.properties.npi"/>NPI</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Personally Identifiable Information</td>
-                        <td><label><input type="checkbox" ng-model = "temp.target.pii"/>PII</label></td>
+                        <td style="text-align:center;"><label><input type="checkbox" ng-model = "temp.target.pii"/></label></td>
                     </tr>
                     <tr>
                         <td>Data Type</td>
