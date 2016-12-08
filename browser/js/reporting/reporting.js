@@ -49,7 +49,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     })
 
     $scope.tree = tree
-    console.log(tree)
     $scope.impactSearches = []
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
@@ -57,7 +56,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.$watch(function() {
         return $scope.selectedDb.value
     }, function(nv, ov) {
-        console.log(nv)
         if (nv !== ov) {
             if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {

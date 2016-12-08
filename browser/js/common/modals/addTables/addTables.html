@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h3 class="modal-title">Adding tables to {{project.project_name}}</h3>
+</div>
+<div class="modal-body">
+    <textarea ng-model="query" placeholds="Write a select statement for your tables"></textarea>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addTables(query)">OK</button>
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+</div>

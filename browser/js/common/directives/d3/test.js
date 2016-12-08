@@ -176,7 +176,6 @@ app.directive("d3", function(dataFactory, reportingFactory) {
 
             // Toggle children on click.
             function click(d) {
-                console.log(d.children)
                 if (d.children) {
                     d._children = d.children;
                     d.children = null;

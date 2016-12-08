@@ -9,10 +9,9 @@ app.factory('projectFactory', function($http) {
             })
     }
 
-    d.getProjectById = function(projectId){
+    d.getProjectById = function(projectId) {
         return $http.get('api/project/' + projectId)
-            .then(function(response){
-                console.log(response.data)
+            .then(function(response) {
                 return response.data
             })
     }
@@ -29,6 +28,14 @@ app.factory('projectFactory', function($http) {
                 return response.data
             })
     }
-
+    d.addTablesThroughQuery = function(query, projectId) {
+        var query = {
+            query: query,
+            project: projectId
+        }
+        return $http.post('/api/project/addTablesThroughQuery', query).then(function(response) {
+            return response.data
+        })
+    }
     return d
 })

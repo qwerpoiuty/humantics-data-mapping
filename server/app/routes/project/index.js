@@ -15,17 +15,29 @@ var ensureAuthenticated = function(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-    db.query('SELECT * FROM projects')
+    db.query('SELECT * FROM projects order by projects.project_id asc')
         .then(function(projects) {
             res.json(projects)
         })
 })
 
 router.get('/:id', function(req, res) {
-    db.query('SELECT * FROM projects INNER JOIN tables on tables.table_id = any(projects.tables) WHERE projects.project_id =' + req.params.id)
+    db.query(`SELECT * FROM projects INNER JOIN tables on tables.table_id = any(projects.tables) WHERE projects.project_id = + ${req.params.id} order by projects.project_id desc`)
         .then(function(projects) {
             res.json(projects)
         })
+})
+
+router.post('/addTablesThroughQuery', (req, res) => {
+    db.query(req.body.query).then((tables) => {
+        tables = tables[0]
+        tables = tables.map(e => {
+            return e.table_id
+        })
+        db.query(`update projects set tables= tables || '{${tables.join(',')}}' where projects.project_id = ${req.body.project}`).then(project => {
+            res.sendStatus(200)
+        })
+    })
 })
 
 router.post('/', function(req, res) {

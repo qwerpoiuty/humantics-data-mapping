@@ -2,7 +2,8 @@ app.factory("queryFactory", function($http) {
     var d = {}
 
     d.customQuery = function(query) {
-        return $http.post('/api/query', query).then(function(response) {
+        console.log(query)
+        return $http.get('/api/projects/custom', query).then(function(response) {
             return response.data
         })
     }

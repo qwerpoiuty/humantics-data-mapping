@@ -19,31 +19,43 @@ app.config(function($stateProvider) {
 });
 
 app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, user, projects, $modal, $state) {
-
     $scope.user = user
     $scope.projects = projects[0]
     $scope.currentPro = "Select a Project"
-    $scope.selectedTask = "false"
+    $scope.selectedProject = false
 
-
-    $scope.selectProject = function(project) {
-        $scope.currentPro = project.project_name
-        $scope.selectedTask = "true"
-        projectFactory.getProjectById(project.project_id).then(function(project) {
-            $scope.targetProject = project[0]
+    $scope.completeProject = (project) => {
+        var query = {
+            column: 'status',
+            value: 'complete'
+        }
+        projectFactory.updateProject(project.project_id, query).then(() => {
+            $scope.refreshProjects()
         })
     }
+    $scope.selectProject = function(project) {
+        $scope.currentPro = project.project_name
+        $scope.selectedProject = project
+        $scope.refreshSingleProject(project.project_id)
+    }
 
-    // $scope.propertyName = 'table_due';
-    // $scope.reverse = true;
-
-    // $scope.sortBy = function(propertyName) {
-    //     $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
-    //     $scope.propertyName = propertyName;
-    // };
-
-    // $scope.openBrowse = function(evt, tabSelection) {
-
+    $scope.addTables = () => {
+        var modalInstance = $modal.open({
+            templateUrl: "js/common/modals/addTables/addTables.html",
+            controller: `addTableCtrl`,
+            size: 'lg',
+            resolve: {
+                project: () => {
+                    return $scope.selectedProject
+                }
+            }
+        })
+        modalInstance.result.then((projectId) => {
+            if (result) {
+                $scope.refreshSingleProject(projectId)
+            }
+        })
+    }
     $scope.newProject = function() {
         var modalInstance = $modal.open({
             templateUrl: 'js/common/modals/newProject/newProject.html',
@@ -55,34 +67,30 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
                 }
             }
         });
+        modalInstance.result.then((results) => {
+            $scope.refreshProjects()
+        })
     }
 
     $scope.detailedView = function(table_id) {
-            $state.go('detailed', {
-                tableId: table_id
-            })
-        }
-        // $scope.openBrowse = function(evt, tabSelection) {
-    //     // Declare all variables
-    //     var i, tabcontent, tablinks;
+        $state.go('detailed', {
+            tableId: table_id
+        })
+    }
 
-    //     // Get all elements with class="tabcontent" and hide them
-    //     tabcontent = document.getElementsByClassName("tabcontent");
-    //     for (i = 0; i < tabcontent.length; i++) {
-    //         tabcontent[i].style.display = "none";
-    //     }
 
-    //     // Get all elements with class="tablinks" and remove the class "active"
-    //     tablinks = document.getElementsByClassName("tablinks");
-    //     for (i = 0; i < tablinks.length; i++) {
-    //         tablinks[i].className = tablinks[i].className.replace(" active", "");
-    //     }
 
-    //     // Show the current tab, and add an "active" class to the link that opened the tab
-    //     document.getElementById(tabSelection).style.display = "block";
-    //     evt.currentTarget.className += " active";
-    // }
-    // document.getElementById("ProjectTab").style.display = "inline";
-    // document.getElementById("ProjectTab").className += " active";
+    //REFRESH FUNCTIONS
+    $scope.refreshProjects = () => {
+        projectFactory.getProjects().then(projects => {
+            $scope.projects = projects[0]
+        })
+    }
+    $scope.refreshSingleProject = (id) => {
+        projectFactory.getProjectById(id).then(function(project) {
+            $scope.targetProject = project[0]
+        })
+    }
+
 
 });
