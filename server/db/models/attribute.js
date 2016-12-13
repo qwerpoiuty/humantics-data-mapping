@@ -26,7 +26,7 @@ module.exports = db.define('attribute', {
     end_date: {
         type: Sequelize.DATE
     },
-    pri: {
+    pii: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },

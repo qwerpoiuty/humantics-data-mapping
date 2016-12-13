@@ -14,7 +14,7 @@ app.directive('mapping', function($state, dataFactory) {
                 scope.dbs = dbs[0]
             })
             scope.editMap = ""
-
+            console.log(scope.target)
             scope.changeSource = function(index) {
                 scope.temp.sourceIndex = index
                 scope.displaySource = scope.sources[index]

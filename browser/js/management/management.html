@@ -20,6 +20,7 @@
                                         <th>Project Name</th>
                                         <th>Project Leader</th>
                                         <th>Status</th>
+                                        <th>Due Date
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -27,6 +28,7 @@
                                         <td>{{project.project_name}}</td>
                                         <td>{{project.leader}}</td>
                                         <td>{{project.status || 'incomplete'}}</td>
+                                        <td>{{project.due_date}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -42,7 +44,6 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
                     <button class = "btn btn-success" ng-if="selectedProject" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
-                    <button class = "btn btn-primary" ng-if="selectedProject" data-toggle="modal" style="float:right;background-color:#1c84c6">New Task</button>
                 </div>
             </div>
 
@@ -53,18 +54,20 @@
                             <form role="form">
                                 <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr ng-show="targetProject">
                                         <th>Table</th>
+                                        <th>Schema</th>
+                                        <th>Database</th>
                                         <th>Status</th>
-                                        <th>Due Date</th>
-                                        <th>Validate</th>
+                                        <th>View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat = "table in targetProject | orderBy: 'table.due_date' track by $index">
                                         <td>{{table.table_name}}</td>
+                                        <td>{{table.schema_name}}</td>
+                                        <td>{{table.db_name}}</td>
                                         <td>{{table.table_status}}</td>
-                                        <td>{{table.due_date}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button> <td>
                                     </tr>
                                 </tbody>
