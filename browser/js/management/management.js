@@ -50,9 +50,9 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
                 }
             }
         })
-        modalInstance.result.then((projectId) => {
+        modalInstance.result.then((result) => {
             if (result) {
-                $scope.refreshSingleProject(projectId)
+                $scope.refreshSingleProject(result)
             }
         })
     }
@@ -89,6 +89,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     }
     $scope.refreshSingleProject = (id) => {
         projectFactory.getProjectById(id).then(function(project) {
+            console.log(project)
             $scope.targetProject = project[0]
         })
     }

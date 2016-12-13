@@ -4,7 +4,7 @@ app.directive("d3", function(dataFactory, reportingFactory) {
         scope: {
             root: "="
         },
-        templateUrl: 'js/common/directives/d3/test.html',
+        templateUrl: 'js/common/directives/d3/tree.html',
         link: function(scope) {
             console.log(scope.root)
             var margin = {
@@ -27,13 +27,14 @@ app.directive("d3", function(dataFactory, reportingFactory) {
                 .projection(function(d) {
                     return [d.y, d.x];
                 });
-            var svg = d3.select("body").append("svg")
+            var svg = d3.select("d3").append("svg")
                 .attr("width", width + margin.right + margin.left)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            root = scope.root[0];
+            // root = scope.root[0];
+            root = scope.root
             root.x0 = height / 2;
             root.y0 = 0;
 
@@ -190,83 +191,82 @@ app.directive("d3", function(dataFactory, reportingFactory) {
 
     }
 })
-
-var flare = {
-    "name": "flare",
-    "children": [{
-        "name": "analytics",
-        "children": [{
-            "name": "cluster",
-            "children": [{
-                "name": "AgglomerativeCluster",
-                "size": 1
-            }, {
-                "name": "CommunityStructure",
-                "size": 1
-            }, {
-                "name": "HierarchicalCluster",
-                "size": 1
-            }, {
-                "name": "MergeEdge",
-                "size": 1
-            }]
-        }, {
-            "name": "graph",
-            "children": [{
-                "name": "BetweennessCentrality",
-                "size": 1
-            }, {
-                "name": "LinkDistance",
-                "size": 1
-            }, {
-                "name": "MaxFlowMinCut",
-                "size": 1
-            }, {
-                "name": "ShortestPaths",
-                "size": 1
-            }, {
-                "name": "SpanningTree",
-                "size": 1
-            }]
-        }, {
-            "name": "optimization",
-            "children": [{
-                "name": "AspectRatioBanker",
-                "size": 1
-            }]
-        }]
-    }, {
-        "name": "scale",
-        "children": [{
-            "name": "IScaleMap",
-            "size": 1
-        }, {
-            "name": "LinearScale",
-            "size": 1
-        }, {
-            "name": "LogScale",
-            "size": 1
-        }, {
-            "name": "OrdinalScale",
-            "size": 1
-        }, {
-            "name": "QuantileScale",
-            "size": 1
-        }, {
-            "name": "QuantitativeScale",
-            "size": 1
-        }, {
-            "name": "RootScale",
-            "size": 1
-        }, {
-            "name": "Scale",
-            "size": 1
-        }, {
-            "name": "ScaleType",
-            "size": 1
-        }, {
-            "name": "TimeScale",
-            "size": 1
-        }]
-    }]
-}
+// var flare = {
+//     "name": "flare",
+//     "children": [{
+//         "name": "analytics",
+//         "children": [{
+//             "name": "cluster",
+//             "children": [{
+//                 "name": "AgglomerativeCluster",
+//                 "size": 1
+//             }, {
+//                 "name": "CommunityStructure",
+//                 "size": 1
+//             }, {
+//                 "name": "HierarchicalCluster",
+//                 "size": 1
+//             }, {
+//                 "name": "MergeEdge",
+//                 "size": 1
+//             }]
+//         }, {
+//             "name": "graph",
+//             "children": [{
+//                 "name": "BetweennessCentrality",
+//                 "size": 1
+//             }, {
+//                 "name": "LinkDistance",
+//                 "size": 1
+//             }, {
+//                 "name": "MaxFlowMinCut",
+//                 "size": 1
+//             }, {
+//                 "name": "ShortestPaths",
+//                 "size": 1
+//             }, {
+//                 "name": "SpanningTree",
+//                 "size": 1
+//             }]
+//         }, {
+//             "name": "optimization",
+//             "children": [{
+//                 "name": "AspectRatioBanker",
+//                 "size": 1
+//             }]
+//         }]
+//     }, {
+//         "name": "scale",
+//         "children": [{
+//             "name": "IScaleMap",
+//             "size": 1
+//         }, {
+//             "name": "LinearScale",
+//             "size": 1
+//         }, {
+//             "name": "LogScale",
+//             "size": 1
+//         }, {
+//             "name": "OrdinalScale",
+//             "size": 1
+//         }, {
+//             "name": "QuantileScale",
+//             "size": 1
+//         }, {
+//             "name": "QuantitativeScale",
+//             "size": 1
+//         }, {
+//             "name": "RootScale",
+//             "size": 1
+//         }, {
+//             "name": "Scale",
+//             "size": 1
+//         }, {
+//             "name": "ScaleType",
+//             "size": 1
+//         }, {
+//             "name": "TimeScale",
+//             "size": 1
+//         }]
+//     }]
+// }

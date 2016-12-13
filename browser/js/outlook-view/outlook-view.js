@@ -57,8 +57,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.editAttribute = function() {
-        if ($scope.targetMapping) $scope.editing = "editAttribute"
-        else alert('pick an attribute first')
+        if ($scope.targetMapping) {
+            $scope.editing = "editAttribute"
+            $scope.temp.target = $scope.targetMapping
+            $scope.targetMapping.properties.forEach(e => {
+                console.log(e)
+                $scope.temp.target.properties[e] = true
+            })
+            console.log($scope.targetMapping)
+        } else alert('pick an attribute first')
 
 
     }
@@ -99,8 +106,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                     for (var key in $scope.temp.target.properties) {
                         if ($scope.temp.target.properties[key]) arr.push(key)
                     }
-                    $scope.temp.target.properties = arr
-                    mappingFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
+                    $scope.temp.target.properties = `{${arr}}`
+                    dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)
                                 .then(function(mapping) {
@@ -162,11 +169,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         }
         ddl += body.join(',\n')
         ddl += "\n)"
-
-        if ($scope.table.primary_index.type === "upi") {
-            ddl += "\nUNIQUE PRIMARY INDEX(" + $scope.table.primary_index.attr_name + ")\n;"
-        } else if ($scope.table.primary_index.type === "nupi") {
-            ddl += "\n NON-UNIQUE PRIMARY INDEX(" + $scope.table.primary_index.attr_name + ")\n;"
+        let primaryIndex = ""
+        let upi = false
+        let npi = false
+        for (var k of attributes[0]) {
+            console.log(k)
         }
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,

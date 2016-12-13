@@ -22,8 +22,13 @@ app.factory('projectFactory', function($http) {
                 return response.data
             })
     }
-    d.updateProject = function(project) {
-        return $http.put('api/project', project)
+    d.updateProject = function(projectId, column, values) {
+        var project = {
+            id: projectId,
+            column: column,
+            values: values
+        }
+        return $http.post('api/project/updateProject', project)
             .then(function(response) {
                 return response.data
             })

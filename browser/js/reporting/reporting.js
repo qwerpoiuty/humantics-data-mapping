@@ -40,6 +40,7 @@ app.config(function($stateProvider) {
         //         })
         //     }
         // }
+
     })
 });
 
@@ -48,7 +49,9 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         $scope.dbs = dbs[0]
     })
 
+
     // $scope.tree = tree
+
     $scope.impactSearches = []
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
@@ -117,10 +120,40 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.tableImpact = function(table) {
-        reportingFactory.getImpactByTable(table.table_id).then(function(impacts) {
-            $scope.sources = impacts
-            $scope.impactSearchs.push($scope.sources)
+        reportingFactory.getTree(table.table_id).then(tree => {
+            $scope.tree = unflatten(tree)
         })
+        let unflatten = arr => {
+            var tree = [],
+                mappedArr = {},
+                arrElem,
+                mappedElem;
+
+            // First map the nodes of the array to an object -> create a hash table.
+            for (var i = 0, len = arr.length; i < len; i++) {
+                arrElem = arr[i];
+                mappedArr[arrElem.id] = arrElem;
+                mappedArr[arrElem.id]['children'] = [];
+            }
+
+
+            for (var id in mappedArr) {
+                if (mappedArr.hasOwnProperty(id)) {
+                    mappedElem = mappedArr[id];
+                    // If the element is not at the root level, add it to its parent array of children.
+                    if (mappedElem.parent) {
+                        mappedArr[mappedElem['parent']]['children'].push(mappedElem);
+                    }
+                    // If the element is at the root level, add it to first level elements array.
+                    else {
+                        tree.push(mappedElem);
+                    }
+                }
+            }
+            return tree;
+
+        }
+
     }
 
     $scope.openBrowse = function(evt, tabSelection) {

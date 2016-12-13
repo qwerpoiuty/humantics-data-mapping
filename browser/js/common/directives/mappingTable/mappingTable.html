@@ -8,11 +8,6 @@
                         <tr>
                             <th ng-if="source===[]">Null</th>
                             <th style="padding-top:0; padding-bottom:3px;">
-                              <!--   <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" style="background-color:#e7eaec; border:none; color:#676a6c;"  type="button" data-toggle="dropdown">Sources
-                                    <span class="caret"></span></button>  
-
-                                </div> -->
                                     <ul class="tab" style="border:none;">
                                         <li ng-repeat = "source in sources track by $index">
                                             <a ng-if="!sources.length" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
@@ -99,7 +94,7 @@
                     </tr>
                     <tr>
                         <td>Personally Identifiable Information</td>
-                        <td><span class = "att-pri-badge" ng-show="{{attribute.pri == true}}"><i class ="fa fa-check" area-hidden="true"></i></span>
+                        <td><span class = "att-pii-badge" ng-if="target.pii"><i class ="fa fa-check" area-hidden="true"></i></span>
                         </td>
                     </tr>
                      <tr>
@@ -490,50 +485,9 @@
                         <td class="padding-tb-16">Table</td>                                    
                         <td class="padding-tb-16 text-center">{{target.table_name}}</td>
                     </tr>
-                    <!-- THIS IS IF WE WANT FOR THE MAPPER TO BE ABLE TO MOVE ATTRIBUTES I DON"T THINK THIS SHOULD BE ALLOWED -->
-                    <!-- <tr>
-                        <td>Database</td>
-                          <td>    
-                            <ui-select ng-model="temp.selectedDb">
-                                <ui-select-match placeholder="{{temp.db_name}}">
-                                    {{$select.selected.db_name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                    <span ng-bind="db.db_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Schema</td>               
-                          <td>    
-                            <ui-select ng-model="target.selectedSchema">
-                                <ui-select-match placeholder="{{temp.schema_name}}">
-                                    {{$select.selected.schema_name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.id">
-                                    <span ng-bind="schema.schema_name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Table</td>                                    
-                          <td>    
-                            <ui-select ng-model="selectedSystem.value">
-                                <ui-select-match placeholder="List of Systems">
-                                    {{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </td>
-                    </tr> -->
                     <tr>
                         <td class="padding-tb-16">Column</td>
                         <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
-                        
                     </tr>
                     <tr>
                         <td>Properties</td>
@@ -551,9 +505,6 @@
                     <tr>
                         <td>Data Type</td>
                         <td class="text-info"><input class="btn btn-default form-control" type="text" placeholder="{{target.datatype}}" ng-model="temp.target.datatype"/></td>
-                    <tr>
-                        <td>Status</td>
-                        <td><input placeholder="{{target.status}}" class="btn btn-default form-control" type="text" ng-model="temp.target.status"/></td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>

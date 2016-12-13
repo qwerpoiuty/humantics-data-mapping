@@ -2,9 +2,34 @@
     <h3 class="modal-title">Adding tables to {{project.project_name}}</h3>
 </div>
 <div class="modal-body">
-    <textarea ng-model="query" placeholds="Write a select statement for your tables"></textarea>
+	<h3>Select * from tables where</h3>
+    <input ng-model="query" placeholder="Write a where clause for your tables"/>
+    <button class="btn btn-primary" ng-click="addTables(query)">Find Tables</button>
+    <table class="table table-hover">
+        <thead>
+            <tr ng-show="tableResults">
+            	<th>Select</th>
+                <th>Table</th>
+                <th>Schema</th>
+                <th>Database</th>
+                <th>Status</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<pre>{{tables}}
+            <tr ng-repeat = "table in tableResults | orderBy: 'table.due_date' track by $index">
+            	<td><input type="checkbox" ng-model="tables[table.table_id].selected"/></td>
+                <td>{{table.table_name}}</td>
+                <td>{{table.schema_name}}</td>
+                <td>{{table.db_name}}</td>
+                <td>{{table.table_status}}</td>
+                <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button> <td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="addTables(query)">OK</button>
+    <button class="btn btn-primary" type="button" ng-click="addToProject(query)">OK</button>
     <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
 </div>
