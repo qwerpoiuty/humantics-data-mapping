@@ -2,9 +2,20 @@
     <h3 class="modal-title">Adding tables to {{project.project_name}}</h3>
 </div>
 <div class="modal-body">
-	<h3>Select * from tables where</h3>
-    <input ng-model="query" placeholder="Write a where clause for your tables"/>
-    <button class="btn btn-primary" ng-click="addTables(query)">Find Tables</button>
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-lg-4">
+            <h3>SELECT * FROM tables WHERE</h3>
+        </div>
+        <div class="col-lg-6">
+        <input style="line-height:2; width:100%; border:none;" ng-model="query" placeholder="Write a where clause for tables"/>    
+        </div>
+        <div class="col-lg-2">
+        <button class="btn btn-primary" ng-click="addTables(query)">Find Tables</button>    
+        </div>
+    </div>
+	
+    
+    
     <table class="table table-hover">
         <thead>
             <tr ng-show="tableResults">
@@ -17,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-        	<pre>{{tables}}
+        	<pre>{{tables}}</pre>
             <tr ng-repeat = "table in tableResults | orderBy: 'table.due_date' track by $index">
             	<td><input type="checkbox" ng-model="tables[table.table_id].selected"/></td>
                 <td>{{table.table_name}}</td>
