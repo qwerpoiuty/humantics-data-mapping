@@ -59,12 +59,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.editAttribute = function() {
         if ($scope.targetMapping) {
             $scope.editing = "editAttribute"
-            $scope.temp.target = $scope.targetMapping
-            $scope.targetMapping.properties.forEach(e => {
-                console.log(e)
+            $scope.temp.target = Object.assign({}, $scope.targetMapping)
+            $scope.temp.target.properties.forEach(e => {
                 $scope.temp.target.properties[e] = true
             })
-            console.log($scope.targetMapping)
         } else alert('pick an attribute first')
 
 
@@ -170,15 +168,25 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         ddl += body.join(',\n')
         ddl += "\n)"
         let primaryIndex = ""
-        let upi = false
-        let npi = false
+        let upi = []
+        let npi = []
         for (var k of attributes[0]) {
-            console.log(k)
+            if (k.properties !== null) {
+                if (k.properties.indexOf('upi') >= 0) {
+                    upi.push(k.attr_name)
+                }
+                if (k.properties.indexOf('npi') >= 0) {
+                    npi.push(k.attr_name)
+                }
+            }
         }
+        if (upi.length > 0) ddl += `\nUNIQUE PRIMARY INDEX(${upi.join(',')})`
+        if (npi.length > 0) ddl += `\nPRIMARY INDEX(${npi.join(',')})`
+
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'js/common/directives/modal.html',
-            controller: 'ModalInstanceCtrl',
+            templateUrl: 'js/common/modals/ddl/ddl.html',
+            controller: 'ddlInstanceCtrl',
             size: "small",
             resolve: {
                 ddl: function() {

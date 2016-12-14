@@ -1,4 +1,4 @@
-app.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, ddl) {
+app.controller('ddlInstanceCtrl', function($scope, $uibModalInstance, ddl) {
     $scope.ddl = ddl;
     console.log(ddl)
     $scope.ok = function() {
