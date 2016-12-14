@@ -13,9 +13,6 @@ module.exports = db.define('schema', {
     },
     db: {
         type: Sequelize.INTEGER
-    },
-    tables: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
 }, {
     timestamps: false
