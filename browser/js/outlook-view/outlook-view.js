@@ -144,7 +144,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         console.log(mapping.transformation_rules)
         return mapping
     }
-    $scope.changingStatus = false
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }
@@ -187,6 +186,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             animation: $scope.animationsEnabled,
             templateUrl: 'js/common/modals/ddl/ddl.html',
             controller: 'ddlInstanceCtrl',
+            backdrop: 'static',
+            keyboard: false,
             size: "small",
             resolve: {
                 ddl: function() {

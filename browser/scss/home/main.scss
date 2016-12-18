@@ -22,20 +22,17 @@
 
 }
 
-.view-height-1{
-	height: 8.5vh;
+.view-height-header{
+	height: 10vh;
 }
 
-.view-height-2{
-	height: 85vh;
-}
-
-.view-height-3{
+.view-height-footer{
 	height: 5vh;
 }
 
 .view-height-main{
-	height: 90vh;
+	height: 100%;
+	margin-bottom: -5vh;
 }
 .row-fix{
 	margin: 0;
@@ -66,6 +63,18 @@
 .tabFieldsetTask{
 	margin-top: 30px;
 	background-color: white;
+}
+
+.tabAttribute{
+	margin-top: 11vh;
+	margin-bottom: 14vh;
+	background-color:white;
+}
+
+.tabTable{
+	margin-top: 5vh;
+	margin-bottom:5vh;
+	background-color:white;
 }
 
 .searchLabel{

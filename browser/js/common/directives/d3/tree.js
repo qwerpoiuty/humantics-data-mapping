@@ -4,7 +4,7 @@ app.directive("d3", function(dataFactory, reportingFactory) {
         scope: {
             root: "="
         },
-        templateUrl: 'js/common/directives/d3/tree.html',
+        templateUrl: 'js/common/directives/d3/horizontal/tree.html',
         link: function(scope) {
             console.log(scope.root)
             var margin = {

@@ -44,7 +44,7 @@ var Promise = require('sequelize').Promise;
 
 // };
 //systems will be companies
-let systems = function() {
+var systems = function() {
     return [{
         "system_id": 1,
         "system_name": "Yadel"
@@ -64,7 +64,7 @@ let systems = function() {
 }
 
 //databases will be apps
-let databases = () => {
+var databases = function() {
     return [{
         "db_id": 1,
         "db_name": "Greenlam",
@@ -149,7 +149,7 @@ let databases = () => {
 }
 
 //departments
-let schemas = () => {
+var schemas = function() {
     return [{
         "schema_id": 1,
         "schema_name": "Engineering",
@@ -353,7 +353,7 @@ let schemas = () => {
     }]
 }
 
-let tables = () => {
+var tables = function() {
     return [{
         "table_id": 1,
         "table_name": "CBRN",
@@ -1156,7 +1156,7 @@ let tables = () => {
         "schema": 8
     }]
 }
-let attributes = () => {
+var attributes = function() {
     return [{
         "attr_id": 1,
         "attr_name": "Face to face",
