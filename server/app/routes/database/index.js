@@ -5,7 +5,7 @@ var Db = db.model('db')
 var Schema = db.model('schema')
 var Table = db.model('table')
 var Attribute = db.model('attribute')
-
+var moment = require('moment')
 var chalk = require('chalk')
 
 
@@ -25,7 +25,7 @@ router.get('/systems', function(req, res) {
 })
 
 router.get('/databases', function(req, res) {
-    db.query('select * from dbs').then(function(dbs) {
+    db.query(`select * from dbs where dbs.system = ${parseInt(req.query.system)}`).then(function(dbs) {
         res.json(dbs)
     })
 
@@ -39,7 +39,7 @@ router.get('/schemas', function(req, res) {
 })
 
 router.get('/tables', function(req, res) {
-    db.query('select * from tables where tables.schema = ' + parseInt(req.query.schema))
+    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id inner join systems on dbs.system = systems.system_id where tables.schema = ' + parseInt(req.query.schema))
         .then(function(tables) {
             res.json(tables)
         })
@@ -69,7 +69,7 @@ router.get('/tableById/:tableId', function(req, res) {
 })
 
 router.get('/attributesByTableId/:tableId', function(req, res) {
-    db.query('select * from attributes inner join tables on attributes.table_id = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
+    db.query('select * from attributes inner join tables on attributes.table_id = tables.table_id inner join "schemas" on tables.schema = schemas.schema_id inner join "dbs" on schemas.db = dbs.db_id inner join systems on dbs.system = systems.system_id where tables.table_id = ' + req.params.tableId + 'order by attributes.attr_id')
         .then(function(table) {
             res.json(table)
         })
@@ -120,8 +120,9 @@ router.post('/tables', function(req, res) {
 })
 
 router.post('/attributes/:tableId', function(req, res) {
-    req.body.attr_name = "'" + req.body.attr_name + "'"
-    req.body.datatype = "'" + req.body.datatype + "'"
+    req.body.attr_name = `'req.body.attr_name'`
+    req.body.datatype = `'req.body.datatype'`
+    req.body.date_modified = `'${moment().format()}'`
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {
@@ -135,13 +136,8 @@ router.post('/attributes/:tableId', function(req, res) {
 })
 
 router.post('/updateAttribute/:attr_id', function(req, res) {
-    var string = []
-    for (var key in req.body) {
-        var temp = key + '=' + "'" + req.body[key] + "'"
-        string.push(temp)
-    }
-    string = string.join(',')
-    db.query('update attributes set ' + string + ' where attributes.attr_id =' + req.params.attr_id)
+
+    db.query(`update attributes set datatype='${req.body.datatype}',properties='{${req.body.properties}}',pii=${req.body.pii},date_modified='${moment().format()}' where attributes.attr_id = ${req.params.attr_id}`)
         .then(function(attribute) {
             res.json(attribute)
         })

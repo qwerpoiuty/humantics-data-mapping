@@ -17,7 +17,7 @@ app.factory('reportingFactory', function($http) {
     }
 
     d.getTree = function(tableId) {
-        return $http.get('/api/mappings/impact/tree/' + 2)
+        return $http.get('/api/mappings/impact/tree/' + tableId)
             .then(function(response) {
                 return response.data
             })

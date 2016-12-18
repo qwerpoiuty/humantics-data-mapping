@@ -3,13 +3,13 @@ app.config(function($stateProvider) {
         url: '/reporting',
         templateUrl: 'js/reporting/reporting.html',
         controller: 'reportCtrl'
-        // resolve: {
-        //     tree: reportingFactory => {
-        //         let unflatten = arr => {
-        //             var tree = [],
-        //                 mappedArr = {},
-        //                 arrElem,
-        //                 mappedElem;
+            // resolve: {
+            //     tree: reportingFactory => {
+            //         let unflatten = arr => {
+            //             var tree = [],
+            //                 mappedArr = {},
+            //                 arrElem,
+            //                 mappedElem;
 
         //             // First map the nodes of the array to an object -> create a hash table.
         //             for (var i = 0, len = arr.length; i < len; i++) {
@@ -45,17 +45,29 @@ app.config(function($stateProvider) {
 });
 
 app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory) {
-    dataFactory.getDatabases().then(function(dbs) {
-        $scope.dbs = dbs[0]
+    dataFactory.getSystems().then(function(systems) {
+        $scope.systems = systems[0]
     })
 
 
     // $scope.tree = tree
 
     $scope.impactSearches = []
+    $scope.selectedSystem = {}
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
     $scope.selectedTable = {}
+
+    $scope.$watch(function() {
+        return $scope.selectedSystem.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            dataFactory.getDatabases(nv.system_id).then(function(dbs) {
+                $scope.dbs = dbs[0]
+            })
+        }
+    })
+
     $scope.$watch(function() {
         return $scope.selectedDb.value
     }, function(nv, ov) {
@@ -151,7 +163,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 }
             }
             return tree;
-
         }
 
     }

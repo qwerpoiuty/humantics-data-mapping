@@ -8,7 +8,6 @@ app.config(function($stateProvider) {
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
-    $scope.columns = ["Database", "Schema", "Date", "Entity"]
     $scope.searchQuery = ""
     $scope.clearFilter = function() {
         $('.filter-status').val('');
@@ -35,25 +34,26 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
     //ALL THE SEARCHING STUFF
 
-    dataFactory.getDatabases().then(function(dbs) {
-        $scope.dbs = dbs[0]
+    dataFactory.getSystems().then(systems => {
+        $scope.systems = systems[0]
     })
 
     $scope.selectedSystem = {}
-
-    // $scope.$watch(function() {
-    //     return $scope.selectedSystems.value
-    // }, function(nv, ov) {
-    //     if (nv !== ov) {
-    //         $scope.databases = dataFactory.getDatabases(nv)
-    //     }
-    // })
-
-
     $scope.selectedDb = {}
+    $scope.createdSystem = {}
     $scope.createdDb = {}
     $scope.createdSchema = {}
     $scope.selectedSchema = {}
+
+    $scope.$watch(function() {
+        return $scope.selectedSystem.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            dataFactory.getDatabases(nv.system_id).then(dbs => {
+                $scope.dbs = dbs[0]
+            })
+        }
+    })
     $scope.$watch(function() {
         return $scope.selectedDb.value
     }, function(nv, ov) {
@@ -68,9 +68,21 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-
             dataFactory.getTables(nv.schema_id).then(function(tables) {
+                console.log(tables[0])
                 $scope.tables = tables[0]
+
+            })
+        }
+    })
+
+    $scope.$watch(function() {
+        return $scope.createdSystem.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            console.log(nv)
+            dataFactory.getDatabases(nv.system_id).then(function(dbs) {
+                $scope.createdDbs = dbs[0]
             })
         }
     })
@@ -101,23 +113,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         }
     }
 
-    $scope.impact = function(type, id) {
-        var modalInstance = $uibModal.open({
-            templateUrl: 'js/common/modals/impactAnalysis/impact.html',
-            controller: 'impactCtrl',
-            size: 'lg',
-            resolve: {
-                impact: function() {
-                    return dataFactory.getImpactByTable(id).then(function(impact) {
-                        return impact
-                    })
-                },
-                type: function() {
-                    return type
-                }
-            }
-        });
-    }
+
 
     $scope.createTable = function() {
         var table = {

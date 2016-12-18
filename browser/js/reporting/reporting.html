@@ -32,10 +32,10 @@
 													        	<span class="input-group-addon"><div class="newTableText">Select a System</div></span>
 													        	<ui-select ng-model="selectedSystem.value">
 																    <ui-select-match placeholder="List of Systems">
-																        {{$select.selected.name}}
+																        {{$select.selected.system_name}}
 																    </ui-select-match>
-																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																        <span ng-bind="item.name"></span>
+																    <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+																        <span ng-bind="system.system_name"></span>
 																    </ui-select-choices>
 																</ui-select>
 													        </div>

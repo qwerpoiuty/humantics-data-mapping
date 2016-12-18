@@ -3,21 +3,29 @@ app.factory('dataFactory', function($http) {
 
     //high level gets
     d.getSystems = function() {
-        return ["IBM", "INTEL", "LINUX", "STUFF"]
+        return $http.get(`/api/database/systems`)
+            .then(response => {
+                return response.data
+            })
     }
 
-    d.getDatabases = function() {
+    d.getDatabases = function(system_id) {
         //this is going to be a get for database names
-        return $http.get('/api/database/databases')
+        var query = {
+            system: system_id
+        }
+        return $http.get('/api/database/databases', {
+                params: query
+            })
             .then(function(response) {
                 return response.data
             })
     }
 
-    d.getSchemas = function(dbID) {
+    d.getSchemas = function(db_id) {
         //this is going to accept a database as an argument and return a list of schemas
         var query = {
-            db: dbID
+            db: db_id
         }
         return $http.get('/api/database/schemas', {
                 params: query
@@ -115,6 +123,7 @@ app.factory('dataFactory', function($http) {
             })
     }
     d.updateAttribute = function(attribute, target) {
+        console.log(attribute)
         return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {
                 return response.data

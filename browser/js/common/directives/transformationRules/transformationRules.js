@@ -8,24 +8,23 @@ app.directive('rules', function($state, mappingFactory) {
         templateUrl: 'js/common/directives/transformationRules/transformationRules.html',
         link: function(scope, element, attrs) {
             scope.newRule = false
-
             scope.addTransformation = function() {
                 scope.newRule = !scope.newRule
             }
-            scope.saveTransformation = function(transformationRule) {
+            scope.saveTransformation = function(transformationRule, version) {
+                console.log(scope.target)
                 scope.rules.push(transformationRule)
                 var rules = scope.rules
+
                 mappingFactory.updateRules(rules, scope.target.attr_id).then(function() {
-                    $route.reload();
+                    scope.newRule = !scope.newRule
                 })
             }
 
             scope.deleteRule = function(index) {
                 scope.rules.splice(index, 1)
                 var rules = scope.rules
-                mappingFactory.updateRules(rules, scope.target.attr_id).then(function() {
-                    $route.reload();
-                })
+                mappingFactory.updateRules(rules, scope.target.attr_id)
             }
             scope.hide = []
             console.log(scope.hide)
@@ -42,7 +41,7 @@ app.directive('rules', function($state, mappingFactory) {
                 scope.rules[index].description = scope.rules[index].newDescription
                 delete scope.rules[index].newDescription
                 mappingFactory.updateRules(scope.rules, scope.target.attr_id).then(function() {
-                    $route.reload();
+
                 })
             }
         }

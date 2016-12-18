@@ -14,7 +14,7 @@
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
 											  <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'SqlTab')"><h5 class="text-success">SQL</h5></a></li>
+<!-- 											  <li><a class="tablinks" ng-click="openBrowse(event, 'SqlTab')"><h5 class="text-success">SQL</h5></a></li> -->
 											</ul>
 										<div id="SearchTab" class="tabcontent">	
 										    <form method="post">
@@ -40,10 +40,10 @@
 													        	<span class="input-group-addon"><div class="newTableText">Select a System</div></span>
 													        	<ui-select ng-model="selectedSystem.value">
 																    <ui-select-match placeholder="List of Systems">
-																        {{$select.selected.name}}
+																        {{$select.selected.system_name}}
 																    </ui-select-match>
-																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																        <span ng-bind="item.name"></span>
+																    <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+																        <span ng-bind="system.system_name"></span>
 																    </ui-select-choices>
 																</ui-select>
 													        </div>
@@ -84,6 +84,18 @@
 										    <form method="post">
 										        <fieldset class="tabFieldset3">
 										            <div class="row">
+										            <div class="col-lg-8 col-lg-offset-2">
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target System</div></span>
+											       			<ui-select ng-model="createdSystem.value">
+														    <ui-select-match placeholder="List of Systems">
+														        {{$select.selected.system_name}}
+														    </ui-select-match>
+														    <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+														        <span ng-bind="system.system_name"></span>
+														    </ui-select-choices>
+															</ui-select>
+												      	</div>
+												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Database</div></span>
 													        	
@@ -91,7 +103,7 @@
 														    <ui-select-match placeholder="List of Databases">
 														        {{$select.selected.db_name}}
 														    </ui-select-match>
-														    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+														    <ui-select-choices repeat="db in (createdDbs | filter: $select.search) track by db.db_id">
 														        <span ng-bind="db.db_name"></span>
 														    </ui-select-choices>
 															</ui-select>
@@ -116,7 +128,7 @@
 										    </form>
 									    </div>
 
-									    <div id="SqlTab" class="tabcontent">	
+									   <!--  <div id="SqlTab" class="tabcontent">	
 												<form method="post">
 										        <fieldset class="tabFieldset4">	
 													<div class = "row">
@@ -136,7 +148,7 @@
 													</div>
 										        </fieldset>
 										    </form>
-									    </div>
+									    </div> -->
 
 									</div>
 								</div> 
@@ -252,11 +264,8 @@
 											<th>Table Name</th>
 											<th>Database</th>
 											<th>Schema</th>
-											<th>Attribute Count</th>
+<!-- 											<th>Attribute Count</th> -->
 											<th data-hide="all">Sample Source Value</th>
-				                            <th data-hide="all">Created On</th>
-				                            <th data-hide="all">Last Modified</th>
-				                            <th data-hide="all">Last Modified By</th>
 				                            <th data-hide="all">More Information</th>
 				                            <th>Status</th>
 				                        </tr>
@@ -268,11 +277,10 @@
 											<td>{{table.db_name}}</td>
 											<td>{{table.schema_name}}</td>
 											<!-- make sure to actually keep a runnign tally on the number of attributes that call this table home -->
-											<td>22</td>
-											<td>Stan Le</td>
-											<td>Target</td>
+											<!-- <td>22</td> -->
+											<td>String/td>
 											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-											<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+											<td>{{table.table_status}}</td>
 	                                    </tr>
 	                                    </tbody>
 	                                    <tfoot>

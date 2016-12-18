@@ -44,6 +44,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
+            if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
+            else $scope.targetMapping.version = 1
+            console.log($scope.targetmapping)
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
         })
@@ -89,27 +92,34 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         switch ($scope.editing) {
             case "newSource":
                 var mapping = $scope.setMapping()
+                console.log(mapping)
                 mapping.source.push($scope.temp.attr.attr_id)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
-                    $state.reload()
                 })
                 break
             case "editAttribute":
                 var mapping = $scope.setMapping()
-                mapping.source[$scope.sourceIndex] = $scope.temp.attr_id
+                if ($scope.temp.hasOwnProperty('source')) mapping.source[$scope.sourceIndex] = $scope.temp.source.attr.attr_id
                 if ($scope.temp.target) {
-                    var arr = []
-                    for (var key in $scope.temp.target.properties) {
-                        if ($scope.temp.target.properties[key]) arr.push(key)
-                    }
-                    $scope.temp.target.properties = `{${arr}}`
+                    var arr = ['pk', 'fk', 'upi', 'npi']
+                    var properties = []
+                    arr.forEach(e => {
+                        if ($scope.temp.target.properties[e]) properties.push(e)
+                    })
+                    $scope.temp.target.properties = properties
                     dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)
-                                .then(function(mapping) {
-                                    $state.reload()
+                                .then(function() {
+                                    $scope.editing = "none"
+                                    dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
+                                        $scope.attributes = attributes[0]
+                                        $scope.currentAttr = $scope.targetMapping.attr_name
+                                        $scope.sources = []
+                                        $scope.targetMapping = {}
+                                    })
                                 })
                         })
                 }
@@ -141,7 +151,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             target: $scope.targetMapping.attr_id
         }
         mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
-        console.log(mapping.transformation_rules)
         return mapping
     }
     $scope.changingStatus = false
@@ -155,7 +164,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             version: $scope.sources[0].version
         }
         mappingFactory.changeStatus(temp)
-        $state.reload()
     }
 
     $scope.generateDDL = function() {

@@ -4,6 +4,7 @@ var db = require('../../../db')
 var Mapping = db.model('mapping')
 var chalk = require('chalk')
 var Promise = require('bluebird');
+var moment = require('moment')
 
 var ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -20,18 +21,21 @@ router.get('/', function(req, res) {
 })
 
 router.get('/recentMapping', function(req, res) {
-    db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id where a.target=' + req.query.attr_id + ' order by a.version desc')
+    db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id inner join systems on e.system = systems.system_id where a.target=' + req.query.attr_id + ' order by a.version desc')
         .then(function(mappings) {
             if (mappings[0].length == 1) {
                 res.json(mappings[0])
             } else if (mappings[0].length > 1) {
                 var currentVersion = mappings[0][0].version
+                var sent = false
                 for (var i = 0; i < mappings[0].length; i++) {
                     if (mappings[0][i].version != currentVersion) {
                         res.json(mappings[0].slice(0, i))
+                        sent = true
                         break
                     }
                 }
+                if (sent === false) res.json(mappings[0])
             } else {
                 res.sendStatus(200)
             }
@@ -148,7 +152,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 
 router.post('/', function(req, res) {
     req.body.source = "'{" + req.body.source.join(',') + "}'"
-    req.body.date_created = "'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "'"
+    req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
     var keys = Object.keys(req.body)
     var values = []
@@ -167,7 +171,7 @@ router.post('/', function(req, res) {
 
 router.post('/rules/:targetId', function(req, res) {
 
-    db.query('update mappings set transformation_rules= ' + "'" + JSON.stringify(req.body) + "'" + 'where mappings.target=106').then(function(projects) {
+    db.query('update mappings set transformation_rules= ' + "'" + JSON.stringify(req.body) + "'" + `where mappings.target=${req.params.targetId}`).then(function(projects) {
         res.sendStatus(200)
     })
 
