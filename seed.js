@@ -9161,8 +9161,8 @@ var attributes = function() {
 }
 var seedSystems = function() {
 
-    var creatingSys = systems().map(function(db) {
-        return db.model('system').create(db)
+    var creatingSys = systems().map(function(system) {
+        return db.model('system').create(system)
     })
     return Promise.all(creatingSys)
 }
@@ -9199,6 +9199,8 @@ var seedAttributes = function() {
 
 db.sync({
         force: true
+    }).then(function() {
+        return seedSystems()
     })
     .then(function() {
         return seedDbs();

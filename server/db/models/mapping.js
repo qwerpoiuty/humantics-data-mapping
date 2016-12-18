@@ -21,7 +21,7 @@ module.exports = db.define('mapping', {
     target: {
         type: Sequelize.INTEGER
     },
-    date_created: {
+    date_modified: {
         type: Sequelize.DATE
     },
     modifier: {

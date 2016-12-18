@@ -10,7 +10,7 @@
                             <th style="padding-top:0; padding-bottom:3px;">
                                     <ul class="tab" style="border:none;">
                                         <li ng-repeat = "source in sources track by $index">
-                                            <a ng-if="!sources.length" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
+                                            <a ng-if="" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
                                                 <h5 style="margin:0;color:#676a6c;" class="text-success">No Source</h5>
                                             </a>
                                             <a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks"  ng-click="changeSource($index)">
@@ -24,7 +24,7 @@
                     <tbody>
                             <tr>
                                 <td>System</td>      
-                                <td>{{displaySource.system || ''}}</td>
+                                <td>{{displaySource.system_name || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Database</td>      
@@ -376,12 +376,12 @@
                     <tr> 
                         <td>System</td>      
                         <td>   
-                         <ui-select ng-model="temp.system">
-                            <ui-select-match placeholder="{{displaySource.system}}">
-                                {{temp.system || 'Add a value'}}
+                         <ui-select ng-model="editSource.system">
+                            <ui-select-match placeholder="{{displaySource.system_name}}">
+                                {{editSource.system.system_name || 'Add a value'}}
                             </ui-select-match>
                             <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
-                                <span ng-bind="system"></span>
+                                <span ng-bind="system.system_name"></span>
                             </ui-select-choices>
                         </ui-select>
                         </td>
@@ -389,9 +389,9 @@
                     <tr>
                         <td>Database</td>      
                         <td>
-                            <ui-select ng-model="temp.db">
+                            <ui-select ng-model="editSource.db">
                                 <ui-select-match placeholder="{{displaySource.db_name}}">
-                                    {{temp.db.db_name|| 'Add a value'}}
+                                    {{editSource.db.db_name|| 'Add a value'}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
                                     <span ng-bind="db.db_name"></span>
@@ -402,9 +402,9 @@
                     <tr>
                         <td>Schema</td>               
                         <td>   
-                            <ui-select ng-model="temp.schema">
+                            <ui-select ng-model="editSource.schema">
                                 <ui-select-match placeholder="{{displaySource.schema_name}}">
-                                    {{temp.schema.schema_name|| 'Add a value'}}
+                                    {{editSource.schema.schema_name|| 'Add a value'}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
                                     <span ng-bind="schema.schema_name"></span>
@@ -415,9 +415,9 @@
                     <tr>
                         <td>Table</td>                                    
                         <td>
-                            <ui-select ng-model="temp.table">
+                            <ui-select ng-model="editSource.table">
                                 <ui-select-match placeholder="{{displaySource.table_name}}">
-                                    {{temp.table.table_name|| 'Add a value'}}
+                                    {{editSource.table.table_name|| 'Add a value'}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
                                     <span ng-bind="table.table_name"></span>
@@ -428,9 +428,9 @@
                     <tr>
                         <td>Column</td>      
                         <td>
-                            <ui-select ng-model="temp.attr">
+                            <ui-select ng-model="editSource.attr">
                                 <ui-select-match placeholder="{{displaySource.attr_name}}">
-                                    {{temp.attr.attr_name|| 'Add a value'}}
+                                    {{editSource.attr.attr_name|| 'Add a value'}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
                                     <span ng-bind="attr.attr_name"></span>
@@ -440,7 +440,7 @@
                     </tr>
                      <tr>
                         <td >Data Type</td>
-                        <td>{{temp.attr.datatype}}</td>
+                        <td>{{datatype}}</td>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
