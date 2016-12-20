@@ -44,7 +44,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory) {
+app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
     })
@@ -134,6 +134,20 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.tableImpact = function(table) {
         reportingFactory.getTree(table.table_id).then(tree => {
             $scope.tree = unflatten(tree)
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'js/common/modals/impactTree/impactTree.html',
+                controller: 'impactTreeCtrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: "xl",
+                resolve: {
+                    tree: function() {
+                        return tree;
+                    }
+                }
+            });
         })
         let unflatten = arr => {
             var tree = [],
@@ -166,6 +180,8 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         }
 
     }
+
+
 
     $scope.openBrowse = function(evt, tabSelection) {
         $scope.sources = null

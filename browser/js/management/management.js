@@ -23,7 +23,10 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     $scope.projects = projects[0]
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
-
+    $scope.changingStatus = false
+    $scope.toggleChange = function() {
+        $scope.changingStatus = !$scope.changingStatus
+    }
     $scope.completeProject = (project) => {
         var query = {
             column: 'status',

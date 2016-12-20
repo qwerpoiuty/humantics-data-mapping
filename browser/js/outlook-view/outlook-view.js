@@ -42,6 +42,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
+            console.log($scope.sources[0])
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
             if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
@@ -83,7 +84,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         var mapping = $scope.setMapping()
         mapping.source.splice($scope.temp.sourceIndex, 1)
         mappingFactory.updateMapping(mapping).then(function(mapping) {
-            $scope.apply()
+            dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
+                $scope.attributes = attributes[0]
+                $scope.currentAttr = $scope.targetMapping.attr_name
+                $scope.sources = []
+                $scope.targetMapping = {}
+            })
         })
 
     }
@@ -158,7 +164,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
     $scope.changeStatus = function(status) {
         var temp = {
-            status: mappingStatus,
+            status: status,
             id: $scope.targetMapping.attr_id,
             version: $scope.sources[0].version
         }

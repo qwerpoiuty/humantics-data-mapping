@@ -179,7 +179,7 @@ router.post('/rules/:targetId', function(req, res) {
 
 router.post('/changeStatus', function(req, res) {
     console.log('hello')
-    db.query("update mappings set status='" + req.body.status + "' where mappings.target =" + req.body.id + ' and mappings.version =' + req.body.version).then(function() {
+    db.query("update mappings set mapping_status='" + req.body.status + "' where mappings.target =" + req.body.id + ' and mappings.version =' + req.body.version).then(function() {
         res.sendStatus(200)
     })
 })

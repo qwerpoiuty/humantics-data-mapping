@@ -225,7 +225,14 @@ ul.tab li a:focus, .active {background-color: #f3f3f4;}
 }
 
 
+//modals
 
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+}
 
 input[type=radio].css-checkbox {
 							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
