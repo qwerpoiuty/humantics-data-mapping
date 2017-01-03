@@ -6,7 +6,6 @@ app.directive("vertical-tree", function(dataFactory, reportingFactory) {
             },
             templateUrl: 'js/common/directives/d3/vertical/tree.html',
             link: function(scope) {
-                console.log(scope.root)
                 var margin = {
                         top: 10,
                         right: 120,

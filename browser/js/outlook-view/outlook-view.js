@@ -42,12 +42,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") $scope.sources = mapping
             else $scope.sources = []
-            console.log($scope.sources[0])
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
             if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
             else $scope.targetMapping.version = 1
-            console.log($scope.targetmapping)
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
         })
