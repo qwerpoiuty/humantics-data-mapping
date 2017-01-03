@@ -16,10 +16,10 @@ var ensureAuthenticated = function(req, res, next) {
 
 let systemLink = `inner join systems on systems.system_id = dbs.system`
 let dbLink = `inner join dbs on db.db_id = schemas.db`
-let schemaLink = `inner join schemas on schemas.db_id = tables.schema`
+let schemaLink = `inner join schemas on schemas.schema_id = tables.schema`
 let tableLink = `inner join tables on tables.table_id = attributes.table_id`
 let attrTargetLink = `inner join attributes on attributes.attr_id = mappings.target`
-let attrSourceLink = `inner join attributes on attributes.attr_id = any(mappigns.source)`
+let attrSourceLink = `inner join attributes on attributes.attr_id = any(mappings.source)`
 let attrLink = `inner join attributes on attributes.table_id = tables.table_id`
 
 
@@ -31,42 +31,42 @@ router.get('/', function(req, res) {
 })
 
 router.get('/recentMapping', function(req, res) {
-    db.query(`select * from mappings ${attrSourceLink} ${tableLink} ${schemaLink} ${dbLink} ${systemLink} where mappings.target = ${req.query.attr_id} order by mappings.version desc`)
-        // db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id inner join systems on e.system = systems.system_id where a.target=' + req.query.attr_id + ' order by a.version desc')
+    // db.query(`select * from mappings ${attrSourceLink} ${tableLink} ${schemaLink} ${dbLink} ${systemLink} where mappings.target = ${req.query.attr_id} order by mappings.version desc`)
+    db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id inner join systems on e.system = systems.system_id where a.target=' + req.query.attr_id + ' order by a.version desc')
         .then(function(mappings) {
-            mappigns = mappings[0]
-            if (mappings.length == 1) res.json(mappings)
+            // mappings = mappings[0]
+            // if (mappings.length == 1) res.json(mappings)
 
-            else if (mappings.length > 1) {
-                let currentVersion = mappings[0].version
-                let sent = false
-                for (let i of mappings) {
-                    if (mappings[i].version !== currentVersion) {
-                        res.json(mappings.slice(0, i))
-                        sent = true
-                        break
-                    }
-                }
-                if (sent === false) res.json(mappings)
-            } else {
-                res.sendStatus(400)
-            }
-            // if (mappings[0].length == 1) {
-            //     res.json(mappings[0])
-            // } else if (mappings[0].length > 1) {
-            //     var currentVersion = mappings[0][0].version
-            //     var sent = false
-            //     for (var i = 0; i < mappings[0].length; i++) {
-            //         if (mappings[0][i].version != currentVersion) {
-            //             res.json(mappings[0].slice(0, i))
+            // else if (mappings.length > 1) {
+            //     let currentVersion = mappings[0].version
+            //     let sent = false
+            //     for (let i of mappings) {
+            //         if (mappings[i].version !== currentVersion) {
+            //             res.json(mappings.slice(0, i))
             //             sent = true
             //             break
             //         }
             //     }
-            //     if (sent === false) res.json(mappings[0])
+            //     if (sent === false) res.json(mappings)
             // } else {
-            //     res.sendStatus(200)
+            //     res.sendStatus(400)
             // }
+        if (mappings[0].length == 1) {
+            res.json(mappings[0])
+        } else if (mappings[0].length > 1) {
+            var currentVersion = mappings[0][0].version
+            var sent = false
+            for (var i = 0; i < mappings[0].length; i++) {
+                if (mappings[0][i].version != currentVersion) {
+                    res.json(mappings[0].slice(0, i))
+                    sent = true
+                    break
+                }
+            }
+            if (sent === false) res.json(mappings[0])
+        } else {
+            res.sendStatus(200)
+        }
         })
 })
 
