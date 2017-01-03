@@ -1,4 +1,4 @@
-<div id="page-wrapper" class="gray-bg" style="min-height: 973px;">
+<div id="page-wrapper" class="gray-bg" style="min-height:100%; padding:0;">
     <div class="wrapper wrapper-content">
         <div class="col-lg-5 animated fadeInRight">
             <div class="mail-box-header" style="background-color:#1c84c6;">
@@ -52,14 +52,15 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <form role="form">
-                                <table class="table table-hover">
+                                <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                     <tr ng-show="targetProject">
                                         <th>Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
                                         <th>Status</th>
-                                        <th>View</th>
+                                        <th data-hide="all">Detailed View</th>
+                                        <th data-hide="all">Status Approval</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,6 +70,9 @@
                                         <td>{{table.db_name}}</td>
                                         <td>{{table.table_status}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button> <td>
+                                        <td> <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
+                                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
