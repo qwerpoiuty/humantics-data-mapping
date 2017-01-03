@@ -18,7 +18,7 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, user, projects, $modal, $state) {
+app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, projects, $modal, $state) {
     $scope.user = user
     $scope.projects = projects[0]
     $scope.currentPro = "Select a Project"
@@ -80,6 +80,19 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         $state.go('detailed', {
             tableId: table_id
         })
+    }
+
+
+    $scope.toggleChange = function() {
+        $scope.changingStatus = !$scope.changingStatus
+    }
+    $scope.changeStatus = function(status) {
+        var temp = {
+            status: mappingStatus,
+            id: $scope.targetMapping.attr_id,
+            version: $scope.sources[0].version
+        }
+        mappingFactory.changeStatus(temp)
     }
 
 

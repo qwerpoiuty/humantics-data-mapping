@@ -154,7 +154,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         mappingHistory[e.target] = [e]
                     }
                 })
-                console.log(mappingHistory)
+
                 $scope.allMapping = []
                 for (let mapping of Object.keys(mappingHistory)) {
                     let version = Math.max(...mappingHistory[mapping].map(e => e.version))
@@ -162,7 +162,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         if (e.version === version) $scope.allMapping.push(e)
                     })
                 }
-                console.log($scope.allMapping)
+
 
             })
     }
