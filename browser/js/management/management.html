@@ -55,7 +55,7 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                     <tr ng-show="targetProject">
-                                        <th>Table</th>
+                                        <th data-toggle="true" >Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
                                         <th>Status</th>
@@ -64,12 +64,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat = "table in targetProject | orderBy: 'table.due_date' track by $index">
+                                    <tr ng-repeat = "table in targetProject | orderBy: 'table.due_date' track by $index" foo-repeat-done>
                                         <td>{{table.table_name}}</td>
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
                                         <td>{{table.table_status}}</td>
-                                        <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button> <td>
+                                        <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
                                         <td> <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
                                             <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
                                         </td>
