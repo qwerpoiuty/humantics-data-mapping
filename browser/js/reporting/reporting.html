@@ -261,20 +261,18 @@
 
 	       			<div class="col-lg-6 percent-100">
 
-
-       					<div ng-show="!targets && !sources">
-	                		<div class="col-lg-12">
-		                    <div class="ibox">
-		                        <div class="ibox-content" style="border-top:none; height:85vh;">
-					             	<h2 style="text-align:center"> Data Maps Reporting</h2>
-					             	<h3 style="text-align:center"> Detailed Reporting and Visualization</h3>  
-		                         </div>
-		                        </div>
-		                    </div>
-	                	</div>
-
 		       			<div class="row percent-50">	
-							<div class = "ibox" ng-show="sources">
+							<div ng-show="!targets && !sources">
+		                		<div class="col-lg-12">
+			                    <div class="ibox">
+			                        <div class="ibox-content" style="border-top:none; height:100%;">
+						             	<h2 style="text-align:center"> Data Maps Reporting</h2>
+						             	<h3 style="text-align:center"> Detailed Reporting and Visualization</h3>  
+			                         </div>
+			                        </div>
+			                    </div>
+		                	</div>
+							<div class = "ibox" ng-show="sources" style="margin-right:30px; margin-left:15px;">
 								<div class = "ibox-content" >
 									<div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
 										<h3 style="color:white;">Sources</h3>
@@ -371,9 +369,9 @@
 
 							<div ng-show="!targets">
 	                		<div class="col-lg-12">
-		                    <div class="ibox">
+		                    <div class="ibox" style="margin-right:15px;">
 		                        <div class="ibox-content" style="border-top:none;">
-					             	<h2 style="text-align:center; font-weight:500; padding-bottom:17.5vh; padding-top:18vh;"> Selected attribute does not have any targets</h2>
+					             	<h2 style="text-align:center; font-weight:500; padding-bottom:17.5vh; padding-top:18vh;">Selected attribute does not have any targets</h2>
 		                         </div>
 		                        </div>
 		                    </div>
