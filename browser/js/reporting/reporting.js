@@ -143,25 +143,27 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
     $scope.totalMappings = table => {
 
-        reportingFactory.getAllMappings(table.table_id)
+        reportingFactory.getAllMappings(22)
             .then(mappings => {
-                let mappingHistory = {}
+                $scope.mappingHistory = {}
                 mappings = mappings[0]
                 mappings.forEach(e => {
-                    if (mappingHistory.hasOwnProperty(e.target)) {
-                        mappingHistory[e.target].push(e)
+                    if ($scope.mappingHistory.hasOwnProperty(e.target)) {
+                        $scope.mappingHistory[e.target].push(e)
                     } else {
-                        mappingHistory[e.target] = [e]
+                        $scope.mappingHistory[e.target] = [e]
                     }
                 })
 
-                $scope.allMapping = []
-                for (let mapping of Object.keys(mappingHistory)) {
+                $scope.recentMapping = []
+                for (let mapping of Object.keys($scope.mappingHistory)) {
                     let version = Math.max(...mappingHistory[mapping].map(e => e.version))
-                    mappingHistory[mapping].forEach(e => {
-                        if (e.version === version) $scope.allMapping.push(e)
+                    $scope.mappingHistory[mapping].forEach(e => {
+                        if (e.version === version) $scope.recentMapping.push(e)
                     })
                 }
+                console.log($scope.recentMapping)
+                console.log(mappingHistory)
 
 
             })

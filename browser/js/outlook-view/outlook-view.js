@@ -101,6 +101,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
+                    $scope.selectAttribute($scope.targetMapping)
                 })
                 break
             case "editAttribute":
@@ -120,9 +121,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                                     $scope.editing = "none"
                                     dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
                                         $scope.attributes = attributes[0]
-                                        $scope.currentAttr = $scope.targetMapping.attr_name
-                                        $scope.sources = []
-                                        $scope.targetMapping = {}
+                                        $scope.attributes.forEach(e => {
+                                            if (e.attr_id == mapping.target) {
+                                                $scope.selectAttribute(e)
+                                                return
+                                            }
+                                        })
                                     })
                                 })
                         })
@@ -136,7 +140,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 }
                 $scope.temp.target.properties = arr
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
-                    console.log('hello')
+                    dataFactory.getAttributesByTableId($stateParams.tableId).then(function(attributes) {
+                        $scope.attributes = attributes[0]
+                    })
                 })
         }
     }

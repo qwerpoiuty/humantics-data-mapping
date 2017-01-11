@@ -10,25 +10,35 @@ app.directive('rules', function($state, mappingFactory) {
         link: function(scope, element, attrs) {
             scope.newRule = false
             scope.addTransformation = function() {
-                scope.newRule = !scope.newRule
+                if (scope.mapping.length === 0) alert("Please specify a source first")
+                else scope.newRule = !scope.newRule
             }
             scope.saveTransformation = function(transformationRule, version) {
 
                 scope.rules.push(transformationRule)
-                var mapping = scope.setMapping()
-                mappingFactory.updateMapping(rules, scope.mapping.target).then(function() {
+                mappingFactory.updateMapping(scope.setMap()).then(function() {
                     scope.newRule = !scope.newRule
                 })
             }
 
             scope.deleteRule = function(index) {
                 scope.rules.splice(index, 1)
-                var mapping = scope.setMapping()
                 mappingFactory.updateMapping(rules, scope.mapping.target).then(function() {
                     scope.newRule = !scope.newRule
                 })
             }
             scope.hide = []
+            scope.setMap = () => {
+                let temp = scope.mapping[0].version + 1
+                let mapping = {
+                    version: temp,
+                    modifier: scope.user.id,
+                    source: scope.mapping,
+                    target: scope.mapping[0].target,
+                    transformation_rules: scope.rules
+                }
+                return mapping
+            }
             scope.editRule = function(index) {
                 scope.hide[index] = 1
 
