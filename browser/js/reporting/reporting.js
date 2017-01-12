@@ -142,7 +142,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.totalMappings = table => {
-
         reportingFactory.getAllMappings(22)
             .then(mappings => {
                 $scope.mappingHistory = {}
@@ -162,10 +161,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         if (e.version === version) $scope.recentMapping.push(e)
                     })
                 }
-                console.log($scope.recentMapping)
-                console.log(mappingHistory)
-
-
             })
     }
 

@@ -31,7 +31,6 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 var transition = $state.go(stateName)
                 transition.then(function(currentState) {
                     scope.pagetitle = scope.headers[currentState.name]
-                    console.log(scope.pagetitle)
                 })
             }
 

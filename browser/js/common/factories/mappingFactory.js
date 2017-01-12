@@ -1,6 +1,6 @@
 app.factory('mappingFactory', function($http) {
     var d = {}
-        //gets
+
     d.getMapping = function(target) {
         var query = {
             attr_id: target

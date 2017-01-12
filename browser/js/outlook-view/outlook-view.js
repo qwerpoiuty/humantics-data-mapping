@@ -24,7 +24,6 @@ app.config(function($stateProvider) {
 });
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal) {
-
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
@@ -59,6 +58,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.editAttribute = function() {
+        if ($scope.user.power_level < 2) {
+            alert('You don\'t have permissions to do that')
+            return
+        }
         if ($scope.targetMapping) {
             $scope.editing = "editAttribute"
             $scope.temp.target = Object.assign({}, $scope.targetMapping)
@@ -70,10 +73,14 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     }
 
-    $scope.cancel = function() {
+    $scope.cancel = () => {
         $scope.editing = "none"
     }
     $scope.newSource = function() {
+        if ($scope.user.power_level < 2) {
+            alert('You don\'t have permissions to do that')
+            return
+        }
         if ($scope.targetMapping) $scope.editing = "newSource"
         else alert('pick an attribute first')
     }
@@ -95,8 +102,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.save = function() {
         switch ($scope.editing) {
             case "newSource":
-                var mapping = $scope.setMapping()
-                console.log(mapping)
+            var mapping = $scope.setMapping()
                 mapping.source.push($scope.temp.attr.attr_id)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
@@ -105,11 +111,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 })
                 break
             case "editAttribute":
-                var mapping = $scope.setMapping()
+            var mapping = $scope.setMapping()
                 if ($scope.temp.hasOwnProperty('source')) mapping.source[$scope.sourceIndex] = $scope.temp.source.attr.attr_id
                 if ($scope.temp.target) {
-                    var arr = ['pk', 'fk', 'upi', 'npi']
-                    var properties = []
+                var arr = ['pk', 'fk', 'upi', 'npi']
+                var properties = []
                     arr.forEach(e => {
                         if ($scope.temp.target.properties[e]) properties.push(e)
                     })
