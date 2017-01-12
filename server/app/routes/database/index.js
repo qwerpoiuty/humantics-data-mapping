@@ -62,7 +62,7 @@ router.get('/recentTable', function(req, res) {
         })
 })
 router.get('/tableById/:tableId', function(req, res) {
-    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_id=' + req.params.tableId)
+    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id inner join systems on dbs.system = systems.system_id where tables.table_id=' + req.params.tableId)
         .then(function(table) {
             res.json(table)
         })

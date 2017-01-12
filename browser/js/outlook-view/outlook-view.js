@@ -46,7 +46,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
             if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
             else $scope.targetMapping.version = 1
-            console.log($scope.targetmapping)
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
         })
@@ -83,7 +82,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         var mapping = $scope.setMapping()
         mapping.source.splice($scope.temp.sourceIndex, 1)
         mappingFactory.updateMapping(mapping).then(function(mapping) {
-            $scope.apply()
+            dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
+                $scope.attributes = attributes[0]
+                $scope.currentAttr = $scope.targetMapping.attr_name
+                $scope.sources = []
+                $scope.targetMapping = {}
+            })
         })
 
     }
@@ -97,6 +101,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
+                    $scope.selectAttribute($scope.targetMapping)
                 })
                 break
             case "editAttribute":
@@ -116,9 +121,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                                     $scope.editing = "none"
                                     dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
                                         $scope.attributes = attributes[0]
-                                        $scope.currentAttr = $scope.targetMapping.attr_name
-                                        $scope.sources = []
-                                        $scope.targetMapping = {}
+                                        $scope.attributes.forEach(e => {
+                                            if (e.attr_id == mapping.target) {
+                                                $scope.selectAttribute(e)
+                                                return
+                                            }
+                                        })
                                     })
                                 })
                         })
@@ -132,7 +140,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 }
                 $scope.temp.target.properties = arr
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
-                    console.log('hello')
+                    dataFactory.getAttributesByTableId($stateParams.tableId).then(function(attributes) {
+                        $scope.attributes = attributes[0]
+                    })
                 })
         }
     }
@@ -158,7 +168,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
     $scope.changeStatus = function(status) {
         var temp = {
-            status: mappingStatus,
+            status: status,
             id: $scope.targetMapping.attr_id,
             version: $scope.sources[0].version
         }

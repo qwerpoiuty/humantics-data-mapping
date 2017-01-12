@@ -4,6 +4,7 @@
             <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
                 <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
                     <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
                     <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
@@ -53,7 +54,7 @@
                     <h3 style="color:white;">{{currentAttr}}</h3>
                     
                     <div ng-hide="changingStatus">
-                        <button class = "btn btn-danger" ng-if ="sources[0].status" style="float:right;" ng-click="toggleChange()">Incomplete</button>
+                        <button class = "btn btn-danger" ng-if ="sources[0].table_status" style="float:right;" ng-click="toggleChange()">{{sources[0].mapping_status}}</button>
                     </div>
 
                     <div ng-show="changingStatus">
@@ -65,7 +66,7 @@
             <div style="background-color:#ffffff;padding-top:24px;">
                 <div style="overflow-y:scroll;">
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-                    <rules rules="rules" target = "targetMapping"></rules>
+                    <rules rules="rules" mapping="sources" user="user"></rules>
                 </div>
             </div>
         </div> 

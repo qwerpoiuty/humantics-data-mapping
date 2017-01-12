@@ -39,18 +39,17 @@
 }
 
 .tabFieldset{
-	margin-top: 52px;
-	margin-bottom: 35px;
+	margin-top: 14%;
 	background-color:white;
 }
 
 .tabFieldset2{
-	margin-top: 12px;
+	margin-top: 10%;
 	background-color:white;
 }
 
 .tabFieldset3{
-	margin-top: 12px;
+	margin-top: 8%;
 	background-color:white;
 }
 
@@ -224,8 +223,18 @@ ul.tab li a:focus, .active {background-color: #f3f3f4;}
     display: none;
 }
 
+.tabcontent2 {
+    display: none;
+}
 
+//modals
 
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+}
 
 input[type=radio].css-checkbox {
 							position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;

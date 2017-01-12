@@ -6,7 +6,7 @@
                     <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th ng-if="source===[]">Null</th>
+                            <th ng-if="noSources">Null</th>
                             <th style="padding-top:0; padding-bottom:3px;">
                                     <ul class="tab" style="border:none;">
                                         <li ng-repeat = "source in sources track by $index">
@@ -233,10 +233,10 @@
                         <td>   
                          <ui-select ng-model="temp.system">
                             <ui-select-match >
-                                {{temp.system || ''}}
+                                {{temp.system.system_name || ''}}
                             </ui-select-match>
                             <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
-                                <span ng-bind="system"></span>
+                                <span ng-bind="system.system_name"></span>
                             </ui-select-choices>
                         </ui-select>
                         </td>

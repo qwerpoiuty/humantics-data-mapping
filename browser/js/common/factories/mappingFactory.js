@@ -38,15 +38,7 @@ app.factory('mappingFactory', function($http) {
         })
     }
 
-    d.updateRules = function(transformationRules, targetId) {
-        console.log(transformationRules)
-        return $http.post('/api/mappings/rules/' + targetId, transformationRules).then(function(response) {
-            return response.data
-        })
-    }
-
     d.changeStatus = function(status) {
-        console.log(status)
         return $http.post('/api/mappings/changeStatus/', status).then(function(response) {
             return response.data
         })

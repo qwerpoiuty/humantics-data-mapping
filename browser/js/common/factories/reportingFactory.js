@@ -1,6 +1,13 @@
 app.factory('reportingFactory', function($http) {
     var d = {}
 
+    d.getAllMappings = table_id => {
+        return $http.get('/api/mappings/all/' + table_id)
+            .then(response => {
+                return response.data
+            })
+    }
+
     //impact analysis
     d.getImpactByTable = function(tableId) {
         return $http.get('/api/mappings/impact/table/' + tableId)
