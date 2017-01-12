@@ -19,6 +19,9 @@ app.config(function($stateProvider) {
                     return user
                 })
             }
+        },
+        data: {
+            authenticate: true
         }
     })
 });
@@ -102,7 +105,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.save = function() {
         switch ($scope.editing) {
             case "newSource":
-            var mapping = $scope.setMapping()
+                var mapping = $scope.setMapping()
                 mapping.source.push($scope.temp.attr.attr_id)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
@@ -111,11 +114,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 })
                 break
             case "editAttribute":
-            var mapping = $scope.setMapping()
+                var mapping = $scope.setMapping()
                 if ($scope.temp.hasOwnProperty('source')) mapping.source[$scope.sourceIndex] = $scope.temp.source.attr.attr_id
                 if ($scope.temp.target) {
-                var arr = ['pk', 'fk', 'upi', 'npi']
-                var properties = []
+                    var arr = ['pk', 'fk', 'upi', 'npi']
+                    var properties = []
                     arr.forEach(e => {
                         if ($scope.temp.target.properties[e]) properties.push(e)
                     })
