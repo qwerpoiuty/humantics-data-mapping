@@ -123,7 +123,6 @@ app.factory('dataFactory', function($http) {
             })
     }
     d.updateAttribute = function(attribute, target) {
-        console.log(attribute)
         return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {
                 return response.data

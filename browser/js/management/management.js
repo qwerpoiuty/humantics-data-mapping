@@ -105,7 +105,6 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     }
     $scope.refreshSingleProject = (id) => {
         projectFactory.getProjectById(id).then(function(project) {
-            console.log(project)
             $scope.targetProject = project[0]
         })
     }

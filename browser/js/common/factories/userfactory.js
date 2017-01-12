@@ -1,5 +1,4 @@
 app.factory('userFactory', function($http) {
-    console.log("hello friend")
     var userFactory = {}
         //user fetches
     userFactory.createUser = function(user) {
@@ -17,16 +16,16 @@ app.factory('userFactory', function($http) {
             });
     }
     userFactory.updateUser = function(user) {
-       var bool = true
-       for (var key in user){
-            if (user[key] == "" || user[key] == null){
+        var bool = true
+        for (var key in user) {
+            if (user[key] == "" || user[key] == null) {
                 bool == false
                 break
             }
-       }
+        }
         if (bool == false) {
-           return "Please fill out all the fields"
-        }   
+            return "Please fill out all the fields"
+        }
         return $http.put("/api/users/update", user)
             .then(function(response) {
                 return response.data;

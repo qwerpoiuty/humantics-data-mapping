@@ -69,7 +69,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
     }, function(nv, ov) {
         if (nv !== ov) {
             dataFactory.getTables(nv.schema_id).then(function(tables) {
-                console.log(tables[0])
                 $scope.tables = tables[0]
 
             })
@@ -80,7 +79,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         return $scope.createdSystem.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            console.log(nv)
             dataFactory.getDatabases(nv.system_id).then(function(dbs) {
                 $scope.createdDbs = dbs[0]
             })
@@ -91,7 +89,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         return $scope.createdDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            console.log(nv)
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {
                 $scope.createdSchemas = schemas[0]
             })
