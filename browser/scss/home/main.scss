@@ -39,18 +39,17 @@
 }
 
 .tabFieldset{
-	margin-top: 52px;
-	margin-bottom: 35px;
+	margin-top: 14%;
 	background-color:white;
 }
 
 .tabFieldset2{
-	margin-top: 12px;
+	margin-top: 10%;
 	background-color:white;
 }
 
 .tabFieldset3{
-	margin-top: 12px;
+	margin-top: 8%;
 	background-color:white;
 }
 
@@ -224,6 +223,9 @@ ul.tab li a:focus, .active {background-color: #f3f3f4;}
     display: none;
 }
 
+.tabcontent2 {
+    display: none;
+}
 
 //modals
 
