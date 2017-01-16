@@ -1,0 +1,88 @@
+<div id="page-wrapper" class="gray-bg" style="min-height:100%; padding:0;">
+    <div class="wrapper wrapper-content">
+        <div class="col-lg-5 animated fadeInRight">
+            <div class="mail-box-header" style="background-color:#1c84c6;">
+                <h2><span style="color:white;">Projects</span></h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                </div>
+                <h3 style="color:white;">List of Current Projects</h3>
+                <button class = "btn btn-primary" ng-click = "newProject()" style="float:right;">New Project</button>
+            </div>
+
+            <div class="mail-box">
+                <div class="mail-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Project Name</th>
+                                        <th>Project Leader</th>
+                                        <th>Status</th>
+                                        <th>Due Date
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
+                                        <td>{{project.project_name}}</td>
+                                        <td>{{project.leader}}</td>
+                                        <td>{{project.status || 'incomplete'}}</td>
+                                        <td>{{project.due_date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div class="col-lg-7 animated fadeInRight">
+            <div class="mail-box-header" style="background-color:#1ab394;">
+                <h2 style="color:white;">Current Jobs</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:white;">{{currentPro}}</h3>
+                    <button class = "btn btn-success" ng-if="selectedProject" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
+                </div>
+            </div>
+
+               <div class="mail-box">
+                <div class="mail-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <table class="footable table table-stripped toggle-arrow-tiny">
+                                <thead>
+                                    <tr ng-show="targetProject">
+                                        <th data-toggle="true" >Table</th>
+                                        <th>Schema</th>
+                                        <th>Database</th>
+                                        <th>Status</th>
+                                        <th data-hide="all">Detailed View</th>
+                                        <th data-hide="all">Status Approval</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat = "table in targetProject | orderBy: 'table.due_date' track by $index" foo-repeat-done>
+                                        <td>{{table.table_name}}</td>
+                                        <td>{{table.schema_name}}</td>
+                                        <td>{{table.db_name}}</td>
+                                        <td>{{table.table_status}}</td>
+                                        <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
+                                        <td> <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
+                                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </div> 
+    </div>
+    </div>
+    <footer></footer>

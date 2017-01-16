@@ -1,0 +1,67 @@
+<div class="mail-body">
+                        <div class="row">
+                            <div class="col-sm-6 b-r">
+                                <form role="form">
+                                    <table class="table table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th class="table-title">Source Information<th>
+                                    </tr>
+                                    <tr>
+                                        <td>Database Name</td>      
+                                        <td>Database Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Type</td>               
+                                        <td><input type="text" name="sourceDatabaseType"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Field Name</td>                                    
+                                        <td><input type="text" name="sourceFieldName"></td>
+                                    </tr>
+                                     <tr>
+                                        <td>Field Data Type </td>
+                                        <td><input type="text" name="sourceFieldDataType"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sample Value</td>
+                                        <td><input type="text" name="sourceSampleValue"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <form role="form">
+                                    <table class="table table-hover">
+                                    <tbody>
+                                   <tr>
+                                        <th>Target Information<th>
+                                    </tr>
+                                    <tr>
+                                        <td>Database Name</td>      
+                                        <td><input type="text" name="targetDatabaseName"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Type</td>               
+                                        <td><input type="text" name="targetDatabaseType"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Field Name</td>                                    
+                                        <td><input type="text" name="targetFieldName"></td>
+                                    </tr>
+                                     <tr>
+                                        <td>Field Data Type </td>
+                                        <td><input type="text" name="targetFieldDataType"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sample Value</td>
+                                        <td><input type="text" name="targetSampleValue"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+                        </div> 
+</div>

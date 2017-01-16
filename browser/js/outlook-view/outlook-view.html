@@ -1,0 +1,75 @@
+<div id="page-wrapper" class="gray-bg" style="min-height:100%; padding:0;">
+    <div class="wrapper wrapper-content">
+        <div class="col-lg-5 animated fadeInRight">
+            <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
+                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button></h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
+                    <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
+                    <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
+                </div>
+            </div>
+
+            <div class="mail-box" style="border:none;">
+                <div class="mail-body" style="padding-top:34px;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Properties</th>
+                                        <th>Attribute Name</th>
+                                        <th>DataType</th>
+                                        <th>PII</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-click="selectAttribute(attributes[$index])" ng-repeat = "attribute in attributes track by $index"
+                                    ng-class="{{attribute.attr_id}}">
+                                        <td><span class = "att-prop-badge" ng-repeat="prop in attribute.properties">{{prop}}</span></td>
+                                        <td>{{attribute.attr_name}}</td>
+                                        <td>{{attribute.datatype}}</td>
+                                        <td><span class = "att-pii-badge" ng-show="{{attribute.pii == true}}"><i class ="fa fa-check" area-hidden="true"></i></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 animated fadeInRight">
+            <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
+                <div class="pull-right tooltip-demo">
+                    <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
+                    <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> Source</a>
+                    <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
+                    <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
+                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Source</a>
+                </div>
+                <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:white;">{{currentAttr}}</h3>
+                    
+                    <div ng-show="sources[0].mapping_status =='incomplete'|| sources[0].mapping_status=='rejected'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('pending')">Submit for Review</button></div>
+                    <div ng-show="sources[0].mapping_status=='pending'">
+                        <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('rejected')">Decline</button>
+                        <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('approved')">Approve</button>
+                    </div>  
+                </div>
+            </div>
+            <div style="background-color:#ffffff;padding-top:24px;">
+                <div style="overflow-y:scroll;">
+                    <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
+                    <rules rules="rules" mapping="sources" user="user"></rules>
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+    </div>
+
+</div>
+<footer></footer>

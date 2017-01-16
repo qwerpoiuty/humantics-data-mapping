@@ -3,7 +3,8 @@
 }
 
 body {
-  background: #fdfdfd;
+  background-color: #f3f3f4 !important;
+  height: auto;
 }
 
 @mixin clearfix {
@@ -24,6 +25,23 @@ body {
     display: none;
     -webkit-appearance: none;
 }
+
+.percent-100{
+  height:100%;
+}
+
+.percent-50{
+  height:50%;
+}
+
+.percent-33{
+  height:33%;
+}
+
+.percent-315{
+  height:31.5%
+}
+
 .unmargin{
   margin-top:0;
   margin-bottom:0;
@@ -49,7 +67,15 @@ body {
     /* reset the text-align */
     margin:0 auto;
 }
-
+.overflow{
+  overflow:auto
+}
+.bold{
+  text-decoration: bold;
+}
+.underliner{
+  text-decoration: underline;
+}
 .selectDisable {-webkit-user-select: none;  -khtml-user-select: none;   -moz-user-select: none; -o-user-select: none;    user-select: none; }
 
 .selectEnable { -webkit-user-select: text;  -khtml-user-select: text;   -moz-user-select: text; -o-user-select: text;    user-select: text; }
@@ -58,7 +84,29 @@ body {
   padding:0;
 }
 
+.with-newlines{
+  white-space:pre
+}
+
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.node text {
+  font: 14px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #676a6c;
+  stroke-width: 3.0px;
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'login/main';
-@import 'theme/style'
+@import 'theme/style';
+@import 'outlook-view/main';

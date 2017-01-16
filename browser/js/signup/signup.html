@@ -1,0 +1,27 @@
+<div class="middle-box text-center loginscreen animated fadeInDown" style="padding-top: 150px !important;">
+        <div style="background-color: grey; padding: 30px;">
+            <div>
+
+                <h1 class="logo-name" style="color:white; text-shadow: -1px 0 #f3f3f4, 0 1px #f3f3f4, 1px 0 #f3f3f4, 0 -1px #f3f3f4;">D &nbspA &nbspT &nbspA &nbspM &nbspA &nbspP &nbspS</h1>
+
+            </div>
+            <h3 style="color:whitesmoke;">Datamapping Registration</h3>
+            <p style="color:whitesmoke;">Create account to see it in action.</p>
+            <form class="m-t" role="form">
+                <div class="form-group">
+                    <input type="email" class="form-control" ng-model="user.email" placeholder="Email" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="user.confirm" placeholder="Confirm Password" required="">
+                </div>
+                <button type="submit" ng-click="signup(user)" class="btn btn-primary block full-width m-b">Register</button>
+
+                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="login.html">Login</a>
+            </form>
+            <p class="m-t"> <small style="color:whitesmoke;">Humantics - Datamapping Portal 2016</small> </p>
+        </div>
+</div>

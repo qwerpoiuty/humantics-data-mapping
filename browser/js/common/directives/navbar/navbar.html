@@ -1,0 +1,33 @@
+<div class="row wrapper border-bottom white-bg page-heading view-height-1 row-fix" ng-if="user">
+    <div class="col-lg-3">
+        <h2 class="text-success">{{pagetitle || "Your Dashboard"}}</h2>
+        <ol class="breadcrumb">
+            <li class = "navLink" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+                <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-offset-6 col-lg-3">
+    	<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <!-- <div class="navbar-header">
+	            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
+            <form role="search" class="navbar-form-custom" action="search_results.html">
+                <div class="form-group">
+                    <input type="text" placeholder="Search your mappings..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div> -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span ng-if="!user" class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
+                    <span ng-if="user" class = "m-r-sm text-muted welcome-message">Welcome Back {{user.email}}</span>
+                </li>
+                <li>
+                    <a ng-if="!user" ui-sref="login">Login</a>
+                    <a ng-if="user" ng-click = "logout()" style="color:#1c84c6;">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                </li>	
+            </ul>
+
+        </nav>
+    </div>
+</div>
