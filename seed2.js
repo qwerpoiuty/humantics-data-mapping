@@ -59,7 +59,7 @@ var organizeData = csvData => {
         return e.table_name
     })
     tables.forEach(table => {
-        var index = systems.indexOf(table.schema)
+        var index = systems.indexOf(table.schema) + 1
         table.schema = index
     })
     var arr = {};
@@ -71,10 +71,10 @@ var organizeData = csvData => {
         tables.push(arr[key]);
     var tempTables = []
     tables.forEach(table => tempTables.push(table.table_name))
-    attributes.forEach(attribute => attribute.table_id = tempTables.indexOf(attribute.table))
+    attributes.forEach(attribute => attribute.table_id = tempTables.indexOf(attribute.table) + 1)
 
     var systemSeeds = []
-    for (var i = 0; i < systems.length; i++) {
+    for (var i = 1; i < systems.length + 1; i++) {
         systemSeeds.push({
             system_name: systems[i]
         })
