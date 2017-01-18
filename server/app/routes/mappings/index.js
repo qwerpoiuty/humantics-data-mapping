@@ -149,6 +149,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
             promises.push(childPromise)
         })
         Promise.all(promises).then(() => {
+            console.log("i'm finished?", tree)
             res.json(tree)
         })
     }
@@ -179,7 +180,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
         }))]
 
         let children = a()
-        console.log(children)
+        console.log("first", children)
 
 
         db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')").then(attributes => {
@@ -195,6 +196,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 })
 
 router.post('/', function(req, res) {
+    console.log(req.body.source)
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
@@ -203,7 +205,6 @@ router.post('/', function(req, res) {
     for (var key in req.body) {
         values.push(req.body[key])
     }
-
     keys = keys.join(',')
     values = values.join(',')
 
