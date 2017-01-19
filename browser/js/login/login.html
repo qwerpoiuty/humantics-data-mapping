@@ -11,6 +11,7 @@
 
     <div>
         <p style="color:whitesmoke;">Login to start mapping!</p>
+        <p style="color:red" ng-show="error">{{error}}</p>
         <form class="m-t" role="form" ng-submit="submit()">
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Username" ng-model="loginInfo.email" required="">

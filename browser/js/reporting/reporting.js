@@ -2,7 +2,10 @@ app.config(function($stateProvider) {
     $stateProvider.state('reporting', {
         url: '/reporting',
         templateUrl: 'js/reporting/reporting.html',
-        controller: 'reportCtrl'
+        controller: 'reportCtrl',
+        data: {
+            authenticate: true
+        }
 
     })
 });
@@ -10,6 +13,7 @@ app.config(function($stateProvider) {
 app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
+        console.log($scope.systems)
     })
 
     $scope.impactSearches = []
@@ -42,7 +46,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         return $scope.selectedSchema.value
     }, function(nv, ov) {
         if (nv !== ov) {
-
             dataFactory.getTables(nv.schema_id).then(function(tables) {
                 $scope.tables = tables[0]
             })

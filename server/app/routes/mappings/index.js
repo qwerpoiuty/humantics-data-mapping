@@ -51,22 +51,22 @@ router.get('/recentMapping', function(req, res) {
             // } else {
             //     res.sendStatus(400)
             // }
-        if (mappings[0].length == 1) {
-            res.json(mappings[0])
-        } else if (mappings[0].length > 1) {
-            var currentVersion = mappings[0][0].version
-            var sent = false
-            for (var i = 0; i < mappings[0].length; i++) {
-                if (mappings[0][i].version != currentVersion) {
-                    res.json(mappings[0].slice(0, i))
-                    sent = true
-                    break
+            if (mappings[0].length == 1) {
+                res.json(mappings[0])
+            } else if (mappings[0].length > 1) {
+                var currentVersion = mappings[0][0].version
+                var sent = false
+                for (var i = 0; i < mappings[0].length; i++) {
+                    if (mappings[0][i].version != currentVersion) {
+                        res.json(mappings[0].slice(0, i))
+                        sent = true
+                        break
+                    }
                 }
+                if (sent === false) res.json(mappings[0])
+            } else {
+                res.sendStatus(200)
             }
-            if (sent === false) res.json(mappings[0])
-        } else {
-            res.sendStatus(200)
-        }
         })
 })
 
@@ -124,16 +124,19 @@ router.get('/impact/tree/:table_id', function(req, res) {
                 } else {
                     db.query(`select table_name, schema_name, target from tables ${attrLink} ${schemaLink} inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ${parent}`).then(attributes => {
                         attributes = attributes[0]
-                        var children = attributes.map(e => {
+                        let a = () => [...new Set(attributes.map(e => {
                             return e.target
-                        })
-                        db.query(`select schema_name, tables.table_id,table_name from attributes ${attrLink} ${schemaLink} where attributes.attr_id = any('{${children.join(',')}}')`).then(function(attributes) {
+                        }))]
+                        var children = a()
+                            // FIX THIS TYPO
+                        db.query(`select schema_name, tables.table_id,table_name from attributes ${tableLink} ${schemaLink}  where attributes.attr_id = any('{${children.join(',')}}')`).then(function(attributes) {
                             attributes = attributes[0]
                             if (attributes === undefined) return resolve()
                             let tables = addToTree(attributes, parent)
-                            var children = tables.map(e => {
-                                return e.table_id
-                            })
+                            let a = () => [...new Set(attributes.map(e => {
+                                return e.target
+                            }))]
+                            let children = a()
                             if (children.length == 0) {
                                 resolve()
                             } else {
@@ -171,9 +174,14 @@ router.get('/impact/tree/:table_id', function(req, res) {
             id: req.params.table_id,
             name: attributes[0].schema_name + '.' + attributes[0].table_name,
         })
-        var children = attributes.map(e => {
+        let a = () => [...new Set(attributes.map(e => {
             return e.target
-        })
+        }))]
+
+        let children = a()
+        console.log(children)
+
+
         db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')").then(attributes => {
             var tables = addToTree(attributes[0], req.params.table_id)
             var children = attributes[0].map(e => {
@@ -216,7 +224,7 @@ router.post('/rules/:targetId', function(req, res) {
 })
 
 router.post('/changeStatus', function(req, res) {
-    db.query(`update mappings set mapping_status= ${req.body.status} where mappings.target = ${req.body.id} and mappings.version =${req.body.version}`).then(function() {
+    db.query(`update mappings set mapping_status= '${req.body.status}' where mappings.target = ${req.body.id} and mappings.version =${req.body.version}`).then(function() {
             res.sendStatus(200)
         })
         // db.query("update mappings set mapping_status='" + req.body.status + "' where mappings.target =" + req.body.id + ' and mappings.version =' + req.body.version).then(function() {

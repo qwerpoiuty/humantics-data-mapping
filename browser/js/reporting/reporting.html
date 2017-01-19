@@ -1,5 +1,4 @@
 <!-- <button ng-click = "totalMappings()">Test</button> -->
-<div id="page-wrapper" class="gray-bg" style="min-height:100%; padding:0;">
 <div id = "wrapper" class = "view-height-main">
 	<div class = "wrapper wrapper-content animated fadeIn" style="padding-top:10px;">
 		<div class = "p-w-md m-t-sm">
@@ -34,10 +33,10 @@
 														        	<span class="input-group-addon"><div class="newTableText">Select a System</div></span>
 														        	<ui-select ng-model="selectedSystem.value">
 																	    <ui-select-match placeholder="List of Systems">
-																	        {{$select.selected.name}}
+																	        {{$select.selected.system_name}}
 																	    </ui-select-match>
-																	    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																	        <span ng-bind="item.name"></span>
+																	    <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+																	        <span ng-bind="system.system_name"></span>
 																	    </ui-select-choices>
 																	</ui-select>
 														        </div>
