@@ -11,10 +11,10 @@
 								<div class = "row row-centered">
 									<div class="col-lg-12 col-centered searchOuterContainer">
 										<ul class="tab">
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
-											  <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
-											</ul>
+										   <li><a class="tablinks" ng-click="openBrowse(event, 'SearchTab')"><h5 class="text-success">Search</h5></a></li>
+										   <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
+										   <li><a class="tablinks" ng-click="openBrowse(event, 'CreateTab')"><h5 class="text-success">Create</h5></a></li>
+										</ul>
 										<div id="SearchTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset">
@@ -126,29 +126,6 @@
 										        </fieldset>
 										    </form>
 									    </div>
-
-									   <!--  <div id="SqlTab" class="tabcontent">	
-												<form method="post">
-										        <fieldset class="tabFieldset4">	
-													<div class = "row">
-															<div class="col-lg-8 col-lg-offset-2">
-													        <div class="input-group m-b">
-													        	<span class="input-group-addon"><div class="newTableText">Select Command</div></span>
-													        	<ui-select ng-model="selectedSystem.value">
-																    <ui-select-match placeholder="List of Commands">
-																        {{$select.selected.name}}
-																    </ui-select-match>
-																    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-																        <span ng-bind="item.name"></span>
-																    </ui-select-choices>
-																</ui-select>
-													        </div>
-											      		</div>
-													</div>
-										        </fieldset>
-										    </form>
-									    </div> -->
-
 									</div>
 								</div> 
 							</div>
@@ -163,11 +140,11 @@
 										<div class = "row row-centered">
 											<div class="col-lg-12 col-centered searchOuterContainer">
 												<ul class="tab">
-													  <li><a class="tablinks2" ng-click="openBrowse(event, 'ActionsTab')"><h5 class="text-success">Recent Actions</h5></a></li>
-													  <li><a class="tablinks2" ng-click="openBrowse(event, 'SummaryTab')"><h5 class="text-success">Summary of Projects</h5></a></li>
+													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'ActionsTab')"><h5 class="text-success">Recent Actions</h5></a></li>
+													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'SummaryTab')"><h5 class="text-success">Summary of Projects</h5></a></li>
 												</ul>
 
-												<div id="ActionsTab" class="tabcontent">	
+												<div id="ActionsTab" class="tabcontent2">	
 													<form method="post">
 												        <fieldset>
 														   	<div style="max-height:27vh;overflow-y:scroll; padding-top:25px; background-color:white;">
@@ -221,124 +198,124 @@
 													</form>
 											    </div>
 												
-													<div id="SummaryTab" class="tabcontent">	
-														<form method="post">
-													        <fieldset>
-															  	<div style="max-height:27vh; overflow-y:scroll; padding-top:25px;">
-												        			<table class="footable table table-stripped toggle-arrow-tiny">
-												                        <thead>
-												                        <tr>
-												                            <th style="text-align: center;">Project</th>
-												                            <th style="text-align: center;">Leader</th>
-												                            <th style="text-align: center;">Tables Completed</th>
-												                            <th style="text-align: center;">Tasks Completed</th>
-												                            <th style="text-align: center;" >Date Due</th>
-												                            <th style="text-align: center;">Status</th>
-												                        </tr>
-												                        </thead>
-												                        <tbody>
-												                        <tr>
-												                            <td>Project 3</small></td>
-												                            <td>Patrick Smith</td>
-												                            <td>13</td>
-												                            <td>25</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-											                           <tr>
-												                            <td>Project 4</small></td>
-												                            <td>David O'Connel</td>
-												                            <td>13</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
+												<div id="SummaryTab" class="tabcontent2">	
+													<form method="post">
+												        <fieldset>
+														  	<div style="max-height:27vh; overflow-y:scroll; padding-top:25px;">
+											        			<table class="footable table table-stripped toggle-arrow-tiny">
+											                        <thead>
+											                        <tr>
+											                            <th style="text-align: center;">Project</th>
+											                            <th style="text-align: center;">Leader</th>
+											                            <th style="text-align: center;">Tables Completed</th>
+											                            <th style="text-align: center;">Tasks Completed</th>
+											                            <th style="text-align: center;" >Date Due</th>
+											                            <th style="text-align: center;">Status</th>
+											                        </tr>
+											                        </thead>
+											                        <tbody>
+											                        <tr>
+											                            <td>Project 3</small></td>
+											                            <td>Patrick Smith</td>
+											                            <td>13</td>
+											                            <td>25</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                           <tr>
+											                            <td>Project 4</small></td>
+											                            <td>David O'Connel</td>
+											                            <td>13</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                            <tr>
+											                            <td>Project 7</small></td>
+											                            <td>Garret Robinson</td>
+											                            <td>18</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
 											                            <tr>
-												                            <td>Project 7</small></td>
-												                            <td>Garret Robinson</td>
-												                            <td>18</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                            <tr>
-												                            <td>Project 12</small></td>
-												                            <td>Jim Collins</td>
-												                            <td>5</td>
-												                            <td>8</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                             <tr>
-												                            <td>Project 3</small></td>
-												                            <td>Patrick Smith</td>
-												                            <td>13</td>
-												                            <td>25</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-											                           <tr>
-												                            <td>Project 4</small></td>
-												                            <td>David O'Connel</td>
-												                            <td>13</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
+											                            <td>Project 12</small></td>
+											                            <td>Jim Collins</td>
+											                            <td>5</td>
+											                            <td>8</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+											                             <tr>
+											                            <td>Project 3</small></td>
+											                            <td>Patrick Smith</td>
+											                            <td>13</td>
+											                            <td>25</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                           <tr>
+											                            <td>Project 4</small></td>
+											                            <td>David O'Connel</td>
+											                            <td>13</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                            <tr>
+											                            <td>Project 7</small></td>
+											                            <td>Garret Robinson</td>
+											                            <td>18</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
 											                            <tr>
-												                            <td>Project 7</small></td>
-												                            <td>Garret Robinson</td>
-												                            <td>18</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                            <tr>
-												                            <td>Project 12</small></td>
-												                            <td>Jim Collins</td>
-												                            <td>5</td>
-												                            <td>8</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                             <tr>
-												                            <td>Project 3</small></td>
-												                            <td>Patrick Smith</td>
-												                            <td>13</td>
-												                            <td>25</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-											                           <tr>
-												                            <td>Project 4</small></td>
-												                            <td>David O'Connel</td>
-												                            <td>13</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
+											                            <td>Project 12</small></td>
+											                            <td>Jim Collins</td>
+											                            <td>5</td>
+											                            <td>8</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+											                             <tr>
+											                            <td>Project 3</small></td>
+											                            <td>Patrick Smith</td>
+											                            <td>13</td>
+											                            <td>25</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                           <tr>
+											                            <td>Project 4</small></td>
+											                            <td>David O'Connel</td>
+											                            <td>13</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+										                            <tr>
+											                            <td>Project 7</small></td>
+											                            <td>Garret Robinson</td>
+											                            <td>18</td>
+											                            <td>20</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
 											                            <tr>
-												                            <td>Project 7</small></td>
-												                            <td>Garret Robinson</td>
-												                            <td>18</td>
-												                            <td>20</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                            <tr>
-												                            <td>Project 12</small></td>
-												                            <td>Jim Collins</td>
-												                            <td>5</td>
-												                            <td>8</td>
-												                            <td>Jul 14, 2013</td>
-												                            <td>Ongoing</td>
-												                        </tr>
-												                        </tbody>
-											                    </table>
-											                 	</div>
-															</fieldset>
-														</form>
-												    </div>
+											                            <td>Project 12</small></td>
+											                            <td>Jim Collins</td>
+											                            <td>5</td>
+											                            <td>8</td>
+											                            <td>Jul 14, 2013</td>
+											                            <td>Ongoing</td>
+											                        </tr>
+											                        </tbody>
+										                    </table>
+										                 	</div>
+														</fieldset>
+													</form>
+											    </div>
 												</div>
 											</div>
 										</div> 
@@ -346,104 +323,8 @@
 								</div>
 	        				</div>
 	        			</div>
-
-	        		<!-- 	<div class="row percent-33">
-	        				<div class="col-lg-12">
-				   			<div class="ibox">
-	        				<div class="ibox-title" style="border-top:none;">
-								<h5 class="text-success">Recent Actions</h5>
-	        				</div>
-							<div class="ibox-content"  style="max-height:21vh;overflow-y:scroll;">
-								<table class="footable table table-stripped toggle-arrow-tiny">
-		                        <tr>
-		                            <td style="text-align:left;border-top:none;">Completed 1 Task For Project 18</td>
-		                        </tr>
-		                          <tr>
-		                            <td style="text-align:left;">Joined Project 18</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:left;">Completed 1 Task For Project 12</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:left;">Completed 2 Tables For Project 12</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:left;">Completed 2 Tasks For Project 7</td>
-		                        </tr>
-		                        <tr>
-		                            <td style="text-align:left;">Completed 2 Tables For Project 7</td>
-		                        </tr>
-		                        </tbody>
-		                    </table>
-							</div>
-	        			</div>
-
-        					</div>
-        				</div>
-
-        				<div class="row percent-33">
-        					<div class="col-lg-12">
-							<div class="ibox">
-	        				<div class="ibox-title" style="border-top:none;">
-	        					<h5 class="text-success">Summary of Projects</h5>
-	        				</div>
-	        				<div class="ibox-content" style="max-height:20vh;overflow-y:scroll;">
-			        			<table class="footable table table-stripped toggle-arrow-tiny">
-		                        <thead>
-		                        <tr>
-		                            <th data-toggle="true">Project</th>
-		                            <th>Leader</th>
-		                            <th>Tables Completed</th>
-		                            <th>Tasks Completed</th>
-		                            <th data-hide="all">Date Due</th>
-		                            <th>Status</th>
-		                        </tr>
-		                        </thead>
-		                        <tbody>
-		                        <tr>
-		                            <td>Project 3</small></td>
-		                            <td>Patrick Smith</td>
-		                            <td>13</td>
-		                            <td>25</td>
-		                            <td>Jul 14, 2013</td>
-		                            <td>Ongoing</td>
-		                        </tr>
-	                           <tr>
-		                            <td>Project 4</small></td>
-		                            <td>David O'Connel</td>
-		                            <td>13</td>
-		                            <td>20</td>
-		                            <td>Jul 14, 2013</td>
-		                            <td>Ongoing</td>
-		                        </tr>
-	                            <tr>
-		                            <td>Project 7</small></td>
-		                            <td>Garret Robinson</td>
-		                            <td>18</td>
-		                            <td>20</td>
-		                            <td>Jul 14, 2013</td>
-		                            <td>Ongoing</td>
-		                        </tr>
-		                            <tr>
-		                            <td>Project 12</small></td>
-		                            <td>Jim Collins</td>
-		                            <td>5</td>
-		                            <td>8</td>
-		                            <td>Jul 14, 2013</td>
-		                            <td>Ongoing</td>
-		                        </tr>
-		                        </tbody>
-		                    </table>
-		                 	</div>
-	        			</div>
-
-        					</div>
-    					</div>
-						 -->
-
-
 					<div class="col-lg-6">
-						 <div ng-show="tables">
+						<div ng-show="tables">
 	        			<div class="col-lg-12">
 	                    <div class="ibox">
 	                        <div class="ibox-content" style="border-top:none; height:80vh;">

@@ -145,7 +145,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.totalMappings = table => {
-        reportingFactory.getAllMappings(22)
+        reportingFactory.getAllMappings(table.table_id)
             .then(mappings => {
                 $scope.mappingHistory = {}
                 mappings = mappings[0]
@@ -156,14 +156,15 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         $scope.mappingHistory[e.target] = [e]
                     }
                 })
-
+                console.log($scope.mappingHistory)
                 $scope.recentMapping = []
                 for (let mapping of Object.keys($scope.mappingHistory)) {
-                    let version = Math.max(...mappingHistory[mapping].map(e => e.version))
+                    let version = Math.max(...$scope.mappingHistory[mapping].map(e => e.version))
                     $scope.mappingHistory[mapping].forEach(e => {
                         if (e.version === version) $scope.recentMapping.push(e)
                     })
                 }
+                $scope.allMapping = true
             })
     }
 
