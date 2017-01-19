@@ -13,7 +13,6 @@ app.config(function($stateProvider) {
 app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
-        console.log($scope.systems)
     })
 
     $scope.impactSearches = []
@@ -97,7 +96,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.tableImpact = function(table) {
         reportingFactory.getTree(table.table_id).then(tree => {
             $scope.tree = unflatten(tree)
-
+            console.log($scope.tree)
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'js/common/modals/impactTree/impactTree.html',
@@ -107,39 +106,28 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 size: "xl",
                 resolve: {
                     tree: function() {
-                        return tree;
+                        return $scope.tree;
                     }
                 }
             });
         })
         let unflatten = arr => {
-            var tree = [],
-                mappedArr = {},
-                arrElem,
-                mappedElem;
-
-            // First map the nodes of the array to an object -> create a hash table.
-            for (var i = 0, len = arr.length; i < len; i++) {
-                arrElem = arr[i];
-                mappedArr[arrElem.id] = arrElem;
-                mappedArr[arrElem.id]['children'] = [];
-            }
-
-
-            for (var id in mappedArr) {
-                if (mappedArr.hasOwnProperty(id)) {
-                    mappedElem = mappedArr[id];
-                    // If the element is not at the root level, add it to its parent array of children.
-                    if (mappedElem.parent) {
-                        mappedArr[mappedElem['parent']]['children'].push(mappedElem);
-                    }
-                    // If the element is at the root level, add it to first level elements array.
-                    else {
-                        tree.push(mappedElem);
-                    }
+            var map = {},
+                node = {},
+                roots = [];
+            for (var i = 0; i < arr.length; i += 1) {
+                node = Object.assign({}, arr[i]);
+                node.children = [];
+                map[node.id] = node
+                console.log(map, node)
+                if (node.parent) {
+                    map[node.parent].children.push(node);
+                } else {
+                    roots.push(node);
                 }
             }
-            return tree;
+            console.log(roots)
+            return roots
         }
 
     }
