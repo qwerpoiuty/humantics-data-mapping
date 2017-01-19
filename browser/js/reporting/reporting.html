@@ -1,18 +1,20 @@
-<button ng-click = "totalMappings()">Test</button>
+<!-- <button ng-click = "totalMappings()">Test</button> -->
+<div id="page-wrapper" class="gray-bg" style="min-height:100%; padding:0;">
 <div id = "wrapper" class = "view-height-main">
-	<div class = "wrapper wrapper-content animated fadeIn">
+	<div class = "wrapper wrapper-content animated fadeIn" style="padding-top:10px;">
 		<div class = "p-w-md m-t-sm">
-			<div class="row" style="height: 85vh;">
+			<div class="row" style="height: 80vh;">
         		<div class="col-lg-6 percent-100">
         			<div class="row percent-50">
-        				<div class="col-lg-12">
-							<div class = "ibox" style="padding-left:15px;">
-								<div class = "ibox-content">
+        				<div class="col-lg-12" style="height:100%;">
+							<div class = "ibox" style="padding-left:15px; height:100%;">
+								<div class = "ibox-content" style="height:95%;">
 									<div class = "row row-centered">
 										<div class="col-lg-12 col-centered searchOuterContainer">
 											<ul class="tab">
 												  <li><a class="tablinks" ng-click="openBrowse(event, 'attributeImpact')"><h5 class="text-success">Attribute Impact</h5></a></li>
 												  <li><a class="tablinks" ng-click="openBrowse(event, 'tableImpact')"><h5 class="text-success">Table Impact</h5></a></li>
+												  <li><a class="tablinks" ng-click="openBrowse(event, 'allMappings')"><h5 class="text-success">Total Mapping</h5></a></li>
 												</ul>
 											<div id="attributeImpact" class="tabcontent">
 											    <form method="post">
@@ -88,10 +90,8 @@
 									    	</div>
 									    	<div id="allMappings" class="tabcontent">
 											    <form method="post">
-											        <fieldset class="tabAttribute">
+											        <fieldset class="tabMapping">
 											        	<h4>View all mappings and history</h4>
-											            <form method="post">
-											        <fieldset class="tabTable">
 														<div class = "row">
 															<div class="col-lg-8 col-lg-offset-2">
 														        <div class="input-group m-b">
@@ -152,8 +152,6 @@
 														<button class = "btn btn-primary" ng-click = "totalMappings(selectedTable.value)">Find Mappings</button>
 											        </fieldset>
 										    	</form>
-											        </fieldset>
-											    </form>
 										    </div>
 										</div>
 									</div>
@@ -422,7 +420,7 @@
 								</div>
 							</div>	
 						</div>
-						<div ng-show="!targets">
+						<div ng-show="!targets && sources">
 	                		<div class="col-lg-12">
 
 		                   		<div class="ibox">
@@ -479,4 +477,5 @@
    			</div>
 		</div>
 	</div>
+</div>
 </div>
