@@ -30,10 +30,14 @@ app.directive('rules', function($state, mappingFactory) {
             scope.hide = []
             scope.setMap = () => {
                 let temp = scope.mapping[0].version + 1
+                let newSources = []
+                scope.mapping.forEach(function(e) {
+                    newSources.push(e.attr_id)
+                })
                 let mapping = {
                     version: temp,
                     modifier: scope.user.id,
-                    source: scope.mapping,
+                    source: newSources,
                     target: scope.mapping[0].target,
                     transformation_rules: scope.rules
                 }

@@ -13,13 +13,14 @@
             <div class="mail-box" style="border:none;">
                 <div class="mail-body" style="padding-top:34px;">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-lg-12" style="max-height:67vh; overflow-y:scroll;">
                             <form role="form">
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Properties</th>
                                         <th>Attribute Name</th>
+                                        <th>Business Name</th>
                                         <th>DataType</th>
                                         <th>PII</th>
                                     </tr>
@@ -29,6 +30,7 @@
                                     ng-class="{{attribute.attr_id}}">
                                         <td><span class = "att-prop-badge" ng-repeat="prop in attribute.properties">{{prop}}</span></td>
                                         <td>{{attribute.attr_name}}</td>
+                                        <td>{{attribute.business_name}}</td>
                                         <td>{{attribute.datatype}}</td>
                                         <td><span class = "att-pii-badge" ng-show="{{attribute.pii == true}}"><i class ="fa fa-check" area-hidden="true"></i></span></td>
                                     </tr>
@@ -72,4 +74,3 @@
     </div>
 
 </div>
-<footer></footer>

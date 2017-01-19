@@ -108,8 +108,12 @@
                         <td>{{target.lastModified || ''}}</td>
                     </tr>
                     <tr>
+                        <td>Business Name</td>
+                        <td>{{target.business_name || ''}}</td>
+                    </tr>
+                    <tr>
                         <td>Sample Value</td>
-                        <td>{{target.sampleValue || ''}}</td>
+                        <td>{{target.description || ''}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -207,6 +211,15 @@
                     </tr>
                     <tr>
                         <td>Last modified date</td>
+                        <td>{{Date.now()}}</td>
+                    </tr>
+                    <tr>
+                        <td>Business Name</td>
+                        <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="temp.target.business_name"/></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td class="text-info"><input class="btn btn-default form-control" type="text" ng-model="temp.target.description"/></td>
                     </tr>
                     
                     </tbody>
@@ -508,11 +521,11 @@
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.lastModified}}</td>
+                        <td class="padding-tb-16 text-center">{{target.last_modified}}</td>
                     </tr>
                     <tr>
-                        <td>Sample Value</td>
-                        <td><input class="btn btn-default form-control" placeholder="{{target.sample_value}}" type="text" ng-model="temp.target.sample_value"/></td>
+                        <td>Business Name</td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.businessName}}" type="text" ng-model="temp.target.businessName"/></td>
                     </tr>
                     <tr>
                         <td>Description</td>

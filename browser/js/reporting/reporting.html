@@ -1,17 +1,19 @@
+<!-- <button ng-click = "totalMappings()">Test</button> -->
 <div id = "wrapper" class = "view-height-main">
-	<div class = "wrapper wrapper-content animated fadeIn">
+	<div class = "wrapper wrapper-content animated fadeIn" style="padding-top:10px;">
 		<div class = "p-w-md m-t-sm">
-			<div class="row" style="height: 85vh;">
+			<div class="row" style="height: 80vh;">
         		<div class="col-lg-6 percent-100">
         			<div class="row percent-50">
-        				<div class="col-lg-12">
-							<div class = "ibox" style="padding-left:15px;">
-								<div class = "ibox-content">
+        				<div class="col-lg-12" style="height:100%;">
+							<div class = "ibox" style="padding-left:15px; height:100%;">
+								<div class = "ibox-content" style="height:95%;">
 									<div class = "row row-centered">
 										<div class="col-lg-12 col-centered searchOuterContainer">
 											<ul class="tab">
 												  <li><a class="tablinks" ng-click="openBrowse(event, 'attributeImpact')"><h5 class="text-success">Attribute Impact</h5></a></li>
 												  <li><a class="tablinks" ng-click="openBrowse(event, 'tableImpact')"><h5 class="text-success">Table Impact</h5></a></li>
+												  <li><a class="tablinks" ng-click="openBrowse(event, 'allMappings')"><h5 class="text-success">Total Mapping</h5></a></li>
 												</ul>
 											<div id="attributeImpact" class="tabcontent">
 											    <form method="post">
@@ -87,10 +89,8 @@
 									    	</div>
 									    	<div id="allMappings" class="tabcontent">
 											    <form method="post">
-											        <fieldset class="tabAttribute">
+											        <fieldset class="tabMapping">
 											        	<h4>View all mappings and history</h4>
-											            <form method="post">
-											        <fieldset class="tabTable">
 														<div class = "row">
 															<div class="col-lg-8 col-lg-offset-2">
 														        <div class="input-group m-b">
@@ -151,8 +151,6 @@
 														<button class = "btn btn-primary" ng-click = "totalMappings(selectedTable.value)">Find Mappings</button>
 											        </fieldset>
 										    	</form>
-											        </fieldset>
-											    </form>
 										    </div>
 										</div>
 									</div>
@@ -315,7 +313,7 @@
 					</div>
        			</div>
        			<div class="col-lg-6 percent-100">
-   					<div ng-show="!targets && !sources && !allMapping">
+   					<div ng-if="!targets && !sources && !allMapping">
                 		<div class="col-lg-12">
 	                    <div class="ibox">
 	                        <div class="ibox-content" style="border-top:none; height:85vh;">
@@ -326,8 +324,8 @@
 	                    </div>
                 	</div>
 
-	       			<div class="row percent-50">	
-						<div class = "ibox" ng-show="sources">
+	       			<div class="row percent-50" ng-if="sources">	
+						<div class = "ibox" >
 							<div class = "ibox-content" >
 								<div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
 									<h3 style="color:white;">Sources</h3>
@@ -374,8 +372,8 @@
 						</div>
 					</div>
 
-					<div class="row percent-50">
-						<div class = "ibox" ng-show="targets">
+					<div class="row percent-50" ng-if="targets">
+						<div class = "ibox" >
 							<div class = "ibox-content">
 								<div class="mail-box-header" style="background-color:#1ab394; padding: 15px 20px 15px 20px;">
 									<button class="btn btn-primary"  ng-if="impactSearches !== []" ng-click = "previousImpact()" style="background-color:none; border-color:white; margin-right: 8px;"><i class="fa fa-arrow-left" style="" aria-hidden="true"></i></button>
@@ -421,61 +419,62 @@
 								</div>
 							</div>	
 						</div>
-						<div ng-show="!targets">
+						<div ng-show="!targets && sources">
 	                		<div class="col-lg-12">
-
 		                   		<div class="ibox">
 		                        	<div class="ibox-content" style="border-top:none;">
 					             		<h2 style="text-align:center; font-weight:500; padding-bottom:17.5vh; padding-top:18vh;"> Selected attribute does not have any targets</h2>
 		                         	</div>
-
 		                        </div>
 		                    </div>
-                		</div>		
+                		</div>
 					</div>
 					
-					<div ng-show="allMapping">
-						<div class = "ibox">
-							<div class = "ibox-content">
-								<div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-										<h3 style="color:white;">All Mappings</h3>
-								</div>
-								<div class = "mail-body" style="border-left:1px grey; border-right: 2px grey;">
-									<table class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
-										<thead>
-										<tr>
-											<th data-toggle="true">Target Attribute</th>
-											<th>Version</th>
-											<th>DataType</th>
-											<th>Sources</th>
-											<th>Last Modified</th>
-											<th>Modifier</th>
-										</tr>
-										</thead>
-										<tbody>
-										<tr ng-repeat = "mapping in allMapping track by $index" foo-repeat-done>
-											<td>{{mapping.attr_name}}</td>
-											<td>{{mapping.version}}</td>
-											<td>{{mapping.datatype}}</td>
-											<td>{{mapping.source.length || 0}}</td>
-											<td>{{mapping.date_modified}}</td>
-											<td>{{mapping.modifier}}</td>
-										</tr>
-										</tbody>
-										<tfoot>
-					                        <tr>
-					                            <td colspan="5">
-					                                <ul class="pagination"></ul>
-					                            </td>
-					                        </tr>
-					                    </tfoot>			                    
-									</table>
-								</div>
-							</div>	
+					<div ng-if="allMapping" class="row percent-100">
+						<div class="col-lg-12">
+							<div class = "ibox">
+								<div class = "ibox-content">
+									<div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
+											<h3 style="color:white;">All Mappings</h3>
+									</div>
+									<div class = "mail-body" style="border-left:1px grey; border-right: 2px grey;">
+										<table class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
+											<thead>
+											<tr>
+												<th data-toggle="true">Target Attribute</th>
+												<th>Version</th>
+												<th>DataType</th>
+												<th>Sources</th>
+												<th>Last Modified</th>
+												<th>Modifier</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr ng-repeat = "mapping in recentMapping track by $index" foo-repeat-done>
+												<td>{{mapping.attr_name}}</td>
+												<td>{{mapping.version}}</td>
+												<td>{{mapping.datatype}}</td>
+												<td>{{mapping.source.length || 0}}</td>
+												<td>{{mapping.date_modified}}</td>
+												<td>{{mapping.modifier}}</td>
+											</tr>
+											</tbody>
+											<tfoot>
+						                        <tr>
+						                            <td colspan="5">
+						                                <ul class="pagination"></ul>
+						                            </td>
+						                        </tr>
+						                    </tfoot>			                    
+										</table>
+									</div>
+								</div>	
+							</div>
 						</div>
 					</div>
 				</div>
    			</div>
 		</div>
 	</div>
+</div>
 </div>

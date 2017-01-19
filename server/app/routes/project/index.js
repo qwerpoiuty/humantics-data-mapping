@@ -15,7 +15,7 @@ var ensureAuthenticated = function(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-    db.query('SELECT * FROM projects order by projects.project_id asc')
+    db.query('SELECT project_id, project_name, email,members,tables,project_status,due_date FROM projects inner join users on projects.leader= users.id order by projects.project_id asc')
         .then(function(projects) {
             res.json(projects)
         })
