@@ -32,6 +32,12 @@ module.exports = db.define('attribute', {
     },
     properties: {
         type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    description: {
+        type: Sequelize.STRING
+    },
+    business_name: {
+        type: Sequelize.STRING
     }
 }, {
     timestamps: false

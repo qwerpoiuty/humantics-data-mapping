@@ -115,41 +115,46 @@ router.get('/impact/tree/:table_id', function(req, res) {
 
 
     let promise = Promise.resolve(thenable)
+    let promiseCount = 0
     let findChildren = parents => {
-        let promises = []
-        parents.forEach(parent => {
+        var promisesArray = parents.map(parent => {
+            promiseCount++
+            let promises = []
             let childPromise = new Promise((resolve, reject) => {
-                if (!parent) {
-                    resolve()
-                } else {
-                    db.query(`select table_name, schema_name, target from tables ${attrLink} ${schemaLink} inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ${parent}`).then(attributes => {
+                db.query(`select table_name, schema_name, target from tables ${attrLink} ${schemaLink} inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ${parent}`).then(attributes => {
+                    attributes = attributes[0]
+                    let a = () => [...new Set(attributes.map(e => {
+                        return e.target
+                    }))]
+                    var children = a()
+                    if (children.length == 0) {
+                        promiseCount--
+                        resolve()
+                    }
+                    db.query(`select schema_name, tables.table_id,table_name from attributes ${tableLink} ${schemaLink}  where attributes.attr_id = any('{${children.join(',')}}')`).then(function(attributes) {
                         attributes = attributes[0]
+                        if (attributes.length === 0) {
+                            promiseCount--
+                            return resolve()
+                        }
+                        let tables = addToTree(attributes, parent)
                         let a = () => [...new Set(attributes.map(e => {
-                            return e.target
+                            return e.table_id
                         }))]
-                        var children = a()
-                            // FIX THIS TYPO
-                        db.query(`select schema_name, tables.table_id,table_name from attributes ${tableLink} ${schemaLink}  where attributes.attr_id = any('{${children.join(',')}}')`).then(function(attributes) {
-                            attributes = attributes[0]
-                            if (attributes === undefined) return resolve()
-                            let tables = addToTree(attributes, parent)
-                            let a = () => [...new Set(attributes.map(e => {
-                                return e.target
-                            }))]
-                            let children = a()
-                            if (children.length == 0) {
-                                resolve()
-                            } else {
-                                return findChildren(children)
-                            }
-                        })
+                        let children = a()
+                        return findChildren(children)
                     })
-                }
+                })
             })
             promises.push(childPromise)
+            return Promise.all(promises)
         })
-        Promise.all(promises).then(() => {
-            res.json(tree)
+        Promise.all(promisesArray).then(() => {
+            if (promiseCount === 1) {
+                console.log(tree)
+                res.json(tree)
+
+            }
         })
     }
 
@@ -162,7 +167,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
             child_tables.push(attributes[i].table_id);
             tree.push({
                 id: attributes[i].table_id,
-                name: attributes[i].schema_name + "." + attributes[0].table_name,
+                name: attributes[i].schema_name + "." + attributes[i].table_name,
                 parent: parent
             })
         }
@@ -179,15 +184,15 @@ router.get('/impact/tree/:table_id', function(req, res) {
         }))]
 
         let children = a()
-        console.log(children)
-
 
         db.query("select schema_name, tables.table_id,table_name from attributes inner join tables on attributes.table_id = tables.table_id inner join schemas on tables.schema = schemas.schema_id where attributes.attr_id = any('{" + children.join(',') + "}')").then(attributes => {
             var tables = addToTree(attributes[0], req.params.table_id)
             var children = attributes[0].map(e => {
                 return e.table_id
             })
-            return findChildren(children)
+            findChildren(children).then(() => {
+                console.log('hello')
+            })
         })
     })
 
@@ -195,6 +200,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 })
 
 router.post('/', function(req, res) {
+    console.log(req.body.source)
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
@@ -203,7 +209,6 @@ router.post('/', function(req, res) {
     for (var key in req.body) {
         values.push(req.body[key])
     }
-
     keys = keys.join(',')
     values = values.join(',')
 

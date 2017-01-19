@@ -26,7 +26,7 @@
                                 <tbody>
                                     <tr ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
                                         <td>{{project.project_name}}</td>
-                                        <td>{{project.leader}}</td>
+                                        <td>{{project.email}}</td>
                                         <td>{{project.status || 'incomplete'}}</td>
                                         <td>{{project.due_date}}</td>
                                     </tr>
