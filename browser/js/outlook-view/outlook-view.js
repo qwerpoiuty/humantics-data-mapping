@@ -119,10 +119,13 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 if ($scope.temp.target) {
                     var arr = ['pk', 'fk', 'upi', 'npi']
                     var properties = []
-                    arr.forEach(e => {
-                        if ($scope.temp.target.properties[e]) properties.push(e)
-                    })
+                    if ($scope.temp.target.hasOwnProperty('properties')) {
+                        arr.forEach(e => {
+                            if ($scope.temp.target.properties[e]) properties.push(e)
+                        })
+                    }
                     $scope.temp.target.properties = properties
+                    console.log($scope.temp.target)
                     dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
                             mappingFactory.updateMapping(mapping)

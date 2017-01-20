@@ -151,7 +151,6 @@ router.get('/impact/tree/:table_id', function(req, res) {
         })
         Promise.all(promisesArray).then(() => {
             if (promiseCount === 1) {
-                console.log(tree)
                 res.json(tree)
 
             }
@@ -190,9 +189,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
             var children = attributes[0].map(e => {
                 return e.table_id
             })
-            findChildren(children).then(() => {
-                console.log('hello')
-            })
+            findChildren(children)
         })
     })
 
@@ -200,7 +197,6 @@ router.get('/impact/tree/:table_id', function(req, res) {
 })
 
 router.post('/', function(req, res) {
-    console.log(req.body.source)
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"

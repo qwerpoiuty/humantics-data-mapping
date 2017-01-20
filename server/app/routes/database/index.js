@@ -137,7 +137,7 @@ router.post('/attributes/:tableId', function(req, res) {
 
 router.post('/updateAttribute/:attr_id', function(req, res) {
 
-    db.query(`update attributes set datatype='${req.body.datatype}',properties='{${req.body.properties}}',pii=${req.body.pii},date_modified='${moment().format()}' where attributes.attr_id = ${req.params.attr_id}`)
+    db.query(`update attributes set datatype='${req.body.datatype}',properties='{${req.body.properties}}',pii=${req.body.pii}, description='${req.body.description}', business_name='${req.body.business_name}', date_modified='${moment().format()}' where attributes.attr_id = ${req.params.attr_id}`)
         .then(function(attribute) {
             res.json(attribute)
         })
