@@ -119,7 +119,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 if ($scope.temp.target) {
                     var arr = ['pk', 'fk', 'upi', 'npi']
                     var properties = []
-                    if ($scope.temp.target.hasOwnProperty('properties')) {
+                    console.log($scope.temp.target)
+                    if ($scope.temp.target.hasOwnProperty(properties)) {
                         arr.forEach(e => {
                             if ($scope.temp.target.properties[e]) properties.push(e)
                         })
