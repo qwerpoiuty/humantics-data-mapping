@@ -76,7 +76,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 attributes = attributes[0]
                 var mappingHistory = {}
                 attributes.forEach(e => {
-                    if ($mappingHistory.hasOwnProperty(e.target)) {
+                    if (mappingHistory.hasOwnProperty(e.target)) {
                         mappingHistory[e.target].push(e)
                     } else {
                         mappingHistory[e.target] = [e]
