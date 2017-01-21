@@ -116,7 +116,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 
     let promise = Promise.resolve(thenable)
     let promiseCount = 0
-    let interation = 0
+    let iteration = 0
     let findChildren = parents => {
         var promisesArray = parents.map(parent => {
             promiseCount++
