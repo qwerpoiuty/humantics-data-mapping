@@ -146,7 +146,6 @@ router.get('/impact/tree/:table_id', function(req, res) {
                         iteration++
                         if (iteration >= 4) {
                             res.json(tree)
-                            res.next()
                             return
                         }
                         return findChildren(children)
