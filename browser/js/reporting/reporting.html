@@ -419,7 +419,9 @@
 								</div>
 							</div>	
 						</div>
-						<div ng-show="!targets && sources">
+					</div>
+
+						<div class="row percent 50" ng-if="sources && !targets">
 	                		<div class="col-lg-12">
 		                   		<div class="ibox">
 		                        	<div class="ibox-content" style="border-top:none;">
@@ -428,7 +430,6 @@
 		                        </div>
 		                    </div>
                 		</div>
-					</div>
 					
 					<div ng-if="allMapping" class="row percent-100">
 						<div class="col-lg-12">
@@ -443,7 +444,7 @@
 											<tr>
 												<th data-toggle="true">Target Attribute</th>
 												<th>Version</th>
-												<th>DataType</th>
+												<th>DataType</th>	
 												<th>Sources</th>
 												<th>Last Modified</th>
 												<th>Modifier</th>

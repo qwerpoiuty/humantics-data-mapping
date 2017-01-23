@@ -73,23 +73,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.impact = function(attr_id) {
         reportingFactory.getImpactByAttribute(attr_id)
             .then(function(attributes) {
-                attributes = attributes[0]
-                var mappingHistory = {}
-                attributes.forEach(e => {
-                    if (mappingHistory.hasOwnProperty(e.target)) {
-                        mappingHistory[e.target].push(e)
-                    } else {
-                        mappingHistory[e.target] = [e]
-                    }
-                })
-                var recentMappings = []
-                for (let mapping of Object.keys(mappingHistory)) {
-                    let version = Math.max(...mappingHistory[mapping].map(e => e.version))
-                    mappingHistory[mapping].forEach(e => {
-                        if (e.version === version) recentMappings.push(e)
-                    })
-                }
-                $scope.targets = attributes
+                $scope.targets = attributes[0]
             })
     }
 

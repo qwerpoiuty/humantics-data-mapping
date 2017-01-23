@@ -119,52 +119,39 @@ var projects = [{
     tables: [2, 3, 6, 7, 9, 10, 11, 12]
 }]
 var mappings = [{
-    mapping_id: 1,
-    version: 1,
-    source: [1],
-    target: 213,
-    modifier: 1
-}, {
-    mapping_id: 2,
-    version: 1,
-    source: [11],
-    target: 227,
-    modifier: 1
-}, {
-    mapping_id: 3,
-    version: 1,
-    source: [9],
-    target: 228,
-    modifier: 1
-}, {
-    mapping_id: 4,
     version: 1,
     source: [1],
     target: 2,
     modifier: 1
 }, {
-    mapping_id: 5,
     version: 1,
-    source: [221],
-    target: 15,
+    source: [1],
+    target: 5,
     modifier: 1
 }, {
-    mapping_id: 6,
     version: 1,
-    source: [21],
-    target: 114,
+    source: [1],
+    target: 9,
     modifier: 1
 }, {
-    mapping_id: 7,
     version: 1,
-    source: [235],
-    target: 134,
+    source: [1],
+    target: 16,
     modifier: 1
 }, {
-    mapping_id: 8,
     version: 1,
-    source: [8],
-    target: 138,
+    source: [5],
+    target: 11,
+    modifier: 1
+}, {
+    version: 1,
+    source: [9],
+    target: 31,
+    modifier: 1
+}, {
+    version: 1,
+    source: [31],
+    target: 42,
     modifier: 1
 }]
 var seedProjects = () => {
@@ -216,8 +203,7 @@ var seedAttributes = function(attributes) {
 
 var seedMappings = function() {
 
-    var creatingMappings = mappings.map(mapping => {
-        console.log(mapping)
+    var creatingMappings = mappings.forEach(mapping => {
         return db.model('mapping').create(mapping)
     })
     return Promise.all(creatingMappings)
