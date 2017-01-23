@@ -26,11 +26,7 @@
             419: AUTH_EVENTS.sessionTimeout,
             440: AUTH_EVENTS.sessionTimeout
         };
-        $q.onPossiblyUnhandledRejection(function(exception) {
-            if (exception.message.match(/transition (superseded|prevented|aborted|failed)/)) {
-                return;
-            }
-        });
+
         return {
             responseError: function(response) {
                 $rootScope.$broadcast(statusDict[response.status], response);
