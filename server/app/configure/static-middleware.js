@@ -13,9 +13,9 @@ module.exports = function(app) {
     var bowerPath = path.join(root, './bower_components');
 
     app.use(favicon(app.getValue('faviconPath')));
+    app.use(express.static(bowerPath));
     app.use(express.static(npmPath));
     app.use(express.static(publicPath));
-    app.use(express.static(bowerPath));
     app.use(express.static(browserPath));
 
 };
