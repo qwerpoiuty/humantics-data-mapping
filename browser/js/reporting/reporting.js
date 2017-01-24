@@ -175,6 +175,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.openBrowse = function(evt, tabSelection) {
         $scope.sources = null
         $scope.targets = null
+        $scope.allMapping = false
             // Declare all variables
         var i, tabcontent, tablinks;
 

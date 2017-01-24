@@ -442,21 +442,19 @@
 											<thead>
 											<tr>
 												<th data-toggle="true">Target Attribute</th>
-												<th>Version</th>
-												<th>DataType</th>
-												<th>Sources</th>
-												<th>Last Modified</th>
-												<th>Modifier</th>
+												<th>Target Datatype</th>
+												<th>Source Attribute</th>	
+												<th>Sources Datatype</th>
+												<th>Source Address</th>
 											</tr>
 											</thead>
 											<tbody>
 											<tr ng-repeat = "mapping in recentMapping track by $index" foo-repeat-done>
-												<td>{{mapping.attr_name}}</td>
-												<td>{{mapping.version}}</td>
-												<td>{{mapping.datatype}}</td>
-												<td>{{mapping.source.length || 0}}</td>
-												<td>{{mapping.date_modified}}</td>
-												<td>{{mapping.modifier}}</td>
+												<td>{{mapping.target_attr_name}}</td>
+												<td>{{mapping.target_datatype}}</td>
+												<td>{{mapping.source_attr_name}}</td>
+												<td>{{mapping.source_datatype}}</td>
+												<td>{{mapping.source_system}}.{{mapping.source_db}}.{{mapping.source_schema}}.{{mapping.source_table}}</td>
 											</tr>
 											</tbody>
 											<tfoot>
