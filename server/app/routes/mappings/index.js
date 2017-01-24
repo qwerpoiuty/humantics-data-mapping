@@ -103,18 +103,13 @@ inner join dbs as e2
   on d2.db = e2.db_id
 inner join systems as f2
   on e2.system = f2.system_id
-<<<<<<< HEAD
-where b1.table_id = ${req.params.table_id}
-order by target asc`).then(mappings => {
-=======
 where b1.table_id = ${req.params.table_id}`).then(mappings => {
->>>>>>> master
         res.json(mappings)
     })
 })
 
 router.get('/impact/attribute/:attr_id', function(req, res) {
-    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)'`)
+    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)`)
         .then(function(mappings) {
             res.json(mappings)
         })
