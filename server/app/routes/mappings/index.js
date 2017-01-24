@@ -103,13 +103,18 @@ inner join dbs as e2
   on d2.db = e2.db_id
 inner join systems as f2
   on e2.system = f2.system_id
+<<<<<<< HEAD
+where b1.table_id = ${req.params.table_id}
+order by target asc`).then(mappings => {
+=======
 where b1.table_id = ${req.params.table_id}`).then(mappings => {
+>>>>>>> master
         res.json(mappings)
     })
 })
 
 router.get('/impact/attribute/:attr_id', function(req, res) {
-    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id inner join schemas on a.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where ${req.params.attr_id} = any(c.source)`)
+    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)'`)
         .then(function(mappings) {
             res.json(mappings)
         })
@@ -148,7 +153,6 @@ router.get('/impact/tree/:table_id', function(req, res) {
 
     let promise = Promise.resolve(thenable)
     let promiseCount = 0
-    let iteration = 0
     let findChildren = parents => {
         var promisesArray = parents.map(parent => {
             promiseCount++
@@ -175,11 +179,6 @@ router.get('/impact/tree/:table_id', function(req, res) {
                             return e.table_id
                         }))]
                         let children = a()
-                        iteration++
-                        if (iteration >= 4) {
-                            res.json(tree)
-                            return
-                        }
                         return findChildren(children)
                     })
                 })
@@ -189,6 +188,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
         })
         Promise.all(promisesArray).then(() => {
             if (promiseCount === 1) {
+                console.log(tree)
                 res.json(tree)
 
             }
@@ -227,7 +227,9 @@ router.get('/impact/tree/:table_id', function(req, res) {
             var children = attributes[0].map(e => {
                 return e.table_id
             })
-            findChildren(children)
+            findChildren(children).then(() => {
+                console.log('hello')
+            })
         })
     })
 
@@ -235,6 +237,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 })
 
 router.post('/', function(req, res) {
+    console.log(req.body.source)
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"

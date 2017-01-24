@@ -73,6 +73,9 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.impact = function(attr_id) {
         reportingFactory.getImpactByAttribute(attr_id)
             .then(function(attributes) {
+<<<<<<< HEAD
+                $scope.targets = attributes[0]
+=======
                 attributes = attributes[0]
                 var mappingHistory = {}
                 attributes.forEach(e => {
@@ -91,6 +94,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 }
                 console.log(mappingHistory, recentMappings)
                 $scope.targets = recentMappings
+>>>>>>> master
             })
     }
 
