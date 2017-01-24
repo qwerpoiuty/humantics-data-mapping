@@ -10,7 +10,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal) {
+app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal, $state) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
     })
@@ -110,6 +110,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.tableImpact = function(table) {
+
         reportingFactory.getTree(table.table_id).then(tree => {
             $scope.tree = unflatten(tree)
             console.log($scope.tree)
@@ -160,7 +161,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         $scope.mappingHistory[e.target] = [e]
                     }
                 })
-                console.log($scope.mappingHistory)
                 $scope.recentMapping = []
                 for (let mapping of Object.keys($scope.mappingHistory)) {
                     let version = Math.max(...$scope.mappingHistory[mapping].map(e => e.version))
@@ -168,8 +168,16 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         if (e.version === version) $scope.recentMapping.push(e)
                     })
                 }
+                console.log($scope.recentMapping)
                 $scope.allMapping = true
             })
+
+    }
+
+    $scope.transition = () => {
+        $state.go('detailed', {
+            tableId: $scope.selectedTable.value.table_id
+        })
     }
 
     $scope.openBrowse = function(evt, tabSelection) {
