@@ -111,7 +111,6 @@ where b1.table_id = ${req.params.table_id}`).then(mappings => {
 router.get('/impact/attribute/:attr_id', function(req, res) {
     db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id inner join schemas on a.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where ${req.params.attr_id} = any(c.source)`)
         .then(function(mappings) {
-            console.log(mappings)
             res.json(mappings)
         })
 })

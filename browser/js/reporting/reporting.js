@@ -83,6 +83,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                     }
                 })
                 var recentMappings = []
+                console.log(mappingHistory)
                 for (let mapping of Object.keys(mappingHistory)) {
                     let version = Math.max(...mappingHistory[mapping].map(e => e.version))
                     mappingHistory[mapping].forEach(e => {
@@ -98,9 +99,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         $scope.sources = null
         $scope.sources = $scope.targets
         $scope.targets = null
-        reportingFactory.getImpactByAttribute(attr_id).then(function(attributes) {
-            $scope.targets = attributes[0]
-        })
+        $scope.impact(attr_id)
     }
 
     $scope.previousImpact = function() {
@@ -168,13 +167,13 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         if (e.version === version) $scope.recentMapping.push(e)
                     })
                 }
-                console.log($scope.recentMapping)
                 $scope.allMapping = true
             })
 
     }
 
     $scope.transition = () => {
+        console.log('hello?')
         $state.go('detailed', {
             tableId: $scope.selectedTable.value.table_id
         })
