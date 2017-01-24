@@ -83,14 +83,14 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                     }
                 })
                 var recentMappings = []
-                console.log(mappingHistory)
                 for (let mapping of Object.keys(mappingHistory)) {
                     let version = Math.max(...mappingHistory[mapping].map(e => e.version))
                     mappingHistory[mapping].forEach(e => {
                         if (e.version === version) recentMappings.push(e)
                     })
                 }
-                $scope.targets = attributes
+                console.log(mappingHistory, recentMappings)
+                $scope.targets = recentMappings
             })
     }
 
