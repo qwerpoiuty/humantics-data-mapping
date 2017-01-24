@@ -60,7 +60,6 @@
                                         <th>Database</th>
                                         <th>Status</th>
                                         <th data-hide="all">Detailed View</th>
-                                        <th data-hide="all">Status Approval</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,9 +69,6 @@
                                         <td>{{table.db_name}}</td>
                                         <td>{{table.table_status}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-                                        <td> <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('pending')">Decline</button>
-                                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('complete')">Approve</button>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
