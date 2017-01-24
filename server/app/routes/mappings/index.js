@@ -103,8 +103,12 @@ inner join dbs as e2
   on d2.db = e2.db_id
 inner join systems as f2
   on e2.system = f2.system_id
+<<<<<<< HEAD
 where b1.table_id = ${req.params.table_id}
 order by target asc`).then(mappings => {
+=======
+where b1.table_id = ${req.params.table_id}`).then(mappings => {
+>>>>>>> master
         res.json(mappings)
     })
 })

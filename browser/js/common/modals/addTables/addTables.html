@@ -28,7 +28,6 @@
             </tr>
         </thead>
         <tbody>
-        	<pre>{{tables}}</pre>
             <tr ng-repeat = "table in tableResults | orderBy: 'table.due_date' track by $index">
             	<td><input type="checkbox" ng-model="tables[table.table_id].selected"/></td>
                 <td>{{table.table_name}}</td>
