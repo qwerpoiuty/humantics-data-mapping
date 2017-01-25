@@ -10,7 +10,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal) {
+app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal, $state) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
     })
@@ -73,7 +73,24 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.impact = function(attr_id) {
         reportingFactory.getImpactByAttribute(attr_id)
             .then(function(attributes) {
-                $scope.targets = attributes[0]
+                attributes = attributes[0]
+                var mappingHistory = {}
+                attributes.forEach(e => {
+                    if (mappingHistory.hasOwnProperty(e.target)) {
+                        mappingHistory[e.target].push(e)
+                    } else {
+                        mappingHistory[e.target] = [e]
+                    }
+                })
+                var recentMappings = []
+                for (let mapping of Object.keys(mappingHistory)) {
+                    let version = Math.max(...mappingHistory[mapping].map(e => e.version))
+                    mappingHistory[mapping].forEach(e => {
+                        if (e.version === version) recentMappings.push(e)
+                    })
+                }
+                console.log(mappingHistory, recentMappings)
+                $scope.targets = recentMappings
             })
     }
 
@@ -82,9 +99,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         $scope.sources = null
         $scope.sources = $scope.targets
         $scope.targets = null
-        reportingFactory.getImpactByAttribute(attr_id).then(function(attributes) {
-            $scope.targets = attributes[0]
-        })
+        $scope.impact(attr_id)
     }
 
     $scope.previousImpact = function() {
@@ -94,6 +109,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.tableImpact = function(table) {
+
         reportingFactory.getTree(table.table_id).then(tree => {
             $scope.tree = unflatten(tree)
             console.log($scope.tree)
@@ -144,7 +160,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         $scope.mappingHistory[e.target] = [e]
                     }
                 })
-                console.log($scope.mappingHistory)
                 $scope.recentMapping = []
                 for (let mapping of Object.keys($scope.mappingHistory)) {
                     let version = Math.max(...$scope.mappingHistory[mapping].map(e => e.version))
@@ -154,11 +169,20 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 }
                 $scope.allMapping = true
             })
+
+    }
+
+    $scope.transition = () => {
+        console.log('hello?')
+        $state.go('detailed', {
+            tableId: $scope.selectedTable.value.table_id
+        })
     }
 
     $scope.openBrowse = function(evt, tabSelection) {
         $scope.sources = null
         $scope.targets = null
+        $scope.allMapping = false
             // Declare all variables
         var i, tabcontent, tablinks;
 

@@ -71,13 +71,45 @@ router.get('/recentMapping', function(req, res) {
 })
 
 router.get('/all/:table_id', (req, res) => {
-    db.query(`select * from mappings inner join attributes on attributes.attr_id = mappings.target where attributes.table_id = ${req.params.table_id} order by target`).then(mappings => {
+    db.query(`select 
+  a.version, a.target,
+  b1.attr_name as target_attr_name,
+  b1.datatype as target_datatype,
+  b2.attr_name as source_attr_name,
+  b2.datatype as source_datatype,
+  c1.table_name as target_table,
+  c2.table_name as source_table,
+  d2.schema_name as source_schema,
+  e2.db_name as source_db,
+  f2.system_name as source_system
+from mappings as a 
+inner join attributes as b1
+  on a.target = b1.attr_id
+inner join tables as c1
+  on b1.table_id = c1.table_id
+inner join schemas as d1
+  on c1.schema = d1.schema_id
+inner join dbs as e1
+  on d1.db = e1.db_id
+inner join systems as f1
+  on e1.system = f1.system_id
+inner join attributes as b2
+  on b2.attr_id = any(a.source)
+inner join tables as c2
+  on b2.table_id = c2.table_id
+inner join schemas as d2
+  on c2.schema = d2.schema_id
+inner join dbs as e2
+  on d2.db = e2.db_id
+inner join systems as f2
+  on e2.system = f2.system_id
+where b1.table_id = ${req.params.table_id}`).then(mappings => {
         res.json(mappings)
     })
 })
 
 router.get('/impact/attribute/:attr_id', function(req, res) {
-    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)'`)
+    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)`)
         .then(function(mappings) {
             res.json(mappings)
         })

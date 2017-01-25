@@ -53,13 +53,14 @@
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{currentAttr}}</h3>
-                    
+                    <h3 style="color:white;">{{currentAttr}} <span style="color:red;" ng-if="sources[0].mapping_status =='approved'">Approved</span> <span style="color:red;" ng-if="sources[0].mapping_status =='pending'">Pending</span></h3>
                     <div ng-show="sources[0].mapping_status =='incomplete'|| sources[0].mapping_status=='rejected'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('pending')">Submit for Review</button></div>
-                    <div ng-show="sources[0].mapping_status=='pending'">
-                        <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('rejected')">Decline</button>
-                        <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('approved')">Approve</button>
-                    </div>  
+                    <div ng-if="user.power_level ==3">
+                        <div ng-show="sources[0].mapping_status=='pending'">
+                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('rejected')">Decline</button>
+                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('approved')">Approve</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div style="background-color:#ffffff;padding-top:24px;">

@@ -50,6 +50,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             else $scope.targetMapping.version = 1
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
+            console.log($scope.sources)
         })
     }
 
