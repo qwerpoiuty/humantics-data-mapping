@@ -212,10 +212,10 @@ var seed = (systems, dbs, schemas, tables, attributes) => {
     db.sync({
             force: true
         })
-        .then(function() {
-            console.log('users')
-            return seedUsers()
-        })
+    // .then(function() {
+    //     console.log('users')
+    //     return seedUsers()
+    // })
         .then(function() {
             console.log('projects')
             return seedProjects()
@@ -236,9 +236,9 @@ var seed = (systems, dbs, schemas, tables, attributes) => {
         .then(function() {
             return seedAttributes(attributes)
         })
-        .then(function() {
-            return seedMappings()
-        })
+        // .then(function() {
+        //     return seedMappings()
+        // })
         .then(function() {
             console.log(chalk.green('Seed successful!'));
             process.exit(0);
