@@ -52,6 +52,7 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
         return $scope.selectedSystem.value
     }, function(nv, ov) {
         if (nv !== ov) {
+
             dataFactory.getDatabases(nv.system_id).then(dbs => {
                 $scope.dbs = dbs[0]
             })

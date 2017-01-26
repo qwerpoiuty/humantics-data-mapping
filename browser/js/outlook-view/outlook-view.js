@@ -54,7 +54,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.addAttribute = function(attribute) {
-        $scope.temp = $scope.table
         $scope.editing = "newAttribute"
         $scope.currentAttr = "New Attribute"
             // dataFactory.addAttribute($scope.table, attribute)
