@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config(function($stateProvider) {
 
     $stateProvider.state('login', {
         url: '/login',
@@ -8,20 +8,33 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('LoginCtrl', function($scope, AuthService, $state) {
 
     $scope.login = {};
     $scope.error = null;
-
-    $scope.sendLogin = function (loginInfo) {
+    let attempts = 5
+    $scope.sendLogin = function(loginInfo) {
 
         $scope.error = null;
-
-        AuthService.login(loginInfo).then(function () {
-            $state.go('home');
-        }).catch(function () {
-            $scope.error = 'Invalid login credentials.';
-        });
+        if (attempts <= 1) {
+            AuthService.lock(loginInfo).then(message => {
+                $scope.error = `The account ${loginInfo.email} has been locked. Please contact your administrator`
+            })
+        } else {
+            AuthService.login(loginInfo).then(function() {
+                $state.go('home');
+            }).catch(function(err) {
+                if (err.message.status == 404) {
+                    $scope.error = "That user does not exist"
+                } else if (err.message.status == 401) {
+                    $scope.error = `Invalid login credentials. The account will be locked in ${attempts} attempts`
+                } else if (err.message.status == 400) {
+                    $scope.error = `That account has been locked. Please contact your administrator`
+                }
+                $scope.loginInfo.password = ""
+                attempts--
+            });
+        }
 
     };
 });

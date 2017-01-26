@@ -148,6 +148,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
 
     let promise = Promise.resolve(thenable)
     let promiseCount = 0
+    let iterations = 0
     let findChildren = parents => {
         var promisesArray = parents.map(parent => {
             promiseCount++
@@ -174,6 +175,12 @@ router.get('/impact/tree/:table_id', function(req, res) {
                             return e.table_id
                         }))]
                         let children = a()
+                        iterations++
+                        if (iterations > 4) {
+                            promiseCount--
+                            resolve()
+                            return
+                        }
                         return findChildren(children)
                     })
                 })
@@ -182,8 +189,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
             return Promise.all(promises)
         })
         Promise.all(promisesArray).then(() => {
-            if (promiseCount === 1) {
-                console.log(tree)
+            if (promiseCount <= 1) {
                 res.json(tree)
 
             }
