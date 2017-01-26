@@ -105,6 +105,20 @@ body {
   stroke-width: 3.0px;
 }
 
+@media only screen  and (min-width : 1200px) {
+.tabFieldset2{
+  margin-top:2.5%;
+}
+}
+
+.margin-t-5{
+  margin-top:5%;
+}
+
+.margin-t-2-5{
+  margin-top:2.5%;
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'login/main';
