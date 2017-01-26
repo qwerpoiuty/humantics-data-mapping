@@ -112,7 +112,7 @@
                         <td>{{target.business_name || ''}}</td>
                     </tr>
                     <tr>
-                        <td>Sample Value</td>
+                        <td>Description</td>
                         <td>{{target.description || ''}}</td>
                     </tr>
                     </tbody>
@@ -335,38 +335,50 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="padding-tb-16">System</td>      
-                        <td class="padding-tb-16 text-center">{{target.system}}</td>
+                        <td>System</td>      
+                        <td>{{target.system}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Database</td>      
-                        <td class="padding-tb-16 text-center">{{target.db_name}}</td>
+                        <td>Database</td>      
+                        <td>{{target.db_name}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Schema</td>               
-                        <td class="padding-tb-16 text-center">{{target.schema_name}}</td>
+                        <td>Schema</td>               
+                        <td>{{target.schema_name}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Table</td>                                    
-                        <td class="padding-tb-16 text-center">{{target.table_name}}</td>
+                        <td>Table</td>                                    
+                        <td>{{target.table_name}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Column</td>
-                        <td class="padding-tb-16 text-center">{{target.attr_name}}</td>
+                        <td>Column</td>
+                        <td>{{target.attr_name}}</td>
                         
                     </tr>
                     <tr>
+                        <td>Properties</td>
+                        <td><span class = "att-prop-badge" ng-repeat="prop in target.properties">{{prop}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Personally Identifiable Information</td>
+                        <td><span class = "att-pii-badge" ng-if="target.pii"><i class ="fa fa-check" area-hidden="true"></i></span>
+                        </td>
+                    </tr>
+                     <tr>
                         <td>Data Type</td>
-                        <td class="text-info">{{target.dataType}}</td>
-                    <tr>
+                        <td class="text-info">{{target.datatype || ''}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{target.last_modified}}</td>
+                        <td>Last modified date</td>
+                        <td>{{target.last_modified}}</td>
                     </tr>
                     <tr>
-                        <td>Sample Value</td>
-                        <td>{{target.sample_value}}</td>
+                        <td>Business Name</td>
+                        <td>{{target.business_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>{{target.description}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -456,7 +468,7 @@
                         <td>{{datatype}}</td>
                     </tr>
                     <tr>
-                        <td class="padding-tb-16">Last modified date</td>
+                        <td class="padding-tb-16>Last modified date</td>
                         <td class="padding-tb-16 text-center">{{displaySource.last_modified}}</td>
                     </tr>
                     <tr>
@@ -525,7 +537,7 @@
                     </tr>
                     <tr>
                         <td>Business Name</td>
-                        <td><input class="btn btn-default form-control" placeholder="{{target.businessName}}" type="text" ng-model="temp.target.businessName"/></td>
+                        <td><input class="btn btn-default form-control" placeholder="{{target.business_name}}" type="text" ng-model="temp.target.business_name"/></td>
                     </tr>
                     <tr>
                         <td>Description</td>

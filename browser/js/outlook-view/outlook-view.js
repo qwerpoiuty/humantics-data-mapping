@@ -50,7 +50,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             else $scope.targetMapping.version = 1
             if ($scope.rules == null) $scope.rules = []
             $scope.currentAttr = $scope.targetMapping.attr_name
-            console.log($scope.sources)
         })
     }
 
@@ -59,6 +58,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "newAttribute"
         $scope.currentAttr = "New Attribute"
             // dataFactory.addAttribute($scope.table, attribute)
+        $scope.tables = []
     }
 
     $scope.editAttribute = function() {
@@ -143,7 +143,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 }
                 break
             case "newAttribute":
-                $scope.temp.target.table_id = $stateParams.tableI
+                $scope.temp.target.table_id = $stateParams.tableId
                 var arr = []
                 for (var key in $scope.temp.target.properties) {
                     if ($scope.temp.target.properties[key]) arr.push(key)
@@ -152,6 +152,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
                     dataFactory.getAttributesByTableId($stateParams.tableId).then(function(attributes) {
                         $scope.attributes = attributes[0]
+                        $scope.editing = "none"
+                        $scope.temp = {}
                     })
                 })
         }

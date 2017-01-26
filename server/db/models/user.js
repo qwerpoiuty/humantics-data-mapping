@@ -19,6 +19,10 @@ module.exports = db.define('user', {
     },
     power_level: {
         type: Sequelize.INTEGER
+    },
+    locked: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 }, {
     instanceMethods: {

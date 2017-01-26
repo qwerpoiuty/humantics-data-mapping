@@ -17,6 +17,7 @@
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
+                                        <th>Member</th>
                                         <th>Project Name</th>
                                         <th>Project Leader</th>
                                         <th>Status</th>
@@ -25,10 +26,11 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
+                                        <td><span class = "att-pii-badge" ng-show="project.members.indexOf(user.id) !== -1 || project.leader == user.id"><i class ="fa fa-check" area-hidden="true"></i></span></td>
                                         <td>{{project.project_name}}</td>
                                         <td>{{project.email}}</td>
                                         <td>{{project.status || 'incomplete'}}</td>
-                                        <td>{{project.due_date}}</td>
+                                        <td>{{project.due_date | date:'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -43,6 +45,7 @@
                 <h2 style="color:white;">Current Jobs</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
+                    <button class = "btn btn-success" ng-if="selectedProject" ng-click="addMembers()" style="float:right;background-color:#1c84c6">Add Members</button>
                     <button class = "btn btn-success" ng-if="selectedProject" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
