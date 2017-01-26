@@ -1,13 +1,13 @@
-<div class="row wrapper border-bottom white-bg page-heading view-height-1 row-fix" ng-if="user">
+<div class="row wrapper border-bottom white-bg page-heading view-height-header row-fix" ng-if="user">
     <div class="col-lg-3">
-        <h2 class="text-success">{{pagetitle || "Your Dashboard"}}</h2>
+        <h2 class="text-success margin-t-5">{{pagetitle || "Your Dashboard"}}</h2>
         <ol class="breadcrumb">
             <li class = "navLink" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
                 <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
             </li>
         </ol>
     </div>
-    <div class="col-lg-offset-6 col-lg-3">
+    <div class="col-lg-offset-5 col-lg-4">
     	<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <!-- <div class="navbar-header">
 	            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-plus"></i> </a>
@@ -17,7 +17,7 @@
                 </div>
             </form>
         </div> -->
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right margin-t-2-5">
                 <li>
                     <span ng-if="!user" class="m-r-sm text-muted welcome-message">Welcome to Humantics Data Mapping</span>
                     <span ng-if="user" class = "m-r-sm text-muted welcome-message">Welcome Back {{user.email}}</span>

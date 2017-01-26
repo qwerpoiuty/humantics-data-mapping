@@ -184,6 +184,6 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
 
     document.getElementById("SearchTab").style.display = "inline";
     document.getElementById("SearchTab").className += " active";
-    document.getElementById("ActionsTab").style.display += "inline";
+    document.getElementById("ActionsTab").style.display += "block";
     document.getElementById("ActionsTab").className += " active";
 });

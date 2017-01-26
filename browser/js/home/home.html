@@ -1,8 +1,8 @@
 <div id="wrapper" class="view-height-main">
     <div id="page-wrapper" class="gray-bg" style="min-height: 100%;">
 	    <div class="wrapper wrapper-content animated fadeIn">
-	        <div class="p-w-md m-t-sm">
-	        	<div class="row" style="height:85vh; max-height:85vh;">
+	        <div class="p-w-md">
+	        	<div class="row" style="height:80vh; max-height:80vh;">
 	        		<div class="col-lg-6" style="height:100%;">
 	        			<div class="row percent-50">
 	        				<div class="col-lg-12" style="height:100%;">
@@ -19,7 +19,7 @@
 										    <form method="post">
 										        <fieldset class="tabFieldset">
 										            <input id="searchBar" ng-model="searchQuery" type="text"/>
-										            <input type="submit" value="Submit" id="submitButton" ng-click="search(searchCat,searchQuery)"/>
+										            <input style="font-size:11px;" type="submit" value="Submit" id="submitButton" ng-click="search(searchCat,searchQuery)"/>
 										            <div id="searchInContainer">
 										                <input type="radio" name="check" class="css-checkbox" value="table" id="searchTable" checked ng-model="searchCat"/>
 										                <label for="searchTable" class="css-label" id="siteNameLabel">Table Search</label>
@@ -134,20 +134,20 @@
 	        			</div>
 
 	        			<div class="row percent-50">
-	        				<div class="col-lg-12" style="height:100%">
-	        					<div class = "ibox" style="height:100%">
-									<div class = "ibox-content" style="padding:32.5px; border:none; height:88%;">
-										<div class = "row row-centered">
-											<div class="col-lg-12 col-centered searchOuterContainer">
+	        				<div class="col-lg-12 percent-100">
+	        					<div class = "ibox percent-100">
+									<div class = "ibox-content percent-100" style="padding:32.5px; border:none;">
+										<div class = "row row-centered percent-100">
+											<div class="col-lg-12 col-centered searchOuterContainer percent-100">
 												<ul class="tab">
 													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'ActionsTab')"><h5 class="text-success">Recent Actions</h5></a></li>
 													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'SummaryTab')"><h5 class="text-success">Summary of Projects</h5></a></li>
 												</ul>
 
-												<div id="ActionsTab" class="tabcontent2">	
+												<div id="ActionsTab" class="tabcontent2" style="height:80%; overflow-y:scroll;">	
 													<form method="post">
-												        <fieldset>
-														   	<div style="max-height:27vh;overflow-y:scroll; padding-top:25px; background-color:white;">
+												        <fieldset class="percent-100">
+														   	<div class="percent-100" style="padding-top:1.5%; background-color:white;">
 																<table class="footable table table-stripped toggle-arrow-tiny">
 											                        <tr>
 											                            <td style="text-align:left;border-top:none;">Completed 1 Task For Project 18</td>
@@ -198,10 +198,10 @@
 													</form>
 											    </div>
 												
-												<div id="SummaryTab" class="tabcontent2">	
+												<div id="SummaryTab" class="tabcontent2" style="height:80%; overflow-y:scroll;">	
 													<form method="post">
 												        <fieldset>
-														  	<div style="max-height:27vh; overflow-y:scroll; padding-top:25px;">
+														  	<div class="percent-100" style="padding-top:1.5; background-color:white;">
 											        			<table class="footable table table-stripped toggle-arrow-tiny">
 											                        <thead>
 											                        <tr>
@@ -323,11 +323,11 @@
 								</div>
 	        				</div>
 	        			</div>
-					<div class="col-lg-6">
-						<div ng-show="tables">
-	        			<div class="col-lg-12">
-	                    <div class="ibox">
-	                        <div class="ibox-content" style="border-top:none; height:80vh;">
+					<div class="col-lg-6 percent-100">
+						<div ng-show="tables" class="percent-100">
+	        			<div class="col-lg-12 percent-100">
+	                    <div class="ibox percent-100">
+	                        <div class="ibox-content percent-100" style="border-top:none;">
 				                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="16">
 	                                	<thead>
 	                                	<tr>

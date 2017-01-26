@@ -89,7 +89,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                         if (e.version === version) recentMappings.push(e)
                     })
                 }
-                console.log(mappingHistory, recentMappings)
                 $scope.targets = recentMappings
             })
     }
@@ -112,7 +111,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
         reportingFactory.getTree(table.table_id).then(tree => {
             $scope.tree = unflatten(tree)
-            console.log($scope.tree)
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'js/common/modals/impactTree/impactTree.html',
