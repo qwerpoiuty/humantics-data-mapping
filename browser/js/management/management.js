@@ -27,6 +27,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
     $scope.changingStatus = false
+    console.log($scope.projects)
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }
@@ -44,7 +45,23 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         $scope.selectedProject = project
         $scope.refreshSingleProject(project.project_id)
     }
-
+    $scope.addMembers = () => {
+        var modalInstance = $modal.open({
+            templateUrl: "js/common/modals/addUsers/addUsers.html",
+            controller: `addMemberCtrl`,
+            size: 'sm',
+            resolve: {
+                project: () => {
+                    return $scope.selectedProject
+                }
+            }
+        })
+        modalInstance.result.then((result) => {
+            if (result) {
+                $scope.refreshSingleProject(result)
+            }
+        })
+    }
     $scope.addTables = () => {
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addTables/addTables.html",

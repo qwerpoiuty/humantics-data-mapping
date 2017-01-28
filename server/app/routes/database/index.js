@@ -120,8 +120,9 @@ router.post('/tables', function(req, res) {
 })
 
 router.post('/attributes/:tableId', function(req, res) {
-    req.body.attr_name = `'req.body.attr_name'`
-    req.body.datatype = `'req.body.datatype'`
+    req.body.attr_name = `'${req.body.attr_name}'`
+    req.body.datatype = `'${req.body.datatype}'`
+    req.body.properties = `'{${req.body.properties.join(',')}}'`
     req.body.date_modified = `'${moment().format()}'`
     var keys = Object.keys(req.body)
     var values = []

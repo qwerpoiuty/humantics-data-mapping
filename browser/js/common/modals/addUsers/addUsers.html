@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Members to "{{project.project_name}}"</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            	<th>Select</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+        <pre>{{selectedMembers}}</pre>
+            <tr ng-repeat = "member in members | orderBy: 'member.email' track by $index">
+            	<td><input type="checkbox" ng-model="selectedMembers[member.id].selected"/></td>
+                <td>{{member.email}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addToProject(query)">OK</button>
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+</div>
