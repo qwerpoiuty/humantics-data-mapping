@@ -84,3 +84,24 @@ div.panel.show {
 .att-prop-badge{
     background: #f1f1f1;border: 1px solid #ededed;border-radius: 2px;box-shadow: none;color: #333333;cursor: default;line-height: 13px;margin: 3px 0px 3px 5px;padding: 3px 5px 3px 5px;
 }
+
+.flexHeight{
+    height:85%;
+}
+.flexHeight2{
+    height:88.5%;
+}
+
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+
+  .flexHeight{
+    height:77%;
+}
+  .flexHeight2{
+    height:82.5%;
+  }
+
+}

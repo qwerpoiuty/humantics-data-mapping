@@ -294,3 +294,43 @@ input[type=radio].css-checkbox {
 .newTableText{
 	width:110px;
 }
+
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+
+.tabFieldset2{
+  margin-top: 10px;
+}
+
+.tabFieldset3{
+  margin-top: 5px;
+
+  .m-b{
+  margin-bottom: 5px;
+}
+}
+
+.tabTable{
+	margin-top:5px;
+
+	.m-b{
+	margin-bottom:0;
+	}
+}
+
+
+.tabMapping{
+	margin-top:5px;
+
+	.m-b{
+	margin-bottom:0;
+	}
+}
+
+.720p{
+  margin-bottom: 0;
+}
+
+}

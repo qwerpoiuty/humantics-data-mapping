@@ -1,8 +1,8 @@
 <div id = "wrapper" class = "view-height-main">
-    <div class = "wrapper wrapper-content animated fadeIn" style="padding-top:10px;">
-        <div class = "p-w-md m-t-sm">
+    <div class = "wrapper wrapper-content animated fadeIn" style="padding: 1.5%; padding-bottom:0;">
+        <div class = "p-w-md">
             <div class="row" style="height: 80vh;">
-        <div class="col-lg-5 animated fadeInRight">
+        <div class="col-lg-5 animated fadeInRight percent-100">
             <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
                 <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
@@ -12,10 +12,10 @@
                 </div>
             </div>
 
-            <div class="mail-box" style="border:none;">
+            <div class="mail-box flexHeight" style="border:none;">
                 <div class="mail-body" style="padding-top:34px;">
-                    <div class="row">
-                        <div class="col-lg-12" style="max-height:67vh; overflow-y:scroll;">
+                    <div class="row percent-100">
+                        <div class="col-lg-12 percent-100" style="overflow-y:scroll;">
                             <form role="form">
                                 <table class="table table-hover">
                                 <thead>
@@ -44,14 +44,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 animated fadeInRight">
+        <div class="col-lg-7 animated fadeInRight percent-100">
             <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
                 <div class="pull-right tooltip-demo">
-                    <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
-                    <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> Source</a>
+                    <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
+                    <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> Add</a>
                     <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
                     <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
-                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Source</a>
+                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Delete</a>
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
@@ -65,8 +65,8 @@
                     </div>
                 </div>
             </div>
-            <div style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll;">
+            <div class="flexHeight2" style="background-color:#ffffff;padding-top:24px;">
+                <div style="overflow-y:scroll; height:100%">
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
                 </div>
