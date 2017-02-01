@@ -102,6 +102,51 @@ router.get('/attributesByIds', function(req, res) {
 })
 
 
+
+//POSTS
+router.post('/systems', (req, res) => {
+    req.body.system_name = `'${req.body.system_name}'`
+    var keys = Object.keys(req.body)
+
+    var values = []
+    for (var key in req.body) {
+        values.push(req.body[key])
+    }
+    keys = keys.join(',')
+    values = values.join(',')
+    db.query(`insert into systems (${keys}) values(${values})`).then(function(table) {
+        res.sendStatus(200)
+    })
+})
+router.post('/dbs', (req, res) => {
+    req.body.db_name = `'${req.body.db_name}'`
+    var keys = Object.keys(req.body)
+
+    var values = []
+    for (var key in req.body) {
+        values.push(req.body[key])
+    }
+    keys = keys.join(',')
+    values = values.join(',')
+    db.query(`insert into dbs (${keys}) values(${values})`).then(function(table) {
+        res.sendStatus(200)
+    })
+})
+router.post('/schemas', (req, res) => {
+    req.body.schema_name = `'${req.body.schema_name}'`
+    var keys = Object.keys(req.body)
+
+    var values = []
+    for (var key in req.body) {
+        values.push(req.body[key])
+    }
+    keys = keys.join(',')
+    values = values.join(',')
+    db.query(`insert into schemas (${keys}) values(${values})`).then(function(table) {
+        res.sendStatus(200)
+    })
+})
+
 router.post('/tables', function(req, res) {
     req.body.table_name = "'" + req.body.table_name + "'"
     var keys = Object.keys(req.body)
@@ -136,8 +181,34 @@ router.post('/attributes/:tableId', function(req, res) {
     })
 })
 
-router.post('/updateAttribute/:attr_id', function(req, res) {
 
+//updates
+router.post('/updateSystem/:system_id', function(req, res) {
+    db.query(`update system set system_name=${req.body.system_name} where system.system_id = ${req.params.system_id}`)
+        .then(function(system) {
+            res.sendStatus(200)
+        })
+})
+router.post('/updateDb/:db_id', function(req, res) {
+    db.query(`update schema set system='${req.body.system}', db_name=${req.body.db_name} where db.db_id = ${req.params.db_id}`)
+        .then(function(db) {
+            res.sendStatus(200)
+        })
+})
+router.post('/updateSchema/:schema_id', function(req, res) {
+    db.query(`update schema set db='${req.body.db}', schema_name=${req.body.schema_name} where scheam.schema_id = ${req.params.schema_id}`)
+        .then(function(schema) {
+            res.sendStatus(200)
+        })
+})
+router.post('/updateTable/:table_id', function(req, res) {
+    db.query(`update table set schema='${req.body.schema}', table_name=${req.body.table_name},locked=${req.body.locked} where table.table_id = ${req.params.table_id}`)
+        .then(function(table) {
+            res.sendStatus(200)
+        })
+})
+
+router.post('/updateAttribute/:attr_id', function(req, res) {
     db.query(`update attributes set datatype='${req.body.datatype}',properties='{${req.body.properties}}',pii=${req.body.pii},date_modified='${moment().format()}' where attributes.attr_id = ${req.params.attr_id}`)
         .then(function(attribute) {
             res.json(attribute)

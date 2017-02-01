@@ -11,6 +11,9 @@ module.exports = db.define('mapping', {
     version: {
         type: Sequelize.INTEGER
     },
+    current: {
+        type: Sequelize.BOOLEAN
+    },
     source: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
@@ -28,7 +31,7 @@ module.exports = db.define('mapping', {
         type: Sequelize.INTEGER
     },
     comments: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
     },
     transformation_rules: {
         type: Sequelize.JSON
