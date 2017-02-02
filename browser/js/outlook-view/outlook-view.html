@@ -47,11 +47,16 @@
         <div class="col-lg-7 animated fadeInRight">
             <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
                 <div class="pull-right tooltip-demo">
-                    <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i></a>
-                    <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> Source</a>
-                    <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
-                    <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
-                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Source</a>
+                    <div class= "row">
+                        <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i></a>
+                        <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Source</a>
+                        <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
+                        <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
+                        <a ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Source</a>
+                    </div>
+                    <div class="row">
+                        <a ng-click="toggleNotes()" class = "btn btn-white btn-sm">Show {{notes}}</a>
+                    </div>
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
@@ -66,9 +71,12 @@
                 </div>
             </div>
             <div style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll;">
+                <div style="overflow-y:scroll;" ng-if="notes=='Notes'">
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
+                </div>
+                <div style="overflow-y:scroll;" ngif="notes =='Mapping'">
+                    <notes target = "targetMapping" notes="notes" user="user"></notes>
                 </div>
             </div>
         </div> 

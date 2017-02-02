@@ -27,6 +27,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal) {
+    $scope.notes = "Notes"
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
@@ -37,6 +38,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.sourceIndex = 0
     $scope.currentAttr = "Select an Attribute"
 
+    $scope.toggleNotes = () => {
+        if (!$scope.targetMapping) alert('pick an attribute first')
+        else if ($scope.notes == "Notes") $scope.notes = "Mapping"
+        else if ($scope.notes == "Mapping") $scope.notes = "Notes"
+    }
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
@@ -46,9 +52,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             else $scope.sources = []
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
+            $scope.notes = $scope.sources[0] ? $scope.sources[0].comments : []
             if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
             else $scope.targetMapping.version = 1
             if ($scope.rules == null) $scope.rules = []
+            if ($scope.notes == null) $scope.notes = []
             $scope.currentAttr = $scope.targetMapping.attr_name
         })
     }
