@@ -2,7 +2,7 @@ app.directive('notes', () => {
     return {
         restrict: 'E',
         scope: {
-            notes: '=',
+            comments: '=',
             user: '=',
             target: '='
         },
@@ -10,7 +10,7 @@ app.directive('notes', () => {
         link: (scope, element, attrs) => {
             scope.newNote = false
             scope.addNotes = function() {
-                console.log(scope.sources[0])
+                //Remember to force check on whether tables can be modified by other mappers
                 scope.newNote = !scope.newNote
             }
         }

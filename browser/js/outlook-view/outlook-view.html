@@ -55,7 +55,7 @@
                         <a ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Source</a>
                     </div>
                     <div class="row">
-                        <a ng-click="toggleNotes()" class = "btn btn-white btn-sm">Show {{notes}}</a>
+                        <a ng-click="toggleNotes()" class = "btn btn-white btn-sm">Show {{notes?'Mapping':'Notes'}}</a>
                     </div>
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
@@ -71,12 +71,12 @@
                 </div>
             </div>
             <div style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll;" ng-if="notes=='Notes'">
+                <div style="overflow-y:scroll;" ng-if="!notes">
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
                 </div>
-                <div style="overflow-y:scroll;" ngif="notes =='Mapping'">
-                    <notes target = "targetMapping" notes="notes" user="user"></notes>
+                <div style="overflow-y:scroll;" ng-if="notes">
+                    <notes target = "targetMapping" comments="comments" user="user"></notes>
                 </div>
             </div>
         </div> 
