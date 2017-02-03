@@ -14,7 +14,7 @@ app.directive('mapping', function($state, dataFactory) {
             })
             scope.editMap = ""
             scope.editSource = {}
-
+            scope.newSource = {}
             scope.changeSource = function(index) {
                 scope.temp.sourceIndex = index
                 scope.displaySource = scope.sources[index]
@@ -68,10 +68,9 @@ app.directive('mapping', function($state, dataFactory) {
                 }
             })
             scope.$watch(() => {
-                return scope.temp.system
+                return scope.newSource.system
             }, (nv, ov) => {
                 if (nv !== ov) {
-                    console.log(scope.temp)
                     dataFactory.getDatabases(nv.system_id).then(function(dbs) {
                         scope.dbs = dbs[0]
                     })
@@ -79,7 +78,7 @@ app.directive('mapping', function($state, dataFactory) {
             })
 
             scope.$watch(() => {
-                return scope.temp.db
+                return scope.newSource.db
             }, (nv, ov) => {
                 if (nv !== ov) {
                     dataFactory.getSchemas(nv.db_id).then(function(schemas) {
@@ -89,7 +88,7 @@ app.directive('mapping', function($state, dataFactory) {
             })
 
             scope.$watch(() => {
-                return scope.temp.schema
+                return scope.newSource.schema
             }, (nv, ov) => {
                 if (nv !== ov) {
                     dataFactory.getTables(nv.schema_id).then(function(tables) {
@@ -99,7 +98,7 @@ app.directive('mapping', function($state, dataFactory) {
             })
 
             scope.$watch(() => {
-                return scope.temp.table
+                return scope.newSource.table
             }, (nv, ov) => {
                 if (nv !== ov) {
                     dataFactory.getAttributesByTableId(nv.table_id).then(function(attrs) {
@@ -107,7 +106,15 @@ app.directive('mapping', function($state, dataFactory) {
                     })
                 }
             })
-
+            scope.$watch(() => {
+                return scope.newSource.attr
+            }, (nv, ov) => {
+                if (nv !== ov) {
+                    console.log(scope.newSource)
+                    scope.temp.source = scope.newSource
+                    console.log(scope.temp)
+                }
+            })
 
             scope.$watch(() => {
                 return scope.source
@@ -116,7 +123,6 @@ app.directive('mapping', function($state, dataFactory) {
                     scope.sources = nv
                     scope.displaySource = nv[0]
                     scope.noSources
-                    scope.temp = {}
                     if (scope.displaySource === undefined) scope.noSources = true
                     else {
                         scope.noSources = false
@@ -124,12 +130,6 @@ app.directive('mapping', function($state, dataFactory) {
                     }
                     scope.temp.sourceIndex = 0
                         // scope.source=nv
-                }
-            })
-
-            scope.$watch('edit', function(nv, ov) {
-                if (scope.edit == 'newSource') {
-                    scope.temp = {}
                 }
             })
 

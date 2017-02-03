@@ -64,6 +64,14 @@ order by p.due_date`)
         })
 })
 
+router.get('/getPermission/:user_id', (req, res) => {
+    db.query(`select * from projects inner join users on users.id = any(projects.members) where ${req.query.table_id} = any(projects.tables) and users.id = ${req.params.user_id}`).then(projects => {
+        if (projects[0].length > 0) res.json(true)
+        else res.json(false)
+
+    })
+})
+
 router.get('/:id', function(req, res) {
     db.query(`SELECT leader, members, project_name, project_id, schema_name, table_name, table_id, table_status, project_status, db_name FROM projects INNER JOIN tables on tables.table_id = any(projects.tables) inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id WHERE projects.project_id = + ${req.params.id} order by projects.project_id desc`)
         .then(function(projects) {

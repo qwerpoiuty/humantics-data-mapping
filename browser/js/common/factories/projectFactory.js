@@ -34,8 +34,18 @@ app.factory('projectFactory', function($http) {
         })
 
     }
+    d.getPermission = (user_id, table_id) => {
+        var query = {
+            table_id: table_id
+        }
+        return $http.get('api/project/getPermission/' + user_id, {
+            params: query
+        }).then(response => {
+            return response.data
+        })
+    }
     d.getCompletedMappings = () => {
-        return $http.get('api/project/completedMappings').then(mappigns => {
+        return $http.get('api/project/completedMappings').then(response => {
             return response.data
         })
     }

@@ -248,9 +248,9 @@
                     <tr> 
                         <td>System</td>      
                         <td>   
-                         <ui-select ng-model="temp.system">
+                         <ui-select ng-model="newSource.system">
                             <ui-select-match >
-                                {{temp.system.system_name || ''}}
+                                {{newSource.system.system_name || ''}}
                             </ui-select-match>
                             <ui-select-choices repeat="system in (systems | filter: $select.search) track by $index">
                                 <span ng-bind="system.system_name"></span>
@@ -261,9 +261,9 @@
                     <tr>
                         <td>Database</td>      
                         <td>
-                            <ui-select ng-model="temp.db">
+                            <ui-select ng-model="newSource.db">
                                 <ui-select-match >
-                                    {{temp.db.db_name|| ''}}
+                                    {{newSource.db.db_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="db in (dbs | filter: $select.search) track by $index">
                                     <span ng-bind="db.db_name"></span>
@@ -274,9 +274,9 @@
                     <tr>
                         <td>Schema</td>               
                         <td>   
-                            <ui-select ng-model="temp.schema">
+                            <ui-select ng-model="newSource.schema">
                                 <ui-select-match >
-                                    {{temp.schema.schema_name|| ''}}
+                                    {{newSource.schema.schema_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by $index">
                                     <span ng-bind="schema.schema_name"></span>
@@ -287,9 +287,9 @@
                     <tr>
                         <td>Table</td>                                    
                         <td>
-                            <ui-select ng-model="temp.table">
+                            <ui-select ng-model="newSource.table">
                                 <ui-select-match >
-                                    {{temp.table.table_name|| ''}}
+                                    {{newSource.table.table_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="table in (tables | filter: $select.search) track by $index">
                                     <span ng-bind="table.table_name"></span>
@@ -300,9 +300,9 @@
                     <tr>
                         <td>Column</td>      
                         <td>
-                            <ui-select ng-model="temp.attr">
+                            <ui-select ng-model="newSource.attr">
                                 <ui-select-match >
-                                    {{temp.attr.attr_name|| ''}}
+                                    {{newSource.attr.attr_name|| ''}}
                                 </ui-select-match>
                                 <ui-select-choices repeat="attr in (attrs | filter: $select.search) track by $index">
                                     <span ng-bind="attr.attr_name"></span>
@@ -312,16 +312,16 @@
                     </tr>
                      <tr>
                         <td >Data Type</td>
-                        <td>{{temp.attr.datatype}}</td>
+                        <td>{{newSource.attr.datatype}}</td>
                     </tr>
                     </tr>
                     <tr>
                         <td class="padding-tb-16">Last modified date</td>
-                        <td class="padding-tb-16 text-center">{{temp.attr.last_modified}}</td>
+                        <td class="padding-tb-16 text-center">{{newSource.attr.last_modified}}</td>
                     </tr>
                     <tr>
                         <td>Sample Value</td>
-                        <td>{{temp.attr.sample_value}}</td>
+                        <td>{{newSource.attr.sample_value}}</td>
                     </tr>
                     </tbody>
                 </table>
