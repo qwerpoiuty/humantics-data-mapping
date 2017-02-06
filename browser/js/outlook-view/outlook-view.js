@@ -38,8 +38,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.sourceIndex = 0
     $scope.currentAttr = "Select an Attribute"
     $scope.checkMember = (user) => {
-        projectFactory.getPermission(user.id, $scope.table.table_id).then(permission => {
-            $scope.projectMember = permission
+        projectFactory.getPermission(user.id, $scope.table.table_id).then(member => {
+            $scope.projectMember = member
         })
     }
     $scope.checkMember($scope.user)
@@ -55,7 +55,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             if (typeof mapping === "object") {
                 $scope.sources = mapping
                 if ($scope.projectMember) {
-                    switch ($scope.sources.mapping_status) {
+                    switch ($scope.sources[0].mapping_status) {
                         case "pending review":
                             $scope.permissions = 2
                             break
@@ -63,7 +63,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                             $scope.permissions = 3
                             break
                         default:
-                            $scope.permission = 1
+                            console.log('hello')
+                            $scope.permissions = 1
                     }
                 } else {
                     $scope.permissions = 5
@@ -72,7 +73,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
-            $scope.comments = $scope.sources[0] ? $scope.sources[0].comments : []
+            $scope.comments = $scope.sources[0] ? JSON.parse($scope.sources[0].comments) : []
 
             if ($scope.rules == null) $scope.rules = []
 
@@ -84,7 +85,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.editAttribute = function() {
-        if ($scope.user.power_level != $scope.permissions) {
+        if ($scope.user.power_level >= 4) {
             alert('You don\'t have permissions to do that')
             return
         }

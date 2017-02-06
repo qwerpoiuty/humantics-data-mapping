@@ -21,23 +21,23 @@
                             <h4>Note Subject</h4> 
                         </div>
                         <div class = "row">
-                            <input ng-model="newNote.name" id="ruleType" class="newRuleType" type="text" placeholder="Note Subject"/>
+                            <input ng-model="note.name" id="ruleType" class="newRuleType" type="text" placeholder="Note Subject"/>
                         </div>
                         <div class="row">
                             <h4>Note Content</h4>
                         </div>
                         <div class = "row">
-                            <textarea ng-model="newNote.content" class="newRuleDescription col-lg-12" placeholder="Content of the note" cols="50"></textarea>
+                            <textarea ng-model="note.content" class="newRuleDescription col-lg-12" placeholder="Content of the note" cols="50"></textarea>
                         </div>
                         <div class = "row">
-                            <button ng-click="saveNote(newNote)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
+                            <button ng-click="saveNote(note)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div accordion class = "accordion-button" ng-repeat = "note in notes track by $index">
                 
-                <button class="accordion">{{rule.type}}
+                <button class="accordion">{{note.name}} by {{note.poster}}
                 </button>
                 <div class="panel">
                     <div class="pull-right tooltip-demo">
@@ -46,8 +46,8 @@
                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hide[$index]" ng-click = "cancel($index)">Cancel</a>
                             <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteRule($index)"><i class="fa fa-trash-o"></i></a>
                     </div>
-                   <p ng-hide="hide[$index] == 1">{{rule.description}}</p>
-                   <textarea ng-show="hide[$index] ==1" ng-model="rule.newDescription" class="newRuleDescription col-lg-12" placeholder="{{rule.description}}" cols="50"></textarea>
+                   <p ng-hide="hide[$index] == 1">{{note.content}}</p>
+                   <textarea ng-show="hide[$index] ==1" ng-model="rule.content" class="newRuleDescription col-lg-12" cols="50"></textarea>
                 </div>
             </div>
 
