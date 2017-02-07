@@ -8,7 +8,6 @@ app.directive('notes', (mappingFactory) => {
         },
         templateUrl: 'js/common/directives/notes/notes.html',
         link: (scope, element, attrs) => {
-            console.log(scope.notes)
             scope.newNote = false
             scope.note = {}
             scope.note.poster = scope.user.email
@@ -17,9 +16,7 @@ app.directive('notes', (mappingFactory) => {
             }
 
             scope.saveNote = function(notes) {
-
                 scope.notes.push(notes)
-                console.log(scope.notes)
                 mappingFactory.updateMapping(scope.setMap()).then(function() {
                     scope.newNote = !scope.newNote
                 })
@@ -31,7 +28,6 @@ app.directive('notes', (mappingFactory) => {
                 scope.mapping.forEach(function(e) {
                     newSources.push(e.attr_id)
                 })
-                console.log(newSources)
                 let mapping = {
                     version: temp,
                     modifier: scope.user.id,
@@ -48,6 +44,14 @@ app.directive('notes', (mappingFactory) => {
             }
             scope.cancel = function(index) {
                 scope.hide[index] = 0
+            }
+            scope.updateNote = function(index) {
+                scope.note[index].description = scope.note[index].newDescription
+                delete scope.note[index].newDescription
+                var mapping = scope.setMapping()
+                mappingFactory.updateMapping(note, scope.mapping.target).then(function() {
+                    scope.newRule = !scope.newRule
+                })
             }
         }
     }

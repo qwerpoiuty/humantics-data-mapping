@@ -63,7 +63,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                             $scope.permissions = 3
                             break
                         default:
-                            console.log('hello')
                             $scope.permissions = 1
                     }
                 } else {

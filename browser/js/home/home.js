@@ -26,10 +26,9 @@ app.config(function($stateProvider) {
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings) {
     $scope.user = user
-    $scope.assignedMappings = assignedMappings
-    console.log($scope.assignedMappings)
+    $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
-    projectFactory.getAssignedMappings(user).th
+    projectFactory.getAssignedMappings(user)
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');

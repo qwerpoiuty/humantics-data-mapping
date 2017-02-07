@@ -48,10 +48,10 @@
                 <div class="pull-right tooltip-demo">
                     <div class= "row">
                         <a ng-click="editAttribute()" ng-if="user.power_level ==5 && editing=='none'" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i></a>
-                        <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Source</a>
+                        <a ng-click = "newSource()" ng-if="editing =='none' && !notes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Source</a>
                         <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
                         <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
-                        <a ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Source</a>
+                        <a ng-if="!notes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Source</a>
                     </div>
                     <div class="row">
                         <a ng-click="toggleNotes()" ng-if="permissions" class = "btn btn-white btn-sm">Show {{notes?'Mapping':'Notes'}}</a>
@@ -70,11 +70,11 @@
                 </div>
             </div>
             <div style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll;" ng-if="!notes">
+                <div style="overflow-y:scroll;" ng-show="!notes">
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
                 </div>
-                <div style="overflow-y:scroll;" ng-if="notes">
+                <div style="overflow-y:scroll;" ng-show="notes">
                     <notes mapping = "sources" notes="comments" user="user"></notes>
                 </div>
             </div>
