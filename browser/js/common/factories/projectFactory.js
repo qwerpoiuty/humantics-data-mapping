@@ -14,13 +14,13 @@ app.factory('projectFactory', function($http) {
         }
         switch (user.power_level) {
             case 1:
-                query.stage = 'incomplete'
+                query.stage = 'Incomplete'
                 break
             case 2:
-                query.stage = 'pending review'
+                query.stage = 'Pending Review'
                 break
             case 3:
-                query.stage = 'pending approval'
+                query.stage = 'Pending Approval'
                 break
             default:
                 $http.get('api/project').then(response => {

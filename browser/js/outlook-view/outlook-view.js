@@ -103,7 +103,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-        if ($scope.user.power_level != $scope.permissions) {
+        if ($scope.user.power_level != 1 || $scope.member) {
             alert('You don\'t have permissions to do that')
             return
         }
@@ -112,6 +112,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.deleteSource = function() {
+        if ($scope.user.power_level != 1 || $scope.member) {
+            alert('You don\'t have permissions to do that')
+            return
+        }
         var mapping = $scope.setMapping()
         mapping.source.splice($scope.temp.sourceIndex, 1)
         mappingFactory.updateMapping(mapping).then(function(mapping) {
@@ -131,6 +135,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
                 var mapping = $scope.setMapping()
                 mapping.source.push($scope.temp.source.attr.attr_id)
+                console.log(mapping)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
@@ -197,21 +202,16 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             target: $scope.targetMapping.attr_id
         }
         mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
+        mapping.comments = ($scope.comments.length) ? $scope.comments : null
         return mapping
     }
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }
     $scope.changeStatus = function(status) {
-        if ($scope.user.power_level < 2) {
+        if (!$scope.projectMember) {
             alert('You don\'t have the the autohorization')
             return
-        }
-        if (status == 'approve' || status == 'decline') {
-            if ($scope.user.power_level < 3) {
-                alert('You don\'t have the authorization')
-                return
-            }
         }
         var temp = {
             status: status,
