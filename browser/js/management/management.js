@@ -125,7 +125,47 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     }
     $scope.refreshSingleProject = (id) => {
         projectFactory.getProjectById(id).then(function(project) {
-            $scope.targetProject = project[0]
+            var obj = []
+            var tables = []
+            $scope.targetProject = []
+            project = project[0]
+            project.forEach(attr => {
+                if (tables.indexOf(attr.table_id) == -1) {
+                    obj[attr.table_id] = {
+                        table_name: attr.table_name,
+                        table_id: attr.table_id,
+                        db_name: attr.db_name,
+                        schema_name: attr.schema_name,
+                        attribute_count: 0,
+                        pending_review: 0,
+                        pending_approval: 0,
+                        complete_mapping: 0,
+                        incomplete: 0
+                    }
+                    tables.push(attr.table_id)
+                }
+                obj[attr.table_id].attribute_count++
+                switch (attr.mapping_status) {
+                    case 'Approved':
+                        obj[attr.table_id].complete_mapping++
+                            break
+                    case 'Pending Approval':
+                        obj[attr.table_id].pending_approval++
+                            break
+                    case 'Pending Review':
+                        obj[attr.table_id].pending_review++
+                            break
+                    case 'Incomplete':
+                        obj[attr.table_id].incomplete++
+                            break
+                    default:
+                        obj[attr.table_id].incomplete++
+                }
+            })
+            obj.forEach(table => {
+                $scope.targetProject.push(table)
+            })
+            console.log($scope.targetProject)
         })
     }
 
