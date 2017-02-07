@@ -22,7 +22,7 @@ router.get('/', function(req, res) {
 })
 
 router.get('/completedMappings', (req, res) => {
-    db.query(`select * from mappings inner join attributes on attributes.attr_id = mappings.target inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = tables.schema inner join dbs on schema.db = dbs.db_id inner join projects on tables.table_id = any(project.project_id) where mappings.mapping_status = 'approved'`)
+    db.query(`select * from mappings inner join attributes on attributes.attr_id = mappings.target inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = tables.schema inner join dbs on schema.db = dbs.db_id inner join projects on tables.table_id = any(project.project_id) where mappings.mapping_status = 'Approved'`)
 })
 
 router.get('/wipMappings/project_id', (req, res) => {
@@ -48,7 +48,8 @@ order by a1.date_modified`).then(mappings => {
 })
 
 router.get('/assignedMappings', (req, res) => {
-    db.query(`
+    if (req.query.stage == 'Incomplete') {
+        db.query(`
 select a.attr_id, t.table_name, a.attr_name,p.project_name,t.table_id from projects p
 inner join users u
  on u.id = any(p.members)
@@ -56,12 +57,27 @@ inner join tables t
  on t.table_id = any(p.tables)
 inner join attributes a
  on a.table_id = t.table_id
-where a.attr_id not in(select target from mappings where mappings.mapping_status <> '${req.query.stage}') 
+where a.attr_id not in(select target from mappings where mappings.mapping_status <> 'Incomplete')
 and u.id = ${req.query.user_id}
-order by p.due_date`)
-        .then(assigned => {
+order by p.due_date `).then(assigned => {
             res.json(assigned)
         })
+    } else {
+        db.query(`
+select a.attr_id, t.table_name, a.attr_name,p.project_name,t.table_id from projects p
+inner join users u
+ on u.id = any(p.members)
+inner join tables t
+ on t.table_id = any(p.tables)
+inner join attributes a
+ on a.table_id = t.table_id
+where a.attr_id in(select target from mappings where mappings.mapping_status = '${req.query.stage}') 
+and u.id = ${req.query.user_id}
+order by p.due_date`)
+            .then(assigned => {
+                res.json(assigned)
+            })
+    }
 })
 
 router.get('/getPermission/:user_id', (req, res) => {
@@ -73,7 +89,18 @@ router.get('/getPermission/:user_id', (req, res) => {
 })
 
 router.get('/:id', function(req, res) {
-    db.query(`SELECT leader, members, project_name, project_id, schema_name, table_name, table_id, table_status, project_status, db_name FROM projects INNER JOIN tables on tables.table_id = any(projects.tables) inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id WHERE projects.project_id = + ${req.params.id} order by projects.project_id desc`)
+    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id, m.mapping_status from projects p
+ inner join tables t
+  on t.table_id = any(p.tables)
+ inner join schemas s
+  on t.schema = s.schema_id
+ inner join dbs on s.db = dbs.db_id
+ inner join attributes a
+  on a.table_id = t.table_id
+ full outer join mappings m
+  on m.target = a.attr_id
+where p.project_id = 1
+order by t.table_id, attr_id`)
         .then(function(projects) {
             res.json(projects)
         })

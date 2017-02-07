@@ -63,7 +63,11 @@
                                         <th data-toggle="true" >Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
-                                        <th>Status</th>
+                                        <th data-hide="all">Total Attributes</th>
+                                        <th data-hide="all">Attributes Completed</th>
+                                        <th data-hide="all">Attributes in Review</th>
+                                        <th data-hide="all">Attributes pending Approval</th>
+                                        <th data-hide="all">Incomplete Attributes</th>
                                         <th data-hide="all">Detailed View</th>
                                     </tr>
                                 </thead>
@@ -72,7 +76,11 @@
                                         <td>{{table.table_name}}</td>
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
-                                        <td>{{table.table_status}}</td>
+                                        <td>{{table.attribute_count}}</td>
+                                        <td>{{table.complete_mapping}}</td>
+                                        <td>{{table.pending_review}}</td>
+                                        <td>{{table.pending_approval}}</td>
+                                        <td>{{table.incomplete}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
                                     </tr>
                                 </tbody>

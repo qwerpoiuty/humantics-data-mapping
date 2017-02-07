@@ -18,8 +18,8 @@ module.exports = db.define('mapping', {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     mapping_status: {
-        type: Sequelize.ENUM("incomplete", "pending", "approved", "declined"),
-        defaultValue: "incomplete"
+        type: Sequelize.ENUM("Incomplete", "Pending Review", "Pending Approval", "Approved"),
+        defaultValue: "Incomplete"
     },
     target: {
         type: Sequelize.INTEGER
