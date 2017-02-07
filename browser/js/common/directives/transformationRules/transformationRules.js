@@ -39,7 +39,8 @@ app.directive('rules', function($state, mappingFactory) {
                     modifier: scope.user.id,
                     source: newSources,
                     target: scope.mapping[0].target,
-                    transformation_rules: scope.rules
+                    transformation_rules: scope.rules,
+                    comments: scope.mapping[0].comments
                 }
                 return mapping
             }

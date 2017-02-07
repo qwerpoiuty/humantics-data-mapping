@@ -242,6 +242,10 @@ router.post('/', function(req, res) {
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
+    req.body.comments = `'${JSON.stringify(req.body.comments)}'`
+    if (req.body.hasOwnProperty('mapping_status')) {
+        req.body.mapping_status = `'${req.body.mapping_status}'`
+    }
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {
@@ -256,15 +260,15 @@ router.post('/', function(req, res) {
         })
 })
 
-router.post('/rules/:targetId', function(req, res) {
-    db.query(`update mappings set transformation_rules= '${JSON.stringify(req.body)}' where mappings.target=${req.params.targetId}`).then(function(projects) {
-            res.sendStatus(200)
-        })
-        // db.query('update mappings set transformation_rules= ' + "'" + JSON.stringify(req.body) + "'" + `where mappings.target=${req.params.targetId}`).then(function(projects) {
-        //     res.sendStatus(200)
-        // })
+// router.post('/rules/:targetId', function(req, res) {
+//     db.query(`update mappings set transformation_rules= '${JSON.stringify(req.body)}' where mappings.target=${req.params.targetId}`).then(function(projects) {
+//             res.sendStatus(200)
+//         })
+//         // db.query('update mappings set transformation_rules= ' + "'" + JSON.stringify(req.body) + "'" + `where mappings.target=${req.params.targetId}`).then(function(projects) {
+//         //     res.sendStatus(200)
+//         // })
 
-})
+// })
 
 router.post('/changeStatus', function(req, res) {
     db.query(`update mappings set mapping_status= '${req.body.status}' where mappings.target = ${req.body.id} and mappings.version =${req.body.version}`).then(function() {

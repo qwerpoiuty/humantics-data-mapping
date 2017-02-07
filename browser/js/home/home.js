@@ -5,13 +5,30 @@ app.config(function($stateProvider) {
         controller: 'homeCtrl',
         data: {
             authenticate: true
+        },
+        resolve: {
+            user: function(AuthService) {
+                return AuthService.getLoggedInUser().then(function(user) {
+                    return user
+                })
+            },
+            assignedMappings: (AuthService, projectFactory) => {
+                return AuthService.getLoggedInUser()
+                    .then(user => {
+                        return projectFactory.getAssignedMappings(user)
+                    }).then(assignedMappings => {
+                        return assignedMappings
+                    })
+            }
         }
     });
 });
 
-app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state) {
-
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings) {
+    $scope.user = user
+    $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
+    projectFactory.getAssignedMappings(user)
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
