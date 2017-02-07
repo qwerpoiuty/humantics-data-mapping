@@ -51,7 +51,7 @@
                         <a ng-click = "newSource()" ng-if="editing =='none' && !notes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
                         <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
                         <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
-                        <a ng-if="!notes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete/a>
+                        <a ng-if="!notes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete</a>
                     </div>
                     <div class="row">
                         <a ng-click="toggleNotes()" ng-if="permissions" class = "btn btn-white btn-sm">Show {{notes?'Mapping':'Notes'}}</a>

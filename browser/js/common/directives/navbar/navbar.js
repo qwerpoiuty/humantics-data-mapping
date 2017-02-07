@@ -20,12 +20,17 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                     label: 'Reporting',
                     state: 'reporting',
                     auth: true
+                }, {
+                    label: 'Admin',
+                    state: 'admin',
+                    auth: true
                 }
             ];
             scope.headers = {
                 detailed: "Detailed Table Breakdown",
                 reporting: "Find Reports",
-                management: "Manage Projects"
+                management: "Manage Projects",
+                admin: "Super User Control Panel"
             }
             scope.transition = function(stateName) {
                 var transition = $state.go(stateName)
