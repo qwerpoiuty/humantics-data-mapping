@@ -104,7 +104,7 @@ router.get('/attributesByIds', function(req, res) {
 
 
 //POSTS
-router.post('/systems', (req, res) => {
+router.post('/system', (req, res) => {
     req.body.system_name = `'${req.body.system_name}'`
     var keys = Object.keys(req.body)
 
@@ -118,7 +118,7 @@ router.post('/systems', (req, res) => {
         res.sendStatus(200)
     })
 })
-router.post('/dbs', (req, res) => {
+router.post('/db', (req, res) => {
     req.body.db_name = `'${req.body.db_name}'`
     var keys = Object.keys(req.body)
 
@@ -132,7 +132,7 @@ router.post('/dbs', (req, res) => {
         res.sendStatus(200)
     })
 })
-router.post('/schemas', (req, res) => {
+router.post('/schema', (req, res) => {
     req.body.schema_name = `'${req.body.schema_name}'`
     var keys = Object.keys(req.body)
 
@@ -183,20 +183,25 @@ router.post('/attributes/:tableId', function(req, res) {
 
 
 //updates
-router.post('/updateSystem/:system_id', function(req, res) {
-    db.query(`update system set system_name=${req.body.system_name} where system.system_id = ${req.params.system_id}`)
+
+
+router.post('/updateSystem/', function(req, res) {
+    req.body.system_name = `'${req.body.system_name}'`
+    db.query(`update systems set system_name=${req.body.system_name} where systems.system_id = ${req.body.system_id}`)
         .then(function(system) {
             res.sendStatus(200)
         })
 })
-router.post('/updateDb/:db_id', function(req, res) {
-    db.query(`update schema set system='${req.body.system}', db_name=${req.body.db_name} where db.db_id = ${req.params.db_id}`)
+router.post('/updateDatabase/', function(req, res) {
+    req.body.db_name = `'${req.body.db_name}'`
+    db.query(`update dbs set db_name=${req.body.db_name} where dbs.db_id = ${req.body.db_id}`)
         .then(function(db) {
             res.sendStatus(200)
         })
 })
-router.post('/updateSchema/:schema_id', function(req, res) {
-    db.query(`update schema set db='${req.body.db}', schema_name=${req.body.schema_name} where scheam.schema_id = ${req.params.schema_id}`)
+router.post('/updateSchema/', function(req, res) {
+    req.body.schema_name = `'${req.body.schema_name}'`
+    db.query(`update schemas set schema_name=${req.body.schema_name} where schemas.schema_id = ${req.body.schema_id}`)
         .then(function(schema) {
             res.sendStatus(200)
         })
@@ -215,6 +220,32 @@ router.post('/updateAttribute/:attr_id', function(req, res) {
         })
 })
 
+//deletes
+router.post('/deleteSystem/:system_id', function(req, res) {
+    db.query(`delete from systems where systems.system_id = ${req.params.system_id}`)
+        .then(function(system) {
+            res.sendStatus(200)
+        })
+})
+router.post('/deleteDatabase/:db_id', function(req, res) {
+    db.query(`delete from dbs where dbs.db_id = ${req.params.db_id}`)
+        .then(function(db) {
+            res.sendStatus(200)
+        })
+})
+router.post('/deleteSchema/:schema_id', function(req, res) {
+    db.query(`delete from schemas where schemas.schema_id = ${req.params.schema_id}`)
+        .then(function(schema) {
+            res.sendStatus(200)
+        })
+})
+router.post('/deleteTable/:table_id', function(req, res) {
+
+    db.query(`delete from tables where tables.table_id = ${req.params.table_id}`)
+        .then(function(schema) {
+            res.sendStatus(200)
+        })
+})
 
 
 module.exports = router

@@ -39,6 +39,12 @@ module.exports = db.define('user', {
             var hash = bcrypt.hashSync(user.password, salt);
             user.salt = salt;
             user.password = hash;
+        },
+        beforeUpdate: function(user) {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(user.password, salt);
+            user.salt = salt;
+            user.password = hash;
         }
     }
 }, {

@@ -98,17 +98,6 @@ app.factory('dataFactory', function($http) {
                 return response.data
             })
     }
-
-    //posts
-
-
-    d.createTable = function(table) {
-        return $http.post('/api/database/tables', table)
-            .then(function(response) {
-                return response.data
-            })
-    }
-
     d.searchTables = function(search) {
         return $http.get('/api/database/searchtables', search)
             .then(function(response) {
@@ -116,17 +105,83 @@ app.factory('dataFactory', function($http) {
             })
     }
 
+    //posts
+    //creates
+    d.createSystem = system => {
+        return $http.post('/api/database/system', system).then(response => {
+            return response.data
+        })
+    }
+    d.createDatabase = db => {
+        return $http.post('/api/database/db', db).then(response => {
+            return response.data
+        })
+    }
+    d.createSchema = schema => {
+        console.log(schema)
+        return $http.post('/api/database/schema', schema).then(response => {
+            return response.data
+        })
+    }
+    d.createTable = function(table) {
+        return $http.post('/api/database/tables', table)
+            .then(function(response) {
+                return response.data
+            })
+    }
     d.createAttribute = function(attribute) {
         return $http.post('/api/database/attributes/' + attribute.table_id, attribute)
             .then(function(response) {
                 return response.data
             })
     }
+
+    //updates
+    d.updateSystem = system => {
+        return $http.post('api/database/updateSystem/', system).then(response => {
+            return response.data
+        })
+    }
+    d.updateDatabase = db => {
+        return $http.post('api/database/updateDatabase/', db).then(response => {
+            return response.data
+        })
+    }
+    d.updateSchema = schema => {
+        return $http.post('api/database/updateSchema/', schema).then(response => {
+            return response.data
+        })
+    }
     d.updateAttribute = function(attribute, target) {
         return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {
                 return response.data
             })
+    }
+
+    //deletes
+    d.deleteSystem = id => {
+        return $http.post('api/database/deleteSystem/' + id).then(response => {
+            return response.data
+        })
+    }
+
+    d.deleteDatabase = id => {
+        return $http.post('api/database/deleteDatabase/' + id).then(response => {
+            return response.data
+        })
+    }
+
+    d.deleteSchema = id => {
+        return $http.post('api/database/deleteSchema/' + id).then(response => {
+            return response.data
+        })
+    }
+
+    d.deleteTable = id => {
+        return $http.post('api/database/deleteTable/' + id).then(response => {
+            return response.data
+        })
     }
 
 

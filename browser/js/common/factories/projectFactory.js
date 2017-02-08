@@ -22,6 +22,8 @@ app.factory('projectFactory', function($http) {
             case 3:
                 query.stage = 'Pending Approval'
                 break
+            case 4:
+                query.stage = 'Approved'
             default:
                 $http.get('api/project').then(response => {
                     return response.data

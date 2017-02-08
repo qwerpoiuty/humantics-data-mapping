@@ -396,7 +396,6 @@
 											<th>Table</th>
 											<th data-hide="all">Datatype</th>
 											<th data-hide="all">Last Modified</th>
-											<th data-hide="all">Last Editor</th>
 											<th data-hide="all">Impact Analysis</th>
 										</tr>
 										</thead>
@@ -409,7 +408,6 @@
 											<td>{{target.table_name}}</td>
 											<td>{{target.datatype}}</td>
 											<td>{{target.last_modified}}</td>
-											<td>Last Editor</td>
 											<td><button class = "btn btn-primary" ng-click="nextImpact(target.attr_id)">Get Analysis</button></td>
 										</tr>
 										</tbody>
@@ -440,7 +438,7 @@
 							<div class = "ibox">
 								<div class = "ibox-content">
 									<div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-											<h3 style="color:white;">All Mappings</h3>
+											<h3 style="color:white;">All Completed Mappings for {{selectedTable.value.table_name}}</h3>
 											<button class = "btn btn-primary" ng-click = "transition()">Go to Detailed View</button>
 									</div>
 									<div class = "mail-body" style="border-left:1px grey; border-right: 2px grey;">

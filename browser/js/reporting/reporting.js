@@ -90,6 +90,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                     })
                 }
                 $scope.targets = recentMappings
+                console.log($scope.targets)
             })
     }
 
@@ -102,6 +103,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.previousImpact = function() {
+        if ($scope.impactSearches.length == 1) return
         $scope.impactSearches.pop()
         $scope.sources = $scope.impactSearches[$scope.impactSearches.length - 1]
         $scope.targets = []
@@ -171,7 +173,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.transition = () => {
-        console.log('hello?')
         $state.go('detailed', {
             tableId: $scope.selectedTable.value.table_id
         })

@@ -89,7 +89,7 @@ router.get('/getPermission/:user_id', (req, res) => {
 })
 
 router.get('/:id', function(req, res) {
-    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id, m.mapping_status from projects p
+    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version,m.mapping_status from projects p
  inner join tables t
   on t.table_id = any(p.tables)
  inner join schemas s
@@ -97,7 +97,8 @@ router.get('/:id', function(req, res) {
  inner join dbs on s.db = dbs.db_id
  inner join attributes a
   on a.table_id = t.table_id
- full outer join mappings m
+ full outer join (select * from mappings m1
+where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m
   on m.target = a.attr_id
 where p.project_id = 1
 order by t.table_id, attr_id`)

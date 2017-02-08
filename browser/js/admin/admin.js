@@ -11,24 +11,28 @@ app.config(function($stateProvider) {
                 return AuthService.getLoggedInUser().then(function(user) {
                     return user
                 })
-            },
-            assignedMappings: (AuthService, projectFactory) => {
-                return AuthService.getLoggedInUser()
-                    .then(user => {
-                        return projectFactory.getAssignedMappings(user)
-                    }).then(assignedMappings => {
-                        return assignedMappings
-                    })
             }
         }
     });
 });
 
-app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings) {
+app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, userFactory) {
     $scope.user = user
-    $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
-    projectFactory.getAssignedMappings(user)
+    $scope.power_levels = [{
+        title: 'mapper',
+        level: 1
+    }, {
+        title: 'reviewer',
+        level: 2
+    }, {
+        title: 'approver',
+        level: 3
+    }, {
+        title: 'manager',
+        level: 4
+    }]
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -57,13 +61,24 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     dataFactory.getSystems().then(systems => {
         $scope.systems = systems[0]
     })
-
-    $scope.selectedSystem = {}
-    $scope.selectedDb = {}
-    $scope.createdSystem = {}
-    $scope.createdDb = {}
-    $scope.createdSchema = {}
-    $scope.selectedSchema = {}
+    $scope.reset = () => {
+        $scope.selectedSystem = {}
+        $scope.selectedDb = {}
+        $scope.selectedSchema = {}
+        $scope.selectedTable = {}
+        $scope.createSystem = {}
+        $scope.createDb = {}
+        $scope.createSchema = {}
+        $scope.sEdit = false
+        $scope.dbEdit = false
+        $scope.schemaEdit = false
+        $scope.tableEdit = false
+    }
+    $scope.reset()
+    $scope.toggle = bool => {
+        console.log('hello', bool)
+        $scope[bool] = !$scope[bool]
+    }
 
     $scope.$watch(function() {
         return $scope.selectedSystem.value
@@ -79,69 +94,143 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            if ($scope.selectedSchema.hasOwnProperty('value')) $scope.selectedSchema = {}
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {
                 $scope.schemas = schemas[0]
             })
         }
     })
     $scope.$watch(function() {
-        return $scope.selectedSchema.value
+        return $scope.createSystem.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            dataFactory.getTables(nv.schema_id).then(function(tables) {
-                $scope.tables = tables[0]
 
+            dataFactory.getDatabases(nv.system_id).then(dbs => {
+                $scope.dbs = dbs[0]
             })
         }
     })
-
     $scope.$watch(function() {
-        return $scope.createdSystem.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-            dataFactory.getDatabases(nv.system_id).then(function(dbs) {
-                $scope.createdDbs = dbs[0]
-            })
-        }
-    })
-
-    $scope.$watch(function() {
-        return $scope.createdDb.value
+        return $scope.createDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {
-                $scope.createdSchemas = schemas[0]
+                $scope.schemas = schemas[0]
             })
         }
     })
+
 
     //search things
     $scope.searchCat = "table"
     $scope.search = function(category, query) {
-        switch (category) {
-            case "table":
-                return dataFactory.getTablesByName(query).then(function(tables) {
-                    $scope.tables = tables[0]
-                })
-            case "entity":
-                return dataFactory.attributesByName(query).then(function(tables) {
-                    $scope.tables = tables[0]
-                })
+            switch (category) {
+                case "table":
+                    return dataFactory.getTablesByName(query).then(function(tables) {
+                        $scope.tables = tables[0]
+                    })
+                case "entity":
+                    return dataFactory.attributesByName(query).then(function(tables) {
+                        $scope.tables = tables[0]
+                    })
+            }
         }
+        //ADMIN CREATES
+    $scope.createUser = user => {
+        if (user.confirm !== user.password) {
+            alert('Passwords don\'t match')
+            return
+        }
+        userFactory.createUser(user).then(() => {
+            $scope.reset()
+        })
+    }
+    $scope.createSystem = system => {
+        dataFactory.createSystem(system)
+    }
+    $scope.createDatabase = db => {
+        var dbToBeCreated = {
+            db_name: db,
+            system: $scope.createSystem.value.system_id
+        }
+        dataFactory.createDatabase(dbToBeCreated)
+    }
+    $scope.createSchema = schema => {
+        var schemaToBeCreated = {
+            schema_name: schema,
+            db: $scope.createDb.value.db_id
+        }
+        dataFactory.createSchema(schemaToBeCreated)
+    }
+    $scope.createTable = function(table) {
+        var table = {
+            schema: $scope.createSchema.value.schema_id,
+            table_name: table
+        }
+        dataFactory.createTable(table)
+    }
+    $scope.createAttributes = attributes => {
+        dataFactory.createAttribute(attributes)
     }
 
-
-
-    $scope.createTable = function() {
-        var table = {
-            schema: $scope.createdSchema.value.schema_id,
-            table_name: $scope.createdTable
+    //ADMIN EDITS
+    $scope.updateSystem = system => {
+        let updatedSystem = {
+            system_name: system,
+            system_id: $scope.selectedSystem.value.system_id
         }
-        dataFactory.createTable(table).then(function(table) {
-            dataFactory.getMostRecentTable().then(function(table_id) {
-                $scope.detailedView(table_id)
+        dataFactory.updateSystem(updatedSystem).then(() => {
+            $scope.reset()
+        })
+    }
+    $scope.updateDatabase = db => {
+        let updatedDb = {
+            db_name: db,
+            db_id: $scope.selectedDb.value.db_id
+        }
+        dataFactory.updateDatabase(updatedDb).then(() => {
+            $scope.reset()
+        })
+    }
+
+    $scope.updateSchema = schema => {
+        let updatedSchema = {
+            schema_name: schema,
+            schema_id: $scope.selectedSchema.value.schema_id
+        }
+        dataFactory.updateSchema(updatedSchema).then(() => {
+            $scope.reset()
+        })
+    }
+
+    $scope.updateUser = user => {
+        if (user.confirm !== user.password) {
+            alert('Passwords don\'t match')
+            return
+        }
+        userFactory.updateUser(user).then(response => {
+            $scope.reset()
+        })
+    }
+    $scope.adminDelete = (structure, id) => {
+        if (structure == 'System') {
+            dataFactory.getSystems().then(systems => {
+                $scope.systems = systems[0]
             })
+        }
+        var command = 'delete' + structure
+        dataFactory[command](id).then(() => {
+            if (structure == 'System') {
+                dataFactory.getSystems().then(systems => {
+                    $scope.systems = systems[0]
+                    $scope.reset()
+                })
+            }
+        })
+    }
+
+    $scope.findTables = () => {
+        dataFactory.getTables($scope.selectedSchema.value.schema_id).then(function(tables) {
+            $scope.tables = tables[0]
         })
     }
 
@@ -170,8 +259,8 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     }
 
     $scope.openBrowse2 = function(evt, tabSelection) {
-
-            // Declare all variables
+            $scope.reset()
+                // Declare all variables
             var i, tabcontent, tablinks;
 
             // Get all elements with class="tabcontent" and hide them

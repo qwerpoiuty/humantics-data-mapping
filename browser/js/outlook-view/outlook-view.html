@@ -47,7 +47,7 @@
             <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
                 <div class="pull-right tooltip-demo">
                     <div class= "row">
-                        <a ng-click="editAttribute()" ng-if="user.power_level ==5 && editing=='none' &&  !notes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
+                        <a ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !notes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
                         <a ng-click = "newSource()" ng-if="editing =='none' && !notes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
                         <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
                         <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>

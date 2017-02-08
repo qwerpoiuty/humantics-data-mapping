@@ -84,7 +84,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.editAttribute = function() {
-        if ($scope.user.power_level >= 4) {
+        if ($scope.user.power_level <= 3) {
             alert('You don\'t have permissions to do that')
             return
         }
@@ -135,7 +135,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
                 var mapping = $scope.setMapping()
                 mapping.source.push($scope.temp.source.attr.attr_id)
-                console.log(mapping)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
@@ -145,7 +144,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             case "editAttribute":
                 console.log($scope.temp)
                 var mapping = $scope.setMapping()
-                if ($scope.temp.hasOwnProperty('source')) mapping.source[$scope.sourceIndex] = $scope.temp.source.attr.attr_id
                 if ($scope.temp.target) {
                     var arr = ['pk', 'fk', 'upi', 'npi']
                     var properties = []
@@ -155,19 +153,17 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                     $scope.temp.target.properties = properties
                     dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
-                            mappingFactory.updateMapping(mapping)
-                                .then(function() {
-                                    $scope.editing = "none"
-                                    dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
-                                        $scope.attributes = attributes[0]
-                                        $scope.attributes.forEach(e => {
-                                            if (e.attr_id == mapping.target) {
-                                                $scope.selectAttribute(e)
-                                                return
-                                            }
-                                        })
-                                    })
+                            $scope.editing = "none"
+                            dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
+                                $scope.attributes = attributes[0]
+                                $scope.attributes.forEach(e => {
+                                    if (e.attr_id == mapping.target) {
+                                        $scope.selectAttribute(e)
+                                        return
+                                    }
                                 })
+                            })
+
                         })
                 }
                 break

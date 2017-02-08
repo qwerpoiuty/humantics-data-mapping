@@ -35,13 +35,9 @@ router.get('/:id', function(req, res) {
 
 //UPDATES FOR THINGS
 router.put('/update', function(req, res) {
-    req.body.completed = true
-    User.findById(req.body.id)
-        .then(function(user) {
-            return user.update(req.body)
-        }).then(function(updatedUser) {
-            res.json(updatedUser)
-        })
+    db.query(`update users set password='${req.body.password}', power_level=${req.body.power_level.level} where users.email = '${req.body.email}'`).then(user => {
+        res.sendStatus(200)
+    })
 })
 
 router.post('/signup', function(req, res) {
