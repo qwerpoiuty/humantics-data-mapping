@@ -1,8 +1,9 @@
 'use strict';
 window.app = angular.module('data-mapping', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'ngAnimate', 'ui.select']);
 
-app.config(function($urlRouterProvider, $locationProvider) {
+app.config(function($urlRouterProvider, $locationProvider, $q) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
+    $qProvider.errorOnUnhandledRejections(false);
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
@@ -44,9 +45,9 @@ app.run(function($rootScope, AuthService, $state) {
             // (the second time, AuthService.isAuthenticated() will work)
             // otherwise, if no user is logged in, go to "login" state.
             if (user) {
-                $state.go(toState.name, toParams);
+                $state.transitionTo(toState.name, toParams);
             } else {
-                $state.go('login');
+                $state.transitionTo('login');
             }
         });
 
