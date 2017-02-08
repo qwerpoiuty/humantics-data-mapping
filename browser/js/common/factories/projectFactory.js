@@ -24,10 +24,8 @@ app.factory('projectFactory', function($http) {
                 break
             case 4:
                 query.stage = 'Approved'
-            default:
-                $http.get('api/project').then(response => {
-                    return response.data
-                })
+            case 5:
+                query.stage = 'Incomplete'
         }
         return $http.get('api/project/assignedMappings', {
             params: query
