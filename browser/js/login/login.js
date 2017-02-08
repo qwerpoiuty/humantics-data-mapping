@@ -22,7 +22,7 @@ app.controller('LoginCtrl', function($scope, AuthService, $state) {
             })
         } else {
             AuthService.login(loginInfo).then(function() {
-                $state.go('home');
+                $state.transitionTo('home');
             }).catch(function(err) {
                 if (err.message.status == 404) {
                     $scope.error = "That user does not exist"

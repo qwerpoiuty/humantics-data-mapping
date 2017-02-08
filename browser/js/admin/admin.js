@@ -62,6 +62,24 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.systems = systems[0]
     })
     $scope.reset = () => {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById("adminCreateTab").style.display = "inline";
+        document.getElementById("adminCreateTab").className += " active";
+        document.getElementById("adminEditTab").style.display += "block";
+        document.getElementById("adminEditTab").className += " active";
         $scope.selectedSystem = {}
         $scope.selectedDb = {}
         $scope.selectedSchema = {}
@@ -144,32 +162,44 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
             $scope.reset()
         })
     }
-    $scope.createSystem = system => {
-        dataFactory.createSystem(system)
+    $scope.systemCreate = system => {
+        dataFactory.createSystem(system).then(() => {
+            $scope.reset()
+            dataFactory.getSystems().then(systems => {
+                $scope.systems = systems[0]
+            })
+            alert('System Created')
+        })
     }
     $scope.createDatabase = db => {
         var dbToBeCreated = {
             db_name: db,
             system: $scope.createSystem.value.system_id
         }
-        dataFactory.createDatabase(dbToBeCreated)
+        dataFactory.createDatabase(dbToBeCreated).then(() => {
+            $scope.reset()
+            alert('Database Created')
+        })
     }
     $scope.createSchema = schema => {
         var schemaToBeCreated = {
             schema_name: schema,
             db: $scope.createDb.value.db_id
         }
-        dataFactory.createSchema(schemaToBeCreated)
+        dataFactory.createSchema(schemaToBeCreated).then(() => {
+            $scope.reset()
+            alert('Schema Created')
+        })
     }
     $scope.createTable = function(table) {
         var table = {
             schema: $scope.createSchema.value.schema_id,
             table_name: table
         }
-        dataFactory.createTable(table)
-    }
-    $scope.createAttributes = attributes => {
-        dataFactory.createAttribute(attributes)
+        dataFactory.createTable(table).then(() => {
+            $scope.reset()
+            alert('Table Created')
+        })
     }
 
     //ADMIN EDITS
@@ -180,6 +210,10 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         }
         dataFactory.updateSystem(updatedSystem).then(() => {
             $scope.reset()
+            dataFactory.getSystems().then(systems => {
+                $scope.systems = systems[0]
+            })
+            alert('System Updated')
         })
     }
     $scope.updateDatabase = db => {
@@ -189,6 +223,7 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         }
         dataFactory.updateDatabase(updatedDb).then(() => {
             $scope.reset()
+            alert('Database Updated')
         })
     }
 
@@ -199,6 +234,7 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         }
         dataFactory.updateSchema(updatedSchema).then(() => {
             $scope.reset()
+            alert('Schema Updated')
         })
     }
 
@@ -209,22 +245,19 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         }
         userFactory.updateUser(user).then(response => {
             $scope.reset()
+            alert('User Updated')
         })
     }
     $scope.adminDelete = (structure, id) => {
-        if (structure == 'System') {
-            dataFactory.getSystems().then(systems => {
-                $scope.systems = systems[0]
-            })
-        }
         var command = 'delete' + structure
         dataFactory[command](id).then(() => {
+            alert(`${structure} deleted`)
             if (structure == 'System') {
                 dataFactory.getSystems().then(systems => {
                     $scope.systems = systems[0]
-                    $scope.reset()
                 })
             }
+            $scope.reset()
         })
     }
 
