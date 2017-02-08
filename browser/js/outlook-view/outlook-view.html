@@ -8,7 +8,6 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
                     <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
-                    <button class = "btn btn-primary" ng-click="addAttribute()" style="float:right;">New Attribute</button>
                 </div>
             </div>
 
@@ -47,28 +46,43 @@
         <div class="col-lg-7 animated fadeInRight percent-100">
             <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
                 <div class="pull-right tooltip-demo">
-                    <a ng-click="editAttribute()" ng-if="editing=='none'" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Edit</a>
-                    <a ng-click = "newSource()" ng-if="editing =='none'" class ="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"><i class = "fa fa-plus"></i> Add</a>
-                    <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Save</a>
-                    <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-pencil"></i> Cancel</a>
-                    <a ng-click="deleteSource()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> Delete</a>
+                    <div class= "row">
+                        <a ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !notes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
+                        <a ng-click = "newSource()" ng-if="editing =='none' && !notes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
+                        <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
+                        <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
+                        <a ng-if="!notes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete</a>
+                    </div>
+                    <div class="row" style="padding-top:2%">
+                        <a ng-click="toggleNotes()" style="float:right" ng-if="permissions" class = "btn btn-white btn-sm">Show {{notes?'Mapping':'Notes'}}</a>
+                    </div>
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{currentAttr}} <span style="color:red;" ng-if="sources[0].mapping_status =='approved'">Approved</span> <span style="color:red;" ng-if="sources[0].mapping_status =='pending'">Pending</span></h3>
-                    <div ng-show="sources[0].mapping_status =='incomplete'|| sources[0].mapping_status=='rejected'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('pending')">Submit for Review</button></div>
+                    <h3 style="color:white;">{{currentAttr}} <span style="color:red;"">{{sources[0].mapping_status}}</h3>
+                    <div ng-if="user.power_level == 1" ng-show="sources[0].mapping_status =='Incomplete'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('Pending Review')">Submit for Review</button></div>
+                    <div ng-if="user.power_level ==2">
+                        <div ng-show="sources[0].mapping_status=='Pending Review'">
+                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('Incomplete')">Decline</button>
+                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
+                        </div>
+                    </div>
                     <div ng-if="user.power_level ==3">
-                        <div ng-show="sources[0].mapping_status=='pending'">
-                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('rejected')">Decline</button>
-                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('approved')">Approve</button>
+                        <div ng-show="sources[0].mapping_status=='Pending Approval'">
+                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('incomplete')">Decline</button>
+                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Approved')">Approve</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="flexHeight2" style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll; height:100%">
+                <div style="overflow-y:scroll; height:100%" ng-show="!notes">
+
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
+                </div>
+                <div style="overflow-y:scroll;" ng-show="notes">
+                    <notes mapping = "sources" notes="comments" user="user"></notes>
                 </div>
             </div>
         </div> 

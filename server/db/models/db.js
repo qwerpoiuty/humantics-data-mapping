@@ -12,6 +12,9 @@ module.exports = db.define('db', {
     db_name: {
         type: Sequelize.STRING
     },
+    db_business_name: {
+        type: Sequelize.STRING
+    },
     system: {
         type: Sequelize.INTEGER
     }

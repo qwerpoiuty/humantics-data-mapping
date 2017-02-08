@@ -26,7 +26,8 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal) {
+app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal, projectFactory) {
+    $scope.notes = false
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
@@ -36,32 +37,54 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.sourceSelection = "none"
     $scope.sourceIndex = 0
     $scope.currentAttr = "Select an Attribute"
-
+    $scope.checkMember = (user) => {
+        projectFactory.getPermission(user.id, $scope.table.table_id).then(member => {
+            $scope.projectMember = member
+        })
+    }
+    $scope.checkMember($scope.user)
+    $scope.toggleNotes = () => {
+        if (!$scope.targetMapping) alert('pick an attribute first')
+        else $scope.notes = !$scope.notes
+    }
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
-            if (typeof mapping === "object") $scope.sources = mapping
-            else $scope.sources = []
+            if (typeof mapping === "object") {
+                $scope.sources = mapping
+                if ($scope.projectMember) {
+                    switch ($scope.sources[0].mapping_status) {
+                        case "pending review":
+                            $scope.permissions = 2
+                            break
+                        case "pending approval":
+                            $scope.permissions = 3
+                            break
+                        default:
+                            $scope.permissions = 1
+                    }
+                } else {
+                    $scope.permissions = 5
+                }
+            } else $scope.sources = []
+
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
-            if ($scope.sources[0]) $scope.targetmapping = $scope.sources[0].version
-            else $scope.targetMapping.version = 1
+            $scope.comments = $scope.sources[0] ? JSON.parse($scope.sources[0].comments) : []
+
             if ($scope.rules == null) $scope.rules = []
+
+            if ($scope.comments == null) $scope.comments = []
             $scope.currentAttr = $scope.targetMapping.attr_name
+
+
         })
     }
 
-    $scope.addAttribute = function(attribute) {
-        $scope.editing = "newAttribute"
-        $scope.currentAttr = "New Attribute"
-            // dataFactory.addAttribute($scope.table, attribute)
-        $scope.tables = []
-    }
-
     $scope.editAttribute = function() {
-        if ($scope.user.power_level < 2) {
+        if ($scope.user.power_level <= 3) {
             alert('You don\'t have permissions to do that')
             return
         }
@@ -80,7 +103,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-        if ($scope.user.power_level < 2) {
+        if ($scope.user.power_level != 1 || $scope.member) {
             alert('You don\'t have permissions to do that')
             return
         }
@@ -89,6 +112,10 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.deleteSource = function() {
+        if ($scope.user.power_level != 1 || $scope.member) {
+            alert('You don\'t have permissions to do that')
+            return
+        }
         var mapping = $scope.setMapping()
         mapping.source.splice($scope.temp.sourceIndex, 1)
         mappingFactory.updateMapping(mapping).then(function(mapping) {
@@ -105,8 +132,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.save = function() {
         switch ($scope.editing) {
             case "newSource":
+
                 var mapping = $scope.setMapping()
-                mapping.source.push($scope.temp.attr.attr_id)
+                mapping.source.push($scope.temp.source.attr.attr_id)
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
@@ -114,8 +142,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 })
                 break
             case "editAttribute":
+                console.log($scope.temp)
                 var mapping = $scope.setMapping()
-                if ($scope.temp.hasOwnProperty('source')) mapping.source[$scope.sourceIndex] = $scope.temp.source.attr.attr_id
                 if ($scope.temp.target) {
                     var arr = ['pk', 'fk', 'upi', 'npi']
                     var properties = []
@@ -125,19 +153,17 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                     $scope.temp.target.properties = properties
                     dataFactory.updateAttribute($scope.temp.target, $scope.targetMapping.attr_id)
                         .then(function(target) {
-                            mappingFactory.updateMapping(mapping)
-                                .then(function() {
-                                    $scope.editing = "none"
-                                    dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
-                                        $scope.attributes = attributes[0]
-                                        $scope.attributes.forEach(e => {
-                                            if (e.attr_id == mapping.target) {
-                                                $scope.selectAttribute(e)
-                                                return
-                                            }
-                                        })
-                                    })
+                            $scope.editing = "none"
+                            dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
+                                $scope.attributes = attributes[0]
+                                $scope.attributes.forEach(e => {
+                                    if (e.attr_id == mapping.target) {
+                                        $scope.selectAttribute(e)
+                                        return
+                                    }
                                 })
+                            })
+
                         })
                 }
                 break
@@ -172,21 +198,16 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             target: $scope.targetMapping.attr_id
         }
         mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
+        mapping.comments = ($scope.comments.length) ? $scope.comments : null
         return mapping
     }
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }
     $scope.changeStatus = function(status) {
-        if ($scope.user.power_level < 2) {
+        if (!$scope.projectMember) {
             alert('You don\'t have the the autohorization')
             return
-        }
-        if (status == 'approve' || status == 'decline') {
-            if ($scope.user.power_level < 3) {
-                alert('You don\'t have the authorization')
-                return
-            }
         }
         var temp = {
             status: status,

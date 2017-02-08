@@ -25,32 +25,12 @@ let attrLink = `inner join attributes on attributes.table_id = tables.table_id`
 
 router.get('/', function(req, res) {
     db.query(`select * from mappings ${attrSourceLink} ${tableLink} ${schemaLink} ${dbLink} ${systemLink} where mappings.target = ${req.query.attr_id} order by a.version desc`).then(mappings => res.json(mappings))
-        // db.query('SELECT * FROM mappings inner join "attributes" as b on b.attr_id = any(a.source) inner join "tables" as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join "dbs" as e on d.db = e.db_id inner join systems on e.system = systems.system_id WHERE a.target = ' + req.query.attr_id + ' order by a.version desc').then(function(mappings) {
-        //     res.json(mappings)
-        // })
 })
 
 router.get('/recentMapping', function(req, res) {
-    // db.query(`select * from mappings ${attrSourceLink} ${tableLink} ${schemaLink} ${dbLink} ${systemLink} where mappings.target = ${req.query.attr_id} order by mappings.version desc`)
+
     db.query('select * from mappings a inner join attributes b on b.attr_id = any(a.source) inner join tables as c on b.table_id = c.table_id inner join schemas d on c.schema = d.schema_id inner join dbs as e on d.db = e.db_id inner join systems on e.system = systems.system_id where a.target=' + req.query.attr_id + ' order by a.version desc')
         .then(function(mappings) {
-            // mappings = mappings[0]
-            // if (mappings.length == 1) res.json(mappings)
-
-            // else if (mappings.length > 1) {
-            //     let currentVersion = mappings[0].version
-            //     let sent = false
-            //     for (let i of mappings) {
-            //         if (mappings[i].version !== currentVersion) {
-            //             res.json(mappings.slice(0, i))
-            //             sent = true
-            //             break
-            //         }
-            //     }
-            //     if (sent === false) res.json(mappings)
-            // } else {
-            //     res.sendStatus(400)
-            // }
             if (mappings[0].length == 1) {
                 res.json(mappings[0])
             } else if (mappings[0].length > 1) {
@@ -72,7 +52,7 @@ router.get('/recentMapping', function(req, res) {
 
 router.get('/all/:table_id', (req, res) => {
     db.query(`select 
-  a.version, a.target,
+  a.version, a.target, a.mapping_status,
   b1.attr_name as target_attr_name,
   b1.datatype as target_datatype,
   b2.attr_name as source_attr_name,
@@ -109,7 +89,12 @@ where b1.table_id = ${req.params.table_id}`).then(mappings => {
 })
 
 router.get('/impact/attribute/:attr_id', function(req, res) {
-    db.query(`select * from tables a inner join attributes b on b.table_id = a.table_id inner join mappings c on c.target = b.attr_id where ${req.params.attr_id} = any(c.source)`)
+    db.query(`select * from tables a 
+        inner join attributes b on b.table_id = a.table_id 
+        inner join mappings c on c.target = b.attr_id 
+        inner join schemas on a.schema = schemas.schema_id
+        inner join dbs on dbs.db_id = schemas.db
+        where ${req.params.attr_id} = any(c.source) and c.mapping_status = 'Approved'`)
         .then(function(mappings) {
             res.json(mappings)
         })
@@ -154,7 +139,19 @@ router.get('/impact/tree/:table_id', function(req, res) {
             promiseCount++
             let promises = []
             let childPromise = new Promise((resolve, reject) => {
-                db.query(`select table_name, schema_name, target from tables ${attrLink} ${schemaLink} inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ${parent}`).then(attributes => {
+                db.query(`SELECT * from tables c
+inner join attributes b
+ on b.table_id = c.table_id
+inner join mappings a1
+ on b.attr_id = any(a1.source)
+inner join schemas d
+ on d.schema_id = c.schema
+inner join dbs e
+ on d.db = e.db_id
+WHERE a1.date_modified = 
+  (SELECT max(date_modified) FROM mappings a2 WHERE a2.target = a1.target)
+and a1.mapping_status = 'Approved'
+and c.table_id = ${parent}`).then(attributes => {
                     attributes = attributes[0]
                     let a = () => [...new Set(attributes.map(e => {
                         return e.target
@@ -211,7 +208,19 @@ router.get('/impact/tree/:table_id', function(req, res) {
         }
         return child_tables
     }
-    db.query(`select table_name, schema_name, target from tables ${attrLink} ${schemaLink} inner join mappings on attributes.attr_id = any(mappings.source) where tables.table_id = ${req.params.table_id}`).then(attributes => {
+    db.query(`SELECT * from tables c
+inner join attributes b
+ on b.table_id = c.table_id
+inner join mappings a1
+ on b.attr_id = any(a1.source)
+inner join schemas d
+ on d.schema_id = c.schema
+inner join dbs e
+ on d.db = e.db_id
+WHERE a1.date_modified = 
+  (SELECT max(date_modified) FROM mappings a2 WHERE a2.target = a1.target)
+and a1.mapping_status = 'Approved'
+and c.table_id = ${req.params.table_id}`).then(attributes => {
         attributes = attributes[0]
         tree.push({
             id: req.params.table_id,
@@ -228,9 +237,7 @@ router.get('/impact/tree/:table_id', function(req, res) {
             var children = attributes[0].map(e => {
                 return e.table_id
             })
-            findChildren(children).then(() => {
-                console.log('hello')
-            })
+            findChildren(children)
         })
     })
 
@@ -242,6 +249,10 @@ router.post('/', function(req, res) {
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
+    req.body.comments = `'${JSON.stringify(req.body.comments)}'`
+    if (req.body.hasOwnProperty('mapping_status')) {
+        req.body.mapping_status = `'${req.body.mapping_status}'`
+    }
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {
@@ -256,23 +267,12 @@ router.post('/', function(req, res) {
         })
 })
 
-router.post('/rules/:targetId', function(req, res) {
-    db.query(`update mappings set transformation_rules= '${JSON.stringify(req.body)}' where mappings.target=${req.params.targetId}`).then(function(projects) {
-            res.sendStatus(200)
-        })
-        // db.query('update mappings set transformation_rules= ' + "'" + JSON.stringify(req.body) + "'" + `where mappings.target=${req.params.targetId}`).then(function(projects) {
-        //     res.sendStatus(200)
-        // })
-
-})
 
 router.post('/changeStatus', function(req, res) {
     db.query(`update mappings set mapping_status= '${req.body.status}' where mappings.target = ${req.body.id} and mappings.version =${req.body.version}`).then(function() {
-            res.sendStatus(200)
-        })
-        // db.query("update mappings set mapping_status='" + req.body.status + "' where mappings.target =" + req.body.id + ' and mappings.version =' + req.body.version).then(function() {
-        //     res.sendStatus(200)
-        // })
+        res.sendStatus(200)
+    })
+
 })
 
 

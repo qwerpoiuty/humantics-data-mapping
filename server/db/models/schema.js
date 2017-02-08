@@ -11,6 +11,9 @@ module.exports = db.define('schema', {
     schema_name: {
         type: Sequelize.STRING
     },
+    schema_business_name: {
+        type: Sequelize.STRING
+    },
     db: {
         type: Sequelize.INTEGER
     }

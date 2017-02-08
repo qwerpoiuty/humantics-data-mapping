@@ -8,7 +8,49 @@ app.factory('projectFactory', function($http) {
                 return response.data
             })
     }
+    d.getAssignedMappings = user => {
+        var query = {
+            user_id: user.id
+        }
+        switch (user.power_level) {
+            case 1:
+                query.stage = 'Incomplete'
+                break
+            case 2:
+                query.stage = 'Pending Review'
+                break
+            case 3:
+                query.stage = 'Pending Approval'
+                break
+            case 4:
+                query.stage = 'Approved'
+            default:
+                $http.get('api/project').then(response => {
+                    return response.data
+                })
+        }
+        return $http.get('api/project/assignedMappings', {
+            params: query
+        }).then(response => {
+            return response.data
+        })
 
+    }
+    d.getPermission = (user_id, table_id) => {
+        var query = {
+            table_id: table_id
+        }
+        return $http.get('api/project/getPermission/' + user_id, {
+            params: query
+        }).then(response => {
+            return response.data
+        })
+    }
+    d.getCompletedMappings = () => {
+        return $http.get('api/project/completedMappings').then(response => {
+            return response.data
+        })
+    }
     d.getProjectById = function(projectId) {
         return $http.get('api/project/' + projectId)
             .then(function(response) {

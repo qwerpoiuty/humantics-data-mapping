@@ -37,7 +37,11 @@ app.factory('mappingFactory', function($http) {
 
         })
     }
-
+    d.updateNotes = function(target, notes) {
+        return $http.post('/api/mappings/notes' + target, notes).then(response => {
+            return response.data
+        })
+    }
     d.changeStatus = function(status) {
         return $http.post('/api/mappings/changeStatus/', status).then(function(response) {
             return response.data

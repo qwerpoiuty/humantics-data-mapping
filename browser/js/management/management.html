@@ -8,7 +8,7 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                 </div>
                 <h3 style="color:white;">List of Current Projects</h3>
-                <button class = "btn btn-primary" ng-click = "newProject()" style="float:right;">New Project</button>
+                <button class = "btn btn-primary" ng-if="user.power_level==4" ng-click = "newProject()" style="float:right;">New Project</button>
             </div>
 
             <div class="mail-box" style="height:85%; margin-bottom:0px;">
@@ -47,8 +47,8 @@
                 <h2 style="color:white;">Current Jobs</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
-                    <button class = "btn btn-success" ng-if="selectedProject" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Add Members</button>
-                    <button class = "btn btn-success" ng-if="selectedProject" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level==4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Add Members</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level==4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
 
@@ -63,16 +63,24 @@
                                         <th data-toggle="true" >Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
-                                        <th>Status</th>
-                                        <th data-hide="all">Detailed View</th>
+                                        <th data-hide="all">Total Attributes</th>
+                                        <th data-hide="all">Incomplete Attributes</th>
+                                        <th data-hide="all">Attributes in Review</th>
+                                        <th data-hide="all">Attributes pending Approval</th>
+                                        <th data-hide="all">Attributes Completed</th>
+                                        <th>Detailed View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat = "table in targetProject | orderBy: 'table.due_date' track by $index" foo-repeat-done>
+                                    <tr ng-repeat = "table in targetProject track by $index" foo-repeat-done>
                                         <td>{{table.table_name}}</td>
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
-                                        <td>{{table.table_status}}</td>
+                                        <td>{{table.attribute_count}}</td>
+                                        <td>{{table.incomplete}}</td>
+                                        <td>{{table.pending_review}}</td>
+                                        <td>{{table.pending_approval}}</td>
+                                        <td>{{table.complete_mapping}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
                                     </tr>
                                 </tbody>
