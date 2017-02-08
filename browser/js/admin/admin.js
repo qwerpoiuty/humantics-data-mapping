@@ -1,6 +1,6 @@
 app.config(function($stateProvider) {
     $stateProvider.state('admin', {
-        url: '/',
+        url: '/admin',
         templateUrl: 'js/admin/admin.html',
         controller: 'adminCtrl',
         data: {
@@ -199,8 +199,8 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         })
     }
 
-    document.getElementById("SearchTab").style.display = "inline";
-    document.getElementById("SearchTab").className += " active";
-    document.getElementById("ActionsTab").style.display += "block";
-    document.getElementById("ActionsTab").className += " active";
+    document.getElementById("adminCreateTab").style.display = "inline";
+    document.getElementById("adminCreateTab").className += " active";
+    document.getElementById("adminEditTab").style.display += "block";
+    document.getElementById("adminEditTab").className += " active";
 });

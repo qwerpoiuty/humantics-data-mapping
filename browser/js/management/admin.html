@@ -17,16 +17,14 @@
 										   <li><a class="tablinks" ng-click="openBrowse(event, 'tableTab')"><h5 class="text-success">Table</h5></a></li>
 										   <li><a class="tablinks" ng-click="openBrowse(event, 'userTab')"><h5 class="text-success">User</h5></a></li>
 										</ul>
-										
-										<div id="adminCreateTab" class="tabcontent">	
+											<div id="adminCreateTab" class="tabcontent">	
 										    <form method="post">
-										        <fieldset class="tabFieldsetAdminCreate">
+										        <fieldset class="tabFieldsetSystemAdminCreate">
 										      		<h2 style="text-align:center">Create & Assign</h2>
 				             						<h3 style="text-align:center">Establish Your Systems & Users by Specific Need</h3>  
 										        </fieldset>
 										    </form>
 									    </div>
-
 										<div id="systemTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldsetSystem">
@@ -36,15 +34,12 @@
 												        		<span class="input-group-addon"><div class="newTableText">System Name</div></span> 
 												        		<input type="text" placeholder="Name of new System" class="form-control" ng-model = "createdSystem">
 												        	</div>
-												      	</div>										      	
-												  </div>
-												  <div class="row" style="margin-top:10.2%;">
-												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSystem()">Save</button>	
+												      	</div>
+												      	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSystem()">Save</button>	
 												  </div>
 										        </fieldset>
 										    </form>
 									    </div>
-
 							    		<div id="databaseTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldsetDatabase">	
@@ -69,14 +64,11 @@
 												        		<input type="text" placeholder="Name of new Database" class="form-control" ng-model = "createdDatabase">
 													        </div>
 											      		</div>
+											      		<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdDatabase()">Save</button>	
 													</div>
-													<div class="row" style="margin-top:7.4%">
-														<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdDatabase()">Save</button>
-												  	</div>
 										        </fieldset>
 										    </form>
 									    </div>
-
 									    <div id="schemaTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldsetSchema">	
@@ -115,14 +107,11 @@
 												        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "createdSchema">
 													        </div>
 											      		</div>
+											      		<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSchema()">Save</button>	
 													</div>
-													<div class="row" style="margin-top:3.7%;">
-												 		<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSchema()">Save</button>	
-												 	</div>
 										        </fieldset>
 										    </form>
 									    </div>
-
 							    		<div id="tableTab" class="tabcontent">	
 										    <form method="post">
 										        <fieldset class="tabFieldset3">
@@ -164,58 +153,39 @@
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
 												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "createdTable"></div>
-												      </div>							      	
+												      </div>
+												      <button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>									      	
 												    </div>
-												    <div class="row">
-												  		<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>
-												  	</div>
 										        </fieldset>
 										    </form>
 									    </div>
-
 									    <div id="userTab" class="tabcontent">	
 										    <form method="post">
-										        <fieldset class="tabFieldset3">
+										        <fieldset class="tabFieldsetUser">
 										           	<div class="row">
-										           		<div class="col-lg-8 col-lg-offset-2"  style="margin-bottom:1%;">
+										           		<div class="col-lg-8 col-lg-offset-2">
 												        	<div class="input-group m-b">
 												        		<span class="input-group-addon"><div class="newTableText">Email</div></span> 
 												        		<input type="text" placeholder="The User's Email" class="form-control" ng-model = "createdUser">
 												        	</div>
 												      	</div>
-												      	<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
+												      	<div class="col-lg-8 col-lg-offset-2">
 												        	<div class="input-group m-b">
 												        		<span class="input-group-addon"><div class="newTableText">Password</div></span> 
 												        		<input type="text" placeholder="The User's Password" class="form-control" ng-model = "createdUser">
 												        	</div>
 												      	</div>
-												      	<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
+												      	<div class="col-lg-8 col-lg-offset-2">
 												        	<div class="input-group m-b">
 												        		<span class="input-group-addon"><div class="newTableText">Verify</div></span> 
 												        		<input type="text" placeholder="Verify the Password" class="form-control" ng-model = "createdUser">
 												        	</div>
 												      	</div>
-												      	<div class="col-lg-8 col-lg-offset-2 720p">
-												        	<div class="input-group m-b">
-												        		<span class="input-group-addon"><div class="newTableText">Powerlevel</div></span>
-												     			<ui-select ng-model="createdDb.value">
-															    <ui-select-match placeholder="List of Databases">
-															        {{$select.selected.db_name}}
-															    </ui-select-match>
-															    <ui-select-choices repeat="db in (createdDbs | filter: $select.search) track by db.db_id">
-															        <span ng-bind="db.db_name"></span>
-															    </ui-select-choices>
-																</ui-select>
-												      		</div>
-												     	</div> 		
-												  </div>
-												  <div class="row">
-												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdUser()">Save</button>
+												      	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdUser()">Save</button>	
 												  </div>
 										        </fieldset>
 										    </form>
 									    </div>
-
 									</div>
 								</div> 
 							</div>
@@ -236,7 +206,7 @@
 													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'tableETab')"><h5 class="text-success">Table</h5></a></li>
 													  <li><a class="tablinks2" ng-click="openBrowse2(event, 'userETab')"><h5 class="text-success">User</h5></a></li>
 												</ul>
-													<div id="adminEditTab" class="tabcontent2">	
+													<div id="adminEditTab" class="tabcontent">	
 													    <form method="post">
 													        <fieldset class="tabFieldsetAdminEdit">
 													           	<h2 style="text-align:center"> Modify and Edit</h2>
@@ -247,7 +217,7 @@
 
 												<div id="systemETab" class="tabcontent2" style="height:80%;">	
 													<form method="post">
-												        <fieldset class="tabFieldsetSystem">
+												        <fieldset class="percent-100">
 													   		<div class = "row">
 																<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 															        <div class="input-group m-b">
@@ -262,34 +232,17 @@
 																		</ui-select>
 															        </div>
 													      		</div>
-											      		     	
-												      		</div>
-												      		<div class="row" style="margin-top:10%;">
-											      		     	<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
-											      		     	<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>	
+											      		     	<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()"><i class="fa fa-pencil"></i> Edit</button>	
+											      		     	<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()"><i class="fa fa-trash-o"></i> Delete</button>
 												      		</div>
 														</fieldset>
 													</form>
 											    </div>
-
-											     <!--       <fieldset class="tabFieldsetSystem">
-										           	<div class="row">
-										           		<div class="col-lg-8 col-lg-offset-2">
-												        	<div class="input-group m-b">
-												        		<span class="input-group-addon"><div class="newTableText">System Name</div></span> 
-												        		<input type="text" placeholder="Name of new System" class="form-control" ng-model = "createdSystem">
-												        	</div>
-												      	</div>										      	
-												  </div>
-												  <div class="row" style="margin-top:10.2%%;">
-												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSystem()">Save</button>	
-												  </div>
-										        </fieldset> -->
 												
 											
 												<div id="databaseETab" class="tabcontent2" style="height:80%;">	
 													<form method="post">
-												        <fieldset class="tabFieldsetDatabase">
+												        <fieldset class="percent-100">
 													   		<div class = "row">
 																<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 															        <div class="input-group m-b">
@@ -318,32 +271,16 @@
 																		</ui-select>
 															      	</div>
 														     	</div>
+											      		     	<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()"><i class="fa fa-pencil"></i> Edit</button>	
+											      		     	<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()"><i class="fa fa-trash-o"></i> Delete</button>
 												      		</div>
-													     	<div class="row" style="margin-top:8.3%;">
-										      		     		<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
-										      		     		<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>	
-										      		     	</div>
 														</fieldset>
 													</form>
 											    </div>
 
-											        <!--       <fieldset class="tabFieldsetSystem">
-										           	<div class="row">
-										           		<div class="col-lg-8 col-lg-offset-2">
-												        	<div class="input-group m-b">
-												        		<span class="input-group-addon"><div class="newTableText">Database Name</div></span> 
-												        		<input type="text" placeholder="Name of new Database" class="form-control" ng-model = "createdDatabase">
-												        	</div>
-												      	</div>										      	
-												  </div>
-												  <div class="row" style="margin-top:10.2%;">
-												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdDatabase()">Save</button>	
-												  </div>
-										        </fieldset> -->
-
 										    	<div id="schemaETab" class="tabcontent2" style="height:80%;">	
 													<form method="post">
-												        <fieldset class="tabFieldset2">
+												        <fieldset class="percent-100">
 													   		<div class = "row">
 																<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 															        <div class="input-group m-b">
@@ -385,32 +322,17 @@
 																		    </ui-select-choices>
 																		</ui-select></div>
 															     </div>
-												      		</div>
-												      		<div class="row" style="margin-top:3.6%;">
-											      		     	<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px"><i class="fa fa-trash-o"></i> Delete</button>
-											      		     	<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()" style="margin-right:15px"><i class="fa fa-pencil"></i> Edit</button>	
+
+											      		     	<button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()"><i class="fa fa-pencil"></i> Edit</button>	
+											      		     	<button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()"><i class="fa fa-trash-o"></i> Delete</button>
 												      		</div>
 														</fieldset>
 													</form>
 											    </div>
 
-											        <!--       <fieldset class="tabFieldsetSystem">
-										           	<div class="row">
-										           		<div class="col-lg-8 col-lg-offset-2">
-												        	<div class="input-group m-b">
-												        		<span class="input-group-addon"><div class="newTableText">Schema Name</div></span> 
-												        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "createdSchema">
-												        	</div>
-												      	</div>										      	
-												  </div>
-												  <div class="row" style="margin-top:10.2%;">
-												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdSchema()">Save</button>	
-												  </div>
-										        </fieldset> -->
-
-								        		<div id="tableETab" class="tabcontent2">	
+								        		<div id="tableETab" class="tabcontent">	
 												    <form method="post">
-												        <fieldset class="tabFieldset2">
+												        <fieldset class="tabFieldset3">
 												            <div class="row">
 												            <div class="col-lg-8 col-lg-offset-2 720p" style="margin-bottom:1%;">
 														        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Select a System</div></span>
@@ -452,9 +374,9 @@
 												    </form>
 											    </div>
 
-											    <div id="userETab" class="tabcontent2">	
+											    <div id="userETab" class="tabcontent">	
 												    <form method="post">
-												        <fieldset class="tabFieldset3">
+												        <fieldset class="tabFieldsetUser">
 												           	<div class="row">
 												           		<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
@@ -474,23 +396,7 @@
 														        		<input type="text" placeholder="Verify the Password" class="form-control" ng-model = "createdUser">
 														        	</div>
 														      	</div>
-														      	<div class="col-lg-8 col-lg-offset-2 720p" style="margin-bottom:1%;">
-														        	<div class="input-group m-b">
-														        		<span class="input-group-addon"><div class="newTableText">Powerlevel</div></span>
-														     			<ui-select ng-model="createdDb.value">
-																	    <ui-select-match placeholder="List of Databases">
-																	        {{$select.selected.db_name}}
-																	    </ui-select-match>
-																	    <ui-select-choices repeat="db in (createdDbs | filter: $select.search) track by db.db_id">
-																	        <span ng-bind="db.db_name"></span>
-																	    </ui-select-choices>
-																		</ui-select>
-														      		</div>
-														     	</div>
-														  </div>
-														  <div class="row" style="margin-top:2.8%;">
-											      		   <!--  <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px"><i class="fa fa-trash-o"></i> Delete</button> -->
-											      		    <button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "adminEdit()" style="margin-right:15px"><i class="fa fa-pencil"></i> Update</button>	
+														      	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createdUser()">Save</button>	
 														  </div>
 												        </fieldset>
 												    </form>
@@ -546,8 +452,8 @@
 	                		<div class="col-lg-12">
 	                    <div class="ibox">
 	                        <div class="ibox-content" style="border-top:none; height:80vh; padding-top:40%;">
-				             	<h2 style="text-align:center">Admin Control Panel</h2>
-				             	<h3 style="text-align:center">Super User Controls & Unique System Mangemnt</h3>  
+				             	<h2 style="text-align:center"> Welcome To Data Maps</h2>
+				             	<h3 style="text-align:center"> A Unique Data Mapping & Handling Framework</h3>  
 	                         </div>
 	                        </div>
 	                    </div>
