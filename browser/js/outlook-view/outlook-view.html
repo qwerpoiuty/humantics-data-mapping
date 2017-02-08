@@ -9,6 +9,7 @@
                     <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
                     <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
                 </div>
+                <button class="btn btn-primary" ng-click="addAttribute()" ng-if="user.power_level==5">New Attribute</button>
             </div>
 
             <div class="mail-box flexHeight" style="border:none;">

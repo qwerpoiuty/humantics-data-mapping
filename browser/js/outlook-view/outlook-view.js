@@ -48,6 +48,13 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         else $scope.notes = !$scope.notes
     }
 
+    $scope.addAttribute = function(attribute) {
+        $scope.temp = $scope.table
+        $scope.editing = "newAttribute"
+        $scope.currentAttr = "New Attribute"
+            // dataFactory.addAttribute($scope.table, attribute)
+    }
+
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         $scope.changingStatus = false
