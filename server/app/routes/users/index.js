@@ -14,7 +14,11 @@ var ensureAuthenticated = function(req, res, next) {
         res.status(401).end();
     }
 }
-
+router.get('/', (req, res) => {
+    db.query(`select email,power_level from users`).then(users => {
+        res.json(users[0])
+    })
+})
 
 
 //UPDATES FOR THINGS

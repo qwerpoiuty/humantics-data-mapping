@@ -17,7 +17,7 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, userFactory) {
+app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projectFactory, user, userFactory) {
     $scope.user = user
     $scope.searchQuery = ""
     $scope.power_levels = [{
@@ -73,6 +73,9 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     dataFactory.getSystems().then(systems => {
         $scope.systems = systems[0]
     })
+    userFactory.getUsers().then(users => {
+        $scope.currentUsers = users
+    })
     $scope.reset = () => {
         $scope.selectedSystem = {}
         $scope.selectedDb = {}
@@ -85,8 +88,6 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.dbEdit = false
         $scope.schemaEdit = false
         $scope.tableEdit = false
-        $scope.openBrowse(null, 'adminCreateTab')
-        $scope.openBrowse2(null, 'adminEditTab')
         $scope.userToBeCreated = {}
         $scope.systemToBeCreated = {}
         $scope.dbToBeCreated = {}
@@ -101,7 +102,6 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     }
 
     $scope.toggle = bool => {
-        console.log('hello', bool)
         $scope[bool] = !$scope[bool]
     }
 
@@ -124,6 +124,7 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
             })
         }
     })
+
     $scope.$watch(function() {
         return $scope.createSystem.value
     }, function(nv, ov) {
@@ -143,26 +144,44 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
             })
         }
     })
-
-
-    //search things
-    $scope.searchCat = "table"
-    $scope.search = function(category, query) {
-            switch (category) {
-                case "table":
-                    return dataFactory.getTablesByName(query).then(function(tables) {
-                        $scope.tables = tables[0]
-                    })
-                case "entity":
-                    return dataFactory.attributesByName(query).then(function(tables) {
-                        $scope.tables = tables[0]
-                    })
-            }
+    $scope.$watch(function() {
+        return $scope.createSchema.value
+    }, function(nv, ov) {
+        if (nv !== ov) {
+            dataFactory.getTables(nv.schema_id).then(function(tables) {
+                $scope.currentTables = tables[0]
+            })
         }
-        //ADMIN CREATES
+    })
+
+    //ADMIN CREATES
     $scope.createUser = user => {
+        $scope.currentUsers.forEach(currentUser => {
+            if (currentUser.email = user.email) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That user already exists'
+                        }
+                    }
+                })
+            }
+            return
+        })
         if (user.confirm !== user.password) {
-            alert('Passwords don\'t match')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Passwords Don\'t Match'
+                    }
+                }
+            })
             return
         }
         userFactory.createUser(user).then(() => {
@@ -170,51 +189,190 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         })
     }
     $scope.systemCreate = system => {
+        var bool = false
+        $scope.systems.forEach(currentSystem => {
+            if (currentSystem.system_name.toLowerCase() === system.system_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That system already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+
+            }
+        })
+        if (bool) return
         dataFactory.createSystem(system).then(() => {
             $scope.reset()
-            alert('System Created')
+            dataFactory.getSystems().then(systems => {
+                $scope.systems = systems[0]
+            })
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'System Created'
+                    }
+                }
+            })
         })
     }
     $scope.createDatabase = db => {
+        var bool = false
         var dbToBeCreated = {
-            db_name: db,
+            db_name: db.db_name,
             system: $scope.createSystem.value.system_id
         }
+        $scope.dbs.forEach(currentDb => {
+            if (currentDb.db_name.toLowerCase() === dbToBeCreated.db_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That database already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
         dataFactory.createDatabase(dbToBeCreated).then(() => {
             $scope.reset()
-            alert('Database Created')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Database Created'
+                    }
+                }
+            })
         })
     }
-    $scope.createSchema = schema => {
+    $scope.schemaCreate = schema => {
         var schemaToBeCreated = {
-            schema_name: schema,
+            schema_name: schema.schema_name,
             db: $scope.createDb.value.db_id
         }
+        var bool = false
+        $scope.schemas.forEach(currentSchema => {
+            if (currentSchema.schema_name.toLowerCase() === schemaToBeCreated.schema_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That schema already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
         dataFactory.createSchema(schemaToBeCreated).then(() => {
             $scope.reset()
-            alert('Schema Created')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Schema Created'
+                    }
+                }
+            })
         })
     }
     $scope.createTable = function(table) {
-        var table = {
+        var tableToBeCreated = {
             schema: $scope.createSchema.value.schema_id,
-            table_name: table
+            table_name: table.table_name
         }
-        dataFactory.createTable(table).then(() => {
+        var bool = false
+        $scope.currentTables.forEach(currentTable => {
+            if (currentTable.table_name.toLowerCase() === tableToBeCreated.table_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That Table already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
+        dataFactory.createTable(tableToBeCreated).then(() => {
             $scope.reset()
-            alert('Table Created')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Table Created'
+                    }
+                }
+            })
         })
     }
 
     //ADMIN EDITS
     $scope.updateSystem = system => {
+        var bool = false
         let updatedSystem = {
             system_name: system,
             system_id: $scope.selectedSystem.value.system_id
         }
+        $scope.systems.forEach(currentSystem => {
+            if (currentSystem.system_name.toLowerCase() === updatedSystem.system_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That system already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
         dataFactory.updateSystem(updatedSystem).then(() => {
             $scope.reset()
-            alert('System Updated')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'System Updated'
+                    }
+                }
+            })
         })
     }
     $scope.updateDatabase = db => {
@@ -222,9 +380,36 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
             db_name: db,
             db_id: $scope.selectedDb.value.db_id
         }
+        var bool = false
+        $scope.dbs.forEach(currentDb => {
+            if (currentDb.system_name.toLowerCase() === updatedDb.db_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That system already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
         dataFactory.updateDatabase(updatedDb).then(() => {
             $scope.reset()
-            alert('Database Updated')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Database Updated'
+                    }
+                }
+            })
         })
     }
 
@@ -233,31 +418,90 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
             schema_name: schema,
             schema_id: $scope.selectedSchema.value.schema_id
         }
+        var bool = false
+        $scope.schemas.forEach(currentSchema => {
+            if (currentSchema.schema_name.toLowerCase() === updatedSchema.schema_name.toLowerCase()) {
+                var modalInstance = $modal.open({
+                    templateUrl: "js/common/modals/notification/notification.html",
+                    controller: `notification`,
+                    size: 'sm',
+                    resolve: {
+                        message: () => {
+                            return 'That system already exists'
+                        }
+                    }
+                })
+                bool = true
+                return
+            }
+        })
+        if (bool) return
+
         dataFactory.updateSchema(updatedSchema).then(() => {
             $scope.reset()
-            alert('Schema Updated')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Schema Updated'
+                    }
+                }
+            })
         })
     }
 
     $scope.updateUser = user => {
         if (user.confirm !== user.password) {
-            alert('Passwords don\'t match')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Passwords Don\'t Match'
+                    }
+                }
+            })
             return
         }
         userFactory.updateUser(user).then(response => {
             $scope.reset()
-            alert('User Updated')
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'User Updated'
+                    }
+                }
+            })
         })
     }
     $scope.adminDelete = (structure, id) => {
         var command = 'delete' + structure
         dataFactory[command](id).then(() => {
-            alert(`${structure} deleted`)
             if (structure == 'System') {
                 dataFactory.getSystems().then(systems => {
                     $scope.systems = systems[0]
                 })
+            } else if (structure == 'Table') {
+                dataFactory.getTables($scope.selectedSchema.value.schema_id).then(function(tables) {
+                    $scope.tables = tables[0]
+                })
             }
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return `${structure} deleted`
+                    }
+                }
+            })
             $scope.reset()
         })
     }
