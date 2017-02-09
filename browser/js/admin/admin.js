@@ -74,7 +74,6 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.systems = systems[0]
     })
     $scope.reset = () => {
-
         $scope.selectedSystem = {}
         $scope.selectedDb = {}
         $scope.selectedSchema = {}
@@ -88,7 +87,16 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.tableEdit = false
         $scope.openBrowse(null, 'adminCreateTab')
         $scope.openBrowse2(null, 'adminEditTab')
-
+        $scope.userToBeCreated = {}
+        $scope.systemToBeCreated = {}
+        $scope.dbToBeCreated = {}
+        $scope.schemaToBeCreated = {}
+        $scope.tableToBeCreated = {}
+        $scope.userToBeUpdated = {}
+        $scope.systemToBeUpdated = {}
+        $scope.dbToBeUpdated = {}
+        $scope.schemaToBeUpdated = {}
+        $scope.tableToBeUpdated = {}
 
     }
 
