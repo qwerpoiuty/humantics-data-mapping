@@ -1,8 +1,9 @@
 'use strict';
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
+var bcrypt = require('bcrypt');
 var chalk = require('chalk');
+var _ = require('lodash');
 
 module.exports = function(app, db) {
 
@@ -21,8 +22,9 @@ module.exports = function(app, db) {
                 var notFound = {
                     notFound: true
                 }
+
                 if (!user) done(null, notFound)
-                else if (!user.correctPassword(password)) {
+                else if (!bcrypt.compareSync(password, user.password, user.salt)) {
                     done(null, false);
                 } else {
                     // Properly authenticated.
@@ -67,9 +69,10 @@ module.exports = function(app, db) {
             req.logIn(user, function(loginErr) {
                 console.log(chalk.red(loginErr))
                 if (loginErr) return next(loginErr);
+
                 // We respond with a response object that has user with _id and email.
                 res.status(200).send({
-                    user: user.sanitize()
+                    user: _.omit(user.toJSON(), ['password', 'salt'])
                 });
             });
 

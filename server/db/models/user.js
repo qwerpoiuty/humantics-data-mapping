@@ -25,28 +25,5 @@ module.exports = db.define('user', {
         defaultValue: false
     }
 }, {
-    instanceMethods: {
-        sanitize: function() {
-            return _.omit(this.toJSON(), ['password', 'salt']);
-        },
-        correctPassword: function(candidatePassword) {
-            return bcrypt.compareSync(candidatePassword, this.password, this.salt);
-        }
-    },
-    hooks: {
-        beforeCreate: function(user) {
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(user.password, salt);
-            user.salt = salt;
-            user.password = hash;
-        },
-        beforeUpdate: function(user) {
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(user.password, salt);
-            user.salt = salt;
-            user.password = hash;
-        }
-    }
-}, {
     timestamps: false
 });

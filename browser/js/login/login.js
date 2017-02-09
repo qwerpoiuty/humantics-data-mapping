@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('LoginCtrl', function($scope, AuthService, $state) {
-
+    if (AuthService.isAuthenticated) $state.transitionTo('home')
     $scope.login = {};
     $scope.error = null;
     let attempts = 5

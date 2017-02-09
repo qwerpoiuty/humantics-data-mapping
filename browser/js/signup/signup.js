@@ -12,6 +12,9 @@ app.controller('signupCtrl', function($scope, $state, AuthService, userFactory) 
         if (user.password !== user.confirm) {
             alert('Passwords do not match')
         } else {
+            user.power_level = {
+                level: 1
+            }
             $scope.error = null;
 
             userFactory.createUser(user)

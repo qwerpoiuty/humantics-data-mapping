@@ -7,9 +7,10 @@ app.config(function($stateProvider) {
             authenticate: true
         },
         resolve: {
-            user: function(AuthService) {
+            user: function(AuthService, $state) {
                 return AuthService.getLoggedInUser().then(function(user) {
-                    return user
+                    if (user.power_level != 5) $state.transitionTo('home')
+                    else return user
                 })
             }
         }
@@ -32,6 +33,17 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         title: 'manager',
         level: 4
     }]
+    $scope.selectedSystem = {}
+    $scope.selectedDb = {}
+    $scope.selectedSchema = {}
+    $scope.selectedTable = {}
+    $scope.createSystem = {}
+    $scope.createDb = {}
+    $scope.createSchema = {}
+    $scope.sEdit = false
+    $scope.dbEdit = false
+    $scope.schemaEdit = false
+    $scope.tableEdit = false
 
     $scope.clearFilter = function() {
         $('.filter-status').val('');
@@ -62,24 +74,7 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.systems = systems[0]
     })
     $scope.reset = () => {
-        // Declare all variables
-        var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById("adminCreateTab").style.display = "inline";
-        document.getElementById("adminCreateTab").className += " active";
-        document.getElementById("adminEditTab").style.display += "block";
-        document.getElementById("adminEditTab").className += " active";
         $scope.selectedSystem = {}
         $scope.selectedDb = {}
         $scope.selectedSchema = {}
@@ -91,8 +86,12 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         $scope.dbEdit = false
         $scope.schemaEdit = false
         $scope.tableEdit = false
+        $scope.openBrowse(null, 'adminCreateTab')
+        $scope.openBrowse2(null, 'adminEditTab')
+
+
     }
-    $scope.reset()
+
     $scope.toggle = bool => {
         console.log('hello', bool)
         $scope[bool] = !$scope[bool]
@@ -165,9 +164,6 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     $scope.systemCreate = system => {
         dataFactory.createSystem(system).then(() => {
             $scope.reset()
-            dataFactory.getSystems().then(systems => {
-                $scope.systems = systems[0]
-            })
             alert('System Created')
         })
     }
@@ -210,9 +206,6 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
         }
         dataFactory.updateSystem(updatedSystem).then(() => {
             $scope.reset()
-            dataFactory.getSystems().then(systems => {
-                $scope.systems = systems[0]
-            })
             alert('System Updated')
         })
     }
@@ -292,8 +285,7 @@ app.controller('adminCtrl', function($scope, $uibModal, dataFactory, $state, pro
     }
 
     $scope.openBrowse2 = function(evt, tabSelection) {
-            $scope.reset()
-                // Declare all variables
+            // Declare all variables
             var i, tabcontent, tablinks;
 
             // Get all elements with class="tabcontent" and hide them
