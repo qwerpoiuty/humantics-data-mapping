@@ -109,6 +109,7 @@
 }
 
 .searchOuterContainer{
+	height:100%;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -121,7 +122,11 @@
 	border: 1px solid #e7eaec;
 
 }
-
+.adminSaveButton{
+	position:absolute;
+	right:15px;
+	bottom:0;
+}
 fieldset{
 	border:none;
 }

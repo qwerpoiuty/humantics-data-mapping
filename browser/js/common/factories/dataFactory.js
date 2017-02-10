@@ -157,6 +157,15 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
+    d.lockTable = (tableId, status) => {
+        var table = {
+            table_id: tableId,
+            status: status
+        }
+        return $http.post('api/database/lockTable', table).then(response => {
+            return response.data
+        })
+    }
     d.updateAttribute = function(attribute, target) {
         return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {

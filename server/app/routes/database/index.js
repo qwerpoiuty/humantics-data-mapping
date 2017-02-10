@@ -216,10 +216,16 @@ router.post('/updateSchema/', function(req, res) {
 router.post('/updateTable/', function(req, res) {
     req.body.table_name = `'${req.body.table_name}'`
     req.body.table_business_name = `'${req.body.table_business_name}'`
-    db.query(`update tables set table_name=${req.body.table_name},table_business_name=${req.body.table_business_name}, locked=${req.body.locked} where tables.table_id = ${req.body.table_id}`)
+    db.query(`update tables set table_name=${req.body.table_name},table_business_name=${req.body.table_business_name} where tables.table_id = ${req.body.table_id}`)
         .then(function(table) {
             res.sendStatus(200)
         })
+})
+
+router.post('/lockTable/', (req, res) => {
+    db.query(`update tables set locked=${req.body.status} where tables.table_id=${req.body.table_id}`).then(table => {
+        res.sendStatus(200)
+    })
 })
 
 router.post('/updateAttribute/:attr_id', function(req, res) {

@@ -550,7 +550,20 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         })
 
     }
-
+    $scope.adminLock = (id) => {
+        dataFactory.lockTable(id).then(() => {
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/confirmation/confirmation.html",
+                controller: `confirmation`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return `Table Locked`
+                    }
+                }
+            })
+        })
+    }
     $scope.findTables = () => {
         dataFactory.getTables($scope.selectedSchema.value.schema_id).then(function(tables) {
             $scope.tables = tables[0]
