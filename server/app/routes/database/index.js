@@ -106,6 +106,7 @@ router.get('/attributesByIds', function(req, res) {
 //POSTS
 router.post('/system', (req, res) => {
     req.body.system_name = `'${req.body.system_name}'`
+    req.body.system_business_name = `'${req.body.system_business_name}'`
     var keys = Object.keys(req.body)
 
     var values = []
@@ -120,6 +121,7 @@ router.post('/system', (req, res) => {
 })
 router.post('/db', (req, res) => {
     req.body.db_name = `'${req.body.db_name}'`
+    req.body.db_business_name = `'${req.body.db_business_name}'`
     var keys = Object.keys(req.body)
 
     var values = []
@@ -134,6 +136,7 @@ router.post('/db', (req, res) => {
 })
 router.post('/schema', (req, res) => {
     req.body.schema_name = `'${req.body.schema_name}'`
+    req.body.schema_business_name = `'${req.body.schema_business_name}'`
     var keys = Object.keys(req.body)
 
     var values = []
@@ -149,6 +152,7 @@ router.post('/schema', (req, res) => {
 
 router.post('/tables', function(req, res) {
     req.body.table_name = "'" + req.body.table_name + "'"
+    req.body.table_business_name = `'${req.body.db_business_name}'`
     var keys = Object.keys(req.body)
 
     var values = []
@@ -187,27 +191,32 @@ router.post('/attributes/:tableId', function(req, res) {
 
 router.post('/updateSystem/', function(req, res) {
     req.body.system_name = `'${req.body.system_name}'`
-    db.query(`update systems set system_name=${req.body.system_name} where systems.system_id = ${req.body.system_id}`)
+    req.body.system_business_name = `'${req.body.system_business_name}'`
+    db.query(`update systems set system_name=${req.body.system_name},system_business_name=${req.body.system_business_name} where systems.system_id = ${req.body.system_id}`)
         .then(function(system) {
             res.sendStatus(200)
         })
 })
 router.post('/updateDatabase/', function(req, res) {
     req.body.db_name = `'${req.body.db_name}'`
-    db.query(`update dbs set db_name=${req.body.db_name} where dbs.db_id = ${req.body.db_id}`)
+    req.body.db_business_name = `'${req.body.db_business_name}'`
+    db.query(`update dbs set db_name=${req.body.db_name}, db_business_name=${req.body.db_business_name} where dbs.db_id = ${req.body.db_id}`)
         .then(function(db) {
             res.sendStatus(200)
         })
 })
 router.post('/updateSchema/', function(req, res) {
     req.body.schema_name = `'${req.body.schema_name}'`
-    db.query(`update schemas set schema_name=${req.body.schema_name} where schemas.schema_id = ${req.body.schema_id}`)
+    req.body.schema_business_name = `'${req.body.schema_business_name}'`
+    db.query(`update schemas set schema_name=${req.body.schema_name},schema_business_name=${req.body.schema_business_name} where schemas.schema_id = ${req.body.schema_id}`)
         .then(function(schema) {
             res.sendStatus(200)
         })
 })
-router.post('/updateTable/:table_id', function(req, res) {
-    db.query(`update table set schema='${req.body.schema}', table_name=${req.body.table_name},locked=${req.body.locked} where table.table_id = ${req.params.table_id}`)
+router.post('/updateTable/', function(req, res) {
+    req.body.table_name = `'${req.body.table_name}'`
+    req.body.table_business_name = `'${req.body.table_business_name}'`
+    db.query(`update tables set table_name=${req.body.table_name},table_business_name=${req.body.table_business_name}, locked=${req.body.locked} where tables.table_id = ${req.body.table_id}`)
         .then(function(table) {
             res.sendStatus(200)
         })

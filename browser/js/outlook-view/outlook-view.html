@@ -3,15 +3,40 @@
         <div class = "p-w-md">
             <div class="row" style="height: 80vh;">
         <div class="col-lg-5 animated fadeInRight percent-100">
-            <div class="mail-box-header" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button></h2>
+            <div class="mail-box-header" ng-show="!editTable" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
+                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button><button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "toggleTableEdit()">Edit Table</button></h2>
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <h3 style="color:yellow;"> [Business Name]:<span style="color:white;"> {{table.table_business_name}}</span></h3>
                     <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
                     <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
                 </div>
                 <button class="btn btn-primary" ng-click="addAttribute()" ng-if="user.power_level==5">New Attribute</button>
             </div>
-
+            <!-- editing a table -->
+            <div class="mail-box-header" ng-show="editTable" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="input-group m-b">
+                                <span class="input-group-addon"><div class="newTableText">Table Name</div></span> 
+                                <input type="text" placeholder="Name of new table" class="form-control" ng-model = "table.table_name">
+                            </div>
+                            <div class="input-group m-b">
+                                <span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+                                <input type="text" placeholder="Business name of new System" class="form-control" ng-model = "table.table_business_name">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "deleteTable()">Delete Table</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "toggleTableEdit()" style="margin-right:15px;"><i class="fa fa-cancel"></i> Cancel</button>
+                        <button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "updateTable()" style="margin-right:15px;"><i class="fa fa-pencil"></i>Save</button> 
+                    </div>
+                </div>
+            </div>
+            <!-- end of editing a table -->
             <div class="mail-box flexHeight" style="border:none;">
                 <div class="mail-body" style="padding-top:34px;">
                     <div class="row percent-100">

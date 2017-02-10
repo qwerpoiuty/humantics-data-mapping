@@ -152,6 +152,11 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
+    d.updateTable = table => {
+        return $http.post('api/database/updateTable/', table).then(response => {
+            return response.data
+        })
+    }
     d.updateAttribute = function(attribute, target) {
         return $http.post('/api/database/updateAttribute/' + target, attribute)
             .then(function(response) {

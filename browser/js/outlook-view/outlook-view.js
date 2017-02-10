@@ -26,13 +26,14 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $uibModal, projectFactory) {
+app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state) {
     $scope.notes = false
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
     $scope.temp = {}
     $scope.selected = {}
+    $scope.editTable = false
     $scope.editing = "none"
     $scope.sourceSelection = "none"
     $scope.sourceIndex = 0
@@ -43,6 +44,51 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         })
     }
     $scope.checkMember($scope.user)
+
+    //admin things
+    $scope.toggleTableEdit = () => {
+        console.log('hello')
+        $scope.editTable = !$scope.editTable
+    }
+    $scope.deleteTable = () => {
+        var modalInstance = $modal.open({
+            templateUrl: "js/common/modals/confirmation/confirmation.html",
+            controller: `confirmation`,
+            size: 'sm',
+            resolve: {
+                message: () => {
+                    return 'Delete Table? You cannot undo this.'
+                }
+            }
+        })
+        modalInstance.result.then(result => {
+            if (result) {
+                dataFactory.deleteTable($scope.table.table_id).then(() => {
+                    $state.transitionTo('home')
+                })
+            }
+        })
+    }
+    $scope.updateTable = () => {
+        dataFactory.updateTable($scope.table).then(() => {
+            var modalInstance = $modal.open({
+                templateUrl: "js/common/modals/notification/notification.html",
+                controller: `notification`,
+                size: 'sm',
+                resolve: {
+                    message: () => {
+                        return 'Table Updated'
+                    }
+                }
+            })
+            modalInstance.result.then(result => {
+                $scope.toggleTableEdit()
+            })
+        })
+    }
+
+
+
     $scope.toggleNotes = () => {
         if (!$scope.targetMapping) alert('pick an attribute first')
         else $scope.notes = !$scope.notes

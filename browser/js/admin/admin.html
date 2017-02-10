@@ -36,7 +36,13 @@
 												        		<span class="input-group-addon"><div class="newTableText">System Name</div></span> 
 												        		<input type="text" placeholder="Name of new System" class="form-control" ng-model = "systemToBeCreated.system_name">
 												        	</div>
-												      	</div>										      	
+												      	</div>
+												      	<div class="col-lg-8 col-lg-offset-2">
+												        	<div class="input-group m-b">
+												        		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+												        		<input type="text" placeholder="Business name of new System" class="form-control" ng-model = "systemToBeCreated.system_business_name">
+												        	</div>
+												      	</div>					      	
 												  </div>
 												  <div class="row" style="margin-top:10.2%;">
 												  	<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "systemCreate(systemToBeCreated)">Save</button>	
@@ -67,6 +73,12 @@
 													        <div class="input-group m-b">
 													      		<span class="input-group-addon"><div class="newTableText">Database Name</div></span> 
 												        		<input type="text" placeholder="Name of new Database" class="form-control" ng-model = "dbToBeCreated.db_name">
+													        </div>
+											      		</div>
+											      		<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
+													        <div class="input-group m-b">
+													      		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+												        		<input type="text" placeholder="Business name of new Database" class="form-control" ng-model = "dbToBeCreated.db_business_name">
 													        </div>
 											      		</div>
 													</div>
@@ -113,6 +125,12 @@
 													        <div class="input-group m-b">
 													      		<span class="input-group-addon"><div class="newTableText">Schema Name</div></span> 
 												        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "schemaToBeCreated.schema_name">
+													        </div>
+											      		</div>
+											      		<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
+													        <div class="input-group m-b">
+													      		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+												        		<input type="text" placeholder="Business name of new Schema" class="form-control" ng-model = "schemaToBeCreated.schema_business_name">
 													        </div>
 											      		</div>
 													</div>
@@ -163,8 +181,14 @@
 																</ui-select></div>
 												      </div>
 												      <div class="col-lg-8 col-lg-offset-2">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "tableToBeCreated.table_name"></div>
-												      </div>							      	
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "tableToBeCreated.table_name"/>
+												        </div>
+												      </div>
+												      <div class="col-lg-8 col-lg-offset-2">
+												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Business Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "tableToBeCreated.table_business_name"/>
+												        </div>
+												        
+												      </div>													      	
 												    </div>
 												    <div class="row">
 												  		<button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable(tableToBeCreated)">Save</button>
@@ -186,13 +210,13 @@
 												      	<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 												        	<div class="input-group m-b">
 												        		<span class="input-group-addon"><div class="newTableText">Password</div></span> 
-												        		<input type="text" placeholder="The User's Password" class="form-control" ng-model = "userToBeCreated.password">
+												        		<input type="password" placeholder="The User's Password" class="form-control" ng-model = "userToBeCreated.password">
 												        	</div>
 												      	</div>
 												      	<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 												        	<div class="input-group m-b">
 												        		<span class="input-group-addon"><div class="newTableText">Verify</div></span> 
-												        		<input type="text" placeholder="Verify the Password" class="form-control" ng-model = "userToBeCreated.confirm">
+												        		<input type="password" placeholder="Verify the Password" class="form-control" ng-model = "userToBeCreated.confirm">
 												        	</div>
 												      	</div>
 												      	<div class="col-lg-8 col-lg-offset-2 720p">
@@ -245,7 +269,7 @@
 											    </div>
 												<div id="systemETab" class="tabcontent2" style="height:80%;">	
 													<form method="post">
-												        <fieldset ng-show="!sEdit"class="tabFieldsetSystem">
+												        <fieldset ng-show="!sEdit" class="tabFieldsetSystem">
 													   		<div class = "row">
 																<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 															        <div class="input-group m-b">
@@ -271,7 +295,11 @@
 												           		<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
 														        		<span class="input-group-addon"><div class="newTableText">System Name</div></span> 
-														        		<input type="text" placeholder="Name of new System" class="form-control" ng-model = "systemToBeUpdated">
+														        		<input type="text" placeholder="New name for the system" class="form-control" ng-model = "systemToBeUpdated.system_name">
+														        	</div>
+														        	<div class="input-group m-b">
+														        		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+														        		<input type="text" placeholder="New business name for the system" class="form-control" ng-model = "systemToBeUpdated.system_business_name">
 														        	</div>
 														      	</div>  	
 															</div>
@@ -324,7 +352,11 @@
 												           		<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
 														        		<span class="input-group-addon"><div class="newTableText">Database Name</div></span> 
-														        		<input type="text" placeholder="Name of new Database" class="form-control" ng-model = "dbToBeUpdated">
+														        		<input type="text" placeholder="Name of new Database" class="form-control" ng-model = "dbToBeUpdated.db_name">
+														        	</div>
+														        	<div class="input-group m-b">
+														        		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+														        		<input type="text" placeholder="New Business Name" class="form-control" ng-model = "dbToBeUpdated.db_business_name">
 														        	</div>
 														      	</div>										      	
 														  </div>
@@ -391,7 +423,11 @@
 												           		<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
 														        		<span class="input-group-addon"><div class="newTableText">Schema Name</div></span> 
-														        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "schemaToBeUpdated">
+														        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "schemaToBeUpdated.schema_name">
+														        	</div>
+														        	<div class="input-group m-b">
+														        		<span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
+														        		<input type="text" placeholder="Name of new Schema" class="form-control" ng-model = "schemaToBeUpdated.schema_business_name">
 														        	</div>
 														      	</div>										      	
 														  </div>
@@ -471,13 +507,13 @@
 														      	<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
 														        		<span class="input-group-addon"><div class="newTableText">Password</div></span> 
-														        		<input type="text" placeholder="The User's new Password" class="form-control" ng-model = "userToBeUpdated.password">
+														        		<input type="password" placeholder="The User's new Password" class="form-control" ng-model = "userToBeUpdated.password">
 														        	</div>
 														      	</div>
 														      	<div class="col-lg-8 col-lg-offset-2">
 														        	<div class="input-group m-b">
 														        		<span class="input-group-addon"><div class="newTableText">Verify</div></span> 
-														        		<input type="text" placeholder="Verify the Password" class="form-control" ng-model = "userToBeUpdated.confirm">
+														        		<input type="password" placeholder="Verify the Password" class="form-control" ng-model = "userToBeUpdated.confirm">
 														        	</div>
 														      	</div>
 														      	<div class="col-lg-8 col-lg-offset-2 720p">
@@ -522,7 +558,6 @@
 											<th>Schema</th>
 											<!--<th>Attribute Count</th> -->
 				                            <th data-hide="all">More Information</th>
-				                            <th data-hide="all">Delete</th>
 				                            <th>Status</th>
 				                        </tr>
 	                                	</thead>
@@ -533,7 +568,7 @@
 											<td>{{table.db_name}}</td>
 											<td>{{table.schema_name}}</td>
 											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-											<td><button class = "btn btn-danger" ng-click="adminDelete('Table', table.table_id)">Delete</button></td>
+											<td><button class = "btn btn-danger" ng-click="adminLock(table.table_id)">Lock</button></td>
 											<td>{{table.table_status}}</td>
 	                                    </tr>
 	                                    </tbody>
