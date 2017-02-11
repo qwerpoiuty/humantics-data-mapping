@@ -2,7 +2,6 @@
 var path = require('path');
 var express = require('express');
 var favicon = require('serve-favicon');
-var json2xls = require('json2xls');
 
 module.exports = function(app) {
 
@@ -18,6 +17,5 @@ module.exports = function(app) {
     app.use(express.static(publicPath));
     app.use(express.static(bowerPath));
     app.use(express.static(browserPath));
-    app.use(json2xls.middleware);
 
 };
