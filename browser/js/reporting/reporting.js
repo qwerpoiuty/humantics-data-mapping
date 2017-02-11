@@ -112,40 +112,54 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     $scope.tableImpact = function(table) {
 
         reportingFactory.getTree(table.table_id).then(tree => {
-            $scope.tree = unflatten(tree)
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'js/common/modals/impactTree/impactTree.html',
-                controller: 'impactTreeCtrl',
-                backdrop: 'static',
-                keyboard: false,
-                size: "xl",
-                resolve: {
-                    tree: function() {
-                        return $scope.tree;
+            if (!tree) {
+                var modalinstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'js/common/modals/notification/notification.html',
+                    controller: 'notification',
+                    backdrop: 'static',
+                    keyboard: false,
+                    size: "sm",
+                    resolve: {
+                        message: function() {
+                            return `This table is not refernced as a source`
+                        }
                     }
+                })
+            } else {
+                let unflatten = arr => {
+                    var map = {},
+                        node = {},
+                        roots = [];
+                    for (var i = 0; i < arr.length; i += 1) {
+                        node = Object.assign({}, arr[i]);
+                        node.children = [];
+                        map[node.id] = node
+                        if (node.parent) {
+                            map[node.parent].children.push(node);
+                        } else {
+                            roots.push(node);
+                        }
+                    }
+                    return roots
                 }
-            });
-        })
-        let unflatten = arr => {
-            var map = {},
-                node = {},
-                roots = [];
-            for (var i = 0; i < arr.length; i += 1) {
-                node = Object.assign({}, arr[i]);
-                node.children = [];
-                map[node.id] = node
-                console.log(map, node)
-                if (node.parent) {
-                    map[node.parent].children.push(node);
-                } else {
-                    roots.push(node);
-                }
-            }
-            console.log(roots)
-            return roots
-        }
+                $scope.tree = unflatten(tree)
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'js/common/modals/impactTree/impactTree.html',
+                    controller: 'impactTreeCtrl',
+                    backdrop: 'static',
+                    keyboard: false,
+                    size: "lg",
+                    resolve: {
+                        tree: function() {
+                            return $scope.tree;
+                        }
+                    }
+                });
 
+            }
+        })
     }
 
     $scope.totalMappings = table => {
@@ -153,22 +167,12 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
             .then(mappings => {
                 $scope.mappingHistory = {}
                 mappings = mappings[0]
-                mappings.forEach(e => {
-                    if ($scope.mappingHistory.hasOwnProperty(e.target)) {
-                        $scope.mappingHistory[e.target].push(e)
-                    } else {
-                        $scope.mappingHistory[e.target] = [e]
-                    }
-                })
-                $scope.recentMapping = []
-                for (let mapping of Object.keys($scope.mappingHistory)) {
-                    let version = Math.max(...$scope.mappingHistory[mapping].map(e => e.version))
-                    $scope.mappingHistory[mapping].forEach(e => {
-                        if (e.version === version) $scope.recentMapping.push(e)
-                    })
-                }
+                $scope.recentMapping = mappings
                 $scope.allMapping = true
             })
+    }
+    $scope.getXls = json => {
+        alasql('SELECT * INTO XLSX("mappings.xlsx",{headers:true}) FROM ?', [json]);
 
     }
 

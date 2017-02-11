@@ -15,8 +15,8 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 router.get('/', (req, res) => {
-    db.query(`select email,power_level from users`).then(users => {
-        res.json(users[0])
+    db.query(`select id,email,power_level from users`).then(users => {
+        res.json(users)
     })
 })
 

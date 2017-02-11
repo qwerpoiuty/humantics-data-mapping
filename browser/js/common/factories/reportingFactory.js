@@ -30,6 +30,34 @@ app.factory('reportingFactory', function($http) {
             })
     }
 
+    d.getXls = json => {
+        var self = this;
+        var deferred = $q.defer();
+        $http.get('api/mapping/xls', {
+            responseType: "arraybuffer"
+        }).then(
+            function(data, status, headers) {
+                var type = headers('Content-Type');
+                var disposition = headers('Content-Disposition');
+                if (disposition) {
+                    var match = disposition.match(/.*filename=\"?([^;\"]+)\"?.*/);
+                    if (match[1])
+                        defaultFileName = match[1];
+                }
+                defaultFileName = defaultFileName.replace(/[<>:"\/\\|?*]+/g, '_');
+                var blob = new Blob([data], {
+                    type: type
+                });
+                saveAs(blob, defaultFileName);
+                deferred.resolve(defaultFileName);
+            },
+            function(data, status) {
+                var e = /* error */
+                    deferred.reject(e);
+            });
+        return deferred.promise;
+    }
+
     return d
 
 })

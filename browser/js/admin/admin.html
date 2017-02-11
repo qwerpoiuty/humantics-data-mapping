@@ -559,7 +559,7 @@
 											<td>{{table.db_name}}</td>
 											<td>{{table.schema_name}}</td>
 											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-											<td><button class = "btn btn-danger" ng-click="adminLock(table.table_id)">{{table.locked?'Unlock':'Lock'}}</button></td>
+											<td><button class = "btn btn-danger" ng-click="adminLock(table.table_id,table.locked)">{{table.locked?'Unlock':'Lock'}}</button></td>
 											<td>{{table.table_status}}</td>
 	                                    </tr>
 	                                    </tbody>

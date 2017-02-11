@@ -4,11 +4,6 @@ app.config(function($stateProvider) {
         templateUrl: 'js/management/management.html',
         controller: 'manageCtrl',
         resolve: {
-            projects: function(projectFactory) {
-                return projectFactory.getProjects().then(function(projects) {
-                    return projects
-                })
-            },
             user: function(AuthService) {
                 return AuthService.getLoggedInUser().then(function(user) {
                     return user
@@ -21,13 +16,15 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, projects, $modal, $state) {
+app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, $modal, $state) {
     $scope.user = user
-    $scope.projects = projects[0]
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
     $scope.changingStatus = false
-    console.log($scope.projects)
+
+    projectFactory.getProjects($scope.user.id).then(projects => {
+        $scope.projects = projects[0]
+    })
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }
@@ -49,7 +46,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addUsers/addUsers.html",
             controller: `addMemberCtrl`,
-            size: 'sm',
+            size: 'md',
             resolve: {
                 project: () => {
                     return $scope.selectedProject
@@ -58,6 +55,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         })
         modalInstance.result.then((result) => {
             if (result) {
+                $scope.selectedProject.members = result
                 $scope.refreshSingleProject(result)
             }
         })
@@ -80,6 +78,23 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         })
     }
 
+    $scope.removeTable = tableId => {
+        $scope.selectedProject.tables.splice($scope.selectedProject.tables.indexOf(tableId), 1)
+        projectFactory.updateProject($scope.selectedProject.project_id, `tables`, $scope.selectedProject.tables).then(result => {
+            $scope.refreshSingleProject($scope.selectedProject.project_id)
+            var modalInstance = $modal.open({
+                templateUrl: 'js/common/modals/notification/notification.html',
+                controller: 'notification',
+                size: 'sm',
+                resolve: {
+                    message: function() {
+                        return `Table removed`
+                    }
+                }
+            });
+        })
+    }
+
     $scope.newProject = function() {
         var modalInstance = $modal.open({
             templateUrl: 'js/common/modals/newProject/newProject.html',
@@ -95,7 +110,36 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
             $scope.refreshProjects()
         })
     }
-
+    $scope.deleteProject = () => {
+        if (!$scope.selectedProject) {
+            var modalInstance = $modal.open({
+                templateUrl: 'js/common/modals/notification/notification.html',
+                controller: 'notification',
+                size: 'sm',
+                resolve: {
+                    message: function() {
+                        return `Pick a project first`
+                    }
+                }
+            });
+        } else {
+            var modalInstance = $modal.open({
+                templateUrl: 'js/common/modals/confirmation/confirmation.html',
+                controller: 'confirmation',
+                size: 'sm',
+                resolve: {
+                    message: function() {
+                        return `Are you sure you want to delete the project?`
+                    }
+                }
+            });
+            modalInstance.result.then(result => {
+                if (result) {
+                    projectFactory.deleteProject($scope.selectedProject.project_id)
+                }
+            })
+        }
+    }
     $scope.detailedView = function(table_id) {
         $state.go('detailed', {
             tableId: table_id
@@ -114,8 +158,6 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         }
         mappingFactory.changeStatus(temp)
     }
-
-
 
     //REFRESH FUNCTIONS
     $scope.refreshProjects = () => {
@@ -145,27 +187,26 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
                     tables.push(attr.table_id)
                 }
                 obj[attr.table_id].attribute_count++
-                switch (attr.mapping_status) {
-                    case 'Approved':
-                        obj[attr.table_id].complete_mapping++
-                            break
-                    case 'Pending Approval':
-                        obj[attr.table_id].pending_approval++
-                            break
-                    case 'Pending Review':
-                        obj[attr.table_id].pending_review++
-                            break
-                    case 'Incomplete':
-                        obj[attr.table_id].incomplete++
-                            break
-                    default:
-                        obj[attr.table_id].incomplete++
-                }
+                    switch (attr.mapping_status) {
+                        case 'Approved':
+                            obj[attr.table_id].complete_mapping++
+                                break
+                        case 'Pending Approval':
+                            obj[attr.table_id].pending_approval++
+                                break
+                        case 'Pending Review':
+                            obj[attr.table_id].pending_review++
+                                break
+                        case 'Incomplete':
+                            obj[attr.table_id].incomplete++
+                                break
+                        default:
+                            obj[attr.table_id].incomplete++
+                    }
             })
             obj.forEach(table => {
                 $scope.targetProject.push(table)
             })
-            console.log($scope.targetProject)
         })
     }
 

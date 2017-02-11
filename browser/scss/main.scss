@@ -109,6 +109,12 @@ body {
   margin-top:5%;
 }
 
+.top-right-button{
+  position:absolute;
+  top:0;
+  right:0;
+}
+
 .margin-t-2-5{
   margin-top:2.5%;
 }
@@ -119,3 +125,4 @@ body {
 @import 'login/main';
 @import 'theme/style';
 @import 'outlook-view/main';
+@import 'management/main';

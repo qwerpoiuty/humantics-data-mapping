@@ -1,5 +1,5 @@
 <div id = "wrapper" class = "view-height-main">
-    <div class = "wrapper wrapper-content animated fadeIn" style="padding: 1.5%; padding-bottom:0;">
+    <div class = "wrapper wrapper-content animated fadeIn" style="padding: 1.5%; ">
         <div class = "p-w-md">
             <div class="row" style="height: 80vh;">
         <div class="col-lg-5 animated fadeInRight percent-100">
@@ -19,19 +19,15 @@
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Member</th>
                                         <th>Project Name</th>
                                         <th>Project Leader</th>
-                                        <th>Status</th>
                                         <th>Due Date </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
-                                        <td><span class = "att-pii-badge" ng-show="project.members.indexOf(user.id) !== -1 || project.leader == user.id"><i class ="fa fa-check" area-hidden="true"></i></span></td>
                                         <td>{{project.project_name}}</td>
                                         <td>{{project.email}}</td>
-                                        <td>{{project.status || 'incomplete'}}</td>
                                         <td>{{project.due_date | date:'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </tbody>
@@ -43,12 +39,13 @@
             </div>
         </div>   
         <div class="col-lg-7 animated fadeInRight percent-100">
-            <div class="mail-box-header" style="background-color:#1ab394;">
+            <div class="mail-box-header" style="background-color:#1ab394;position:relative;">
                 <h2 style="color:white;">Current Jobs</h2>
+                <button ng-show="selectedProject" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level==4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Add Members</button>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level==4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
 
@@ -69,6 +66,7 @@
                                         <th data-hide="all">Attributes pending Approval</th>
                                         <th data-hide="all">Attributes Completed</th>
                                         <th>Detailed View</th>
+                                        <th>Remove Table</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,6 +80,7 @@
                                         <td>{{table.pending_approval}}</td>
                                         <td>{{table.complete_mapping}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
+                                        <td><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
                                     </tr>
                                 </tbody>
                             </table>

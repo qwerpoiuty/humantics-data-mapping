@@ -2,12 +2,14 @@ app.factory('projectFactory', function($http) {
     var d = {}
 
     //high level gets
-    d.getProjects = function() {
-        return $http.get('api/project')
+    d.getProjects = function(userId) {
+        return $http.get('api/project/projectbyUser/' + userId)
             .then(function(response) {
                 return response.data
             })
     }
+
+
     d.getAssignedMappings = user => {
         var query = {
             user_id: user.id
@@ -50,7 +52,7 @@ app.factory('projectFactory', function($http) {
         })
     }
     d.getProjectById = function(projectId) {
-        return $http.get('api/project/' + projectId)
+        return $http.get('api/project/single/' + projectId)
             .then(function(response) {
                 return response.data
             })
@@ -72,6 +74,11 @@ app.factory('projectFactory', function($http) {
             .then(function(response) {
                 return response.data
             })
+    }
+    d.deletProject = project_id => {
+        return $http.post('apl/project/' + project_id).then(response => {
+            return response.data
+        })
     }
     d.addTablesThroughQuery = function(query, projectId) {
         var query = {

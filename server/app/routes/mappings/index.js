@@ -52,7 +52,7 @@ router.get('/recentMapping', function(req, res) {
 
 router.get('/all/:table_id', (req, res) => {
     db.query(`select 
-  a.version, a.target, a.mapping_status,
+    a.version, a.mapping_status, a.date_modified,
   b1.attr_name as target_attr_name,
   b1.datatype as target_datatype,
   b2.attr_name as source_attr_name,
@@ -61,10 +61,13 @@ router.get('/all/:table_id', (req, res) => {
   c2.table_name as source_table,
   d2.schema_name as source_schema,
   e2.db_name as source_db,
-  f2.system_name as source_system
+  f2.system_name as source_system,
+  u.email as modifier
 from mappings as a 
 inner join attributes as b1
   on a.target = b1.attr_id
+inner join users u
+  on a.modifier = u.id
 inner join tables as c1
   on b1.table_id = c1.table_id
 inner join schemas as d1
@@ -83,7 +86,9 @@ inner join dbs as e2
   on d2.db = e2.db_id
 inner join systems as f2
   on e2.system = f2.system_id
-where b1.table_id = ${req.params.table_id}`).then(mappings => {
+where b1.table_id = 1
+and a.version = 
+  (SELECT max(version) FROM mappings a1 WHERE a.target = a1.target)`).then(mappings => {
         res.json(mappings)
     })
 })
@@ -222,6 +227,10 @@ WHERE a1.date_modified =
 and a1.mapping_status = 'Approved'
 and c.table_id = ${req.params.table_id}`).then(attributes => {
         attributes = attributes[0]
+        if (attributes.length == 0) {
+            res.json(false)
+            return
+        }
         tree.push({
             id: req.params.table_id,
             name: attributes[0].schema_name + '.' + attributes[0].table_name,
@@ -240,8 +249,6 @@ and c.table_id = ${req.params.table_id}`).then(attributes => {
             findChildren(children)
         })
     })
-
-
 })
 
 router.post('/', function(req, res) {

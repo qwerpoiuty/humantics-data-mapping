@@ -7,13 +7,14 @@
             <tr>
             	<th>Select</th>
                 <th>Email</th>
+                <th>Role</th>
             </tr>
         </thead>
         <tbody>
-        <pre>{{selectedMembers}}</pre>
             <tr ng-repeat = "member in members | orderBy: 'member.email' track by $index">
             	<td><input type="checkbox" ng-model="selectedMembers[member.id].selected"/></td>
                 <td>{{member.email}}</td>
+                <td>{{power_levels[member.power_level]}}</td>
             </tr>
         </tbody>
     </table>

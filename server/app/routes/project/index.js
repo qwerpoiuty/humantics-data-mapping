@@ -14,12 +14,13 @@ var ensureAuthenticated = function(req, res, next) {
     }
 }
 
-router.get('/', function(req, res) {
-    db.query('SELECT project_id, project_name, email,members,tables,project_status,due_date FROM projects inner join users on projects.leader= users.id order by projects.project_id asc')
+router.get('/projectByUser/:user_id', function(req, res) {
+    db.query(`SELECT project_id, project_name, email,members,tables,project_status,due_date FROM projects inner join users on users.id = any(projects.members) where users.id = ${req.params.user_id} order by projects.project_id asc`)
         .then(function(projects) {
             res.json(projects)
         })
 })
+
 
 router.get('/completedMappings', (req, res) => {
     db.query(`select * from mappings inner join attributes on attributes.attr_id = mappings.target inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = tables.schema inner join dbs on schema.db = dbs.db_id inner join projects on tables.table_id = any(project.project_id) where mappings.mapping_status = 'Approved'`)
@@ -88,7 +89,7 @@ router.get('/getPermission/:user_id', (req, res) => {
     })
 })
 
-router.get('/:id', function(req, res) {
+router.get('/single/:id', function(req, res) {
     db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version,m.mapping_status from projects p
  inner join tables t
   on t.table_id = any(p.tables)
@@ -108,7 +109,7 @@ order by t.table_id, attr_id`)
 })
 
 router.post('/updateProject', (req, res) => {
-    db.query(`update projects set tables= ${req.body.column} || '{${req.body.values.join(',')}}' where projects.project_id = ${req.body.id}`).then(project => {
+    db.query(`update projects set ${req.body.column} = '{${req.body.values.join(',')}}' where projects.project_id = ${req.body.id}`).then(project => {
         res.sendStatus(200)
     })
 })
@@ -118,6 +119,12 @@ router.post('/custom', (req, res) => {
     if (req.body.query) string = string + " where " + req.body.query
     db.query(string).then(results => {
         res.json(results)
+    })
+})
+
+router.post('/deleteProject/:project_id', (req, res) => {
+    db.query(`delete from projects where projects.project_id = ${req.params.project_id}`).then(() => {
+        res.sendStatus(200)
     })
 })
 
