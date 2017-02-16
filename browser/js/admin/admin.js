@@ -20,6 +20,9 @@ app.config(function($stateProvider) {
 app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projectFactory, user, userFactory) {
     $scope.user = user
     $scope.power_levels = [{
+        title: 'reader',
+        level: 0
+    }, {
         title: 'mapper',
         level: 1
     }, {
