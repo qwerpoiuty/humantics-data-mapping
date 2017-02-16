@@ -37,16 +37,16 @@ app.factory('mappingFactory', function($http) {
 
         })
     }
-    d.updateNotes = function(target, notes) {
-        return $http.post('/api/mappings/notes' + target, notes).then(response => {
+    d.updateNotes = function(notes, target, version) {
+        let payload = {
+            notes: notes,
+            version: version
+        }
+        return $http.post('/api/mappings/updateNotes/' + target, payload).then(response => {
             return response.data
         })
     }
-    d.changeStatus = function(status) {
-        return $http.post('/api/mappings/changeStatus/', status).then(function(response) {
-            return response.data
-        })
-    }
+
 
     return d
 })

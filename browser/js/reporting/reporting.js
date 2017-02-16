@@ -17,6 +17,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
     $scope.impactSearches = []
     $scope.selectedSystem = {}
+    $scope.selectedMappings = {}
     $scope.selectedDb = {}
     $scope.selectedSchema = {}
     $scope.selectedTable = {}
@@ -171,8 +172,15 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                 $scope.allMapping = true
             })
     }
-    $scope.getXls = json => {
-        alasql('SELECT * INTO XLSX("mappings.xlsx",{headers:true}) FROM ?', [json]);
+    $scope.getXls = () => {
+        $scope.arr = []
+        console.log($scope.selectedMappings)
+        for (const key of Object.keys($scope.selectedMappings)) {
+            if ($scope.selectedMappings[key].selected == true) $scope.arr.push($scope.recentMapping[key])
+        }
+        console.log($scope.arr)
+
+        alasql('SELECT * INTO XLSX("mappings.xlsx",{headers:true}) FROM ?', [$scope.arr]);
 
     }
 

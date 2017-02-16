@@ -26,6 +26,7 @@ app.config(function($stateProvider) {
 
 app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings) {
     $scope.user = user
+    console.log($scope.user)
     $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)

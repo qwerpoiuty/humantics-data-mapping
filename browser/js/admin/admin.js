@@ -128,7 +128,6 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         return $scope.selectedDb.value
     }, function(nv, ov) {
         if (nv !== ov) {
-            console.log(nv)
             $scope.dbToBeUpdated.db_business_name = nv.db_business_name
             $scope.dbToBeUpdated.db_name = nv.db_name
             dataFactory.getSchemas(nv.db_id).then(function(schemas) {
@@ -269,6 +268,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         $scope.systems.forEach(currentSystem => {
             if (currentSystem.system_name.toLowerCase() === updatedSystem.system_name.toLowerCase()) bool = true
         })
+        if (system.system_name == $scope.selectedSystem.value.system_name) bool = false
         if (bool) return $scope.getNotification(`Please choose another system name`)
 
         dataFactory.updateSystem(updatedSystem).then(() => {
@@ -286,6 +286,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         $scope.dbs.forEach(currentDb => {
             if (currentDb.system_name.toLowerCase() === updatedDb.db_name.toLowerCase()) bool = true
         })
+        if (system.system_name == $scope.selectedDb.value.db_name) bool = false
         if (bool) return $scope.getNotification(`Please choose another database name`)
 
         dataFactory.updateDatabase(updatedDb).then(() => {
@@ -306,6 +307,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
                 bool = true
             }
         })
+        if (system.system_name == $scope.selectedSchema.value.schema_name) bool = false
         if (bool) {
             var modalInstance = $scope.getNotification(`Please choose another schema name`)
             return
@@ -328,6 +330,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         })
     }
     $scope.adminDelete = (structure, id) => {
+        console.log($scope.selectedDb.value)
         var command = 'delete' + structure
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/confirmation/confirmation.html",

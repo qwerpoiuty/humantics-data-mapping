@@ -49,36 +49,16 @@ order by a1.date_modified`).then(mappings => {
 })
 
 router.get('/assignedMappings', (req, res) => {
-    if (req.query.stage == 'Incomplete') {
-        db.query(`
-select a.attr_id, t.table_name, a.attr_name,p.project_name,t.table_id from projects p
+    db.query(`
+select t.table_name, t.table_status ,p.project_name,t.table_id from projects p
 inner join users u
  on u.id = any(p.members)
 inner join tables t
  on t.table_id = any(p.tables)
-inner join attributes a
- on a.table_id = t.table_id
-where a.attr_id not in(select target from mappings where mappings.mapping_status <> 'Incomplete')
-and u.id = ${req.query.user_id}
-order by p.due_date `).then(assigned => {
-            res.json(assigned)
-        })
-    } else {
-        db.query(`
-select a.attr_id, t.table_name, a.attr_name,p.project_name,t.table_id from projects p
-inner join users u
- on u.id = any(p.members)
-inner join tables t
- on t.table_id = any(p.tables)
-inner join attributes a
- on a.table_id = t.table_id
-where a.attr_id in(select target from mappings where mappings.mapping_status = '${req.query.stage}') 
-and u.id = ${req.query.user_id}
-order by p.due_date`)
-            .then(assigned => {
-                res.json(assigned)
-            })
-    }
+where t.table_status = '${req.query.stage}'
+order by p.due_date`).then(assigned => {
+        res.json(assigned)
+    })
 })
 
 router.get('/getPermission/:user_id', (req, res) => {
@@ -90,7 +70,7 @@ router.get('/getPermission/:user_id', (req, res) => {
 })
 
 router.get('/single/:id', function(req, res) {
-    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version,m.mapping_status from projects p
+    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version from projects p
  inner join tables t
   on t.table_id = any(p.tables)
  inner join schemas s

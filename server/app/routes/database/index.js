@@ -78,16 +78,14 @@ router.get('/attributesByTableId/:tableId', function(req, res) {
 
 
 router.get('/tableName/:table_name', function(req, res) {
-    var query = "'" + req.params.table_name + "'"
-    db.query('select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where tables.table_name =' + query)
+    db.query(`select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where lower(tables.table_name) like '${req.params.table_name.toLowerCase()}'`)
         .then(function(tables) {
             res.json(tables)
         })
 })
 
 router.get('/attributesByName/:attr_name', function(req, res) {
-    var query = "'" + req.params.attr_name + "'"
-    db.query('select * from attributes inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = tables.schema inner join dbs on dbs.db_id = schemas.db where attributes.attr_name = ' + query + 'order by attributes.attr_id')
+    db.query(`select * from attributes inner join tables on tables.table_id = attributes.table_id inner join schemas on schemas.schema_id = tables.schema inner join dbs on dbs.db_id = schemas.db where lower(attributes.attr_name) like '${req.params.attr_name.toLowerCase()}'order by attributes.attr_id`)
         .then(function(attributes) {
             res.json(attributes)
         })
@@ -220,6 +218,18 @@ router.post('/updateTable/', function(req, res) {
         .then(function(table) {
             res.sendStatus(200)
         })
+})
+
+router.post('/updateTableComments/:table_id', (req, res) => {
+    db.query(`update tables set comments = '${JSON.stringify(req.body)}' where tables.table_id = ${req.params.table_id}`).then(table => {
+        res.sendStatus(200)
+    })
+})
+
+router.post('/updateTableStatus', (req, res) => {
+    db.query(`update tables set table_status = '${req.body.table_status}' where tables.table_id = ${req.body.table_id}`).then(() => {
+        res.sendStatus(200)
+    })
 })
 
 router.post('/lockTable/', (req, res) => {

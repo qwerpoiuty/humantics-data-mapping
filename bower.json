@@ -14,6 +14,7 @@
   "dependencies": {
     "jquery": "^3.1.0",
     "footable": "^2.0.0",
-    "angular-ui-select": "^0.19.4"
+    "angular-ui-select": "^0.19.4",
+    "alasql": "^0.3.6"
   }
 }

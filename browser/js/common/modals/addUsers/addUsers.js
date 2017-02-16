@@ -35,4 +35,4 @@ app.controller('addMemberCtrl', function($scope, $uibModalInstance, project, pro
         $uibModalInstance.close();
     };
 
-})
+});

@@ -1,0 +1,52 @@
+<div class="mail-attachment">
+        <div class="attachment">
+            <div class="pull-right tooltip-demo">
+                <a class="btn btn-white btn-sm" ng-click = "addComment()"><i class="fa fa-plus"></i> </a>
+            </div>
+
+            <h3 style="margin:0px;">Table Notes</h3>
+        </div>
+    </div>
+    <div class="mail-body text-left tooltip-demo" style="height:26vh;padding-bottom:0;">
+        <div accordion class = "accordion-button" ng-if="newComment">
+            <button class="accordion"><h4>New Note</h4></button>
+            <div class="panel accordion-panel-parent col-lg-12" style="margin-bottom:15px;">
+                <form class="accordion-panel" style="padding-top:10px; padding-bottom:10px;">
+                    <div class="pull-right tooltip-demo">
+                        <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                    <div class="row">
+                        <h4>Note Subject</h4> 
+                    </div>
+                    <div class = "row">
+                        <input ng-model="comment.name" id="ruleType" class="newRuleType" type="text" placeholder="Note Subject"/>
+                    </div>
+                    <div class="row">
+                        <h4>Note Content</h4>
+                    </div>
+                    <div class = "row">
+                        <textarea ng-model="comment.content" class="newRuleDescription col-lg-12" placeholder="Content of the note" cols="50"></textarea>
+                    </div>
+                    <div class = "row">
+                        <button ng-click="saveComment(comment)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div accordion class = "accordion-button" ng-repeat = "comment in comments track by $index">
+            
+            <button class="accordion">{{comment.name}} by {{comment.poster}}
+            </button>
+            <div class="panel">
+                <div class="pull-right tooltip-demo">
+                       <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="hideComment[$index]"><i class="fa fa-pencil" ng-click = "editComment($index)"></i></a>
+                       <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hideComment[$index]" ng-click = "updateComment($index)">Save</a>
+                       <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hideComment[$index]" ng-click = "cancel($index)">Cancel</a>
+                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteComment($index)"><i class="fa fa-trash-o"></i></a>
+                </div>
+               <p ng-hide="hideComment[$index] == 1">{{comment.content}}</p>
+               <textarea ng-show="hideComment[$index] ==1" ng-model="comment.content" class="newRuleDescription col-lg-12" cols="50"></textarea>
+            </div>
+        </div>
+
+    </div>

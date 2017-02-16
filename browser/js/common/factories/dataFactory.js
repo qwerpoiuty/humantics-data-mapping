@@ -157,6 +157,18 @@ app.factory('dataFactory', function($http) {
             return response.data
         })
     }
+
+    d.updateTableComments = (table_id, comments) => {
+        return $http.post('api/database/updateTableComments/' + table_id, comments).then(response => {
+            return response.data
+        })
+    }
+
+    d.updateTableStatus = table => {
+        return $http.post('api/database/updateTableStatus/', table).then(response => {
+            return response.data
+        })
+    }
     d.lockTable = (tableId, status) => {
         var table = {
             table_id: tableId,

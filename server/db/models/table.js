@@ -17,9 +17,12 @@ module.exports = db.define('table', {
     table_business_name: {
         type: Sequelize.STRING
     },
+    comments: {
+        type: Sequelize.JSON
+    },
     table_status: {
-        type: Sequelize.ENUM('incomplete', 'pending', 'complete'),
-        defaultValue: 'incomplete'
+        type: Sequelize.ENUM("Incomplete", "Pending Review", "Pending Approval", "Approved"),
+        defaultValue: "Incomplete"
     },
     locked: {
         type: Sequelize.BOOLEAN,

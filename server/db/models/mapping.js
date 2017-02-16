@@ -11,15 +11,8 @@ module.exports = db.define('mapping', {
     version: {
         type: Sequelize.INTEGER
     },
-    current: {
-        type: Sequelize.BOOLEAN
-    },
     source: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
-    },
-    mapping_status: {
-        type: Sequelize.ENUM("Incomplete", "Pending Review", "Pending Approval", "Approved"),
-        defaultValue: "Incomplete"
     },
     target: {
         type: Sequelize.INTEGER
@@ -30,7 +23,7 @@ module.exports = db.define('mapping', {
     modifier: {
         type: Sequelize.INTEGER
     },
-    comments: {
+    notes: {
         type: Sequelize.JSON
     },
     transformation_rules: {

@@ -26,8 +26,9 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state) {
-    $scope.notes = false
+app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state, $uibModal, notificationService) {
+    $scope.mappingNotes = false
+    $scope.tableNotes = false
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
@@ -47,7 +48,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     //admin things
     $scope.toggleTableEdit = () => {
-        console.log('hello')
         $scope.editTable = !$scope.editTable
     }
     $scope.deleteTable = () => {
@@ -89,9 +89,13 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
 
 
-    $scope.toggleNotes = () => {
-        if (!$scope.targetMapping) alert('pick an attribute first')
-        else $scope.notes = !$scope.notes
+    $scope.toggleMappingNotes = (attr) => {
+        if (!$scope.targetMapping) notificationService.displayNotification('pick an attribute first')
+        if ($scope.sources.length == 0) notificationService.displayNotification('add a source first')
+        else $scope.mappingNotes = !$scope.mappingNotes
+    }
+    $scope.toggleTableNotes = (attr) => {
+        $scope.tableNotes = !$scope.tableNotes
     }
 
     $scope.addAttribute = function(attribute) {
@@ -125,11 +129,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
-            $scope.comments = $scope.sources[0] ? JSON.parse($scope.sources[0].comments) : []
+            $scope.notes = $scope.sources[0] ? $scope.sources[0].notes : []
 
             if ($scope.rules == null) $scope.rules = []
 
-            if ($scope.comments == null) $scope.comments = []
+            if ($scope.notes == null) $scope.notes = []
             $scope.currentAttr = $scope.targetMapping.attr_name
 
 
@@ -137,17 +141,17 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.editAttribute = function() {
-        if ($scope.user.power_level <= 3) {
-            alert('You don\'t have permissions to do that')
-            return
-        }
         if ($scope.targetMapping) {
+            if ($scope.user.power_level <= 3) {
+                notificationService.displayNotification('You don\'t have permissions to do that')
+                return
+            }
             $scope.editing = "editAttribute"
             $scope.temp.target = Object.assign({}, $scope.targetMapping)
             $scope.temp.target.properties.forEach(e => {
                 $scope.temp.target.properties[e] = true
             })
-        } else alert('pick an attribute first')
+        } else notificationService.displayNotification('pick an attribute first')
 
 
     }
@@ -156,12 +160,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-        if ($scope.user.power_level != 1 || $scope.member) {
-            alert('You don\'t have permissions to do that')
+        if ($scope.user.power_level != 1 || $scope.projectMember || $scope.table.table_status != 'Incomplete') {
+            notificationService.displayNotification('You don\'t have permission to do that')
             return
         }
         if ($scope.targetMapping) $scope.editing = "newSource"
-        else alert('pick an attribute first')
+        else notification.displayNotification('pick an attribute first')
     }
 
     $scope.deleteSource = function() {
@@ -251,7 +255,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             target: $scope.targetMapping.attr_id
         }
         mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
-        mapping.comments = ($scope.comments.length) ? $scope.comments : null
+        mapping.notes = ($scope.notes.length) ? $scope.notes : null
         return mapping
     }
     $scope.toggleChange = function() {
@@ -263,20 +267,11 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
             return
         }
         var temp = {
-            status: status,
-            id: $scope.targetMapping.attr_id,
-            version: $scope.sources[0].version
+            table_status: status,
+            table_id: $scope.table.table_id
         }
-        mappingFactory.changeStatus(temp).then((response) => {
-            dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
-                $scope.attributes = attributes[0]
-                $scope.attributes.forEach(e => {
-                    if (e.attr_id == $scope.targetMapping.attr_id) {
-                        $scope.selectAttribute(e)
-                        return
-                    }
-                })
-            })
+        dataFactory.updateTableStatus(temp).then((response) => {
+            $scope.table.table_status = status
         })
     }
 

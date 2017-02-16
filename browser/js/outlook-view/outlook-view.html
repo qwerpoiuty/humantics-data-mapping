@@ -4,7 +4,8 @@
             <div class="row" style="height: 80vh;">
         <div class="col-lg-5 animated fadeInRight percent-100">
             <div class="mail-box-header" ng-show="!editTable" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <h2><span style="color:white; font-size:20px;"> {{table.table_name}}</span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button><button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "toggleTableEdit()">Edit Table</button></h2>
+                <h2><span style="color:white; font-size:20px;"> {{table.table_name}} <span style="color:red;"">{{table.table_status}}</span></span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button><button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "toggleTableEdit()">Edit Table</button></h2>
+                <a ng-click="toggleTableNotes()" style="float:right" class = "btn btn-white btn-sm">Show {{tableNotes?'Table':'Notes'}}</a>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:yellow;"> [Business Name]:<span style="color:white;"> {{table.table_business_name}}</span></h3>
                     <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
@@ -38,7 +39,7 @@
             </div>
             <!-- end of editing a table -->
             <div class="mail-box flexHeight" style="border:none;">
-                <div class="mail-body" style="padding-top:34px;">
+                <div class="mail-body" style="padding-top:34px;" ng-hide="tableNotes">
                     <div class="row percent-100">
                         <div class="col-lg-12 percent-100" style="overflow-y:scroll;">
                             <form role="form">
@@ -67,34 +68,37 @@
                         </div>
                     </div>
                 </div>
+                <div class="mail-body" style="padding-top:34px;" ng-show="tableNotes">
+                    <tablenotes user="user" table="table"></tablenotes>
+                </div>
             </div>
         </div>
         <div class="col-lg-7 animated fadeInRight percent-100">
             <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
                 <div class="pull-right tooltip-demo">
                     <div class= "row">
-                        <a ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !notes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
-                        <a ng-click = "newSource()" ng-if="editing =='none' && !notes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
+                        <a ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !mappingNotes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
+                        <a ng-click = "newSource()" ng-if="editing =='none' && !mappingNotes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
                         <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
                         <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
-                        <a ng-if="!notes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete</a>
+                        <a ng-if="!mappingNotes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete</a>
                     </div>
                     <div class="row" style="padding-top:2%">
-                        <a ng-click="toggleNotes()" style="float:right" ng-if="permissions" class = "btn btn-white btn-sm">Show {{notes?'Mapping':'Notes'}}</a>
+                        <a ng-click="toggleMappingNotes()" style="float:right" class = "btn btn-white btn-sm">Show {{mappingNotes?'Mapping':'Notes'}}</a>
                     </div>
                 </div>
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{currentAttr}} <span style="color:red;"">{{sources[0].mapping_status}}</h3>
-                    <div ng-if="user.power_level == 1" ng-show="sources[0].mapping_status =='Incomplete'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('Pending Review')">Submit for Review</button></div>
+                    <h3 style="color:white;">{{currentAttr}}</h3>
+                    <div ng-if="user.power_level == 1" ng-show="table.table_status =='Incomplete'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('Pending Review')">Submit table for Review</button></div>
                     <div ng-if="user.power_level ==2">
-                        <div ng-show="sources[0].mapping_status=='Pending Review'">
+                        <div ng-show="table.table_status=='Pending Review'">
                             <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('Incomplete')">Decline</button>
                             <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
                         </div>
                     </div>
                     <div ng-if="user.power_level ==3">
-                        <div ng-show="sources[0].mapping_status=='Pending Approval'">
+                        <div ng-show="table.table_status=='Pending Approval'">
                             <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('incomplete')">Decline</button>
                             <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Approved')">Approve</button>
                         </div>
@@ -102,13 +106,13 @@
                 </div>
             </div>
             <div class="flexHeight2" style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll; height:100%" ng-show="!notes">
+                <div style="overflow-y:scroll; height:100%" ng-show="!mappingNotes">
 
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
                     <rules rules="rules" mapping="sources" user="user"></rules>
                 </div>
-                <div style="overflow-y:scroll;" ng-show="notes">
-                    <notes mapping = "sources" notes="comments" user="user"></notes>
+                <div style="overflow-y:scroll;" ng-show="mappingNotes">
+                    <notes mapping = "sources" notes="notes" attr= "targetMapping" user="user"></notes>
                 </div>
             </div>
         </div> 

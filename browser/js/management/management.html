@@ -41,7 +41,9 @@
         <div class="col-lg-7 animated fadeInRight percent-100">
             <div class="mail-box-header" style="background-color:#1ab394;position:relative;">
                 <h2 style="color:white;">Current Jobs</h2>
-                <button ng-show="selectedProject" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
+                <div ng-if="user.power_level==4">
+                    <button ng-show="selectedProject" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
+                </div>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentPro}}</h3>
                     <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
@@ -66,7 +68,7 @@
                                         <th data-hide="all">Attributes pending Approval</th>
                                         <th data-hide="all">Attributes Completed</th>
                                         <th>Detailed View</th>
-                                        <th>Remove Table</th>
+                                        <th ng-if="user.power_level==4">Remove Table</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +82,7 @@
                                         <td>{{table.pending_approval}}</td>
                                         <td>{{table.complete_mapping}}</td>
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-                                        <td><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
+                                        <td ng-if="user.power_level==4"><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
                                     </tr>
                                 </tbody>
                             </table>

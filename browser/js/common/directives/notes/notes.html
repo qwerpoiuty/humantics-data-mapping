@@ -41,13 +41,13 @@
                 </button>
                 <div class="panel">
                     <div class="pull-right tooltip-demo">
-                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="hide[$index]"><i class="fa fa-pencil" ng-click = "editNote($index)"></i></a>
-                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hide[$index]" ng-click = "updateNote($index)">Save</a>
-                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hide[$index]" ng-click = "cancel($index)">Cancel</a>
-                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteRule($index)"><i class="fa fa-trash-o"></i></a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="noteHide[$index]"><i class="fa fa-pencil" ng-click = "editNote($index)"></i></a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="noteHide[$index]" ng-click = "updateNote($index)">Save</a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="noteHide[$index]" ng-click = "cancel($index)">Cancel</a>
+                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteNote($index)"><i class="fa fa-trash-o"></i></a>
                     </div>
-                   <p ng-hide="hide[$index] == 1">{{note.content}}</p>
-                   <textarea ng-show="hide[$index] ==1" ng-model="rule.content" class="newRuleDescription col-lg-12" cols="50"></textarea>
+                   <p ng-hide="noteHide[$index] == 1">{{note.content}}</p>
+                   <textarea ng-show="noteHide[$index] ==1" ng-model="rule.content" class="newRuleDescription col-lg-12" cols="50"></textarea>
                 </div>
             </div>
 

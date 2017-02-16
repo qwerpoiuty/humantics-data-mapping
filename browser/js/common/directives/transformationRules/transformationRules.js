@@ -14,16 +14,16 @@ app.directive('rules', function($state, mappingFactory) {
                 else scope.newRule = !scope.newRule
             }
             scope.saveTransformation = function(transformationRule, version) {
-
                 scope.rules.push(transformationRule)
                 mappingFactory.updateMapping(scope.setMap()).then(function() {
                     scope.newRule = !scope.newRule
+                    scope.mapping[0].version++
                 })
             }
 
             scope.deleteRule = function(index) {
                 scope.rules.splice(index, 1)
-                mappingFactory.updateMapping(rules, scope.mapping.target).then(function() {
+                mappingFactory.updateMapping(scope.setMap()).then(function() {
                     scope.newRule = !scope.newRule
                 })
             }
@@ -40,7 +40,7 @@ app.directive('rules', function($state, mappingFactory) {
                     source: newSources,
                     target: scope.mapping[0].target,
                     transformation_rules: scope.rules,
-                    comments: scope.mapping[0].comments
+                    notes: scope.mapping[0].comments
                 }
                 return mapping
             }

@@ -52,7 +52,7 @@ router.get('/recentMapping', function(req, res) {
 
 router.get('/all/:table_id', (req, res) => {
     db.query(`select 
-    a.version, a.mapping_status, a.date_modified,
+    a.version, a.date_modified,
   b1.attr_name as target_attr_name,
   b1.datatype as target_datatype,
   b2.attr_name as source_attr_name,
@@ -88,7 +88,8 @@ inner join systems as f2
   on e2.system = f2.system_id
 where b1.table_id = 1
 and a.version = 
-  (SELECT max(version) FROM mappings a1 WHERE a.target = a1.target)`).then(mappings => {
+  (SELECT max(version) FROM mappings a1 WHERE a.target = a1.target)
+  order by a.target_attr_name`).then(mappings => {
         res.json(mappings)
     })
 })
@@ -99,7 +100,7 @@ router.get('/impact/attribute/:attr_id', function(req, res) {
         inner join mappings c on c.target = b.attr_id 
         inner join schemas on a.schema = schemas.schema_id
         inner join dbs on dbs.db_id = schemas.db
-        where ${req.params.attr_id} = any(c.source) and c.mapping_status = 'Approved'`)
+        where ${req.params.attr_id} = any(c.source) and a.table_status = 'Approved'`)
         .then(function(mappings) {
             res.json(mappings)
         })
@@ -155,7 +156,7 @@ inner join dbs e
  on d.db = e.db_id
 WHERE a1.date_modified = 
   (SELECT max(date_modified) FROM mappings a2 WHERE a2.target = a1.target)
-and a1.mapping_status = 'Approved'
+and c.table_status = 'Approved'
 and c.table_id = ${parent}`).then(attributes => {
                     attributes = attributes[0]
                     let a = () => [...new Set(attributes.map(e => {
@@ -224,7 +225,7 @@ inner join dbs e
  on d.db = e.db_id
 WHERE a1.date_modified = 
   (SELECT max(date_modified) FROM mappings a2 WHERE a2.target = a1.target)
-and a1.mapping_status = 'Approved'
+and c.table_status = 'Approved'
 and c.table_id = ${req.params.table_id}`).then(attributes => {
         attributes = attributes[0]
         if (attributes.length == 0) {
@@ -252,14 +253,10 @@ and c.table_id = ${req.params.table_id}`).then(attributes => {
 })
 
 router.post('/', function(req, res) {
-    console.log(req.body.source)
     req.body.source = "'{" + req.body.source.join(',') + "}'"
     req.body.date_modified = `'${moment().format()}'`
     req.body.transformation_rules = "'" + JSON.stringify(req.body.transformation_rules) + "'"
-    req.body.comments = `'${JSON.stringify(req.body.comments)}'`
-    if (req.body.hasOwnProperty('mapping_status')) {
-        req.body.mapping_status = `'${req.body.mapping_status}'`
-    }
+    req.body.notes = `'${JSON.stringify(req.body.notes)}'`
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {
@@ -274,13 +271,10 @@ router.post('/', function(req, res) {
         })
 })
 
-
-router.post('/changeStatus', function(req, res) {
-    db.query(`update mappings set mapping_status= '${req.body.status}' where mappings.target = ${req.body.id} and mappings.version =${req.body.version}`).then(function() {
-        res.sendStatus(200)
-    })
-
+router.post('/updateNotes/:target', (req, res) => {
+    db.query(`update mappings set notes = '${JSON.stringify(req.body.notes)}' where mappings.target = ${req.params.target} and mappings.version = ${req.body.version}`).then(() => res.sendStatus(200))
 })
+
 
 
 module.exports = router
