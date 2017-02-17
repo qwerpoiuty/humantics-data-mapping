@@ -333,7 +333,6 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         })
     }
     $scope.adminDelete = (structure, id) => {
-        console.log($scope.selectedDb.value)
         var command = 'delete' + structure
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/confirmation/confirmation.html",
@@ -346,6 +345,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
             }
         })
         modalInstance.result.then(result => {
+            if (!result) return
             dataFactory[command](id).then(() => {
                 if (structure == 'System') {
                     dataFactory.getSystems().then(systems => {

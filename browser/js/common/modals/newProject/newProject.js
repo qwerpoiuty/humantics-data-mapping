@@ -6,4 +6,7 @@ app.controller('newProjectCtrl', function($scope, $uibModalInstance, user, proje
             $uibModalInstance.close(200)
         })
     }
+    $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii'
+    });
 })

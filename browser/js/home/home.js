@@ -24,9 +24,8 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings) {
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings, notificationService) {
     $scope.user = user
-    console.log($scope.user)
     $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)
@@ -86,39 +85,19 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
             })
         }
     })
-    $scope.$watch(function() {
-        return $scope.selectedSchema.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-            dataFactory.getTables(nv.schema_id).then(function(tables) {
-                $scope.tables = tables[0]
-
-            })
-        }
-    })
-
-    $scope.$watch(function() {
-        return $scope.createdSystem.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-            dataFactory.getDatabases(nv.system_id).then(function(dbs) {
-                $scope.createdDbs = dbs[0]
-            })
-        }
-    })
-
-    $scope.$watch(function() {
-        return $scope.createdDb.value
-    }, function(nv, ov) {
-        if (nv !== ov) {
-            dataFactory.getSchemas(nv.db_id).then(function(schemas) {
-                $scope.createdSchemas = schemas[0]
-            })
-        }
-    })
 
     //search things
     $scope.searchCat = "table"
+
+    $scope.browse = () => {
+        if (!$scope.selectedSchema.value) {
+            $scope.error = 'Please select a system, database and schema first'
+            return
+        }
+        dataFactory.getTables($scope.selectedSchema.value.schema_id).then((tables) => {
+            $scope.tables = tables[0]
+        })
+    }
     $scope.search = function(category, query) {
         switch (category) {
             case "table":

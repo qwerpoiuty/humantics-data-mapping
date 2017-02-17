@@ -27,6 +27,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state, $uibModal, notificationService) {
+    $scope.adding = true
     $scope.mappingNotes = false
     $scope.tableNotes = false
     $scope.table = table[0][0]
@@ -100,14 +101,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.addAttribute = function(attribute) {
+        $scope.adding = false
         $scope.temp = $scope.table
         $scope.editing = "newAttribute"
         $scope.currentAttr = "New Attribute"
-            // dataFactory.addAttribute($scope.table, attribute)
     }
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
+        $scope.adding = true
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") {
@@ -227,6 +229,14 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 }
                 break
             case "newAttribute":
+                var bool = false
+                $scope.attributes.forEach(currentAttribute => {
+                    if (currentAttribute.attr_name.toLowerCase() === $scope.temp.target.attr_name.toLowerCase()) bool = true
+                })
+                if (bool) {
+                    notificationService.displayNotification('That attribute already exists')
+                    return
+                }
                 $scope.temp.target.table_id = $stateParams.tableId
                 var arr = []
                 for (var key in $scope.temp.target.properties) {

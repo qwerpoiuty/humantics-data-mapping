@@ -51,14 +51,14 @@
 														<div class="col-lg-8 col-lg-offset-2" style="margin-bottom:1%;">
 													        <div class="input-group m-b">
 													        	<span class="input-group-addon"><div class="newTableText">Select a Database</div></span>
-													       			<ui-select ng-model="selectedDb.value">
+													       		<ui-select ng-model="selectedDb.value">
 															    <ui-select-match placeholder="List of Databases">
 															        {{$select.selected.db_name}}
 															    </ui-select-match>
 															    <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
 															        <span ng-bind="db.db_name"></span>
 															    </ui-select-choices>
-															</ui-select>
+																</ui-select>
 													        </div>
 											      		</div>
 
@@ -76,54 +76,9 @@
 													        </div>
 											      		</div>
 													</div>
-										        </fieldset>
-										    </form>
-									    </div>
-							    		<div id="CreateTab" class="tabcontent">	
-										    <form method="post">
-										        <fieldset class="tabFieldset3">
-										        	<h4 style="margin-bottom:5px; margin-top:0;">Create A Table</h4>
-										            <div class="row">
-										            <div class="col-lg-8 col-lg-offset-2 720p" style="margin-bottom:1%;">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target System</div></span>
-											       			<ui-select ng-model="createdSystem.value">
-														    <ui-select-match placeholder="List of Systems">
-														        {{$select.selected.system_name}}
-														    </ui-select-match>
-														    <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-														        <span ng-bind="system.system_name"></span>
-														    </ui-select-choices>
-															</ui-select>
-												      	</div>
-												      </div>
-												      <div class="col-lg-8 col-lg-offset-2 720p" style="margin-bottom:1%;">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Database</div></span>
-													        	
-											       			<ui-select ng-model="createdDb.value">
-														    <ui-select-match placeholder="List of Databases">
-														        {{$select.selected.db_name}}
-														    </ui-select-match>
-														    <ui-select-choices repeat="db in (createdDbs | filter: $select.search) track by db.db_id">
-														        <span ng-bind="db.db_name"></span>
-														    </ui-select-choices>
-															</ui-select>
-												      	</div>
-												      </div>
-												      <div class="col-lg-8 col-lg-offset-2 720p" style="margin-bottom:1%;">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Target Schema</div></span> <ui-select ng-model="createdSchema.value">
-																    <ui-select-match placeholder="List of Schemas">
-																        {{$select.selected.schema_name}}
-																    </ui-select-match>
-																    <ui-select-choices repeat="schema in (createdSchemas | filter: $select.search) track by schema.schema_id">
-																        <span ng-bind="schema.schema_name"></span>
-																    </ui-select-choices>
-																</ui-select></div>
-												      </div>
-												      <div class="col-lg-8 col-lg-offset-2">
-												        <div class="input-group m-b"><span class="input-group-addon"><div class="newTableText">Table Name</div></span> <input type="text" placeholder="Name of new Table" class="form-control" ng-model = "createdTable"></div>
-												      </div>
-												      <button type="button" class="navbar-minimalize btn btn-primary button-right" ng-click = "createTable()">Save</button>									      	
-												    </div>
+													<div class="row row-centered">
+														<button class = "btn btn-primary" ng-click = "browse()">Search</button>
+													</div>
 										        </fieldset>
 										    </form>
 									    </div>
