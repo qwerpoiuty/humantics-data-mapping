@@ -189,7 +189,7 @@ var seed = (systems, dbs, schemas, tables, attributes) => {
             force: true
         })
         .then(function() {
-            console.log('users')
+            console.log('user')
             return seedUsers()
         })
         .then(function() {
