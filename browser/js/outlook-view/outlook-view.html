@@ -60,7 +60,7 @@
                                         <td>{{attribute.attr_name}}</td>
                                         <td>{{attribute.business_name}}</td>
                                         <td>{{attribute.datatype}}</td>
-                                        <td><span class = "att-pii-badge" ng-show="{{attribute.pii == true}}"><i class ="fa fa-check" area-hidden="true"></i></span></td>
+                                        <td><span class = "att-pii-badge" ng-if="attribute.pii"><i class ="fa fa-check" area-hidden="true"></i></span></td>
                                     </tr>
                                 </tbody>
                             </table>

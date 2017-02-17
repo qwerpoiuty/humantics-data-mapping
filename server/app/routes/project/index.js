@@ -81,7 +81,7 @@ router.get('/single/:id', function(req, res) {
  full outer join (select * from mappings m1
 where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m
   on m.target = a.attr_id
-where p.project_id = 1
+where p.project_id = ${req.params.id}
 order by t.table_id, attr_id`)
         .then(function(projects) {
             res.json(projects)
@@ -111,6 +111,7 @@ router.post('/deleteProject/:project_id', (req, res) => {
 router.post('/', function(req, res) {
     req.body.project_name = "'" + req.body.project_name + "'"
     req.body.due_date = "'" + req.body.due_date + "'"
+    req.body.members = `'{${req.body.members.join(',')}}'`
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {

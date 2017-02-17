@@ -3,6 +3,7 @@ app.factory('projectFactory', function($http) {
 
     //high level gets
     d.getProjects = function(userId) {
+        console.log(userId)
         return $http.get('api/project/projectbyUser/' + userId)
             .then(function(response) {
                 return response.data
@@ -54,6 +55,7 @@ app.factory('projectFactory', function($http) {
     d.getProjectById = function(projectId) {
         return $http.get('api/project/single/' + projectId)
             .then(function(response) {
+                console.log(response.data)
                 return response.data
             })
     }
@@ -75,8 +77,8 @@ app.factory('projectFactory', function($http) {
                 return response.data
             })
     }
-    d.deletProject = project_id => {
-        return $http.post('apl/project/' + project_id).then(response => {
+    d.deleteProject = project_id => {
+        return $http.post('api/project/deleteProject/' + project_id).then(response => {
             return response.data
         })
     }

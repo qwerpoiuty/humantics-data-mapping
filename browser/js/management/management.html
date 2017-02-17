@@ -63,10 +63,7 @@
                                         <th>Schema</th>
                                         <th>Database</th>
                                         <th data-hide="all">Total Attributes</th>
-                                        <th data-hide="all">Incomplete Attributes</th>
-                                        <th data-hide="all">Attributes in Review</th>
-                                        <th data-hide="all">Attributes pending Approval</th>
-                                        <th data-hide="all">Attributes Completed</th>
+                                        <!-- <th data-hide="all">Number of Mappings</th> -->
                                         <th>Detailed View</th>
                                         <th ng-if="user.power_level==4">Remove Table</th>
                                     </tr>
@@ -77,10 +74,7 @@
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
                                         <td>{{table.attribute_count}}</td>
-                                        <td>{{table.incomplete}}</td>
-                                        <td>{{table.pending_review}}</td>
-                                        <td>{{table.pending_approval}}</td>
-                                        <td>{{table.complete_mapping}}</td>
+                                        <!-- <td>{{table.mappings.length}}</td> -->
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
                                         <td ng-if="user.power_level==4"><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
                                     </tr>

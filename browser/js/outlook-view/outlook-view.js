@@ -32,6 +32,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
+    console.log($scope.attributes)
     $scope.temp = {}
     $scope.selected = {}
     $scope.editTable = false
@@ -170,7 +171,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.deleteSource = function() {
         if ($scope.user.power_level != 1 || $scope.member) {
-            alert('You don\'t have permissions to do that')
+            notificationService.displayNotification('You don\'t have permissions to do that')
             return
         }
         var mapping = $scope.setMapping()
@@ -199,7 +200,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 })
                 break
             case "editAttribute":
-                console.log($scope.temp)
                 var mapping = $scope.setMapping()
                 if ($scope.temp.target) {
                     var arr = ['pk', 'fk', 'upi', 'npi']
@@ -213,7 +213,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                             $scope.editing = "none"
                             dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
                                 $scope.attributes = attributes[0]
+                                console.log($scope.attributes)
                                 $scope.attributes.forEach(e => {
+
                                     if (e.attr_id == mapping.target) {
                                         $scope.selectAttribute(e)
                                         return

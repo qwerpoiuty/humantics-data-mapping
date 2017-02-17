@@ -94,17 +94,29 @@ var organizeData = csvData => {
     seed(systems, dbs, schemas, tables, attributes)
 }
 var users = [{
-    email: "admin@humantics.io",
-    password: "humantics",
+    email: "admin@infforay.com",
+    password: "infforay",
+    power_level: 5
+}, {
+    email: "manager@infforay.com",
+    password: "infforay",
+    power_level: 4
+}, {
+    email: "approver@infforay.com",
+    password: "infforay",
     power_level: 3
 }, {
-    email: "mapper@humantics.io",
-    password: "humantics",
+    email: "reviewer@infforay.com",
+    password: "infforay",
     power_level: 2
 }, {
-    email: "readOnly@humantics.io",
-    password: "humantcs",
+    email: "mapper@infforay.com",
+    password: "infforay",
     power_level: 1
+}, {
+    email: "readOnly@infforay.com",
+    password: "infforay",
+    power_level: 0
 }]
 
 var projects = [{
@@ -117,42 +129,6 @@ var projects = [{
     leader: 2,
     member: [1, 2, 3],
     tables: [2, 3, 6, 7, 9, 10, 11, 12]
-}]
-var mappings = [{
-    version: 1,
-    source: [1],
-    target: 2,
-    modifier: 1
-}, {
-    version: 1,
-    source: [1],
-    target: 5,
-    modifier: 1
-}, {
-    version: 1,
-    source: [1],
-    target: 9,
-    modifier: 1
-}, {
-    version: 1,
-    source: [1],
-    target: 16,
-    modifier: 1
-}, {
-    version: 1,
-    source: [5],
-    target: 11,
-    modifier: 1
-}, {
-    version: 1,
-    source: [9],
-    target: 31,
-    modifier: 1
-}, {
-    version: 1,
-    source: [31],
-    target: 42,
-    modifier: 1
 }]
 var seedProjects = () => {
     var creatingProjects = projects.map(project => {
@@ -212,10 +188,10 @@ var seed = (systems, dbs, schemas, tables, attributes) => {
     db.sync({
             force: true
         })
-    // .then(function() {
-    //     console.log('users')
-    //     return seedUsers()
-    // })
+        .then(function() {
+            console.log('users')
+            return seedUsers()
+        })
         .then(function() {
             console.log('projects')
             return seedProjects()
