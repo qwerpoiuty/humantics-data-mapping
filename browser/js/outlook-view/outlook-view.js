@@ -28,12 +28,12 @@ app.config(function($stateProvider) {
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state, $uibModal, notificationService) {
     $scope.adding = true
+
     $scope.mappingNotes = false
     $scope.tableNotes = false
     $scope.table = table[0][0]
     $scope.user = user
     $scope.attributes = attributes[0]
-    console.log($scope.attributes)
     $scope.temp = {}
     $scope.selected = {}
     $scope.editTable = false
@@ -103,6 +103,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.addAttribute = function(attribute) {
         $scope.adding = false
         $scope.temp = $scope.table
+        $scope.temp.target = {}
+        $scope.temp.target.properties = []
         $scope.editing = "newAttribute"
         $scope.currentAttr = "New Attribute"
     }
@@ -110,6 +112,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         $scope.adding = true
+        console.log($scope.adding)
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") {
@@ -188,6 +191,28 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         })
 
     }
+    $scope.deleteAttribute = (attr_id) => {
+        var modalInstance = $modal.open({
+            templateUrl: "js/common/modals/confirmation/confirmation.html",
+            controller: `confirmation`,
+            size: 'sm',
+            resolve: {
+                message: () => {
+                    return 'Delete Attribute? You cannot undo this.'
+                }
+            }
+        })
+        modalInstance.result.then(result => {
+            if (result) {
+                dataFactory.deleteAttribute(attr_id).then(() => {
+                    dataFactory.getAttributesByTableId($stateParams.tableId).then(attr => {
+                        $scope.attributes = attr[0]
+                    })
+                })
+            }
+
+        })
+    }
 
     $scope.save = function() {
         switch ($scope.editing) {
@@ -238,11 +263,12 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                     return
                 }
                 $scope.temp.target.table_id = $stateParams.tableId
-                var arr = []
-                for (var key in $scope.temp.target.properties) {
-                    if ($scope.temp.target.properties[key]) arr.push(key)
-                }
-                $scope.temp.target.properties = arr
+                var arr = ['pk', 'fk', 'upi', 'npi']
+                var properties = []
+                arr.forEach(e => {
+                    if ($scope.temp.target.properties[e]) properties.push(e)
+                })
+                $scope.temp.target.properties = properties
                 dataFactory.createAttribute($scope.temp.target).then(function(table) {
                     dataFactory.getAttributesByTableId($stateParams.tableId).then(function(attributes) {
                         $scope.attributes = attributes[0]

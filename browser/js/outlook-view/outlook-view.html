@@ -81,7 +81,7 @@
                         <a ng-click = "newSource()" ng-if="editing =='none' && !mappingNotes" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
                         <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
                         <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
-                        <a ng-if="!mappingNotes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete</a>
+                        <a ng-if="!mappingNotes" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete Source</a>
                     </div>
                     <div class="row" style="padding-top:2%">
                         <a ng-click="toggleMappingNotes()" style="float:right" class = "btn btn-white btn-sm">Show {{mappingNotes?'Mapping':'Notes'}}</a>
@@ -90,6 +90,7 @@
                 <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <h3 style="color:white;">{{currentAttr}}</h3>
+                    <button ng-if="user.power_level==5 && targetMapping" class = "pull-left btn btn-white btn-sm" ng-click = "deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
                     <div ng-if="user.power_level == 1" ng-show="table.table_status =='Incomplete'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('Pending Review')">Submit table for Review</button></div>
                     <div ng-if="user.power_level ==2">
                         <div ng-show="table.table_status=='Pending Review'">

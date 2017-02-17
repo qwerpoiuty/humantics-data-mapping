@@ -210,6 +210,12 @@ app.factory('dataFactory', function($http) {
         })
     }
 
+    d.deleteAttribute = id => {
+        return $http.post('api/database/deleteAttribute/' + id).then(response => {
+            return response.data
+        })
+    }
+
 
 
     return d

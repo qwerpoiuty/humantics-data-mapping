@@ -274,5 +274,10 @@ router.post('/deleteTable/:table_id', function(req, res) {
         })
 })
 
+router.post('/deleteAttribute/:attr_id', (req, res) => {
+    db.query(`delete from attributes where attributes.attr_id = ${req.params.attr_id}`).then(attr => {
+        res.sendStatus(200)
+    })
+})
 
 module.exports = router
