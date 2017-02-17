@@ -172,7 +172,7 @@ router.post('/attributes/:tableId', function(req, res) {
     req.body.properties = `'{${req.body.properties.join(',')}}'`
     req.body.date_modified = `'${moment().format()}'`
     req.body.business_name = `'${req.body.business_name}`
-    req.body.description = `'${req.body.description}`
+    req.body.description = `'${req.body.description}'`
     var keys = Object.keys(req.body)
     var values = []
     for (var key in req.body) {
