@@ -109,7 +109,7 @@
                 <div style="overflow-y:scroll; height:100%" ng-show="!mappingNotes">
 
                     <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-                    <rules rules="rules" mapping="sources" user="user"></rules>
+                    <rules ng-show="adding" rules="rules" mapping="sources" user="user"></rules>
                 </div>
                 <div style="overflow-y:scroll;" ng-show="mappingNotes">
                     <notes mapping = "sources" notes="notes" attr= "targetMapping" user="user"></notes>
