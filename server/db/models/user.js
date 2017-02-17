@@ -36,7 +36,7 @@ module.exports = db.define('user', {
     hooks: {
         beforeCreate: function(user) {
             var salt = bcrypt.genSaltSync(10);
-            console.log(salt)
+            console.log(salt, user)
             var hash = bcrypt.hashSync(user.password, salt);
             user.salt = salt;
             user.password = hash;
