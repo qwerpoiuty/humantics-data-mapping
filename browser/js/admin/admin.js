@@ -47,6 +47,12 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
     $scope.schemaEdit = false
     $scope.tableEdit = false
 
+    $scope.pickDate = function(){
+       $('.form_datetime').datetimepicker({
+          format: 'mm-dd-yyyy'
+        });
+    }
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
