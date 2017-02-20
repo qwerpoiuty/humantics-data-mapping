@@ -10,7 +10,7 @@ app.config(function($stateProvider) {
     })
 });
 
-app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal, $state) {
+app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportingFactory, $uibModal, $state, notificationService) {
     dataFactory.getSystems().then(function(systems) {
         $scope.systems = systems[0]
     })
@@ -164,12 +164,14 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.totalMappings = table => {
+        $scope.error = "Searching"
         reportingFactory.getAllMappings(table.table_id)
             .then(mappings => {
-                $scope.mappingHistory = {}
+                if (mappings[0].length == 0) $scope.error = "That table has no mappings"
                 mappings = mappings[0]
                 $scope.recentMapping = mappings
                 $scope.allMapping = true
+                $scope.error = null
             })
     }
     $scope.getXls = () => {
@@ -178,8 +180,6 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         for (const key of Object.keys($scope.selectedMappings)) {
             if ($scope.selectedMappings[key].selected == true) $scope.arr.push($scope.recentMapping[key])
         }
-        console.log($scope.arr)
-
         alasql('SELECT * INTO XLSX("mappings.xlsx",{headers:true}) FROM ?', [$scope.arr]);
 
     }

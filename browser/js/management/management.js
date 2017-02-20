@@ -56,7 +56,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         modalInstance.result.then((result) => {
             if (result) {
                 $scope.selectedProject.members = result
-                $scope.refreshSingleProject(result)
+                $scope.refreshSingleProject($scope.selectedProject.project_id)
             }
         })
     }
@@ -73,7 +73,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         })
         modalInstance.result.then((result) => {
             if (result) {
-                $scope.refreshSingleProject(result)
+                $scope.refreshSingleProject($scope.selectedProject.project_id)
             }
         })
     }

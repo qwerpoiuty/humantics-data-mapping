@@ -12,17 +12,17 @@
     <div>
         <p style="color:whitesmoke;">Login to start mapping!</p>
         <p style="color:red" ng-show="error">{{error}}</p>
-        <form class="m-t" role="form" ng-submit="submit()">
+        <form class="m-t" role="form" ng-submit="sendLogin(loginInfo)">
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Username" ng-model="loginInfo.email" required="">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" ng-model="loginInfo.password" required="">
             </div>
-            <button ng-click="sendLogin(loginInfo)" class="btn btn-primary block full-width m-b">Login</button>
+            <input type="submit" id="submit" value="Login" class="btn btn-primary block full-width m-b"/>
 
             <a href="#" style="color:whitesmoke; margin-bottom: 10px;"><small>Forgot password?</small></a>
-            <a class="btn btn-sm btn-white btn-block" ui-sref="signup">Create an account</a>
+            <!-- <a class="btn btn-sm btn-white btn-block" ui-sref="signup">Create an account</a> -->
         </form>
     </div>
 </div>

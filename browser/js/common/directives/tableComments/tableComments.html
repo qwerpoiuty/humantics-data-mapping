@@ -39,10 +39,10 @@
             </button>
             <div class="panel">
                 <div class="pull-right tooltip-demo">
-                       <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="hideComment[$index]"><i class="fa fa-pencil" ng-click = "editComment($index)"></i></a>
+                       <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="hideComment[$index]" ng-if="note.poster==user.email"><i class="fa fa-pencil" ng-click = "editComment($index)"></i></a>
                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hideComment[$index]" ng-click = "updateComment($index)">Save</a>
                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="hideComment[$index]" ng-click = "cancel($index)">Cancel</a>
-                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteComment($index)"><i class="fa fa-trash-o"></i></a>
+                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-if="note.poster==user.email" ng-click = "deleteComment($index)"><i class="fa fa-trash-o"></i></a>
                 </div>
                <p ng-hide="hideComment[$index] == 1">{{comment.content}}</p>
                <textarea ng-show="hideComment[$index] ==1" ng-model="comment.content" class="newRuleDescription col-lg-12" cols="50"></textarea>

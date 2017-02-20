@@ -124,11 +124,6 @@ var projects = [{
     leader: 1,
     members: [1, 2],
     tables: [1, 4, 5, 8, 13]
-}, {
-    project_name: "Map reports",
-    leader: 2,
-    member: [1, 2, 3],
-    tables: [2, 3, 6, 7, 9, 10, 11, 12]
 }]
 var seedProjects = () => {
     var creatingProjects = projects.map(project => {

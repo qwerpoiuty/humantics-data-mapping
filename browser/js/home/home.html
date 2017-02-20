@@ -15,19 +15,17 @@
 										   <li><a class="tablinks" ng-click="openBrowse(event, 'BrowseTab')"><h5 class="text-success">Browse</h5></a></li>
 										</ul>
 										<div id="SearchTab" class="tabcontent">	
-										    <form method="post">
-										        <fieldset class="tabFieldset">
-										            <input id="searchBar" ng-model="searchQuery" type="text"/>
-										            <input style="font-size:11px;" type="submit" value="Submit" id="submitButton" ng-click="search(searchCat,searchQuery)"/>
-										            <div id="searchInContainer">
-										                <input type="radio" name="check" class="css-checkbox" value="table" id="searchTable" checked ng-model="searchCat"/>
-										                <label for="searchTable" class="css-label" id="siteNameLabel">Table Search</label>
-										                <input type="radio" name="check" class="css-checkbox" value="entity" id="searchEntity" ng-model="searchCat"/>
-										                <label for="searchEntity" class="css-label">Entity Search</label>
-										                
-										            </div>
-										        </fieldset>
-										    </form>
+									        <fieldset class="tabFieldset">
+									        	<p style="color:red" ng-show="error">{{error}}</p>
+									            <input id="searchBar" ng-model="searchQuery" type="text"/>
+									            <input style="font-size:11px;" type="submit" value="Submit" id="submitButton" ng-click="search(searchCat,searchQuery)"/>
+									            <div id="searchInContainer">
+									                <input type="radio" name="check" class="css-checkbox" value="table" id="searchTable" checked ng-model="searchCat"/>
+									                <label for="searchTable" class="css-label" id="siteNameLabel">Table Search</label>
+									                <input type="radio" name="check" class="css-checkbox" value="entity" id="searchEntity" ng-model="searchCat"/>
+									                <label for="searchEntity" class="css-label">Entity Search</label>
+									            </div>
+									        </fieldset>
 									    </div>
 							    		<div id="BrowseTab" class="tabcontent">	
 										    <form method="post">
@@ -136,39 +134,40 @@
 	        			<div class="col-lg-12 percent-100">
 	                    <div class="ibox percent-100">
 	                        <div class="ibox-content percent-100" style="border-top:none;">
-				                <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="16">
-	                                	<thead>
-	                                	<tr>
-											<th data-toggle="true">Table Id</th>
-											<th>Table Name</th>
-											<th>Database</th>
-											<th>Schema</th>
-											<!--<th>Attribute Count</th> -->
-				                            <th data-hide="all">More Information</th>
-				                            <th>Status</th>
+	                        	<h3 ng-show="searchCat =='entity'">"{{searchQuery}}" was found in these tables:</h3>
+				                <table class="footable table table-stripped toggle-arrow-tiny default breakpoint" data-page-size="16">
+                                	<thead>
+                                	<tr>
+										<th data-toggle="true">Table Name</th>
+										<th>Business Name</th>
+										<!-- <th>Attribute Count</th> -->
+										<th data-hide="all">Database</th>
+										<th data-hide="all">Schema</th>
+			                            <th data-hide="all">More Information</th>
+			                            <th>Status</th>
+			                        </tr>
+                                	</thead>
+                                    <tbody>
+                                    <tr ng-repeat="table in tables track by $index" foo-repeat-done>
+										<td><span class="footable-toggle"></span>{{table.table_name}}</td>
+										<td>{{table.table_business_name || 'none set'}}</td>
+										<!-- <td></td> -->
+										<td>{{table.db_name}}</td>
+										<td>{{table.schema_name}}</td>
+										<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
+										<td>{{table.table_status}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot align="right">
+				                        <tr>
+				                            <td colspan="5">
+				                                <ul class="pagination"></ul>
+				                            </td>
 				                        </tr>
-	                                	</thead>
-	                                    <tbody>
-	                                    <tr ng-repeat="table in tables track by $index" foo-repeat-done>
-											<td>{{table.table_id}}</td>
-											<td>{{table.table_name}}</td>
-											<td>{{table.db_name}}</td>
-											<td>{{table.schema_name}}</td>
-											<!-- make sure to actually keep a runnign tally on the number of attributes that call this table home -->
-											<td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-											<td>{{table.table_status}}</td>
-	                                    </tr>
-	                                    </tbody>
-	                                    <tfoot>
-					                        <tr>
-					                            <td colspan="5">
-					                                <ul class="pagination"></ul>
-					                            </td>
-					                        </tr>
-					                    </tfoot>
-	                                </table>
-	                            </div>
-	                        </div>
+				                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
 	                    </div>
 	                </div>
 	                	<div ng-show="!tables">
@@ -186,7 +185,7 @@
 					</div>
 
 
-
+				</div>
 	        	</div>
 	        </div>
 	    </div>

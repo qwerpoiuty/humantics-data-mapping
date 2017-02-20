@@ -112,7 +112,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
         $scope.adding = true
-        console.log($scope.adding)
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") {
@@ -166,7 +165,8 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-        if ($scope.user.power_level != 1 || $scope.projectMember || $scope.table.table_status != 'Incomplete') {
+        console.log($scope.user.power_level, $scope.projectMember, $scope.table.table_status)
+        if ($scope.user.power_level != 1 || !$scope.projectMember || $scope.table.table_status != 'Incomplete') {
             notificationService.displayNotification('You don\'t have permission to do that')
             return
         }
@@ -301,7 +301,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
     $scope.changeStatus = function(status) {
         if (!$scope.projectMember) {
-            alert('You don\'t have the the autohorization')
+            notificationService.displayNotification('You are not part of this project')
             return
         }
         var temp = {

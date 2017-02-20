@@ -1,11 +1,9 @@
 <div class="mail-box" style="overflow:none;margin-bottom:0;border-bottom:none; border-left:none; border-right:none;">
-
     <div class="mail-attachment">
             <div class="attachment">
                 <div class="pull-right tooltip-demo">
                     <a class="btn btn-white btn-sm" ng-click = "addNotes()"><i class="fa fa-plus"></i> </a>
                 </div>
-
                 <h3 style="margin:0px;">Mapping Notes</h3>
             </div>
         </div>
@@ -41,10 +39,10 @@
                 </button>
                 <div class="panel">
                     <div class="pull-right tooltip-demo">
-                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-hide="noteHide[$index]"><i class="fa fa-pencil" ng-click = "editNote($index)"></i></a>
+                           <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-if="note.poster==user.email" ng-hide="noteHide[$index]"><i class="fa fa-pencil" ng-click = "editNote($index)"></i></a>
                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="noteHide[$index]" ng-click = "updateNote($index)">Save</a>
                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="edit" ng-show="noteHide[$index]" ng-click = "cancel($index)">Cancel</a>
-                            <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteNote($index)"><i class="fa fa-trash-o"></i></a>
+                            <a class="btn btn-white btn-sm" ng-if="note.poster==user.email" data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "deleteNote($index)"><i class="fa fa-trash-o"></i></a>
                     </div>
                    <p ng-hide="noteHide[$index] == 1">{{note.content}}</p>
                    <textarea ng-show="noteHide[$index] ==1" ng-model="rule.content" class="newRuleDescription col-lg-12" cols="50"></textarea>

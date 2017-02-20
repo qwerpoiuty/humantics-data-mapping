@@ -99,14 +99,26 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
         })
     }
     $scope.search = function(category, query) {
+        $scope.error = "Searching..."
+        $scope.tables = null
         switch (category) {
             case "table":
                 return dataFactory.getTablesByName(query).then(function(tables) {
+                    if (tables[0].length == 0) {
+                        $scope.error = "Sorry! We couldn't find the table you were looking for."
+                        return
+                    }
                     $scope.tables = tables[0]
+                    $scope.error = null
                 })
             case "entity":
                 return dataFactory.attributesByName(query).then(function(tables) {
+                    if (tables[0].length == 0) {
+                        $scope.error = "Sorry! We couldn't find the table you were looking for."
+                        return
+                    }
                     $scope.tables = tables[0]
+                    $scope.error = null
                 })
         }
     }

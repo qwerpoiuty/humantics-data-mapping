@@ -89,8 +89,10 @@ inner join systems as f2
 where b1.table_id = 1
 and a.version = 
   (SELECT max(version) FROM mappings a1 WHERE a.target = a1.target)
-  order by a.target_attr_name`).then(mappings => {
+  order by b1.attr_name`).then(mappings => {
         res.json(mappings)
+    }).catch(err => {
+        res.sendStatus(400)
     })
 })
 
@@ -248,6 +250,8 @@ and c.table_id = ${req.params.table_id}`).then(attributes => {
                 return e.table_id
             })
             findChildren(children)
+        }).catch(err => {
+            res.sendStatus(400)
         })
     })
 })
