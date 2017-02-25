@@ -1,3 +1,4 @@
+
 app.config(function($stateProvider) {
     $stateProvider.state('management', {
         url: '/management',
