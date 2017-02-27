@@ -119,6 +119,12 @@ body {
   margin-top:2.5%;
 }
 
+//Custon Settings
+#wrapper.view-height-main{overflow: visible;}
+.pad-tp-0{padding-top:0}
+.detailed-table .btn .fa {
+    margin-right: 0px;
+}
 
 @import 'directives/main';
 @import 'home/main';

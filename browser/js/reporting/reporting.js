@@ -72,6 +72,8 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
 
     $scope.impact = function(attr_id) {
+        $scope.targets = null
+        $setTimeout(function() {}, 1000);
         reportingFactory.getImpactByAttribute(attr_id)
             .then(function(attributes) {
                 attributes = attributes[0]
@@ -165,13 +167,19 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
 
     $scope.totalMappings = table => {
         $scope.error = "Searching"
+        $scope.allMapping = null
+        $scope.recentMapping = null
         reportingFactory.getAllMappings(table.table_id)
             .then(mappings => {
-                if (mappings[0].length == 0) $scope.error = "That table has no mappings"
-                mappings = mappings[0]
-                $scope.recentMapping = mappings
-                $scope.allMapping = true
+                console.log(mappings)
                 $scope.error = null
+                if (mappings[0].length == 0) {
+                    $scope.error = "That table has no mappings"
+                } else {
+                    mappings = mappings[0]
+                    $scope.recentMapping = mappings
+                    $scope.allMapping = true
+                }
             })
     }
     $scope.getXls = () => {
@@ -204,7 +212,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
         }
 
         // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
+        tablinks = document.getElementsByClassName("btn-tab");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }

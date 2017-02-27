@@ -1,32 +1,32 @@
 <div id = "wrapper" class = "view-height-main">
-    <div class = "wrapper wrapper-content animated fadeIn" style="padding: 1.5%; ">
+    <div class = "wrapper wrapper-content animated pad-tp-0" style="padding: 1.5%; ">
         <div class = "p-w-md">
-            <div class="row" style="height: 80vh;">
-        <div class="col-lg-5 animated fadeInRight percent-100">
-            <div class="mail-box-header" style="background-color:#1c84c6;">
-                <h2><span style="color:white;">Projects</span></h2>
+            <div class="row mar-bt-30" >
+        <div class="col-lg-5 animated fadeInRight">
+            <div class="mail-box-header table-data-view">
+                <div class="lt-att-info white">Projects</div>
                 <div class="mail-tools tooltip-demo m-t-md">
                 </div>
                 <h3 style="color:white;">List of Current Projects</h3>
                 <button class = "btn btn-primary" ng-if="user.power_level==4" ng-click = "newProject()" style="float:right;">New Project</button>
             </div>
 
-            <div class="mail-box" style="height:85%; margin-bottom:0px;">
-                <div class="mail-body percent-100">
+            <div class="mail-box  mar-bt-30 body-container outline-box ">
+                <div class="mail-body tab v-scroll">
                     <div class="row">
                         <div class="col-sm-12" style="overflow-y:scroll;">
                             <form role="form">
                                 <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="pro-tr">
                                         <th>Project Name</th>
                                         <th>Project Leader</th>
                                         <th>Due Date </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
-                                        <td>{{project.project_name}}</td>
+                                    <tr class="pro-tr" ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
+                                        <td class="clickbl ng-binding"><i class="fa fa-angle-right"></i> {{project.project_name}}</td>
                                         <td>{{project.email}}</td>
                                         <td>{{project.due_date | date:'yyyy-MM-dd'}}</td>
                                     </tr>
@@ -38,21 +38,21 @@
                 </div>
             </div>
         </div>   
-        <div class="col-lg-7 animated fadeInRight percent-100">
-            <div class="mail-box-header" style="background-color:#1ab394;position:relative;">
-                <h2 style="color:white;">Current Jobs</h2>
+        <div class="col-lg-7 animated fadeInRight">
+            <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder clearfix">
+                <div class="lt-att-info widthfull">Current Jobs</div>
                 <div ng-if="user.power_level==4">
                     <button ng-show="selectedProject" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
                 </div>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{currentPro}}</h3>
+                    <h3 class="ng-binding pull-left">{{currentPro}}</h3>
                     <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
                     <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
 
-               <div class="mail-box" style="height:85%;">
-                <div class="mail-body percent-100">
+               <div class="body-container mail-box outline-box mar-bt-30">
+                <div class="mail-body current-jobs">
                     <div class="row">
                         <div class="col-sm-12" style="overflow-y:scroll;">
                             <form role="form">

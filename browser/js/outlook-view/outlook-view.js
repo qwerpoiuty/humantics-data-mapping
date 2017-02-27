@@ -27,7 +27,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state, $uibModal, notificationService) {
-    $scope.adding = true
+    $scope.transform = false
 
     $scope.mappingNotes = false
     $scope.tableNotes = false
@@ -40,7 +40,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.editing = "none"
     $scope.sourceSelection = "none"
     $scope.sourceIndex = 0
-    $scope.currentAttr = "Select an Attribute"
+    $scope.currentAttr = "Select an attribute from table"
     $scope.checkMember = (user) => {
         projectFactory.getPermission(user.id, $scope.table.table_id).then(member => {
             $scope.projectMember = member
@@ -101,7 +101,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.addAttribute = function(attribute) {
-        $scope.adding = false
+        $scope.transform = false
         $scope.temp = $scope.table
         $scope.temp.target = {}
         $scope.temp.target.properties = []
@@ -111,7 +111,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
-        $scope.adding = true
+        $scope.transform = true
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
             if (typeof mapping === "object") {
