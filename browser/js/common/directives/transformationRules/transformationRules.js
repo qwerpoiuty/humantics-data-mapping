@@ -8,6 +8,7 @@ app.directive('rules', function($state, mappingFactory) {
         },
         templateUrl: 'js/common/directives/transformationRules/transformationRules.html',
         link: function(scope, element, attrs) {
+            console.log(scope.user.power_level)
             scope.newRule = false
             scope.addTransformation = function() {
                 if (scope.mapping.length === 0) alert("Please specify a source first")
@@ -24,7 +25,7 @@ app.directive('rules', function($state, mappingFactory) {
             scope.deleteRule = function(index) {
                 scope.rules.splice(index, 1)
                 mappingFactory.updateMapping(scope.setMap()).then(function() {
-                    scope.newRule = !scope.newRule
+                    scope.newRule = false
                 })
             }
             scope.hide = []

@@ -1,125 +1,131 @@
-<div id = "wrapper" class = "view-height-main">
-    <div class = "wrapper wrapper-content animated fadeIn" style="padding: 1.5%; padding-bottom:0;">
-        <div class = "p-w-md">
-            <div class="row" style="height: 80vh;">
-        <div class="col-lg-5 animated fadeInRight percent-100">
-            <div class="mail-box-header" ng-show="!editTable" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <h2><span style="color:white; font-size:20px;"> {{table.table_name}} <span style="color:red;"">{{table.table_status}}</span></span><button class = "pull-right btn btn-white btn-sm" ng-click = "generateDDL()">Get DDL</button><button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "toggleTableEdit()">Edit Table</button></h2>
-                <a ng-click="toggleTableNotes()" style="float:right" class = "btn btn-white btn-sm">Show {{tableNotes?'Table':'Notes'}}</a>
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:yellow;"> [Business Name]:<span style="color:white;"> {{table.table_business_name}}</span></h3>
-                    <h3 style="color:yellow;"> [System]:<span style="color:white;"> {{table.system_name}}</span></h3>
-                    <h3 style="color:yellow;">[Database]: <span style="color:white;"> {{table.db_name}}</span><span style="color:yellow;"> [Schema]:</span><span style="color:white;"> {{table.schema_name}}</span></h3> 
-                </div>
-                <button class="btn btn-primary" ng-click="addAttribute()" ng-if="user.power_level==5">New Attribute</button>
-            </div>
-            <!-- editing a table -->
-            <div class="mail-box-header" ng-show="editTable" style="background-color:#1c84c6; padding: 20px 20px 10px 20px;">
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="input-group m-b">
-                                <span class="input-group-addon"><div class="newTableText">Table Name</div></span> 
-                                <input type="text" placeholder="Name of new table" class="form-control" ng-model = "table.table_name">
-                            </div>
-                            <div class="input-group m-b">
-                                <span class="input-group-addon"><div class="newTableText">Business Name</div></span> 
-                                <input type="text" placeholder="Business name of new System" class="form-control" ng-model = "table.table_business_name">
+<div id="wrapper" class="view-height-main detailed-table">
+    <div class="wrapper wrapper-content animated fadeIn pad-tp-0" style="padding: 1.5%; padding-bottom:0;">
+        <div class="p-w-md">
+            <div class="row">
+                <div class="col-lg-5 animated fadeInRight">
+                    <div class="mail-box-header table-data-view" ng-show="!editTable">
+                        <div class="mail-tools tooltip-demo">
+                            <div>
+                            <span class="datatablable tltl">{{table.table_name}} <span class="descip">{{table.table_status}}</span></span><br>
+                            <span class="datatablable">Business Name:<span style="color:white;"> {{table.table_business_name}}</span></span>
+                            <span class="datatablable">System: <span class="descip">{{table.system_name}}</span></span>
+                            <span class="datatablable">Database: <span class="descip">{{table.db_name}}</span></span> 
+                            <span class="datatablable">Schema: <span class="descip">{{table.schema_name}}</span></span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <button ng-if="user.power_level==5" class = "pull-right btn btn-white btn-sm" ng-click = "deleteTable()">Delete Table</button>
+                        <div class="buttonsets">
+                            <button class="btn btn-primary white-brd" ng-click="addAttribute()" ng-if="user.power_level==5">New Attribute</button>
+                            <button class="btn btn-primary white-brd" ng-click = "generateDDL()">Get DDL</button>
+                            <button class="btn btn-primary white-brd" ng-if="user.power_level==5" ng-click = "toggleTableEdit()">Edit Table</button>
+                            <button class="btn btn-primary white-brd" ng-click="toggleTableNotes()">Show {{tableNotes?'Table':'Notes'}}</button>
+                        </div>
+                        
+                    </div>
+                    <!-- editing a table -->
+                    <div class="mail-box-header table-data-view edit-tab" ng-show="editTable">
+                        <div class="mail-tools tooltip-demo">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon"><div class="newTableText">Table Name</div></span>
+                                        <input type="text" placeholder="Name of new table" class="form-control" ng-model="table.table_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group m-b">
+                                        <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
+                                        <input type="text" placeholder="Business name of new System" class="form-control" ng-model="table.table_business_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-primary white-brd" ng-click="updateTable()">Save</button>
+                                    <button class="btn btn-primary white-brd" ng-click="toggleTableEdit()">Cancel</button>
+                                    <button class="btn btn-primary white-brd" ng-if="user.power_level==5" ng-click="deleteTable()"><i class="fa fa-trash-o"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "toggleTableEdit()" style="margin-right:15px;"><i class="fa fa-cancel"></i> Cancel</button>
-                        <button type="button" class="navbar-minimalize btn btn-info button-right" ng-click = "updateTable()" style="margin-right:15px;"><i class="fa fa-pencil"></i>Save</button> 
-                    </div>
-                </div>
-            </div>
-            <!-- end of editing a table -->
-            <div class="mail-box flexHeight" style="border:none;">
-                <div class="mail-body" style="padding-top:34px;" ng-hide="tableNotes">
-                    <div class="row percent-100">
-                        <div class="col-lg-12 percent-100" style="overflow-y:scroll;">
-                            <form role="form">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Properties</th>
-                                        <th>Attribute Name</th>
-                                        <th>Business Name</th>
-                                        <th>DataType</th>
-                                        <th>PII</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-click="selectAttribute(attributes[$index])" ng-repeat = "attribute in attributes track by $index"
-                                    ng-class="{{attribute.attr_id}}">
-                                        <td><span class = "att-prop-badge" ng-repeat="prop in attribute.properties">{{prop}}</span></td>
-                                        <td>{{attribute.attr_name}}</td>
-                                        <td>{{attribute.business_name}}</td>
-                                        <td>{{attribute.datatype}}</td>
-                                        <td><span class = "att-pii-badge" ng-if="attribute.pii"><i class ="fa fa-check" area-hidden="true"></i></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            </form>
+                    <!-- end of editing a table -->
+                    <div class="mail-box no-border" >
+                        <div class="mail-body tab v-scroll outline-box pad-tp-0" ng-hide="tableNotes">
+                            <div class="row percent-100">
+                                <div class="col-lg-12 percent-100" style="overflow-y:scroll;">
+                                    <form role="form">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr> 
+                                                    <th>Attribute Name</th>
+                                                    <th>Business Name</th>
+                                                    <th>PII</th>
+                                                    <th>Properties</th>
+                                                    <th>DataType</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-click="selectAttribute(attributes[$index])" ng-repeat="attribute in attributes track by $index" ng-class="{{attribute.attr_id}}" class="attributesrow">
+                                                    <td class="clickbl"><i class="fa fa-angle-right"></i> {{attribute.attr_name}}</td>
+                                                    <td>{{attribute.business_name}}</td>
+                                                    <td><span class="att-pii-badge" ng-if="attribute.pii"><i class ="fa fa-check" area-hidden="true"></i></span></td>
+                                                    <td><span class="att-prop-badge" ng-repeat="prop in attribute.properties">{{prop}}</span></td>
+                                                    <td>{{attribute.datatype}}</td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mail-body datanotes outline-box" ng-show="tableNotes">
+                            <tablenotes user="user" table="table" class="noteslist"></tablenotes>
                         </div>
                     </div>
                 </div>
-                <div class="mail-body" style="padding-top:34px;" ng-show="tableNotes">
-                    <tablenotes user="user" table="table"></tablenotes>
+                <div class="col-md-7 animated fadeInRight">
+                    <div class="attr-details">
+                        <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
+                            <div class="sect-att-head clearfix">
+                                <div class="lt-att-info">Attribute Information</div>
+                                <div class="rt-att-btn">
+                                <a class="btn btn-white btn-sm" ng-click="newSource()" ng-if="(editing =='none' && !mappingNotes) || user.power_level!=1" title="Add"><i class = "fa fa-plus"></i> </a>
+                                <a class="btn btn-white btn-sm" ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !mappingNotes" title="Edit"><i class="fa fa-edit"></i></a> 
+                                <a class="btn btn-white btn-sm" ng-if="!mappingNotes || user.power_level!=1" ng-click="deleteSource()" title="Delete Source"><i class="fa fa-trash-o"></i> </a>
+                                <a class="btn btn-white btn-sm" ng-click="toggleMappingNotes()" title="Notes"><i class="fa fa-file-text-o"></i></a>
+                                </div>
+                            </div>
+                            <h3>{{currentAttr}} <button ng-if="user.power_level==5 && targetMapping" class="btn btn-primary ng-binding mar-lt-10" ng-click="deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
+                            <a class="btn btn-white btn-sm fl-rt" ng-if="editing!=='none'" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i></a>
+                            <a class="btn btn-white btn-sm fl-rt mar-4" ng-if="editing!=='none'" ng-click="save()" title="Save"><i class="fa fa-save"></i></a>
+                            </h3>
+                            
+                            <div ng-if="user.power_level == 1" ng-show="table.table_status =='Incomplete'">
+                                <button style="float:right" class="btn btn-blue " ng-click="changeStatus('Pending Review')">Submit table for Review</button>
+                            </div>
+                            <div ng-if="user.power_level ==2">
+                                <div ng-show="table.table_status=='Pending Review'">
+                                    <button class="btn btn-danger" style="float:right;" ng-click="changeStatus('Incomplete')">Decline</button>
+                                    <button class="btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
+                                </div>
+                            </div>
+                            <div ng-if="user.power_level ==3">
+                                <div ng-show="table.table_status=='Pending Approval'">
+                                    <button class="btn btn-danger" style="float:right;" ng-click="changeStatus('incomplete')">Decline</button>
+                                    <button class="btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Approved')">Approve</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div ng-show="!mappingNotes">
+                            <mapping source="sources" target="targetMapping" edit="editing" temp="temp"></mapping>
+                            <rules ng-show="transform" rules="rules" mapping="sources" user="user"></rules>
+                        </div>
+                        <div style="overflow-y:scroll;" ng-show="mappingNotes">
+                            <notes mapping="sources" notes="notes" attr="targetMapping" user="user"></notes>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 animated fadeInRight percent-100">
-            <div class="mail-box-header" style="background-color:#1ab394; padding: 20px 20px 10px 20px;">
-                <div class="pull-right tooltip-demo">
-                    <div class= "row">
-                        <a ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !mappingNotes" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i>Edit</a>
-                        <a ng-click = "newSource()" ng-if="(editing =='none' && !mappingNotes) || user.power_level!=1" class ="btn btn-white btn-sm"><i class = "fa fa-plus"></i> Add</a>
-                        <a ng-if="editing!=='none'" ng-click="save()" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Save</a>
-                        <a ng-if="editing!=='none'" ng-click="cancel()" class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Cancel</a>
-                        <a ng-if="!mappingNotes || user.power_level!=1" ng-click="deleteSource()" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Delete Source</a>
-                    </div>
-                    <div class="row" style="padding-top:2%">
-                        <a ng-click="toggleMappingNotes()" style="float:right" class = "btn btn-white btn-sm">Show {{mappingNotes?'Mapping':'Notes'}}</a>
-                    </div>
-                </div>
-                <h2 style="color:white; font-size:20px; ">Attribute Information</h2>
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 style="color:white;">{{currentAttr}}</h3>
-                    <button ng-if="user.power_level==5 && targetMapping" class = "pull-left btn btn-danger btn-sm" ng-click = "deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
-                    <div ng-if="user.power_level == 1" ng-show="table.table_status =='Incomplete'"><button style="float:right" class="btn btn-caution" ng-click="changeStatus('Pending Review')">Submit table for Review</button></div>
-                    <div ng-if="user.power_level ==2">
-                        <div ng-show="table.table_status=='Pending Review'">
-                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('Incomplete')">Decline</button>
-                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
-                        </div>
-                    </div>
-                    <div ng-if="user.power_level ==3">
-                        <div ng-show="table.table_status=='Pending Approval'">
-                            <button class = "btn btn-danger" style="float:right;" ng-click="changeStatus('incomplete')">Decline</button>
-                            <button class = "btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Approved')">Approve</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flexHeight2" style="background-color:#ffffff;padding-top:24px;">
-                <div style="overflow-y:scroll; height:100%" ng-show="!mappingNotes">
-
-                    <mapping source="sources" target="targetMapping" edit = "editing" temp="temp"></mapping>
-                    <rules ng-show="adding" rules="rules" mapping="sources" user="user"></rules>
-                </div>
-                <div style="overflow-y:scroll;" ng-show="mappingNotes">
-                    <notes mapping = "sources" notes="notes" attr= "targetMapping" user="user"></notes>
-                </div>
-            </div>
-        </div> 
-        
     </div>
-</div>
-
-</div>
 </div>

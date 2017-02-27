@@ -86,7 +86,7 @@ inner join dbs as e2
   on d2.db = e2.db_id
 inner join systems as f2
   on e2.system = f2.system_id
-where b1.table_id = 1
+where b1.table_id = ${req.params.table_id}
 and a.version = 
   (SELECT max(version) FROM mappings a1 WHERE a.target = a1.target)
   order by b1.attr_name`).then(mappings => {

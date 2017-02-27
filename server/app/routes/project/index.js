@@ -56,6 +56,7 @@ inner join users u
 inner join tables t
  on t.table_id = any(p.tables)
 where t.table_status = '${req.query.stage}'
+and u.id = ${req.query.user_id}
 order by p.due_date`).then(assigned => {
         res.json(assigned)
     })
