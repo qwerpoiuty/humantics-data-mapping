@@ -7,9 +7,9 @@
         			<div class = "row-centered outline-box pad-25">
 										<div class="col-lg-12 no-pad col-centered">
 											<ul class="tab clearfix">
-												  <li><a class="btn btn-tab active" ng-click="openBrowse($event, 'attributeImpact')">Attribute Impact<br><span class="arrow-down"></span></a></li>
-												  <li><a class="btn btn-tab" ng-click="openBrowse($event, 'tableImpact')">Table Impact<br><span class="arrow-down"></span></a></li>
-												  <li><a class="btn btn-tab" ng-click="openBrowse($event, 'allMappings')">Total Mapping<br><span class="arrow-down"></span></a></li>
+												  <li><a class="btn btn-tab active" ng-click="openBrowse(event, 'attributeImpact')">Attribute Impact<br><span class="arrow-down"></span></a></li>
+												  <li><a class="btn btn-tab" ng-click="openBrowse(event, 'tableImpact')">Table Impact<br><span class="arrow-down"></span></a></li>
+												  <li><a class="btn btn-tab" ng-click="openBrowse(event, 'allMappings')">Total Mapping<br><span class="arrow-down"></span></a></li>
 												</ul>
 											<div id="attributeImpact" class="tabcontent">
 											    <form method="post">
@@ -206,8 +206,7 @@
 									<h3 style="display:inline; padding-top:5px; color:white;">Targets</h3>
 								</div>
 								<div class="mail-body" style="border-left: 1px grey; border-right: 2px grey; overflow-y:scroll; max-height:85%;">
-									<h3 ng-show="targets.length ==0">That attribute is not referenced as a source</h3>
-									<table ng-hide="targets.length ==0" class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
+									<table class = "footable table table-striped toggle-arrow-tiny" data-page-size="8">
 										<thead>
 										<tr>
 											<th data-toggle="true">Attribute Id</th>
@@ -252,9 +251,8 @@
 		                        </div>
 		                    </div>
                 		</div>
-					</div>
-				</div>
-				<div ng-if="allMapping" class="col-lg-6 pull-right percent-100">
+					</div>					
+					<div ng-if="allMapping" class="row percent-100">
 						<div class="col-lg-12">
 							<div class = "ibox">
 								<div class = "ibox-content">
@@ -302,6 +300,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
    			</div>
    			</div>
 		</div>

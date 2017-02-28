@@ -1,26 +1,56 @@
 
 
 <div class="row headerbar clearfix head-cont" ng-if="user">
-    <div class="col-lg-6 col-sm-6 clearfix pad-lt-0 logo-wrapr">
-        <div class="logo-wrap"><img src="img/co-logo.png" title="Data Mapping" alt="Data Mapping" /></div>
-        <div class="user-wel" ng-if="user">Hi, {{user.email}}</div>
-    </div>  
+            <div class="col-lg-6 col-sm-6 clearfix pad-lt-0 logo-wrapr">
+                <div class="logo-wrap"><a href="./"><img src="img/co-logo.png" title="Data Mapping" alt="Data Mapping" /></a></div>
+                <div class="user-wel" ng-if="user">Hi, {{user.email}}</div>
+            </div>  
 
-    <div class="col-lg-6 col-sm-6 clearfix pad-rt-0 text-right head-contr">
-        <span class="temp-span"></span>
-        <ul class="menulinks ">
-        <li class="mn-link" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-            <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
-        </li>
+            <div class="col-lg-6 col-sm-6 clearfix pad-rt-0 text-right head-contr">
+                    <span class="temp-span"></span>
+                    <ul class="menulinks ">
+            <li class="mn-link" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+                <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
+            </li>
         </ul>
-            <a class="btn btn-red header-btn"><i class="fa fa-bell-o"></i> 2</a>
-            <a class="btn btn-blue header-btn mar-rt-0" ng-if="!user" ui-sref="login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-            <a class="btn btn-blue header-btn mar-rt-0" ng-if="user" ng-click = "logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
-    </div>          
-</div>
+                    <ul class="notifications">
+                        <li class="dropdown"><a class="btn btn-red header-btn"><i class="fa fa-bell-o"></i> 5</a>
+                            <ul class="dropdown-content">
+                                <li>
+                                    <a href="#">Sed ut perspiciatis
+                                    <span>Sed quia non numquam eius</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Sed ut perspiciatis
+                                    <span>Sed quia non numquam eius</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Sed ut perspiciatis
+                                    <span>Sed quia non numquam eius</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Sed ut perspiciatis
+                                    <span>Sed quia non numquam eius</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Sed ut perspiciatis
+                                    <span>Sed quia non numquam eius</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a class="btn btn-blue header-btn mar-rt-0" ng-if="!user" ui-sref="login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+                    <a class="btn btn-blue header-btn mar-rt-0" ng-if="user" ng-click = "logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+            </div>          
+        </div>
 
 
-<div class="row wrapper row-fix top-til" ng-if="user">
+<div class="row wrapper row-fix top-til" >
     <div class="col-lg-12">
         <h2 class="main-title">{{pagetitle || "Your Dashboard"}}</h2>
     </div>

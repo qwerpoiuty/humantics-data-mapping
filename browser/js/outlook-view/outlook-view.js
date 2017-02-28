@@ -27,7 +27,7 @@ app.config(function($stateProvider) {
 });
 
 app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, user, mappingFactory, $stateParams, $modal, projectFactory, $state, $uibModal, notificationService) {
-    $scope.transform = false
+    $scope.adding = true
 
     $scope.mappingNotes = false
     $scope.tableNotes = false
@@ -101,7 +101,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.addAttribute = function(attribute) {
-        $scope.transform = false
+        $scope.adding = false
         $scope.temp = $scope.table
         $scope.temp.target = {}
         $scope.temp.target.properties = []
@@ -111,11 +111,25 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
     $scope.selectAttribute = function(attribute) {
         $scope.editing = "none"
-        $scope.transform = true
+        $scope.adding = true
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
-            if (typeof mapping === "object" && mapping.attr_id != null) {
+            if (typeof mapping === "object") {
                 $scope.sources = mapping
+                if ($scope.projectMember) {
+                    switch ($scope.sources[0].mapping_status) {
+                        case "pending review":
+                            $scope.permissions = 2
+                            break
+                        case "pending approval":
+                            $scope.permissions = 3
+                            break
+                        default:
+                            $scope.permissions = 1
+                    }
+                } else {
+                    $scope.permissions = 5
+                }
             } else $scope.sources = []
 
             $scope.targetMapping = attribute
@@ -151,6 +165,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
+        console.log($scope.user.power_level, $scope.projectMember, $scope.table.table_status)
         if ($scope.user.power_level != 1 || !$scope.projectMember || $scope.table.table_status != 'Incomplete') {
             notificationService.displayNotification('You don\'t have permission to do that')
             return
@@ -160,7 +175,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     }
 
     $scope.deleteSource = function() {
-        if ($scope.user.power_level != 1 || !$scope.projectMember || $scope.table.table_status != 'Incomplete') {
+        if ($scope.user.power_level != 1 || $scope.member) {
             notificationService.displayNotification('You don\'t have permissions to do that')
             return
         }

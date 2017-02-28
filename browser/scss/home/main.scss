@@ -278,7 +278,7 @@ ul.tab li a {
 /* Change background color of links on hover */
 
 ul.tab li a:hover {
-    background-color: #f3f3f4;
+    background-color: #fff;
 }
 
 
@@ -286,7 +286,7 @@ ul.tab li a:hover {
 
 ul.tab li a:focus,
 .active {
-    background-color: #f3f3f4;
+    background-color: #fff;
 }
 
 .tabcontent {
@@ -594,11 +594,11 @@ a.active .arrow-down {
 }
 
 .home-dash .tabFieldset > #searchBar {
-    width: 80%
+    width: 100%
 }
 
-.home-dash .tabFieldset > #submitButton.search-subm,
-.search-subm {
+.home-dash .tabFieldset > #submitButton.search-subm, .search-subm {
+    position: absolute;
     top: 0;
     right: 0;
     margin: 0;
@@ -615,7 +615,7 @@ a.active .arrow-down {
 }
 
 .no-mar {
-    margin: 0
+    margin: 0 !important;
 }
 
 .no-pad {
@@ -711,7 +711,7 @@ h5.lt-att-info {
 
 .fixed-het-420px .scroll {
     overflow: auto;
-    height: 330px;
+    height: 384px;
 }
 
 .prog-status tr td {
@@ -1114,6 +1114,7 @@ h4.mr-top-25{    margin-top: 25px !important;
     border-color: #d8d8d8;
 }
 .reportingpage .tabFieldset > #submitButton.search-subm, .search-subm {
+    position: absolute;
     top: 0;
     right: 0;
     margin: 0;
@@ -1131,6 +1132,178 @@ h4.mr-top-25{    margin-top: 25px !important;
 .action{    font-size: 18px;
     padding: 8px 24px 9px;}
 .title-lab.lt-att-info{width: 100%; margin-bottom: 10px;}
+#main > .middle-box{padding-top:0; color:#fff}
+#main > .middle-box .loginscreen{    background: #2965ba;width: 100%;
+    padding: 25px;}
+    .login-logo {margin-top:0}
+.login-logo img{max-width:150px;}
+
+h3.login-title {
+    font-size: 24px;
+    margin: 0 0 5px;
+}
+p.start-map {
+    font-size: 19px;
+    border-top: 1px solid #5786ca;
+    padding-top: 17px;
+    margin-top: 12px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+input#submit.login-btn {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    padding: 7px 22px;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;    margin-top: 13px;
+}
+a.forgotpassword {
+    color: #fff;
+    display: block;
+    padding: 5px;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+input.login-input {
+    padding: 10px 14px;
+    height: inherit;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 0;
+    color: #333;
+}
+
+.middle-box.text-center.ng-scope {
+    max-width: 360px;
+}
+pd-tp-25px{padding-top:25px;}
+
+.notifications{list-style: none; margin:0; padding:0; display: inline-block;}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+       display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 250px;
+    padding: 12px 16px;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: 44px;
+    right: 4px;
+    border: 1px solid #d6d6d6;
+    text-align: left;
+ font-size: 13px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content > li a{display: block;    padding: 10px 15px;}
+.dropdown-content > li {
+    border-bottom: 1px solid #e8e8e8;
+}
+.dropdown-content > li:hover{background:#efefef;}
+fieldset.tabFieldsetSystem {
+    padding-top: 0;
+}
+
+.dropdown-content > li a span{display:block; color: #555; font-size:13px;}
+
+.tabwrapper{position: relative;
+    height: 41px;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;}
+
+ul.admin-sectab {
+       margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+.ibox > .ibox-content{border:0}
+
+.no-top-border{border-top:0}
+.text-left{text-align: left;}
+.div-center{display: inline-block; float:none;}
+.adminpage .ui-select-container{width: 100%;}
+.adminpage .ui-select-toggle.form-control, .adminpage input.form-control{    margin-left: 0;
+    padding: 8px 15px;
+    border-color: #d8d8d8;
+    width: 100%;
+    font-size: 17px;
+    height: inherit;}
+
+    .m-b-20{margin-bottom:20px;}
+
+.adminpage .input-group{width:100%;}
+#editSection{display: none;}
+.adminpage .mainadmin-nav > ul.tab{border: 0; overflow: visible;text-align: center;}
+
+.adminpage .mainadmin-nav > ul.tab li{float: none; display:inline-block;}
+
+#editSection ul.tab, #createSection ul.tab{    border: 0;
+    background: #eee;}
+.lin-h-0{line-height:0}
+.m-r-7{margin-right:7px !important;}
+
+#editSection ul.tab li a, #createSection ul.tab li a{color: #555;
+    padding: 8px 18px 10px;
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+    border-left: 0;
+    font-size: 15px;
+    font-weight: 600;}
+
+    #editSection ul.tab li a:hover, #createSection ul.tab li a:hover, #editSection ul.tab li a.active-tab, #createSection ul.tab li a.active-tab{background-color: #fff; border-bottom-color: #fff;}
+.admintitle{width:100%; text-align: center; margin: 20px 0;}
+.pad-top-0{padding-top:0 !important;}
+
+.ng-valid fieldset.tabFieldset2{margin-top:0 !important;}
+.p-r-0{padding-right: 0 !important;}
+.p-l-0{padding-left: 0 !important;}
+
+
+.adminpage .edit-table .footable-row-detail-row{padding:5px 0;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1162,10 +1335,6 @@ h4.mr-top-25{    margin-top: 25px !important;
     }
 }
 
-.panel-group{
-    overflow:hidden;
-}
-
 @media (max-width: 600px) {
     ul.menulinks {
         width: 100%;
@@ -1190,4 +1359,9 @@ h4.mr-top-25{    margin-top: 25px !important;
     .col-centereddiv {
         padding: 0
     }
+
+
+
+    .dropdown-content {
+    right: -147px;}
 }
