@@ -46,8 +46,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
     $scope.dbEdit = false
     $scope.schemaEdit = false
     $scope.tableEdit = false
-    $scope.createProgress = false
-    $scope.updateProgress = false
+
     $scope.clearFilter = function() {
         $('.filter-status').val('');
         $('.footable').trigger('footable_clear_filter');
@@ -179,59 +178,34 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
 
     //ADMIN CREATES
     $scope.createUser = user => {
-        if ($scope.createProgress) {
-            return
-        }
-        $scope.createProgress = true
         var bool = false
         $scope.currentUsers.forEach(currentUser => {
             if (currentUser.email == user.email) {
                 bool = true
             }
         })
-        if (bool) {
-            $scope.createProgress = false
-            return $scope.getNotification(`User already exists`)
-        }
+        if (bool) return $scope.getNotification(`User already exists`)
         if (user.confirm !== user.password) return $scope.getNotification(`Passwords don\'t match`)
 
         userFactory.createUser(user).then(() => {
+            $scope.getNotification(`User created`)
             $scope.reset()
-            var modalInstance = $scope.getNotification(`User created`)
-            modalInstance.result.then(result => {
-                $scope.createProgress = false
-            })
-
         })
     }
     $scope.systemCreate = system => {
         var bool = false
-        if ($scope.createProgress) {
-            return
-        }
-        $scope.createProgress = true
         $scope.systems.forEach(currentSystem => {
             if (currentSystem.system_name.toLowerCase() === system.system_name.toLowerCase()) bool = true
         })
-        if (bool) {
-            $scope.createProgress = false
-            return $scope.getNotification(`System already exists.`)
-        }
+        if (bool) return $scope.getNotification(`System already exists.`)
 
         dataFactory.createSystem(system).then(() => {
             $scope.reset()
             dataFactory.getSystems().then(systems => $scope.systems = systems[0])
             var modalInstance = $scope.getNotification(`Systm Created`)
-            modalInstance.result.then(result => {
-                $scope.createProgress = false
-            })
         })
     }
     $scope.createDatabase = db => {
-        if ($scope.createProgress) {
-            return
-        }
-        $scope.createProgress = true
         var bool = false
         var dbToBeCreated = {
             db_name: db.db_name,
@@ -246,16 +220,9 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createDatabase(dbToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`Database created`)
-            modalInstance.result.then(result => {
-                $scope.createProgress = false
-            })
         })
     }
     $scope.schemaCreate = schema => {
-        if ($scope.createProgress) {
-            return
-        }
-        $scope.createProgress = true
         var schemaToBeCreated = {
             schema_name: schema.schema_name,
             db: $scope.createDb.value.db_id,
@@ -271,16 +238,9 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createSchema(schemaToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`Schema created`)
-            modalInstance.result.then(result => {
-                $scope.createProgress = false
-            })
         })
     }
     $scope.createTable = function(table) {
-        if ($scope.createProgress) {
-            return
-        }
-        $scope.createProgress = true
         var tableToBeCreated = {
             schema: $scope.createSchema.value.schema_id,
             table_name: table.table_name
@@ -296,19 +256,12 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createTable(tableToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`Table created`)
-            modalInstance.result.then(result => {
-                $scope.createProgress = false
-            })
         })
     }
 
     //ADMIN EDITS
 
     $scope.updateSystem = system => {
-        if ($scope.updateProgress) {
-            return
-        }
-        $scope.updateProgress = true
         var bool = false
         let updatedSystem = {
             system_name: system.system_name,
@@ -324,14 +277,9 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateSystem(updatedSystem).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`System updated`)
-            $scope.updateProgress = false
         })
     }
     $scope.updateDatabase = db => {
-        if ($scope.updateProgress) {
-            return
-        }
-        $scope.updateProgress = true
         let updatedDb = {
             db_name: db,
             db_id: $scope.selectedDb.value.db_id,
@@ -347,15 +295,10 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateDatabase(updatedDb).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`Database updated`)
-            $scope.updateProgress = false
         })
     }
 
     $scope.updateSchema = schema => {
-        if ($scope.updateProgress) {
-            return
-        }
-        $scope.updateProgress = true
         let updatedSchema = {
             schema_name: schema,
             schema_id: $scope.selectedSchema.value.schema_id,
@@ -376,15 +319,10 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateSchema(updatedSchema).then(() => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`Schema updated`)
-            $scope.updateProgress = false
         })
     }
 
     $scope.updateUser = user => {
-        if ($scope.updateProgress) {
-            return
-        }
-        $scope.updateProgress = true
         if (user.confirm !== user.password) {
             var modalInstance = $scope.getNotification(`Passwords don\'t match`)
             return
@@ -392,14 +330,9 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         userFactory.updateUser(user).then(response => {
             $scope.reset()
             var modalInstance = $scope.getNotification(`User updated`)
-            $scope.updateProgress = false
         })
     }
     $scope.adminDelete = (structure, id) => {
-        if ($scope.updateProgress) {
-            return
-        }
-        $scope.updateProgress = true
         var command = 'delete' + structure
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/confirmation/confirmation.html",
@@ -412,10 +345,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
             }
         })
         modalInstance.result.then(result => {
-            if (!result) {
-                $scope.updateProgress = false
-                return
-            }
+            if (!result) return
             dataFactory[command](id).then(() => {
                 if (structure == 'System') {
                     dataFactory.getSystems().then(systems => {
@@ -428,7 +358,6 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
                 }
                 var modalInstance = $scope.getNotification(`${structure} deleted`)
                 $scope.reset()
-                $scope.updateProgress = false
             })
         })
 
@@ -493,14 +422,39 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         }
         //detailed view transition
 
+
+    //extra code added by ND - start
+    $scope.openBrowse3 = function(evt, tabSelection) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent3");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Show the current tab, and add an "active" class to the link that opened the tab
+            document.getElementById(tabSelection).style.display = "block";
+            evt.currentTarget.className += " active";
+            $scope.tables = null
+            $scope.reset()
+        }
+        //extra code added by ND - End
+
     $scope.detailedView = function(tableId) {
         $state.go('detailed', {
             tableId: tableId
         })
     }
 
-    document.getElementById("adminCreateTab").style.display = "inline";
-    document.getElementById("adminCreateTab").className += " active";
-    document.getElementById("adminEditTab").style.display += "block";
-    document.getElementById("adminEditTab").className += " active";
+    //extra code added by ND - start
+    document.getElementById("createSection").style.display = "block";
+    document.getElementById("createSection").className += " active";
+    //extra code added by ND - End
+
+    document.getElementById("systemTab").style.display = "block";
+    document.getElementById("systemTab").className += " active";
+    document.getElementById("systemETab").style.display += "block";
+    document.getElementById("systemETab").className += " active";
 });
