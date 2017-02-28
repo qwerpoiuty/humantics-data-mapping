@@ -43,6 +43,8 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 scope.pagetitle = scope.headers[toState.name]
             })
             scope.user = null;
+
+
             scope.isLoggedIn = function() {
                 return AuthService.isAuthenticated();
             };
@@ -60,6 +62,9 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                 });
             };
 
+            var removeUser = function() {
+                scope.user = null;
+            };
             scope.logout = function() {
                 AuthService.logout().then(function() {
                     $state.go('login');
