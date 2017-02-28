@@ -50,14 +50,7 @@ order by a1.date_modified`).then(mappings => {
 
 router.get('/assignedMappings', (req, res) => {
     db.query(`
-select t.table_name, t.table_status ,p.project_name,t.table_id from projects p
-inner join users u
- on u.id = any(p.members)
-inner join tables t
- on t.table_id = any(p.tables)
-where t.table_status = '${req.query.stage}'
-and u.id = ${req.query.user_id}
-order by p.due_date`).then(assigned => {
+select t.table_name, t.table_status ,p.project_name,t.table_id from projects p inner join users u on u.id = any(p.members) inner join tables t on t.table_id = any(p.tables) where t.table_status = '${req.query.stage}' and u.id = ${req.query.user_id}order by p.due_date`).then(assigned => {
         res.json(assigned)
     })
 })
@@ -71,19 +64,7 @@ router.get('/getPermission/:user_id', (req, res) => {
 })
 
 router.get('/single/:id', function(req, res) {
-    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version from projects p
- inner join tables t
-  on t.table_id = any(p.tables)
- inner join schemas s
-  on t.schema = s.schema_id
- inner join dbs on s.db = dbs.db_id
- inner join attributes a
-  on a.table_id = t.table_id
- full outer join (select * from mappings m1
-where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m
-  on m.target = a.attr_id
-where p.project_id = ${req.params.id}
-order by t.table_id, attr_id`)
+    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version from projects p inner join tables t on t.table_id = any(p.tables) inner join schemas s on t.schema = s.schema_id inner join dbs on s.db = dbs.db_id inner join attributes a on a.table_id = t.table_id full outer join (select * from mappings m1 where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m on m.target = a.attr_id where p.project_id = ${req.params.id} order by t.table_id, attr_id`)
         .then(function(projects) {
             res.json(projects)
         })
