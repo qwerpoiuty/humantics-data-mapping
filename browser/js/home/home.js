@@ -17,6 +17,7 @@ app.config(function($stateProvider) {
                     .then(user => {
                         return projectFactory.getAssignedMappings(user)
                     }).then(assignedMappings => {
+                        console.log(assignedMappings[0])
                         return assignedMappings
                     })
             }
