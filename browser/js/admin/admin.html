@@ -19,144 +19,147 @@
                                         <li><a class="tablinks" ng-click="openBrowse(event, 'tableTab')">Table</a></li>
                                         <li><a class="tablinks" ng-click="openBrowse(event, 'userTab')">User</a></li>
                                     </ul>
-                                    <div id="systemTab" class="tabcontent pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldsetSystem">
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Name of new System" class="form-control" ng-model="systemToBeCreated.system_name">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Business name of new System" class="form-control" ng-model="systemToBeCreated.system_business_name">
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                        <button type="button" class="btn btn-blue pull-right no-mar" ng-click="systemCreate(systemToBeCreated)">Save</button>
-                                    </div>
-                                    <div id="databaseTab" class="tabcontent pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldsetDatabase pad-top-0">
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createSystem.value">
-                                                        <ui-select-match placeholder="Select a System">
-                                                            {{$select.selected.system_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                            <span ng-bind="system.system_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Name of new Database" class="form-control" ng-model="dbToBeCreated.db_name">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Business name of new Database" class="form-control" ng-model="dbToBeCreated.db_business_name">
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createDatabase(dbToBeCreated)">Save</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="schemaTab" class="tabcontent pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldsetSchema pad-top-0">
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createSystem.value">
-                                                        <ui-select-match placeholder="Select a System">
-                                                            {{$select.selected.system_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                            <span ng-bind="system.system_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createDb.value">
-                                                        <ui-select-match placeholder="Select a Database">
-                                                            {{$select.selected.db_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                                            <span ng-bind="db.db_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeCreated.schema_name">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Business name of new Schema" class="form-control" ng-model="schemaToBeCreated.schema_business_name">
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="schemaCreate(schemaToBeCreated)">Save</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="tableTab" class="tabcontent pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldset3 pad-top-0 no-mar">
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createSystem.value">
-                                                        <ui-select-match placeholder="Select a System">
-                                                            {{$select.selected.system_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                            <span ng-bind="system.system_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createDb.value">
-                                                        <ui-select-match placeholder="Select a Database">
-                                                            {{$select.selected.db_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                                            <span ng-bind="db.db_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="createSchema.value">
-                                                        <ui-select-match placeholder="Select a Schema">
-                                                            {{$select.selected.schema_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
-                                                            <span ng-bind="schema.schema_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Name of new Table" class="form-control" ng-model="tableToBeCreated.table_name" />
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="Name of new Table" class="form-control" ng-model="tableToBeCreated.table_business_name" />
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createTable(tableToBeCreated)">Save</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="userTab" class="tabcontent pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldset3 pad-top-0 no-mar">
-                                                <div class="input-group m-b">
-                                                    <input type="text" placeholder="The User's Email" class="form-control" ng-model="userToBeCreated.email">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="password" placeholder="The User's Password" class="form-control" ng-model="userToBeCreated.password">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <input type="password" placeholder="Verify the Password" class="form-control" ng-model="userToBeCreated.confirm">
-                                                </div>
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="userToBeCreated.power_level">
-                                                        <ui-select-match placeholder="Select Power level">
-                                                            {{$select.selected.title}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="level in (power_levels | filter: $select.search) track by $index">
-                                                            <span ng-bind="level.title"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createUser(userToBeCreated)">Save</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
+                                    <img src="img/spinner.gif" ng-show="inProgress"/>
+                                    <div ng-hide="inProgress">
+	                                    <div id="systemTab" class="tabcontent pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldsetSystem">
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Name of new System" class="form-control" ng-model="systemToBeCreated.system_name">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Business name of new System" class="form-control" ng-model="systemToBeCreated.system_business_name">
+	                                                </div>
+	                                            </fieldset>
+	                                        </form>
+	                                        <button type="button" class="btn btn-blue pull-right no-mar" ng-click="systemCreate(systemToBeCreated)">Save</button>
+	                                    </div>
+	                                    <div id="databaseTab" class="tabcontent pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldsetDatabase pad-top-0">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createSystem.value">
+	                                                        <ui-select-match placeholder="Select a System">
+	                                                            {{$select.selected.system_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                            <span ng-bind="system.system_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Name of new Database" class="form-control" ng-model="dbToBeCreated.db_name">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Business name of new Database" class="form-control" ng-model="dbToBeCreated.db_business_name">
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createDatabase(dbToBeCreated)">Save</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="schemaTab" class="tabcontent pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldsetSchema pad-top-0">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createSystem.value">
+	                                                        <ui-select-match placeholder="Select a System">
+	                                                            {{$select.selected.system_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                            <span ng-bind="system.system_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createDb.value">
+	                                                        <ui-select-match placeholder="Select a Database">
+	                                                            {{$select.selected.db_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+	                                                            <span ng-bind="db.db_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeCreated.schema_name">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Business name of new Schema" class="form-control" ng-model="schemaToBeCreated.schema_business_name">
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="schemaCreate(schemaToBeCreated)">Save</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="tableTab" class="tabcontent pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldset3 pad-top-0 no-mar">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createSystem.value">
+	                                                        <ui-select-match placeholder="Select a System">
+	                                                            {{$select.selected.system_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                            <span ng-bind="system.system_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createDb.value">
+	                                                        <ui-select-match placeholder="Select a Database">
+	                                                            {{$select.selected.db_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+	                                                            <span ng-bind="db.db_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="createSchema.value">
+	                                                        <ui-select-match placeholder="Select a Schema">
+	                                                            {{$select.selected.schema_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
+	                                                            <span ng-bind="schema.schema_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Name of new Table" class="form-control" ng-model="tableToBeCreated.table_name" />
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="Name of new Table" class="form-control" ng-model="tableToBeCreated.table_business_name" />
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createTable(tableToBeCreated)">Save</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="userTab" class="tabcontent pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldset3 pad-top-0 no-mar">
+	                                                <div class="input-group m-b">
+	                                                    <input type="text" placeholder="The User's Email" class="form-control" ng-model="userToBeCreated.email">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="password" placeholder="The User's Password" class="form-control" ng-model="userToBeCreated.password">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <input type="password" placeholder="Verify the Password" class="form-control" ng-model="userToBeCreated.confirm">
+	                                                </div>
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="userToBeCreated.power_level">
+	                                                        <ui-select-match placeholder="Select Power level">
+	                                                            {{$select.selected.title}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="level in (power_levels | filter: $select.search) track by $index">
+	                                                            <span ng-bind="level.title"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="createUser(userToBeCreated)">Save</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                </div>
                                 </div>
                             </div>
                             <div id="editSection" class="admin-edit tabcontent3">
@@ -169,201 +172,204 @@
                                         <li><a class="tablinks2" ng-click="openBrowse2(event, 'tableETab')">Table</a></li>
                                         <li><a class="tablinks2" ng-click="openBrowse2(event, 'userETab')">User</a></li>
                                     </ul>
-                                    <div id="systemETab" class="tabcontent2 pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset ng-show="!sEdit" class="tabFieldsetSystem">
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="selectedSystem.value">
-                                                        <ui-select-match placeholder="Select a System">
-                                                            {{$select.selected.system_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                            <span ng-bind="system.system_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('sEdit')" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>
-                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('System',selectedSystem.value.system_id)" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
-                                            </fieldset>
-                                            <fieldset ng-show="sEdit" class="tabFieldsetSystem">
-                                                <div class="input-group m-b">
-                                                    <span class="input-group-addon"><div class="newTableText">System Name</div></span>
-                                                    <input type="text" placeholder="New name for the system" class="form-control" ng-model="systemToBeUpdated.system_name">
-                                                </div>
-                                                <div class="input-group m-b">
-                                                    <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
-                                                    <input type="text" placeholder="New business name for the system" class="form-control" ng-model="systemToBeUpdated.system_business_name">
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateSystem(systemToBeUpdated)"><i class="fa fa-save"></i> Save</button>
-                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('sEdit')"><i class="fa fa-close"></i> Cancel</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="databaseETab" class="tabcontent2 pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset ng-show="!dbEdit" class="tabFieldsetDatabase pad-top-0">
-                                                <div class="input-group m-b lin-h-0">
-                                                    <ui-select ng-model="selectedSystem.value">
-                                                        <ui-select-match placeholder="Select a System">
-                                                            {{$select.selected.system_name}}
-                                                        </ui-select-match>
-                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                            <span ng-bind="system.system_name"></span>
-                                                        </ui-select-choices>
-                                                    </ui-select>
-                                                </div>
-                                                <div class="input-group m-b lin-h-0">
-                                                        <ui-select ng-model="selectedDb.value">
-                                                            <ui-select-match placeholder="Select a Database">
-                                                                {{$select.selected.db_name}}
-                                                            </ui-select-match>
-                                                            <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                                                <span ng-bind="db.db_name"></span>
-                                                            </ui-select-choices>
-                                                        </ui-select>
-                                                </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('dbEdit')" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>
-                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('Database',selectedDb.value.db_id)" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
-                                            </fieldset>
-                                            <fieldset ng-show="dbEdit" class="tabFieldsetSystem">
-                                                <div class="input-group m-b lin-h-0">
-                                                            <span class="input-group-addon"><div class="newTableText">Database Name</div></span>
-                                                            <input type="text" placeholder="Name of new Database" class="form-control" ng-model="dbToBeUpdated.db_name">
-                                                        </div>
-                                                        <div class="input-group m-b lin-h-0">
-                                                            <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
-                                                            <input type="text" placeholder="New Business Name" class="form-control" ng-model="dbToBeUpdated.db_business_name">
-                                                        </div>
-                                                        <button type="button" class="btn btn-blue pull-right m-r-7" ng-click="updateDatabase(dbToBeUpdated)">Save</button>
-                                                        <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('dbEdit')"><i class="fa fa-close"></i> Cancel</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="schemaETab" class="tabcontent2 pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset ng-show="!schemaEdit" class="tabFieldset2 no-mar">
-                                                		<div class="input-group m-b lin-h-0">
-                                                            <ui-select ng-model="selectedSystem.value">
-                                                                <ui-select-match placeholder="Select a System">
-                                                                    {{$select.selected.system_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                                    <span ng-bind="system.system_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                        <div class="input-group m-b lin-h-0">
-                                                            <ui-select ng-model="selectedDb.value">
-                                                                <ui-select-match placeholder="Select a Database">
-                                                                    {{$select.selected.db_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                                                    <span ng-bind="db.db_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                    	<div class="input-group m-b">
-                                                            <ui-select ng-model="selectedSchema.value">
-                                                                <ui-select-match placeholder="Select a Schema">
-                                                                    {{$select.selected.schema_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
-                                                                    <span ng-bind="schema.schema_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('schemaEdit')"><i class="fa fa-pencil"></i> Edit</button>
-                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('Schema',selectedSchema.value.schema_id)"><i class="fa fa-trash-o"></i> Delete</button>
-                                                    
-                                            </fieldset>
-                                            <fieldset ng-show="schemaEdit" class="tabFieldsetSystem">
-                                                <div class="input-group m-b">
-                                                            <span class="input-group-addon"><div class="newTableText">Schema Name</div></span>
-                                                            <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeUpdated.schema_name">
-                                                        </div>
-                                                        <div class="input-group m-b">
-                                                            <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
-                                                            <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeUpdated.schema_business_name">
-                                                        </div>
-                                                        <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateSchema(schemaToBeUpdated)"><i class="fa fa-save"></i> Save</button>
-                                                        <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('schemaEdit')"><i class="fa fa-close"></i> Cancel</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="tableETab" class="tabcontent2 pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldset2">
-                                                    <div class="input-group m-b lin-h-0">
-                                                            <ui-select ng-model="selectedSystem.value">
-                                                                <ui-select-match placeholder="Select a System">
-                                                                    {{$select.selected.system_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
-                                                                    <span ng-bind="system.system_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                        <div class="input-group m-b lin-h-0">
-                                                            <ui-select ng-model="selectedDb.value">
-                                                                <ui-select-match placeholder="Select a Database">
-                                                                    {{$select.selected.db_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
-                                                                    <span ng-bind="db.db_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                        <div class="input-group m-b lin-h-0">
-                                                            <ui-select ng-model="selectedSchema.value">
-                                                                <ui-select-match placeholder="Select a Schema">
-                                                                    {{$select.selected.schema_name}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
-                                                                    <span ng-bind="schema.schema_name"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                        <button class="btn btn-blue pull-right no-mar" ng-click="findTables()"><i class="fa fa-search"></i> Search</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                    <div id="userETab" class="tabcontent2 tabcontent2 pad-25 clearfix">
-                                        <form method="post">
-                                            <fieldset class="tabFieldset3 no-mar">
-                                                    <div class="input-group m-b lin-h-0">
-                                                        <ui-select ng-model="userToBeUpdated.email">
-                                                            <ui-select-match placeholder="Select a User">
-                                                                {{$select.selected.email}}
-                                                            </ui-select-match>
-                                                            <ui-select-choices repeat="user in (currentUsers | filter: $select.search) track by $index">
-                                                                <span ng-bind="user.email"></span>
-                                                            </ui-select-choices>
-                                                        </ui-select>
-                                                    </div>
-                                                    <div class="input-group m-b lin-h-0">
-                                                            <span class="input-group-addon"><div class="newTableText">Powerlevel</div></span>
-                                                            <ui-select ng-model="userToBeUpdated.power_level">
-                                                                <ui-select-match placeholder="Power levels">
-                                                                    {{$select.selected.title}}
-                                                                </ui-select-match>
-                                                                <ui-select-choices repeat="level in (power_levels | filter: $select.search) track by $index">
-                                                                    <span ng-bind="level.title"></span>
-                                                                </ui-select-choices>
-                                                            </ui-select>
-                                                    </div>
-                                                    <div class="input-group m-b">
-                                                        <span class="input-group-addon"><div class="newTableText">Password</div></span>
-                                                        <input type="password" placeholder="The User's new Password" class="form-control" ng-model="userToBeUpdated.password">
-                                                    </div>
-                                                    <div class="input-group m-b">
-                                                            <span class="input-group-addon"><div class="newTableText">Verify</div></span>
-                                                            <input type="password" placeholder="Verify the Password" class="form-control" ng-model="userToBeUpdated.confirm">
-                                                    </div>
-                                                    <!--  <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px"><i class="fa fa-trash-o"></i> Delete</button> -->
-                                                    <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateUser(userToBeUpdated)" style="margin-right:15px"><i class="fa fa-pencil"></i> Update</button>
-                                            </fieldset>
-                                        </form>
-                                    </div>
+                                    <img src="img/spinner.gif" ng-show="inProgress"/>
+                                    <div ng-hide="inProgress">
+	                                    <div id="systemETab" class="tabcontent2 pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset ng-show="!sEdit" class="tabFieldsetSystem">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="selectedSystem.value">
+	                                                        <ui-select-match placeholder="Select a System">
+	                                                            {{$select.selected.system_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                            <span ng-bind="system.system_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('sEdit')" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>
+	                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('System',selectedSystem.value.system_id)" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
+	                                            </fieldset>
+	                                            <fieldset ng-show="sEdit" class="tabFieldsetSystem">
+	                                                <div class="input-group m-b">
+	                                                    <span class="input-group-addon"><div class="newTableText">System Name</div></span>
+	                                                    <input type="text" placeholder="New name for the system" class="form-control" ng-model="systemToBeUpdated.system_name">
+	                                                </div>
+	                                                <div class="input-group m-b">
+	                                                    <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
+	                                                    <input type="text" placeholder="New business name for the system" class="form-control" ng-model="systemToBeUpdated.system_business_name">
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateSystem(systemToBeUpdated)"><i class="fa fa-save"></i> Save</button>
+	                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('sEdit')"><i class="fa fa-close"></i> Cancel</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="databaseETab" class="tabcontent2 pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset ng-show="!dbEdit" class="tabFieldsetDatabase pad-top-0">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                    <ui-select ng-model="selectedSystem.value">
+	                                                        <ui-select-match placeholder="Select a System">
+	                                                            {{$select.selected.system_name}}
+	                                                        </ui-select-match>
+	                                                        <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                            <span ng-bind="system.system_name"></span>
+	                                                        </ui-select-choices>
+	                                                    </ui-select>
+	                                                </div>
+	                                                <div class="input-group m-b lin-h-0">
+	                                                        <ui-select ng-model="selectedDb.value">
+	                                                            <ui-select-match placeholder="Select a Database">
+	                                                                {{$select.selected.db_name}}
+	                                                            </ui-select-match>
+	                                                            <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+	                                                                <span ng-bind="db.db_name"></span>
+	                                                            </ui-select-choices>
+	                                                        </ui-select>
+	                                                </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('dbEdit')" style="margin-right:15px;"><i class="fa fa-pencil"></i> Edit</button>
+	                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('Database',selectedDb.value.db_id)" style="margin-right:15px;"><i class="fa fa-trash-o"></i> Delete</button>
+	                                            </fieldset>
+	                                            <fieldset ng-show="dbEdit" class="tabFieldsetSystem">
+	                                                <div class="input-group m-b lin-h-0">
+	                                                            <span class="input-group-addon"><div class="newTableText">Database Name</div></span>
+	                                                            <input type="text" placeholder="Name of new Database" class="form-control" ng-model="dbToBeUpdated.db_name">
+	                                                        </div>
+	                                                        <div class="input-group m-b lin-h-0">
+	                                                            <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
+	                                                            <input type="text" placeholder="New Business Name" class="form-control" ng-model="dbToBeUpdated.db_business_name">
+	                                                        </div>
+	                                                        <button type="button" class="btn btn-blue pull-right m-r-7" ng-click="updateDatabase(dbToBeUpdated)">Save</button>
+	                                                        <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('dbEdit')"><i class="fa fa-close"></i> Cancel</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="schemaETab" class="tabcontent2 pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset ng-show="!schemaEdit" class="tabFieldset2 no-mar">
+	                                                		<div class="input-group m-b lin-h-0">
+	                                                            <ui-select ng-model="selectedSystem.value">
+	                                                                <ui-select-match placeholder="Select a System">
+	                                                                    {{$select.selected.system_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                                    <span ng-bind="system.system_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                        <div class="input-group m-b lin-h-0">
+	                                                            <ui-select ng-model="selectedDb.value">
+	                                                                <ui-select-match placeholder="Select a Database">
+	                                                                    {{$select.selected.db_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+	                                                                    <span ng-bind="db.db_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                    	<div class="input-group m-b">
+	                                                            <ui-select ng-model="selectedSchema.value">
+	                                                                <ui-select-match placeholder="Select a Schema">
+	                                                                    {{$select.selected.schema_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
+	                                                                    <span ng-bind="schema.schema_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                <button type="button" class="btn btn-blue pull-right no-mar" ng-click="toggle('schemaEdit')"><i class="fa fa-pencil"></i> Edit</button>
+	                                                <button type="button" class="btn btn-red pull-right m-r-7" ng-click="adminDelete('Schema',selectedSchema.value.schema_id)"><i class="fa fa-trash-o"></i> Delete</button>
+	                                                    
+	                                            </fieldset>
+	                                            <fieldset ng-show="schemaEdit" class="tabFieldsetSystem">
+	                                                <div class="input-group m-b">
+	                                                            <span class="input-group-addon"><div class="newTableText">Schema Name</div></span>
+	                                                            <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeUpdated.schema_name">
+	                                                        </div>
+	                                                        <div class="input-group m-b">
+	                                                            <span class="input-group-addon"><div class="newTableText">Business Name</div></span>
+	                                                            <input type="text" placeholder="Name of new Schema" class="form-control" ng-model="schemaToBeUpdated.schema_business_name">
+	                                                        </div>
+	                                                        <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateSchema(schemaToBeUpdated)"><i class="fa fa-save"></i> Save</button>
+	                                                        <button type="button" class="btn btn-red pull-right m-r-7" ng-click="toggle('schemaEdit')"><i class="fa fa-close"></i> Cancel</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="tableETab" class="tabcontent2 pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldset2">
+	                                                    <div class="input-group m-b lin-h-0">
+	                                                            <ui-select ng-model="selectedSystem.value">
+	                                                                <ui-select-match placeholder="Select a System">
+	                                                                    {{$select.selected.system_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="system in (systems | filter: $select.search) track by system.system_id">
+	                                                                    <span ng-bind="system.system_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                        <div class="input-group m-b lin-h-0">
+	                                                            <ui-select ng-model="selectedDb.value">
+	                                                                <ui-select-match placeholder="Select a Database">
+	                                                                    {{$select.selected.db_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="db in (dbs | filter: $select.search) track by db.db_id">
+	                                                                    <span ng-bind="db.db_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                        <div class="input-group m-b lin-h-0">
+	                                                            <ui-select ng-model="selectedSchema.value">
+	                                                                <ui-select-match placeholder="Select a Schema">
+	                                                                    {{$select.selected.schema_name}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="schema in (schemas | filter: $select.search) track by schema.schema_id">
+	                                                                    <span ng-bind="schema.schema_name"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                        </div>
+	                                                        <button class="btn btn-blue pull-right no-mar" ng-click="findTables()"><i class="fa fa-search"></i> Search</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                    <div id="userETab" class="tabcontent2 tabcontent2 pad-25 clearfix">
+	                                        <form method="post">
+	                                            <fieldset class="tabFieldset3 no-mar">
+	                                                    <div class="input-group m-b lin-h-0">
+	                                                        <ui-select ng-model="userToBeUpdated.email">
+	                                                            <ui-select-match placeholder="Select a User">
+	                                                                {{$select.selected.email}}
+	                                                            </ui-select-match>
+	                                                            <ui-select-choices repeat="user in (currentUsers | filter: $select.search) track by $index">
+	                                                                <span ng-bind="user.email"></span>
+	                                                            </ui-select-choices>
+	                                                        </ui-select>
+	                                                    </div>
+	                                                    <div class="input-group m-b lin-h-0">
+	                                                            <span class="input-group-addon"><div class="newTableText">Powerlevel</div></span>
+	                                                            <ui-select ng-model="userToBeUpdated.power_level">
+	                                                                <ui-select-match placeholder="Power levels">
+	                                                                    {{$select.selected.title}}
+	                                                                </ui-select-match>
+	                                                                <ui-select-choices repeat="level in (power_levels | filter: $select.search) track by $index">
+	                                                                    <span ng-bind="level.title"></span>
+	                                                                </ui-select-choices>
+	                                                            </ui-select>
+	                                                    </div>
+	                                                    <div class="input-group m-b">
+	                                                        <span class="input-group-addon"><div class="newTableText">Password</div></span>
+	                                                        <input type="password" placeholder="The User's new Password" class="form-control" ng-model="userToBeUpdated.password">
+	                                                    </div>
+	                                                    <div class="input-group m-b">
+	                                                            <span class="input-group-addon"><div class="newTableText">Verify</div></span>
+	                                                            <input type="password" placeholder="Verify the Password" class="form-control" ng-model="userToBeUpdated.confirm">
+	                                                    </div>
+	                                                    <!--  <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click = "adminDelete()" style="margin-right:15px"><i class="fa fa-trash-o"></i> Delete</button> -->
+	                                                    <button type="button" class="btn btn-blue pull-right no-mar" ng-click="updateUser(userToBeUpdated)" style="margin-right:15px"><i class="fa fa-pencil"></i> Update</button>
+	                                            </fieldset>
+	                                        </form>
+	                                    </div>
+	                                </div>
                                 </div>
                             </div>
                         </div>
