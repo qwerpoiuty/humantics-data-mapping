@@ -54,7 +54,8 @@
                <div class="body-container mail-box outline-box mar-bt-30">
                 <div class="mail-body current-jobs">
                     <div class="row">
-                        <div class="col-sm-12" style="overflow-y:scroll;">
+                        <img src="img/spinner.gif" ng-show="inProgress"/>
+                        <div class="col-sm-12" ng-hide="inProgress" style="overflow-y:scroll;">
                             <form role="form">
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>

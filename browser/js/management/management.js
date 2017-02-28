@@ -18,6 +18,7 @@ app.config(function($stateProvider) {
 
 app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, $modal, $state) {
     $scope.user = user
+    $scope.inProgress = false
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
     $scope.changingStatus = false
@@ -43,6 +44,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         $scope.refreshSingleProject(project.project_id)
     }
     $scope.addMembers = () => {
+        $scope.inProgress = true
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addUsers/addUsers.html",
             controller: `addMemberCtrl`,
@@ -54,6 +56,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
             }
         })
         modalInstance.result.then((result) => {
+            $scope.inProgress = false
             if (result) {
                 $scope.selectedProject.members = result
                 $scope.refreshSingleProject($scope.selectedProject.project_id)
@@ -61,6 +64,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         })
     }
     $scope.addTables = () => {
+        $scope.inProgress = true
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addTables/addTables.html",
             controller: `addTableCtrl`,
@@ -72,7 +76,9 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
             }
         })
         modalInstance.result.then((result) => {
+            $scope.inProgress = false
             if (result) {
+                $scope.selectedProject.tables = result
                 $scope.refreshSingleProject($scope.selectedProject.project_id)
             }
         })
