@@ -2,17 +2,17 @@
     <h3 class="modal-title">Add Members to "{{project.project_name}}"</h3>
 </div>
 <div class="modal-body">
-    <table class="table table-hover">
+    <table class="table table-hover text-left">
         <thead>
             <tr>
-            	<th>Select</th>
+                <th>Select</th>
                 <th>Email</th>
                 <th>Role</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat = "member in members | orderBy: 'member.email' track by $index">
-            	<td><input type="checkbox" ng-model="selectedMembers[member.id].selected"/></td>
+                <td><input type="checkbox" ng-model="selectedMembers[member.id].selected"/></td>
                 <td>{{member.email}}</td>
                 <td>{{power_levels[member.power_level]}}</td>
             </tr>

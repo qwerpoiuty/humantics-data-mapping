@@ -2,29 +2,22 @@
     <h3 class="modal-title" id="modal-title">Create A Project</h3>
 </div>
 <form method="post" ng-submit="createProject(project)">
-<div class="modal-body" id="modal-body" ng-switch = "type">
-      <fieldset class="tabFieldset3">
-        <div class="row">
-          <div class="col-lg-8 col-lg-offset-2">
-            <div class="form-group">
+<div class="modal-body newprojectdate" id="modal-body" ng-switch = "type">
+      <fieldset class="tabFieldset3 no-mar">
+        <div class="form-group">
               <div class="input-group m-b">
                 <span class="input-group-addon"><div class="newTableText">Project Name</div></span>
                 <input type="text" placeholder="Input Project Name" ng-model="project.project_name" class="form-control" required>
               </div>
             </div>
-          </div>
-          <div class="col-lg-8 col-lg-offset-2">
             <div class="form-group">
-              <div class="input-group m-b">
-                <p>Date: <input type="text" id="datepicker"></p>
+              <div class="input-group">
+                <span class="input-group-addon"><div class="newTableText">Due Date</div></span>
+                  <input type="text" class="form-control datepicker" uib-datepicker-popup ng-model="dt" is-open="status.opened" show-button-bar="false" datepicker-options="dateOptions" close-text="Close" required/>
               </div>
             </div>
-          </div>
-        </div>
+            <input type="submit" class="btn btn-blue header-btn no-mar pull-right" value="Create Project">
+         <button type="button" class="btn btn-red header-btn no-mar pull-right m-r-7" ng-click="cancel()">Cancel</button>
       </fieldset>
-</div>
-<div class="modal-footer">
-    <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click="cancel()">Cancel</button>
-    <input type="submit" class="navbar-minimalize btn btn-primary button-right" value="Create Project">
 </div>
 </form>

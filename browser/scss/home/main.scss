@@ -1370,6 +1370,11 @@ ul.admin-sectab {
     margin-bottom: 20px;
 }
 
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
 .adminpage .input-group {
     width: 100%;
 }
@@ -1452,6 +1457,8 @@ ul.admin-sectab {
 
 .home-dash .col-centereddiv .adnc-search > .ui-select-container, .ui-select-container{width:100%}
 .home-dash .prog-status-th th{border-top:0}
+
+.calenderbutton{}
 .projectmanagement{
     .head-titlewrap{
         display: inline-block; margin-top:-11px;
@@ -1461,10 +1468,31 @@ ul.admin-sectab {
     float: right;
     margin-top: 6px !important;}
 }
+.newprojectdate{
+    .btn.btn-default.calenderbutton{background:#eee; border-color: #e5e6e7; color: #666;}
+    .ng-scope.ng-isolate-scope table tbody tr.ng-scope td button.btn-default, button.btn-default{background: #eee !important; border-radius: 0 !important; border: 0 !important;}
+    .ng-scope.ng-isolate-scope table tbody tr.ng-scope td, .text-center.ng-scope{padding:1px;}
+}
+#ui-datepicker-div{z-index:99999 !important;}
 
-
-
-
+a.btn.btn-primary {
+    border: 1px solid #666;
+    background-color: #fff;
+    font-size: 13px;
+    padding: 2px 13px 4px !important;
+    text-align: center;
+    height: inherit;
+    border-radius: 50px;
+    color: #333;
+}
+span.duedate.ng-binding {
+    color: #db665d;
+    font-weight: 400;
+}
+.top-btn-set {
+    float: left;
+    width: 100%;
+}
 
 
 
