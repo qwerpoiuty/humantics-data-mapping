@@ -18,14 +18,40 @@ app.config(function($stateProvider) {
 
 app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, $modal, $state, notificationService) {
     $scope.user = user
+
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
     $scope.changingStatus = false
     $scope.editing = false
-
-    projectFactory.getProjects($scope.user.id).then(projects => {
-        $scope.projects = projects[0]
-    })
+    if ($scope.user.power_level == 5) {
+        projectFactory.getAllProjects().then(projects => {
+            $scope.projects = []
+            for (var key in projects) {
+                $scope.projects.push(projects[key])
+            }
+            for (var i = 0; i < $scope.projects.length; i++) {
+                var completed = 0
+                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+                }
+                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+            }
+        })
+    } else {
+        projectFactory.getProjects($scope.user.id).then(projects => {
+            $scope.projects = []
+            for (var key in projects) {
+                $scope.projects.push(projects[key])
+            }
+            for (var i = 0; i < $scope.projects.length; i++) {
+                var completed = 0
+                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+                }
+                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+            }
+        })
+    }
     $scope.toggleChange = function() {
         $scope.changingStatus = !$scope.changingStatus
     }

@@ -13,7 +13,7 @@
                                 </div>
                             </div>
                             <div class="outline-box pad-25 fixed-het-420px pd-tp-10px">
-                                <div id="ActionsTab" class="tabcontent2">
+                                <div class="scroll">
                                     <table class="footable table table-stripped toggle-arrow-tiny">
                                         <thead>
                                             <tr>
@@ -48,41 +48,9 @@
                                 <div class="scroll">
                                 <table class="table table-stripped toggle-arrow-tiny">
                                         <tbody class="prog-status">
-                                            <tr>
-                                                <td class="no-tp-pad" width="50%">Project 1</td>
-                                                <td class="no-tp-pad" width="40%"><span class="prog-num">25%</span><div class="host-area"><div class="progress-bar" style="width: 26%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 2</td>
-                                                <td><span class="prog-num">14%</span><div class="host-area"><div class="progress-bar" style="width: 14%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 3</td>
-                                                <td><span class="prog-num">30%</span><div class="host-area"><div class="progress-bar" style="width: 30%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 4</td>
-                                                <td><span class="prog-num">22%</span><div class="host-area"><div class="progress-bar" style="width: 22%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 5</td>
-                                                <td><span class="prog-num">0%</span><div class="host-area"><div class="progress-bar" style="width: 0%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 6</td>
-                                                <td><span class="prog-num">3%</span><div class="host-area"><div class="progress-bar" style="width: 3%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 8</td>
-                                                <td><span class="prog-num">80%</span><div class="host-area"><div class="progress-bar" style="width: 80%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 8</td>
-                                                <td><span class="prog-num">100%</span><div class="host-area"><div class="progress-bar" style="width: 100%;"></div></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Project 8</td>
-                                                <td><span class="prog-num">55%</span><div class="host-area"><div class="progress-bar" style="width: 55%;"></div></div></td>
+                                            <tr ng-repeat="project in projects">
+                                                <td class="no-tp-pad" width="50%">{{project.project_name}}</td>
+                                                <td class="no-tp-pad" width="40%"><span class="prog-num">{{project.progress}}%</span><div class="host-area"><div class="progress-bar" style="width: {{project.progress}}%;"></div></div></td>
                                             </tr>
                                         </tbody>
                                     </table>

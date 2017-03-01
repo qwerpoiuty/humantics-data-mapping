@@ -29,28 +29,20 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
     $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)
-    $scope.clearFilter = function() {
-        $('.filter-status').val('');
-        $('.footable').trigger('footable_clear_filter');
-    };
 
-    $scope.filteringEventHandler = function(e) {
-        var selected = $('.filter-status').find(':selected').text();
-        if (selected && selected.length > 0) {
-            e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
-            e.clear = !e.filter;
+    projectFactory.getProjects($scope.user.id).then(projects => {
+        $scope.projects = []
+        for (var key in projects) {
+            $scope.projects.push(projects[key])
         }
-    };
-
-    $scope.filterByStatus = function() {
-        $('.footable').trigger('footable_filter', {
-            filter: $('#filter').val()
-        });
-    };
-
-    $scope.filter = {
-        status: null
-    };
+        for (var i = 0; i < $scope.projects.length; i++) {
+            var completed = 0
+            for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+            }
+            $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+        }
+    })
 
     //ALL THE SEARCHING STUFF
 
@@ -172,6 +164,4 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
 
     document.getElementById("SearchTab").style.display = "inline";
     document.getElementById("SearchTab").className += " active";
-    document.getElementById("ActionsTab").style.display += "block";
-    document.getElementById("ActionsTab").className += " active";
 });

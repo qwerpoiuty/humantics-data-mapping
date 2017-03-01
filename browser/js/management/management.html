@@ -8,7 +8,7 @@
                 <div class="mail-tools tooltip-demo m-t-md">
                 </div>
                 <h3 style="color:white;">List of Current Projects</h3>
-                <button class = "btn btn-primary" ng-if="user.power_level==4" ng-click = "newProject()" style="float:right;">New Project</button>
+                <button class = "btn btn-primary" ng-if="user.power_level>=4" ng-click = "newProject()" style="float:right;">New Project</button>
             </div>
 
             <div class="mail-box  mar-bt-30 body-container outline-box ">
@@ -27,7 +27,7 @@
                                 <tbody>
                                     <tr class="pro-tr" ng-click="selectProject(projects[$index])" ng-repeat = "project in projects | orderBy:'project.due_date' track by $index">
                                         <td class="clickbl ng-binding"><i class="fa fa-angle-right"></i> {{project.project_name}}</td>
-                                        <td>{{project.email}}</td>
+                                        <td>{{project.leader}}</td>
                                         <td>{{project.due_date | date:'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </tbody>
@@ -40,12 +40,12 @@
         </div>   
         <div class="col-lg-7 animated fadeInRight">
             <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder clearfix">
-                <div class="lt-att-info widthfull" ng-show="selectedProject && !editing">Project Name: {{currentPro}} <a ng-click="editProject()" ng-hide="editing"><i class="fa fa-edit"></i></a>
+                <div class="lt-att-info widthfull" ng-show="!editing">Project Name: {{currentPro}} <a ng-click="editProject()" ng-show="selectedProject"><i class="fa fa-edit"></i></a>
                 </div>
                 <div class="lt-att-info widthfull" ng-show="selectedProject && editing">
                     Project Name: <input type="text" ng-show="editing" ng-model="tempProject.project_name"/>
                 </div>
-                <div ng-if="user.power_level==4">
+                <div ng-if="user.power_level>=4">
                     <button ng-show="selectedProject" ng-hide="editing" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
                     <div class="top-right-button">
                         <a class="btn btn-white btn-sm fl-rt" ng-show="editing" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i></a>
@@ -65,8 +65,8 @@
                           </span>
                         </p>
                     </div>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level == 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level >= 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
+                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level >= 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
 
@@ -81,10 +81,11 @@
                                         <th data-toggle="true">Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
+                                        <th>Status</th>
                                         <!-- <th data-hide="all">Total Attributes</th> -->
                                         <!-- <th data-hide="all">Number of Mappings</th> -->
                                         <th>Detailed View</th>
-                                        <th ng-if="user.power_level==4">Remove Table</th>
+                                        <th ng-if="user.power_level>=4">Remove Table</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,10 +93,11 @@
                                         <td>{{table.table_name}}</td>
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
+                                        <td>{{table.table_status}}</td>
                                         <!-- <td>{{attributeCount[$index]}}</td> -->
                                         <!-- <td>{{mappingCount || 'Searching...'}}</td> -->
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
-                                        <td ng-if="user.power_level==4"><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
+                                        <td ng-if="user.power_level>=4"><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
                                     </tr>
                                 </tbody>
                             </table>

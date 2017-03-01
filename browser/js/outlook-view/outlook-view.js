@@ -241,7 +241,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                             $scope.editing = "none"
                             dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
                                 $scope.attributes = attributes[0]
-                                console.log($scope.attributes)
                                 $scope.attributes.forEach(e => {
 
                                     if (e.attr_id == mapping.target) {
