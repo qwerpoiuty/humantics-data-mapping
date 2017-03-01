@@ -204,6 +204,9 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                 dataFactory.deleteAttribute(attr_id).then(() => {
                     dataFactory.getAttributesByTableId($stateParams.tableId).then(attr => {
                         $scope.attributes = attr[0]
+                        $scope.sources = []
+                        $scope.targetMapping = {}
+                        $scope.currentAttr = "Select an attribute from the table"
                     })
                 })
             }
