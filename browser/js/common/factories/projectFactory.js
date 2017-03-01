@@ -20,6 +20,7 @@ app.factory('projectFactory', function($http) {
                             project_name: el.project_name,
                             due_date: el.due_date,
                             leader: el.project_leader,
+                            members: el.members,
                             tables: [{
                                 table_id: projects[i].table_id,
                                 table_status: projects[i].table_status
@@ -31,7 +32,7 @@ app.factory('projectFactory', function($http) {
             })
     }
     d.getAllProjects = () => {
-        return$http.get('/api/projects/')
+        return $http.get('/api/project/')
             .then(function(response) {
                 var projects = response.data[0]
                 var mappedProject = {}
@@ -48,6 +49,7 @@ app.factory('projectFactory', function($http) {
                             project_name: el.project_name,
                             due_date: el.due_date,
                             leader: el.project_leader,
+                            members: el.members,
                             tables: [{
                                 table_id: projects[i].table_id,
                                 table_status: projects[i].table_status

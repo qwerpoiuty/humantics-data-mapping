@@ -110,6 +110,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     };
 
     $scope.addMembers = () => {
+        console.log($scope.selectedProject)
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addUsers/addUsers.html",
             controller: `addMemberCtrl`,
