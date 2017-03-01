@@ -13,7 +13,7 @@
                 <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
             </li>
             <li class="mn-link" ng-if="user.power_level == 5">
-                <a ui-sref-active="active" ng-click="admin">Admin</a>
+                <a ui-sref-active="active" ng-click="transition('admin')">Admin</a>
             </li>
         </ul>
                     <ul class="notifications">
