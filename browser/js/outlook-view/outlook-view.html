@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="buttonsets">
-                            <button class="btn btn-primary white-brd" ng-click="addAttribute()" ng-if="user.power_level==5">New Attribute</button>
+                            <button class="btn btn-primary white-brd" ng-click="addAttribute()" ng-if="user.power_level>=4">New Attribute</button>
                             <button class="btn btn-primary white-brd" ng-click = "generateDDL()">Get DDL</button>
                             <button class="btn btn-primary white-brd" ng-if="user.power_level==5" ng-click = "toggleTableEdit()">Edit Table</button>
                             <button class="btn btn-primary white-brd" ng-click="toggleTableNotes()">Show {{tableNotes?'Table':'Notes'}}</button>
@@ -93,7 +93,7 @@
                                 <a class="btn btn-white btn-sm" ng-click="toggleMappingNotes()" title="Notes"><i class="fa fa-file-text-o"></i></a>
                                 </div>
                             </div>
-                            <h3>{{currentAttr}} <button ng-if="user.power_level==5 && targetMapping" class="btn btn-primary ng-binding mar-lt-10" ng-click="deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
+                            <h3>{{currentAttr}} <button ng-if="user.power_level>=4 && targetMapping" class="btn btn-primary ng-binding mar-lt-10" ng-click="deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
                             <a class="btn btn-white btn-sm fl-rt" ng-if="editing!=='none'" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i></a>
                             <a class="btn btn-white btn-sm fl-rt mar-4" ng-if="editing!=='none'" ng-click="save()" title="Save"><i class="fa fa-save"></i></a>
                             </h3>
