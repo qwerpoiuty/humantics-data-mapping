@@ -9,7 +9,7 @@
             <div class="form-group">
               <div class="input-group m-b">
                 <span class="input-group-addon"><div class="newTableText">Project Name</div></span>
-                <input type="text" placeholder="Input Project Name" ng-model="project.project_name" class="form-control" style="width:90%;" required>
+                <input type="text" placeholder="Input Project Name" ng-model="project.project_name" class="form-control" required>
               </div>
             </div>
           </div>
@@ -17,7 +17,10 @@
             <div class="form-group">
               <div class="input-group m-b">
                 <span class="input-group-addon"><div class="newTableText">Due Date</div></span>
-                  <input type="date" style="width:90%" class="form-control" uib-datepicker-popup ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" required/>
+                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="status.opened" show-button-bar="false" datepicker-options="dateOptions" close-text="Close" required/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
               </div>
             </div>
           </div>
@@ -25,6 +28,7 @@
       </fieldset>
 </div>
 <div class="modal-footer">
+    <button type="button" class="navbar-minimalize btn btn-danger button-right" ng-click="cancel()">Cancel</button>
     <input type="submit" class="navbar-minimalize btn btn-primary button-right" value="Create Project">
 </div>
 </form>

@@ -66,16 +66,26 @@ app.factory('projectFactory', function($http) {
                 return response.data
             })
     }
-    d.updateProject = function(projectId, column, values) {
+    d.updateProject = function(projectId, columns, values) {
         var project = {
             id: projectId,
-            column: column,
+            column: columns,
             values: values
         }
         return $http.post('api/project/updateProject', project)
             .then(function(response) {
                 return response.data
             })
+    }
+    d.editProject = function(projectId, columns, values) {
+        var project = {
+            id: projectId,
+            columns: columns,
+            values: values
+        }
+        return $http.post('api/project/editProject', project).then(response => {
+            return response.data
+        })
     }
     d.deleteProject = project_id => {
         return $http.post('api/project/deleteProject/' + project_id).then(response => {

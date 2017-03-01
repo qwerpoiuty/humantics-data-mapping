@@ -16,11 +16,12 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, $modal, $state) {
+app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataFactory, mappingFactory, user, $modal, $state, notificationService) {
     $scope.user = user
     $scope.currentPro = "Select a Project"
     $scope.selectedProject = false
     $scope.changingStatus = false
+    $scope.editing = false
 
     projectFactory.getProjects($scope.user.id).then(projects => {
         $scope.projects = projects[0]
@@ -42,6 +43,46 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         $scope.selectedProject = project
         $scope.refreshSingleProject(project.project_id)
     }
+    $scope.tempProject = {}
+
+    $scope.editProject = function() {
+        $scope.editing = true
+        $scope.tempProject.project_name = $scope.currentPro
+        $scope.tempProject.due_date = $scope.selectedProject.due_date
+    }
+
+    $scope.cancel = () => {
+        $scope.editing = false
+        $scope.tempProject = {}
+    }
+    $scope.save = () => {
+        console.log('hello')
+        $scope.currentPro = $scope.tempProject.project_name
+        $scope.selectedProject.due_date = $scope.tempProject.due_date
+        $scope.editing = false
+        projectFactory.editProject($scope.selectedProject.project_id, ["project_name", "due_date"], [$scope.tempProject.project_name, $scope.tempProject.due_date]).then(result => {})
+    }
+
+    $scope.open = function($event) {
+        $scope.status.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+        $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+
+    $scope.status = {
+        opened: false
+    };
+
     $scope.addMembers = () => {
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addUsers/addUsers.html",
@@ -112,16 +153,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     }
     $scope.deleteProject = () => {
         if (!$scope.selectedProject) {
-            var modalInstance = $modal.open({
-                templateUrl: 'js/common/modals/notification/notification.html',
-                controller: 'notification',
-                size: 'sm',
-                resolve: {
-                    message: function() {
-                        return `Pick a project first`
-                    }
-                }
-            });
+            notificationService.displayNotification("Pick a project first")
         } else {
             var modalInstance = $modal.open({
                 templateUrl: 'js/common/modals/confirmation/confirmation.html',
@@ -136,6 +168,7 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
             modalInstance.result.then(result => {
                 if (result) {
                     projectFactory.deleteProject($scope.selectedProject.project_id).then(() => {
+                        notificationService.displayNotification("Project Deleted")
                         $scope.refreshProjects()
                     })
                 }

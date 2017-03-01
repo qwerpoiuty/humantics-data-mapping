@@ -20,10 +20,6 @@ app.directive('navbar', function($rootScope, AuthService, AUTH_EVENTS, $state) {
                     label: 'Reporting',
                     state: 'reporting',
                     auth: true
-                }, {
-                    label: 'Admin',
-                    state: 'admin',
-                    auth: true
                 }
             ];
             scope.headers = {

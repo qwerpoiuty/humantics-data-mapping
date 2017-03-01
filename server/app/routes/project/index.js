@@ -76,6 +76,17 @@ router.post('/updateProject', (req, res) => {
     })
 })
 
+router.post('/editProject', (req, res) => {
+    var sets = []
+    for (var i = 0; i < req.body.columns.length; i++) {
+        sets.push(`${req.body.columns[i]}='${req.body.values[i]}'`)
+    }
+
+    db.query(`update projects set ${sets.join(',')} where projects.project_id = ${req.body.id}`).then(project => {
+        res.sendStatus(200)
+    })
+})
+
 router.post('/custom', (req, res) => {
     var string = "select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id"
     if (req.body.query) string = string + " where " + req.body.query

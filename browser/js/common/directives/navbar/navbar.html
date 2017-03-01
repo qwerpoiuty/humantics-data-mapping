@@ -12,6 +12,9 @@
             <li class="mn-link" ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
                 <a ui-sref-active="active" ng-click="transition(item.state)">{{ item.label }}</a>
             </li>
+            <li class="mn-link" ng-if="user.power_level == 5">
+                <a ui-sref-active="active" ng-click="admin">Admin</a>
+            </li>
         </ul>
                     <ul class="notifications">
                         <li class="dropdown"><a class="btn btn-red header-btn"><i class="fa fa-bell-o"></i> 5</a>
