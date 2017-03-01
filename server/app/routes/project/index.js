@@ -15,19 +15,27 @@ var ensureAuthenticated = function(req, res, next) {
 }
 
 router.get('/', function(req, res) {
-    db.query(`SELECT project_id, project_name, u2.email as project_leader, u1.email,members,tables,project_status,due_date, tables.table_id, tables.table_status FROM projects inner join users u1 on u1.id = any(projects.members) inner join tables on tables.table_id = any(projects.tables) inner join users u2 on u2.id=projects.leader order by projects.project_id asc`)
+    db.query(`SELECT project_id, project_name, u2.email as project_leader, u1.email,members,tables,project_status,due_date FROM projects inner join users u1 on u1.id = any(projects.members) 
+inner join users u2 on u2.id=projects.leader order by projects.project_id asc`)
         .then(projects => {
             res.json(projects)
         })
 })
 
 router.get('/projectByUser/:user_id', function(req, res) {
-    db.query(`SELECT project_id, project_name, u2.email as project_leader, u1.email,members,tables,project_status,due_date, tables.table_id, tables.table_status FROM projects inner join users u1 on u1.id = any(projects.members) inner join tables on tables.table_id = any(projects.tables) inner join users u2 on u2.id=projects.leader where u1.id = ${req.params.user_id} order by projects.project_id asc`)
+    db.query(`SELECT project_id, project_name, u2.email as project_leader, u1.email,members,tables,project_status,due_date FROM projects inner join users u1 on u1.id = any(projects.members) 
+inner join users u2 on u2.id=projects.leader 
+where u1.id = ${req.params.user_id} order by projects.project_id asc`)
         .then(function(projects) {
             res.json(projects)
         })
 })
-
+router.get('/projectsStatus/:user_id', function(req, res) {
+    db.query(`SELECT project_id, project_name, u2.email as project_leader, u1.email,members,tables,project_status,due_date, tables.table_id, tables.table_status FROM projects inner join users u1 on u1.id = any(projects.members) inner join tables on tables.table_id = any(projects.tables) inner join users u2 on u2.id=projects.leader where u1.id = ${req.params.user_id} order by projects.project_id asc`)
+        .then(projects => {
+            res.json(projects)
+        })
+})
 router.get('/projectStatsByUser/:user_id', (req, res) => {
     db.query(`select d.project_id, t.table_status from projects inner join tables t on t.table_id = any(p.tables) where user.id=${req.params.user_id}`)
         .then(function(projects) {

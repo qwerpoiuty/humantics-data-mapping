@@ -4,7 +4,7 @@
             <div class="p-w-md">
                 <div class="row">
                     <div class="toggle6 col-md-12 clearfix">
-                        <div class="toggle12 col-md-6 assignment-tab mar-bt-30 full-yes">  
+                        <div class="toggle12 col-md-6 assignment-tab mar-bt-30 full-yes">
                             <div class="attr-details">
                                 <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
                                     <div class="sect-att-head clearfix">
@@ -17,9 +17,9 @@
                                     <table class="footable table table-stripped toggle-arrow-tiny">
                                         <thead>
                                             <tr>
-                                                <th>Table Name</th>
-                                                <th>Project</th>
-                                                <th>Detailed View</th>
+                                                <th class="pad-lt-0">Table Name</th>
+                                                <th class="pad-lt-0">Project</th>
+                                                <th class="pad-lt-0">Detailed View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -35,7 +35,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="toggle12 col-md-6 assignment-tab mar-bt-30 full-yes">
                             <div class="attr-details">
                                 <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
@@ -46,20 +45,24 @@
                             </div>
                             <div class="outline-box pad-25 fixed-het-420px pd-tp-10px">
                                 <div class="scroll">
-                                <table class="table table-stripped toggle-arrow-tiny">
-                                    <tbody class="prog-status">
+                                    <table class="table table-stripped toggle-arrow-tiny">
                                         <thead>
-                                            <tr>
-                                                <th width="50%" class="no-tp-pad">Project Name</th>
-                                                <th width="40%" class="no-tp-pad">Project Progress</th>
+                                                <tr class="prog-status-th">
+                                                    <th width="50%" class="pad-lt-0 ">Project Name</th>
+                                                    <th width="40%" class="pad-lt-0 ">Project Progress</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody class="prog-status">
+                                            <tr ng-repeat="project in projects">
+                                                <td>{{project.project_name}}</td>
+                                                <td><span class="prog-num">{{project.progress}}%</span>
+                                                    <div class="host-area">
+                                                        <div class="progress-bar" style="width: {{project.progress}}%;"></div>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tr ng-repeat="project in projects">
-                                            <td class="no-tp-pad" width="50%">{{project.project_name}}</td>
-                                            <td class="no-tp-pad" width="40%"><span class="prog-num">{{project.progress}}%</span><div class="host-area"><div class="progress-bar" style="width: {{project.progress}}%;"></div></div></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +123,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                        <button class="search-subm" style="position:relative;" ng-click="browse()">Search</button>
+                                                    <button class="search-subm" style="position:relative;" ng-click="browse()">Search</button>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -139,38 +142,38 @@
                             <div class="outline-box pad-25 pd-tp-10px">
                                 <div style="border-top:none;">
                                     <h3 ng-show="searchCat =='entity'">"{{searchQuery}}" was found in these tables:</h3>
-                                    <div class="scrollable-tbl"> 
-                                    <table class=" table table-stripped toggle-arrow-tiny default breakpoint" data-page-size="16">
-                                        <thead>
-                                            <tr>   
-                                                <th data-hide="all"></th>
-                                                <th data-toggle="true">Table Name</th>
-                                                <th>Business Name</th>
-                                                <th data-hide="all">Database</th>
-                                                <th data-hide="all">Schema</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="table in tables track by $index" foo-repeat-done>
-                                                <td>
-                                                    <button class="btn btn-primary plus-icon" ng-click="detailedView(table.table_id)"><i class="fa fa-plus"></i></button>
-                                                </td>
-                                                <td><span class="footable-toggle"></span>{{table.table_name}}</td>
-                                                <td>{{table.table_business_name || 'none set'}}</td>
-                                                <td>{{table.db_name}}</td>
-                                                <td>{{table.schema_name}}</td>
-                                                <td>{{table.table_status}}</td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot align="right">
-                                            <tr>
-                                                <td colspan="6">
-                                                    <ul class="pagination"></ul>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                    <div class="scrollable-tbl">
+                                        <table class=" table table-stripped toggle-arrow-tiny default breakpoint" data-page-size="16">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="all"></th>
+                                                    <th data-toggle="true">Table Name</th>
+                                                    <th>Business Name</th>
+                                                    <th data-hide="all">Database</th>
+                                                    <th data-hide="all">Schema</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="table in tables track by $index" foo-repeat-done>
+                                                    <td>
+                                                        <button class="btn btn-primary plus-icon" ng-click="detailedView(table.table_id)"><i class="fa fa-plus"></i></button>
+                                                    </td>
+                                                    <td><span class="footable-toggle"></span>{{table.table_name}}</td>
+                                                    <td>{{table.table_business_name || 'none set'}}</td>
+                                                    <td>{{table.db_name}}</td>
+                                                    <td>{{table.schema_name}}</td>
+                                                    <td>{{table.table_status}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot align="right">
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <ul class="pagination"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

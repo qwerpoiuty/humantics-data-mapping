@@ -25,31 +25,35 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     $scope.editing = false
     if ($scope.user.power_level == 5) {
         projectFactory.getAllProjects().then(projects => {
-            $scope.projects = []
-            for (var key in projects) {
-                $scope.projects.push(projects[key])
-            }
-            for (var i = 0; i < $scope.projects.length; i++) {
-                var completed = 0
-                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
-                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
-                }
-                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
-            }
-        })
+                $scope.projects = projects[0]
+            })
+            // projectFactory.getAllProjects().then(projects => {
+            //     $scope.projects = []
+            //     for (var key in projects) {
+            //         $scope.projects.push(projects[key])
+            //     }
+            //     for (var i = 0; i < $scope.projects.length; i++) {
+            //         var completed = 0
+            //         for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+            //             if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+            //         }
+            //         $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+            //     }
+            // })
     } else {
         projectFactory.getProjects($scope.user.id).then(projects => {
-            $scope.projects = []
-            for (var key in projects) {
-                $scope.projects.push(projects[key])
-            }
-            for (var i = 0; i < $scope.projects.length; i++) {
-                var completed = 0
-                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
-                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
-                }
-                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
-            }
+            $scope.projects = projects[0]
+                // $scope.projects = []
+                // for (var key in projects) {
+                //     $scope.projects.push(projects[key])
+                // }
+                // for (var i = 0; i < $scope.projects.length; i++) {
+                //     var completed = 0
+                //     for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                //         if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+                //     }
+                //     $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+                // }
         })
     }
     $scope.toggleChange = function() {
@@ -110,7 +114,6 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     };
 
     $scope.addMembers = () => {
-        console.log($scope.selectedProject)
         var modalInstance = $modal.open({
             templateUrl: "js/common/modals/addUsers/addUsers.html",
             controller: `addMemberCtrl`,

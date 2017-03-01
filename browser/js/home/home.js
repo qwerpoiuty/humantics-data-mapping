@@ -30,8 +30,9 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)
 
-    projectFactory.getProjects($scope.user.id).then(projects => {
+    projectFactory.getProjectStatus($scope.user.id).then(projects => {
         $scope.projects = []
+        console.log(projects)
         for (var key in projects) {
             $scope.projects.push(projects[key])
         }

@@ -38,26 +38,26 @@
                 </div>
             </div>
         </div>   
-        <div class="col-lg-7 animated fadeInRight">
+        <div class="col-lg-7 animated fadeInRight" ng-show="selectedProject">
             <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder clearfix">
-                <div class="lt-att-info widthfull" ng-show="!editing">Project Name: {{currentPro}} <a ng-click="editProject()" ng-show="selectedProject"><i class="fa fa-edit"></i></a>
+                <div class="lt-att-info widthfull" ng-show="!editing">Project Name: {{currentPro}} <a ng-click="editProject()"><i class="fa fa-edit"></i></a>
                 </div>
-                <div class="lt-att-info widthfull" ng-show="selectedProject && editing">
+                <div class="lt-att-info widthfull" ng-show="editing">
                     Project Name: <input type="text" ng-show="editing" ng-model="tempProject.project_name"/>
                 </div>
                 <div ng-if="user.power_level>=4">
-                    <button ng-show="selectedProject" ng-hide="editing" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
+                    <button ng-hide="editing" ng-click="deleteProject()" class="btn btn-danger top-right-button"><i class="fa fa-trash-o"></i> Project</button>
                     <div class="top-right-button">
                         <a class="btn btn-white btn-sm fl-rt" ng-show="editing" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i></a>
                         <a class="btn btn-white btn-sm fl-rt mar-4" ng-show="editing" ng-click="save()" title="Save"><i class="fa fa-save"></i></a>
                     </div>
                 </div>
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <h3 ng-show="selectedProject && !editing" class="ng-binding pull-left">Due: {{selectedProject.due_date | date:'yyyy-MM-dd'}}</h3>
-                    <div class="col-lg-1" ng-show="selectedProject && editing">
+                    <h3 ng-show="!editing" class="ng-binding pull-left">Due: {{selectedProject.due_date | date:'yyyy-MM-dd'}}</h3>
+                    <div class="col-lg-1" ng-show="editing">
                         <h3 class="ng-binding pull-left">Due: </h3>
                     </div>
-                    <div class="col-md-6" ng-show="selectedProject && editing">
+                    <div class="col-md-6" ng-show="editing">
                         <p class="input-group">
                           <input type="text" class="form-control" uib-datepicker-popup ng-model="tempProject.due_date" is-open="status.opened" show-button-bar="false" datepicker-options="dateOptions" required="true" />
                           <span class="input-group-btn">
@@ -65,8 +65,8 @@
                           </span>
                         </p>
                     </div>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level >= 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
-                    <button class = "btn btn-success" ng-if="selectedProject && user.power_level >= 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
+                    <button class = "btn btn-success" ng-if="user.power_level >= 4" ng-click="addMembers()" style="float:right;background-color:#1c84c6;margin-left:10px;">Update Members</button>
+                    <button class = "btn btn-success" ng-if="user.power_level >= 4" ng-click="addTables()" style="float:right;background-color:#1c84c6">Add Tables</button>
                 </div>
             </div>
 

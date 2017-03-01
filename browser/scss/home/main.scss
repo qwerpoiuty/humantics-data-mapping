@@ -467,7 +467,7 @@ label.css-label {
 }
 
 .pad-lt-0 {
-    padding-left: 0
+    padding-left: 0 !important;
 }
 
 .pad-rt-0 {
@@ -1451,6 +1451,32 @@ ul.admin-sectab {
 .home-dash .col-centereddiv .outline-box > ul.tab{margin-bottom: 26px;}
 
 .home-dash .col-centereddiv .adnc-search > .ui-select-container, .ui-select-container{width:100%}
+.home-dash .prog-status-th th{border-top:0}
+.projectmanagement{
+    .head-titlewrap{
+        display: inline-block; margin-top:-11px;
+        h3{margin: 0; float: left;}
+    }
+    .add-new-proj{    display: inline-block;
+    float: right;
+    margin-top: 6px !important;}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (min-width: 768px) {
     #page-wrapper {

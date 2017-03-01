@@ -123,7 +123,7 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
                     size: "sm",
                     resolve: {
                         message: function() {
-                            return `This table is not refernced as a source`
+                            return `This table is not referenced as a source`
                         }
                     }
                 })

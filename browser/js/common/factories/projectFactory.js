@@ -5,35 +5,19 @@ app.factory('projectFactory', function($http) {
     d.getProjects = function(userId) {
         return $http.get('api/project/projectbyUser/' + userId)
             .then(function(response) {
-                var projects = response.data[0]
-                var mappedProject = {}
-                for (var i = 0; i < projects.length; i++) {
-                    if (mappedProject[projects[i].project_id]) {
-                        mappedProject[projects[i].project_id].tables.push({
-                            table_id: projects[i].table_id,
-                            table_status: projects[i].table_status
-                        })
-                    } else {
-                        var el = projects[i]
-                        mappedProject[projects[i].project_id] = {
-                            project_id: el.project_id,
-                            project_name: el.project_name,
-                            due_date: el.due_date,
-                            leader: el.project_leader,
-                            members: el.members,
-                            tables: [{
-                                table_id: projects[i].table_id,
-                                table_status: projects[i].table_status
-                            }]
-                        }
-                    }
-                }
-                return mappedProject
+                return response.data
             })
     }
     d.getAllProjects = () => {
         return $http.get('/api/project/')
             .then(function(response) {
+                return response.data
+            })
+    }
+
+    d.getProjectStatus = (userId) => {
+        return $http.get('/api/project/projectsStatus/' + userId)
+            .then(response => {
                 var projects = response.data[0]
                 var mappedProject = {}
                 for (var i = 0; i < projects.length; i++) {

@@ -42,6 +42,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.sourceIndex = 0
     $scope.currentAttr = "Select an attribute from table"
     $scope.version = 1
+    $scope.inProgress = false
     $scope.checkMember = (user) => {
         projectFactory.getPermission(user.id, $scope.table.table_id).then(member => {
             $scope.projectMember = member
@@ -302,7 +303,6 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.sources.forEach(function(e) {
             newSources.push(e.attr_id)
         })
-        console.log(newSources)
 
         var mapping = {
             version: $scope.version,
