@@ -47,14 +47,20 @@
                             <div class="outline-box pad-25 fixed-het-420px pd-tp-10px">
                                 <div class="scroll">
                                 <table class="table table-stripped toggle-arrow-tiny">
-                                        <tbody class="prog-status">
-                                            <tr ng-repeat="project in projects">
-                                                <td class="no-tp-pad" width="50%">{{project.project_name}}</td>
-                                                <td class="no-tp-pad" width="40%"><span class="prog-num">{{project.progress}}%</span><div class="host-area"><div class="progress-bar" style="width: {{project.progress}}%;"></div></div></td>
+                                    <tbody class="prog-status">
+                                        <thead>
+                                            <tr>
+                                                <th width="50%" class="no-tp-pad">Project Name</th>
+                                                <th width="40%" class="no-tp-pad">Project Progress</th>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
+                                        </thead>
+                                        <tr ng-repeat="project in projects">
+                                            <td class="no-tp-pad" width="50%">{{project.project_name}}</td>
+                                            <td class="no-tp-pad" width="40%"><span class="prog-num">{{project.progress}}%</span><div class="host-area"><div class="progress-bar" style="width: {{project.progress}}%;"></div></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
                             </div>
                         </div>
                     </div>
