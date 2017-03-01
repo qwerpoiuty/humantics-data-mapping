@@ -249,29 +249,49 @@ router.post('/updateAttribute/:attr_id', function(req, res) {
 
 //deletes
 router.post('/deleteSystem/:system_id', function(req, res) {
-    db.query(`delete from systems where systems.system_id = ${req.params.system_id}`)
-        .then(function(system) {
-            res.sendStatus(200)
-        })
+    db.query(`select * from dbs where dbs.system = ${req.params.system_id}`).then(results => {
+        if (results[0].length > 0) res.json(false)
+        else {
+            db.query(`delete from systems where systems.system_id = ${req.params.system_id}`)
+                .then(function(system) {
+                    res.sendStatus(200)
+                })
+
+        }
+    })
 })
 router.post('/deleteDatabase/:db_id', function(req, res) {
-    db.query(`delete from dbs where dbs.db_id = ${req.params.db_id}`)
-        .then(function(db) {
-            res.sendStatus(200)
-        })
+    db.query(`select * from schemas where schemas.db = ${req.params.db_id}`).then(results => {
+        if (results[0].length > 0) res.json(false)
+        else {
+            db.query(`delete from dbs where dbs.db_id = ${req.params.db_id}`)
+                .then(function(db) {
+                    res.sendStatus(200)
+                })
+        }
+    })
 })
 router.post('/deleteSchema/:schema_id', function(req, res) {
-    db.query(`delete from schemas where schemas.schema_id = ${req.params.schema_id}`)
-        .then(function(schema) {
-            res.sendStatus(200)
-        })
+    db.query(`select * from tables where tables.schema = ${req.params.schema_id}`).then(results => {
+        if (results[0].length > 0) res.json(false)
+        else {
+            db.query(`delete from schemas where schemas.schema_id = ${req.params.schema_id}`)
+                .then(function(schema) {
+                    res.sendStatus(200)
+                })
+        }
+    })
 })
 router.post('/deleteTable/:table_id', function(req, res) {
-
-    db.query(`delete from tables where tables.table_id = ${req.params.table_id}`)
-        .then(function(schema) {
-            res.sendStatus(200)
-        })
+    db.query(`select * from attributes where attributes.table_id = ${req.params.table_id}`).then(results => {
+        if (results[0].length > 0) res.json(false)
+        else {
+            db.query(`delete from tables where tables.table_id = ${req.params.table_id}`)
+                .then(function(schema) {
+                    res.sendStatus(200)
+                })
+        }
+    })
 })
 
 router.post('/deleteAttribute/:attr_id', (req, res) => {

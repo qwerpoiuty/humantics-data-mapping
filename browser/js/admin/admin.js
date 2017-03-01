@@ -398,7 +398,14 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
                 $scope.inProgress = false
                 return
             }
-            dataFactory[command](id).then(() => {
+            dataFactory[command](id).then((result) => {
+                console.log(result)
+                if (!result) {
+                    notificationService.displayNotification('That structure still has dependencies')
+                    $scope.reset()
+                    $scope.inProgress = false
+                    return
+                }
                 if (structure == 'System') {
                     dataFactory.getSystems().then(systems => {
                         $scope.systems = systems[0]

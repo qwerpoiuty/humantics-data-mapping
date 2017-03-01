@@ -94,8 +94,8 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-centereddiv mar-bt-30">
                             <div class="outline-box pad-25 pd-tp-25px">
                                 <ul class="tab clearfix">
-                                    <li><a class="btn btn-tab active" ng-click="openBrowse(event, 'SearchTab')">Search<br><span class="arrow-down"></span></a></li>
-                                    <li><a class="btn btn-tab" ng-click="openBrowse(event, 'BrowseTab')">Advanced Search<br><span class="arrow-down"></span></a></li>
+                                    <li><a class="btn btn-tab active" ng-click="openBrowse($event, 'SearchTab')">Search<br><span class="arrow-down"></span></a></li>
+                                    <li><a class="btn btn-tab" ng-click="openBrowse($event, 'BrowseTab')">Advanced Search<br><span class="arrow-down"></span></a></li>
                                 </ul>
                                 <div id="SearchTab" class="tabcontent">
                                     <p class="error-alt" style="color:red" ng-show="error">{{error}}</p>

@@ -204,26 +204,38 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
     $scope.refreshSingleProject = (id) => {
         $scope.targetProject = []
         projectFactory.getProjectById(id).then(function(project) {
-            var obj = []
-            var tables = []
-            $scope.targetProject = []
-            project = project[0]
-            project.forEach(attr => {
-                if (tables.indexOf(attr.table_id) == -1) {
-                    obj[attr.table_id] = {
-                        table_name: attr.table_name,
-                        table_id: attr.table_id,
-                        db_name: attr.db_name,
-                        schema_name: attr.schema_name,
-                        attribute_count: 0
-                    }
-                    tables.push(attr.table_id)
-                }
-                obj[attr.table_id].attribute_count++
-            })
-            obj.forEach(table => {
-                $scope.targetProject.push(table)
-            })
+            // var obj = []
+            // var tables = []
+            // $scope.targetProject = []
+            // project = project[0]
+            // project.forEach(attr => {
+            //     if (tables.indexOf(attr.table_id) == -1) {
+            //         obj[attr.table_id] = {
+            //             table_name: attr.table_name,
+            //             table_id: attr.table_id,
+            //             db_name: attr.db_name,
+            //             schema_name: attr.schema_name,
+            //             attribute_count: 0
+            //         }
+            //         tables.push(attr.table_id)
+            //     }
+            //     obj[attr.table_id].attribute_count++
+            // })
+            // obj.forEach(table => {
+            //     $scope.targetProject.push(table)
+            // })
+            $scope.targetProject = project[0]
+
+            $scope.attributeCount = []
+        })
+    }
+    $scope.open = (index) => {
+        if ($scope.attributeCount[index]) return
+            // $scope.attributeCount[index] = "Searching..."
+        $scope.mappingCount = "Searching..."
+        dataFactory.getTableById($scope.targetProject[index].table_id).then(result => {
+            $scope.attributeCount[index] = result[0].length
+            console.log($scope.attributeCount[0])
         })
     }
 

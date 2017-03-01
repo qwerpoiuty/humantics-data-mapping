@@ -78,22 +78,22 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                     <tr ng-show="targetProject">
-                                        <th data-toggle="true" >Table</th>
+                                        <th data-toggle="true">Table</th>
                                         <th>Schema</th>
                                         <th>Database</th>
-                                        <th data-hide="all">Total Attributes</th>
+                                        <!-- <th data-hide="all">Total Attributes</th> -->
                                         <!-- <th data-hide="all">Number of Mappings</th> -->
                                         <th>Detailed View</th>
                                         <th ng-if="user.power_level==4">Remove Table</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat = "table in targetProject track by $index" foo-repeat-done>
+                                    <tr ng-repeat = "table in targetProject track by $index" foo-repeat-done">
                                         <td>{{table.table_name}}</td>
                                         <td>{{table.schema_name}}</td>
                                         <td>{{table.db_name}}</td>
-                                        <td>{{table.attribute_count}}</td>
-                                        <!-- <td>{{table.mappings.length}}</td> -->
+                                        <!-- <td>{{attributeCount[$index]}}</td> -->
+                                        <!-- <td>{{mappingCount || 'Searching...'}}</td> -->
                                         <td><button class = "btn btn-primary" ng-click="detailedView(table.table_id)">Detailed View</button></td>
                                         <td ng-if="user.power_level==4"><button class="btn btn-warning" ng-click="removeTable(table.table_id)">Remove Table</button>
                                     </tr>

@@ -41,6 +41,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
     $scope.sourceSelection = "none"
     $scope.sourceIndex = 0
     $scope.currentAttr = "Select an attribute from table"
+    $scope.version = 1
     $scope.checkMember = (user) => {
         projectFactory.getPermission(user.id, $scope.table.table_id).then(member => {
             $scope.projectMember = member
@@ -114,23 +115,18 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.adding = true
         $scope.changingStatus = false
         mappingFactory.getRecentMapping(attribute.attr_id).then(function(mapping) {
+            console.log(mapping)
             if (typeof mapping === "object") {
                 $scope.sources = mapping
-                if ($scope.projectMember) {
-                    switch ($scope.sources[0].mapping_status) {
-                        case "pending review":
-                            $scope.permissions = 2
-                            break
-                        case "pending approval":
-                            $scope.permissions = 3
-                            break
-                        default:
-                            $scope.permissions = 1
-                    }
-                } else {
-                    $scope.permissions = 5
+                if (mapping[0].attr_name == null) {
+                    $scope.sources = []
                 }
-            } else $scope.sources = []
+                $scope.version = mapping[0].version + 1
+                console.log($scope.version)
+            } else {
+                $scope.sources = []
+                $scope.version = 1
+            }
 
             $scope.targetMapping = attribute
             $scope.rules = $scope.sources[0] ? $scope.sources[0].transformation_rules : []
@@ -165,7 +161,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-        console.log($scope.user.power_level, $scope.projectMember, $scope.table.table_status)
+
         if ($scope.user.power_level != 1 || !$scope.projectMember || $scope.table.table_status != 'Incomplete') {
             notificationService.displayNotification('You don\'t have permission to do that')
             return
@@ -181,12 +177,13 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         }
         var mapping = $scope.setMapping()
         mapping.source.splice($scope.temp.sourceIndex, 1)
+        $scope.sources.splice($scope.temp.sourceIndex, 1)
         mappingFactory.updateMapping(mapping).then(function(mapping) {
             dataFactory.getAttributesByTableId($stateParams.tableId).then((attributes) => {
                 $scope.attributes = attributes[0]
                 $scope.currentAttr = $scope.targetMapping.attr_name
-                $scope.sources = []
-                $scope.targetMapping = {}
+                notificationService.displayNotification("Source Deleted")
+
             })
         })
 
@@ -224,6 +221,7 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
                     $scope.selectAttribute($scope.targetMapping)
+                    $scope.temp = {}
                 })
                 break
             case "editAttribute":
@@ -284,15 +282,16 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.sources.forEach(function(e) {
             newSources.push(e.attr_id)
         })
-        if (!$scope.sources[0]) var version = 1
-        else var version = $scope.sources[0].version + 1
+        console.log(newSources)
+
         var mapping = {
-            version: version,
+            version: $scope.version,
             modifier: $scope.user.id,
             source: newSources,
             target: $scope.targetMapping.attr_id
         }
-        mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
+        $scope.version++
+            mapping.transformation_rules = ($scope.rules.length) ? $scope.rules : null
         mapping.notes = ($scope.notes.length) ? $scope.notes : null
         return mapping
     }

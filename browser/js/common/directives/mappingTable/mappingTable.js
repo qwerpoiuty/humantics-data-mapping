@@ -121,6 +121,7 @@ app.directive('mapping', function($state, dataFactory) {
             }, function(nv, ov) {
                 if (nv !== ov) {
                     scope.sources = nv
+                    scope.newSource = {}
                     scope.displaySource = nv[0]
                     scope.noSources
                     if (scope.displaySource === undefined) scope.noSources = true

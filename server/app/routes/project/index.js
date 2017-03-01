@@ -64,7 +64,8 @@ router.get('/getPermission/:user_id', (req, res) => {
 })
 
 router.get('/single/:id', function(req, res) {
-    db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version from projects p inner join tables t on t.table_id = any(p.tables) inner join schemas s on t.schema = s.schema_id inner join dbs on s.db = dbs.db_id inner join attributes a on a.table_id = t.table_id full outer join (select * from mappings m1 where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m on m.target = a.attr_id where p.project_id = ${req.params.id} order by t.table_id, attr_id`)
+    // db.query(`select s.schema_name,dbs.db_name, t.table_name, t.table_id, a.attr_id,m.version from projects p inner join tables t on t.table_id = any(p.tables) inner join schemas s on t.schema = s.schema_id inner join dbs on s.db = dbs.db_id inner join attributes a on a.table_id = t.table_id full outer join (select * from mappings m1 where m1.version = (select max(version) from mappings m2 where m2.target = m1.target)) m on m.target = a.attr_id where p.project_id = ${req.params.id} order by t.table_id, attr_id`)
+    db.query(`select * from projects p inner join tables t on t.table_id = any(p.tables) inner join schemas s on s.schema_id = t.schema inner join dbs d on d.db_id = s.db where p.project_id = ${req.params.id}`)
         .then(function(projects) {
             res.json(projects)
         })
