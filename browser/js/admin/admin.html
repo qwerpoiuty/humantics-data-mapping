@@ -13,11 +13,11 @@
                                 <div class="lt-att-info text-center admintitle">Establish Your Systems & Users by Specific Need</div>
                                 <div class="ibox outline-box">
                                     <ul class="tab">
-                                        <li><a class="tablinks active-tab" ng-click="openBrowse(event, 'systemTab')">System</a></li>
-                                        <li><a class="tablinks" ng-click="openBrowse(event, 'databaseTab')">Database</a></li>
-                                        <li><a class="tablinks" ng-click="openBrowse(event, 'schemaTab')">Schema</a></li>
-                                        <li><a class="tablinks" ng-click="openBrowse(event, 'tableTab')">Table</a></li>
-                                        <li><a class="tablinks" ng-click="openBrowse(event, 'userTab')">User</a></li>
+                                        <li><a class="tablinks active-tab" ng-click="openBrowse($event, 'systemTab')">System</a></li>
+                                        <li><a class="tablinks" ng-click="openBrowse($event, 'databaseTab')">Database</a></li>
+                                        <li><a class="tablinks" ng-click="openBrowse($event, 'schemaTab')">Schema</a></li>
+                                        <li><a class="tablinks" ng-click="openBrowse($event, 'tableTab')">Table</a></li>
+                                        <li><a class="tablinks" ng-click="openBrowse($event, 'userTab')">User</a></li>
                                     </ul>
                                     <img src="img/spinner.gif" ng-show="inProgress"/>
                                     <div ng-hide="inProgress">
@@ -172,11 +172,11 @@
                                 <div class="lt-att-info text-center admintitle">Manage Your Systems & Users by Specific Need</div>
                                 <div class="ibox outline-box">
                                     <ul class="tab">
-                                        <li><a class="tablinks2" ng-click="openBrowse2(event, 'systemETab')">System</a></li>
-                                        <li><a class="tablinks2" ng-click="openBrowse2(event, 'databaseETab')">Database</a></li>
-                                        <li><a class="tablinks2" ng-click="openBrowse2(event, 'schemaETab')">Schema</a></li>
-                                        <li><a class="tablinks2" ng-click="openBrowse2(event, 'tableETab')">Table</a></li>
-                                        <li><a class="tablinks2" ng-click="openBrowse2(event, 'userETab')">User</a></li>
+                                        <li><a class="tablinks2" ng-click="openBrowse2($event, 'systemETab')">System</a></li>
+                                        <li><a class="tablinks2" ng-click="openBrowse2($event, 'databaseETab')">Database</a></li>
+                                        <li><a class="tablinks2" ng-click="openBrowse2($event, 'schemaETab')">Schema</a></li>
+                                        <li><a class="tablinks2" ng-click="openBrowse2($event, 'tableETab')">Table</a></li>
+                                        <li><a class="tablinks2" ng-click="openBrowse2($event, 'userETab')">User</a></li>
                                     </ul>
                                     <img src="img/spinner.gif" ng-show="inProgress"/>
                                     <div ng-hide="inProgress">

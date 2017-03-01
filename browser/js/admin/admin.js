@@ -185,9 +185,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         userFactory.createUser(user).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`User created`)
-            modalInstance.result.then(result => {
-                $scope.inProgress = false
-            })
+            modalInstance.result.then(result => {})
+            $scope.inProgress = false
 
         })
     }
@@ -209,9 +208,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
             $scope.reset()
             dataFactory.getSystems().then(systems => $scope.systems = systems[0])
             var modalInstance = notificationService.displayNotification(`Systm Created`)
-            modalInstance.result.then(result => {
-                $scope.inProgress = false
-            })
+            modalInstance.result.then(result => {})
+            $scope.inProgress = false
         })
     }
     $scope.createDatabase = db => {
@@ -233,9 +231,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createDatabase(dbToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`Database created`)
-            modalInstance.result.then(result => {
-                $scope.inProgress = false
-            })
+            modalInstance.result.then(result => {})
+            $scope.inProgress = false
         })
     }
     $scope.schemaCreate = schema => {
@@ -258,9 +255,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createSchema(schemaToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`Schema created`)
-            modalInstance.result.then(result => {
-                $scope.inProgress = false
-            })
+            modalInstance.result.then(result => {})
+            $scope.inProgress = false
         })
     }
     $scope.createTable = function(table) {
@@ -283,9 +279,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.createTable(tableToBeCreated).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`Table created`)
-            modalInstance.result.then(result => {
-                $scope.inProgress = false
-            })
+            modalInstance.result.then(result => {})
+            $scope.inProgress = false
         })
     }
 
@@ -311,8 +306,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateSystem(updatedSystem).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`System updated`)
-            $scope.inProgress = false
         })
+        $scope.inProgress = false
     }
     $scope.updateDatabase = db => {
         if ($scope.inProgress) {
@@ -334,8 +329,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateDatabase(updatedDb).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`Database updated`)
-            $scope.inProgress = false
         })
+        $scope.inProgress = false
     }
 
     $scope.updateSchema = schema => {
@@ -363,8 +358,8 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         dataFactory.updateSchema(updatedSchema).then(() => {
             $scope.reset()
             var modalInstance = notificationService.displayNotification(`Schema updated`)
-            $scope.inProgress = false
         })
+        $scope.inProgress = false
     }
 
     $scope.updateUser = user => {
@@ -433,6 +428,7 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
 
     //tab functions
     $scope.openBrowse = function(evt, tabSelection) {
+        $scope.reset()
 
         // Declare all variables
         var i, tabcontent, tablinks;
@@ -453,11 +449,12 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
         document.getElementById(tabSelection).style.display = "block";
         evt.currentTarget.className += " active";
         $scope.tables = null
-        $scope.reset(0)
     }
 
     $scope.openBrowse2 = function(evt, tabSelection) {
-            // Declare all variables
+            console.log('hello')
+            $scope.reset()
+                // Declare all variables
             var i, tabcontent, tablinks;
 
             // Get all elements with class="tabcontent" and hide them
@@ -473,15 +470,16 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
             }
 
             // Show the current tab, and add an "active" class to the link that opened the tab
+            console.log(evt)
             document.getElementById(tabSelection).style.display = "block";
             evt.currentTarget.className += " active";
             $scope.tables = null
-            $scope.reset()
         }
         //detailed view transition
         //extra code added by ND - start
     $scope.openBrowse3 = function(evt, tabSelection) {
             // Declare all variables
+            $scope.reset()
             var i, tabcontent, tablinks;
 
             // Get all elements with class="tabcontent" and hide them
@@ -497,7 +495,6 @@ app.controller('adminCtrl', function($scope, $modal, dataFactory, $state, projec
             document.getElementById(tabSelection).style.display = "block";
             evt.currentTarget.className += " active";
             $scope.tables = null
-            $scope.reset()
         }
         //extra code added by ND - End
 
