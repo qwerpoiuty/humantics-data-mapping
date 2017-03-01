@@ -161,13 +161,13 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         $scope.editing = "none"
     }
     $scope.newSource = function() {
-
-        if ($scope.user.power_level != 1 || !$scope.projectMember || $scope.table.table_status != 'Incomplete') {
+        console.log(($scope.table.table_status != 'Incomplete' && $scope.table_status != "Approved"))
+        if ($scope.user.power_level != 1 || !$scope.projectMember || ($scope.table.table_status != 'Incomplete' && $scope.table.table_status != "Approved")) {
             notificationService.displayNotification('You don\'t have permission to do that')
             return
         }
         if ($scope.targetMapping) $scope.editing = "newSource"
-        else notification.displayNotification('pick an attribute first')
+        else notificationService.displayNotification('pick an attribute first')
     }
 
     $scope.deleteSource = function() {
@@ -202,6 +202,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
         modalInstance.result.then(result => {
             if (result) {
                 dataFactory.deleteAttribute(attr_id).then(() => {
+                    if ($scope.table.table_status == "Approved") {
+                        var temp = {
+                            table_status: "Incomplete",
+                            table_id: $scope.table.table_id
+                        }
+                        dataFactory.updateTableStatus(temp).then((response) => {
+                            $scope.table.table_status = "Incomplete"
+                        })
+                    }
                     dataFactory.getAttributesByTableId($stateParams.tableId).then(attr => {
                         $scope.attributes = attr[0]
                         $scope.sources = []
@@ -220,6 +229,15 @@ app.controller('detailedCtrl', function($scope, dataFactory, table, attributes, 
 
                 var mapping = $scope.setMapping()
                 mapping.source.push($scope.temp.source.attr.attr_id)
+                if ($scope.table.table_status == "Approved") {
+                    var temp = {
+                        table_status: "Incomplete",
+                        table_id: $scope.table.table_id
+                    }
+                    dataFactory.updateTableStatus(temp).then((response) => {
+                        $scope.table.table_status = "Incomplete"
+                    })
+                }
                 mappingFactory.updateMapping(mapping).then(function(mapping) {
                     $scope.editing = "none"
                     $scope.sources = $scope.sources
