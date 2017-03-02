@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{target.lastModified|| date:'yyyy-MM-dd' || ''}}</td>
+                                <td>{{target.lastModified | date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -59,8 +59,8 @@
             </div>
             <div class="col-sm-6">
                 <form role="form">
-                    <div class="tabletitle">Source <span ng-if="noSources" class="attr-stat">Null</span></div>
-                    <ul class="tab" style="border:none;">
+                    <div class="tabletitle" ng-hide="target">Source <span ng-if="noSources" class="attr-stat">Null</span></div>
+                    <ul class="tab" style="border:none;" ng-show="target">
                         <li ng-repeat="source in sources track by $index">
                             <a ng-if="" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-click="changeSource($index)">
                                 <h5 style="margin:0;color:#676a6c;" class="text-success">No Source</h5>
@@ -98,7 +98,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd' || ''}}</td>
+                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -272,7 +272,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{target.last_modified| date:'yyyy-MM-dd'}}</td>
+                                <td>{{target.last_modified | date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -436,7 +436,7 @@
                             </tr>
                             <tr>
                                 <td class="padding-tb-16">Last modified date</td>
-                                <td class="padding-tb-16 text-center">{{target.last_modified| date:'yyyy-MM-dd'}}</td>
+                                <td class="padding-tb-16 text-center">{{target.last_modified | date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -495,7 +495,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd' || ''}}</td>
+                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>

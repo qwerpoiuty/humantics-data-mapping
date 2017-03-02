@@ -1,4 +1,4 @@
-app.directive('rules', function($state, mappingFactory) {
+app.directive('rules', function($state, mappingFactory, notificationService) {
     return {
         restrict: 'E',
         scope: {
@@ -10,8 +10,12 @@ app.directive('rules', function($state, mappingFactory) {
         link: function(scope, element, attrs) {
             scope.newRule = false
             scope.addTransformation = function() {
-                if (scope.mapping.length === 0) alert("Please specify a source first")
-                else scope.newRule = !scope.newRule
+                if (scope.user.power_level !== 1) notificationService.displayNotification("You are not allowed to do that")
+                else {
+                    if (!scope.rules) notificationService.displayNotification('Please select an attribute first')
+                    else if (scope.mapping.length === 0) notificationService.displayNotification("Please specify a source first")
+                    else scope.newRule = !scope.newRule
+                }
             }
             scope.saveTransformation = function(transformationRule, version) {
                 scope.rules.push(transformationRule)
