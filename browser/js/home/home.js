@@ -29,21 +29,37 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
     $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)
-
-    projectFactory.getProjectStatus($scope.user.id).then(projects => {
-        $scope.projects = []
-        console.log(projects)
-        for (var key in projects) {
-            $scope.projects.push(projects[key])
-        }
-        for (var i = 0; i < $scope.projects.length; i++) {
-            var completed = 0
-            for (var j = 0; j < $scope.projects[i].tables.length; j++) {
-                if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+    if (user.power_level == 5) {
+        projectFactory.getAllProjectStatus().then(projects => {
+            $scope.projects = []
+            console.log(projects)
+            for (var key in projects) {
+                $scope.projects.push(projects[key])
             }
-            $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
-        }
-    })
+            for (var i = 0; i < $scope.projects.length; i++) {
+                var completed = 0
+                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+                }
+                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+            }
+        })
+    } else {
+        projectFactory.getProjectStatus($scope.user.id).then(projects => {
+            $scope.projects = []
+            console.log(projects)
+            for (var key in projects) {
+                $scope.projects.push(projects[key])
+            }
+            for (var i = 0; i < $scope.projects.length; i++) {
+                var completed = 0
+                for (var j = 0; j < $scope.projects[i].tables.length; j++) {
+                    if ($scope.projects[i].tables[j].table_status == "Approved") completed++
+                }
+                $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
+            }
+        })
+    }
 
     //ALL THE SEARCHING STUFF
 

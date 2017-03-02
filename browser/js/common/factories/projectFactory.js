@@ -44,7 +44,35 @@ app.factory('projectFactory', function($http) {
                 return mappedProject
             })
     }
-
+    d.getAllProjectStatus = () => {
+        return $http.get('/api/project/projectAllStatus')
+            .then(response => {
+                var projects = response.data[0]
+                var mappedProject = {}
+                for (var i = 0; i < projects.length; i++) {
+                    if (mappedProject[projects[i].project_id]) {
+                        mappedProject[projects[i].project_id].tables.push({
+                            table_id: projects[i].table_id,
+                            table_status: projects[i].table_status
+                        })
+                    } else {
+                        var el = projects[i]
+                        mappedProject[projects[i].project_id] = {
+                            project_id: el.project_id,
+                            project_name: el.project_name,
+                            due_date: el.due_date,
+                            leader: el.project_leader,
+                            members: el.members,
+                            tables: [{
+                                table_id: projects[i].table_id,
+                                table_status: projects[i].table_status
+                            }]
+                        }
+                    }
+                }
+                return mappedProject
+            })
+    }
     d.getAssignedMappings = user => {
         var query = {
             user_id: user.id
