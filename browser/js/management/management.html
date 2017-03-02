@@ -56,10 +56,10 @@
                             </div>
                         </div>
                         <div class="top-btn-set">
-                            <a class="btn btn-primary" ng-click="editProject()" ng-show="!editing"><i class="fa fa-edit"></i> Edit</a>
+                            <a class="btn btn-primary" ng-click="editProject()" ng-show="!editing && user.power_level>=4"><i class="fa fa-edit"></i> Edit</a>
                             <a ng-if="user.power_level>=4" class="btn btn-primary" ng-show="editing" ng-click="save()" title="Save"><i class="fa fa-save"></i> Save</a>
                             <a ng-if="user.power_level>=4" class="btn btn-primary" ng-show="editing" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i> Cancel</a>
-                            <button class="btn btn-primary" ng-show="selectedProject" ng-hide="editing" ng-click="deleteProject()"><i class="fa fa-trash-o"></i> Delete</button>
+                            <button class="btn btn-primary" ng-show="user.power_level >=4 && !editing" ng-click="deleteProject()"><i class="fa fa-trash-o"></i> Delete</button>
                             <button class="btn btn-primary" ng-if="selectedProject && user.power_level >= 4" ng-click="addMembers()">Update Members</button>
                             <button class="btn btn-primary" ng-if="selectedProject && user.power_level >= 4" ng-click="addTables()">Add Tables</button>
                         </div>
