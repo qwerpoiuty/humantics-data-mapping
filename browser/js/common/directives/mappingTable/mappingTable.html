@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{target.lastModified || ''}}</td>
+                                <td>{{target.lastModified|| date:'yyyy-MM-dd' || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -98,7 +98,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.date_modified || ''}}</td>
+                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd' || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -272,7 +272,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{target.last_modified}}</td>
+                                <td>{{target.last_modified| date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -368,7 +368,7 @@
                             </tr>
                             <tr>
                                 <td class="padding-tb-16">Last modified date</td>
-                                <td class="padding-tb-16 text-center">{{newSource.attr.last_modified}}</td>
+                                <td class="padding-tb-16 text-center">{{newSource.attr.last_modified| date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Sample Value</td>
@@ -436,7 +436,7 @@
                             </tr>
                             <tr>
                                 <td class="padding-tb-16">Last modified date</td>
-                                <td class="padding-tb-16 text-center">{{target.last_modified}}</td>
+                                <td class="padding-tb-16 text-center">{{target.last_modified| date:'yyyy-MM-dd'}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>
@@ -495,7 +495,7 @@
                             </tr>
                             <tr>
                                 <td>Last modified date</td>
-                                <td>{{displaySource.date_modified || ''}}</td>
+                                <td>{{displaySource.date_modified| date:'yyyy-MM-dd' || ''}}</td>
                             </tr>
                             <tr>
                                 <td>Business Name</td>

@@ -1,36 +1,33 @@
 <div class="mail-box" style="overflow:none;margin-bottom:0;border-bottom:none; border-left:none; border-right:none;">
-
     <div class="mail-attachment outline-box clearfix">
             <div class="attachment">
                 <div class="pull-right tooltip-demo">
                     <a class="btn btn-white btn-sm" ng-click = addTransformation()><i class="fa fa-plus"></i> </a>
                 </div>
-                <div class="lt-att-info">Transformation Rules</div>
+                <h3 style="margin:0px;">Transformation Rules</h3>
             </div>
         </div>
-        <div class="mail-body text-left tooltip-demo">
-             <!-- <h4 class="text-center">No Current Transformation Rules<h4> -->
-            <div accordion class = "accordion-button" ng-if="newRule">
-                <button class="accordion"><h4>New Rule</h4></button>
-                <div class="panel accordion-panel-parent col-lg-12" style="margin-bottom:15px;">
-                    <form class="accordion-panel" style="padding-top:10px; padding-bottom:10px;">
-                        <div class="pull-right tooltip-demo">
-                            <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                        <div class="row">
+        <div class="mail-body text-left tooltip-demo notlisting-wrap">
+            <div accordion class = "accordion-button clearfix newcomm-wrap" ng-if="newRule">
+                <button class="accordion">
+                    <h4><i class="fa fa-plus"></i> New Note</h4>New Rule</h4>
+                </button>
+                <div class="panel accordion-panel-parent col-lg-12 panel-wrap" >
+                    <form class="accordion-panel add-note-pan">
+                        <div class="col-md-12">
                             <h4>Rule Name</h4> 
                         </div>
-                        <div class = "row">
+                        <div class = "col-md-12">
                             <input ng-model="newTransformation.type" id="ruleType" class="newRuleType" type="text" placeholder="Rule Type"/>
                         </div>
-                        <div class="row">
+                        <div class="col-md-12">
                             <h4>Rule Description</h4>
                         </div>
-                        <div class = "row">
+                        <div class = "col-md-12">
                             <textarea ng-model="newTransformation.description" class="newRuleDescription col-lg-12" placeholder="A short explanation of this rule" cols="50"></textarea>
                         </div>
-                        <div class = "row">
-                            <button ng-click="saveTransformation(newTransformation)" class="col-lg-1 col-lg-offset-11 btn btn-info">Save</button>
+                        <div class = "col-md-12">
+                            <button ng-click="saveTransformation(newTransformation)" class="btn btn-blue header-btn mar-rt-0 ng-scope">Save</button>
                         </div>
                     </form>
                 </div>

@@ -86,28 +86,30 @@
                         <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
                             <div class="sect-att-head clearfix">
                                 <div class="lt-att-info">Attribute Information</div>
+                                <a class="btn btn-red fl-rt" ng-if="editing!=='none'" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i> Close</a>
+                            <a class="btn btn-blue fl-rt mar-4" ng-if="editing!=='none'" ng-click="save()" title="Save"><i class="fa fa-save"></i> Save</a>
                                 <div class="rt-att-btn">
                                 <a class="btn btn-white btn-sm" ng-click="newSource()" ng-if="(editing =='none' && !mappingNotes) || user.power_level!=1" title="Add"><i class = "fa fa-plus"></i> </a>
                                 <a class="btn btn-white btn-sm" ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !mappingNotes" title="Edit"><i class="fa fa-edit"></i></a> 
                                 <a class="btn btn-white btn-sm" ng-click="toggleMappingNotes()" title="Notes"><i class="fa fa-file-text-o"></i></a>
                                 <a class="btn btn-white btn-sm m-r-7" ng-if="!mappingNotes || user.power_level!=1" ng-click="deleteSource()" title="Delete Source"><i class="fa fa-trash-o"></i> </a>
-                                <button style="float:right" class="btn btn-blue " ng-click="changeStatus('Pending Review')">Submit table for Review</button>
+                                <button style="float:right" class="btn btn-blue no-mar" ng-click="changeStatus('Pending Review')">Submit table for Review</button>
                                 </div>
+
                             </div>
                             <h3>{{currentAttr}} <button ng-if="user.power_level>=4 && targetMapping" class="btn btn-primary ng-binding mar-lt-10" ng-click="deleteAttribute(targetMapping.attr_id)">Delete Attribute</button>
-                            <a class="btn btn-white btn-sm fl-rt" ng-if="editing!=='none'" ng-click="cancel()" title="Cancel"><i class="fa fa-close"></i></a>
-                            <a class="btn btn-white btn-sm fl-rt mar-4" ng-if="editing!=='none'" ng-click="save()" title="Save"><i class="fa fa-save"></i></a>
+                            
                             </h3>
                             <div ng-if="user.power_level ==2">
                                 <div ng-show="table.table_status=='Pending Review'">
                                     <button class="btn btn-danger" style="float:right;" ng-click="changeStatus('Incomplete')">Decline</button>
-                                    <button class="btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
+                                    <button class="btn btn-info" ng-click="changeStatus('Pending Approval')">Submit for Approval</button>
                                 </div>
                             </div>
                             <div ng-if="user.power_level ==3">
                                 <div ng-show="table.table_status=='Pending Approval'">
                                     <button class="btn btn-danger" style="float:right;" ng-click="changeStatus('incomplete')">Decline</button>
-                                    <button class="btn btn-info" style="float:right;margin-right:10px;" ng-click="changeStatus('Approved')">Approve</button>
+                                    <button class="btn btn-info" ng-click="changeStatus('Approved')">Approve</button>
                                 </div>
                             </div>
                         </div>
