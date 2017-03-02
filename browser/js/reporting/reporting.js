@@ -164,16 +164,23 @@ app.controller('reportCtrl', function($scope, dataFactory, AuthService, reportin
     }
 
     $scope.totalMappings = table => {
-        $scope.error = "Searching"
-        reportingFactory.getAllMappings(table.table_id)
-            .then(mappings => {
-                if (mappings[0].length == 0) $scope.error = "That table has no mappings"
-                mappings = mappings[0]
-                console.log(mappings[0])
-                $scope.recentMapping = mappings
-                $scope.allMapping = true
-                $scope.error = null
-            })
+        if (!table) {
+            notificationService.displayNotification('Please select a table first')
+            return
+        } else {
+            $scope.error = "Searching"
+            reportingFactory.getAllMappings(table.table_id)
+                .then(mappings => {
+                    console.log(mappings)
+                    if (mappings[0].length == 0) $scope.error = "That table has no mappings"
+                    else {
+                        mappings = mappings[0]
+                        $scope.recentMapping = mappings
+                        $scope.allMapping = true
+                        $scope.error = null
+                    }
+                })
+        }
     }
     $scope.getXls = () => {
         $scope.arr = []

@@ -59,13 +59,10 @@
             </div>
             <div class="col-sm-6">
                 <form role="form">
-                    <div class="tabletitle" ng-hide="target">Source <span ng-if="noSources" class="attr-stat">Null</span></div>
+                    <div class="tabletitle"><span ng-hide="target">Source</span><span ng-if="noSources" class="attr-stat">Null</span></div>
                     <ul class="tab" style="border:none;" ng-show="target">
                         <li ng-repeat="source in sources track by $index">
-                            <a ng-if="" style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-click="changeSource($index)">
-                                <h5 style="margin:0;color:#676a6c;" class="text-success">No Source</h5>
-                            </a>
-                            <a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="tablinks" ng-click="changeSource($index)">
+                            <a style="margin:0;margin-right: 10px;padding:8px; border:1px solid #e7eaec;" class="source-tab" ng-click="changeSource($event,$index)">
                                 <h5 style="margin:0;color:#676a6c;" class="text-success">Source {{$index + 1}}</h5>
                             </a>
                         </li>
@@ -239,7 +236,7 @@
                         <tbody>
                             <tr>
                                 <td>System</td>
-                                <td>{{target.system}}</td>
+                                <td>{{target.system_name}}</td>
                             </tr>
                             <tr>
                                 <td>Database</td>
@@ -389,7 +386,7 @@
                         <tbody>
                             <tr>
                                 <td class="padding-tb-16">System</td>
-                                <td class="padding-tb-16 text-center">{{target.system}}</td>
+                                <td class="padding-tb-16 text-center">{{target.system_name}}</td>
                             </tr>
                             <tr>
                                 <td class="padding-tb-16">Database</td>

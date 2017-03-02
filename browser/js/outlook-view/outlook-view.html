@@ -93,7 +93,8 @@
                                 <a class="btn btn-white btn-sm" ng-click="editAttribute()" ng-if="user.power_level >=4 && editing=='none' &&  !mappingNotes" title="Edit"><i class="fa fa-edit"></i></a> 
                                 <a class="btn btn-white btn-sm" ng-click="toggleMappingNotes()" title="Notes"><i class="fa fa-file-text-o"></i></a>
                                 <a class="btn btn-white btn-sm m-r-7" ng-if="!mappingNotes || user.power_level!=1" ng-click="deleteSource()" title="Delete Source"><i class="fa fa-trash-o"></i> </a>
-                                <button style="float:right" class="btn btn-blue no-mar" ng-click="changeStatus('Pending Review')">Submit table for Review</button>
+                                <button style="float:right" ng-show="table.table_status=='Incomplete'" class="btn btn-blue no-mar" ng-click="changeStatus('Pending Review')">Submit table for Review</button>
+                                <a ng-hide="table.table_status=='Incomplete'" class="btn btn-blue no-mar" style="float:right">In Review</a>
                                 </div>
 
                             </div>

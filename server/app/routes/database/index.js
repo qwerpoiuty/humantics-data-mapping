@@ -47,7 +47,7 @@ router.get('/tables', function(req, res) {
 })
 
 router.get('/attributes', function(req, res) {
-    db.query('select * from attributes where attributes.table_id = ' + parseInt(req.query.attribute))
+    db.query('select * from attributes where attributes.table_id = ' + parseInt(req.query.attribute + 'order by attributes.attr_id'))
         .then(function(attributes) {
             res.json(attributes)
         })

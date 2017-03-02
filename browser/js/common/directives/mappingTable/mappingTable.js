@@ -15,9 +15,15 @@ app.directive('mapping', function($state, dataFactory) {
             scope.editMap = ""
             scope.editSource = {}
             scope.newSource = {}
-            scope.changeSource = function(index) {
+            scope.changeSource = function(evt, index) {
                 scope.temp.sourceIndex = index
                 scope.displaySource = scope.sources[index]
+                    // var tablinks = document.getElementsByClassName("source-tab");
+                    // for (var i = 0; i < tablinks.length; i++) {
+                    //     tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    // }
+                $('.source-tab').removeClass('active')
+                evt.currentTarget.className += " active"
             }
             scope.$watch(() => {
                 return scope.editSource.system
