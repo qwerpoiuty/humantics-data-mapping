@@ -47,7 +47,7 @@ router.post('/signup', function(req, res) {
     var hash = bcrypt.hashSync(user.password, salt);
     user.salt = salt;
     user.password = hash;
-    db.query(`insert into users (email,password,salt,power_level) values ('${user.email}', '${user.password}', '${user.salt}', ${user.power_level})`).then(user => {
+    db.query(`insert into users (email,password,salt,power_level,"createdAt","updatedAt") values ('${user.email}', '${user.password}', '${user.salt}', ${user.power_level},CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`).then(user => {
         res.json(user)
     })
 })
