@@ -42,5 +42,5 @@ module.exports = db.define('user', {
         }
     }
 }, {
-    timestamps: false
+    timestamps: true
 });
