@@ -75,7 +75,16 @@ router.get('/attributesByTableId/:tableId', function(req, res) {
         })
 })
 
-
+router.get('/allTables', (req, res) => {
+    db.query(`SELECT tables.*, count(attributes.attr_id) as number_of_attributes     
+from tables
+left join attributes
+on ( tables.table_id = attributes.table_id)
+group by
+    tables.table_id`).then(tables => {
+        res.json(tables)
+    })
+})
 
 router.get('/tableName/:table_name', function(req, res) {
     db.query(`select * from tables inner join schemas on tables.schema = schemas.schema_id inner join dbs on schemas.db = dbs.db_id where lower(tables.table_name) like '${req.params.table_name.toLowerCase()}'`)

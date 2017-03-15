@@ -8,7 +8,14 @@
                             <div class="attr-details">
                                 <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
                                     <div class="sect-att-head clearfix">
-                                        <div class="lt-att-info">Your Assignments</div>
+                                        <div ng-show="user.power_level!==5" class="lt-att-info">Your Assignments</div>
+                                        <div ng-show="user.power_level===5" class="lt-att-info">Tables Overview
+                                            <h5><span>Total Tables: {{assignedMappings.length}}</span>
+                                            <span>Complete Tables: {{completeTables}}</span>
+                                            <span>Tables Pending Review: {{pendingReview}}</span>
+                                            <span>Tables Pending Approval: {{pendingApproval}}</span>
+                                            <span>Incomplete Tables: {{incompleteTables}}</span></h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -18,14 +25,16 @@
                                         <thead>
                                             <tr>
                                                 <th class="pad-lt-0">Table Name</th>
-                                                <th class="pad-lt-0">Project</th>
+                                                <th ng-if="user.power_level!==5" class="pad-lt-0">Project</th>
+                                                <th class="pad-lt-0">Table Status</th>
                                                 <th class="pad-lt-0">Detailed View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="mapping in assignedMappings">
                                                 <td>{{mapping.table_name}}</td>
-                                                <td>{{mapping.project_name}}</td>
+                                                <td ng-if="user.power_level!==5">{{mapping.project_name}}</td>
+                                                <td>{{mapping.table_status}}</td>
                                                 <td>
                                                     <button class="btn btn-primary" ng-click="detailedView(mapping.table_id)">Detailed View</button>
                                                 </td>
@@ -39,7 +48,7 @@
                             <div class="attr-details">
                                 <div class="mail-tools tooltip-demo attribute-tab-head outline-box no-bt-brder">
                                     <div class="sect-att-head clearfix">
-                                        <div class="lt-att-info">Progress Status</div>
+                                        <div class="lt-att-info">Project Status <span ng-if="allUsers">Total Number of Users: {{allUsers.length}}</span></div>
                                     </div>
                                 </div>
                             </div>

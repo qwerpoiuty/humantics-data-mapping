@@ -68,7 +68,6 @@ app.controller('manageCtrl', function($scope, AuthService, projectFactory, dataF
         $scope.tempProject = {}
     }
     $scope.save = () => {
-        console.log('hello')
         $scope.currentPro = $scope.tempProject.project_name
         $scope.selectedProject.due_date = $scope.tempProject.due_date
         $scope.editing = false

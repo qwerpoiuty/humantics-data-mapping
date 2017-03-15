@@ -12,10 +12,13 @@ app.config(function($stateProvider) {
                     return user
                 })
             },
-            assignedMappings: (AuthService, projectFactory) => {
+            assignedMappings: (AuthService, projectFactory, dataFactory) => {
                 return AuthService.getLoggedInUser()
                     .then(user => {
-                        return projectFactory.getAssignedMappings(user)
+                        if (user.power_level !== 5) return projectFactory.getAssignedMappings(user)
+                        else return dataFactory.getAllTables().then(tables => {
+                            return tables
+                        })
                     }).then(assignedMappings => {
                         return assignedMappings
                     })
@@ -24,15 +27,27 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings, notificationService) {
+app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, projectFactory, user, assignedMappings, notificationService, userFactory) {
     $scope.user = user
     $scope.assignedMappings = assignedMappings[0]
     $scope.searchQuery = ""
     projectFactory.getAssignedMappings(user)
     if (user.power_level == 5) {
+        $scope.tableStatus = {
+            "Incomplete": 0,
+            "Pending Review": 0,
+            "Pending Approval": 0,
+            "Approved": 0
+        }
+        $scope.assignedMappings.forEach(e => {
+            $scope.tableStatus[e.table_status]++
+        })
+        $scope.incompleteTables = $scope.tableStatus.Incomplete
+        $scope.pendingReview = $scope.tableStatus["Pending Review"]
+        $scope.pendingApproval = $scope.tableStatus["Pending Approval"]
+        $scope.completeTables = $scope.tableStatus.Approved
         projectFactory.getAllProjectStatus().then(projects => {
             $scope.projects = []
-            console.log(projects)
             for (var key in projects) {
                 $scope.projects.push(projects[key])
             }
@@ -44,10 +59,12 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
                 $scope.projects[i].progress = Math.floor((completed / $scope.projects[i].tables.length) * 100)
             }
         })
+        userFactory.getUsers().then(users => {
+            $scope.allUsers = users[0]
+        })
     } else {
         projectFactory.getProjectStatus($scope.user.id).then(projects => {
             $scope.projects = []
-            console.log(projects)
             for (var key in projects) {
                 $scope.projects.push(projects[key])
             }
@@ -66,6 +83,10 @@ app.controller('homeCtrl', function($scope, $uibModal, dataFactory, $state, proj
     dataFactory.getSystems().then(systems => {
         $scope.systems = systems[0]
     })
+
+    if ($scope.user.power_level == 5) {
+
+    }
 
     $scope.selectedSystem = {}
     $scope.selectedDb = {}

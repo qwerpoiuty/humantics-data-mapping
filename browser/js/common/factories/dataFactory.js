@@ -61,6 +61,11 @@ app.factory('dataFactory', function($http) {
     }
 
     //Specific gets
+    d.getAllTables = function() {
+        return $http.get('/api/database/allTables').then(response => {
+            return response.data
+        })
+    }
     d.getMostRecentTable = function() {
         return $http.get('/api/database/recentTable').then(function(response) {
             return response.data
